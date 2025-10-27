@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobFinder - Find Your Dream Job</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header/Navigation -->
+    <header class="bg-gray-200 shadow-sm">
+      <nav class="max-w-7xl mx-auto px-6 py-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="text-xl font-bold text-gray-800">LOGO</div>
+            <div class="text-xl text-gray-700">JobFinder</div>
+          </div>
+          <div class="flex items-center space-x-8">
+            <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900">About</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Job listings</a
+            >
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Favorites jobs</a
+            >
+            <a href="#" class="text-gray-700 hover:text-gray-900">Profile</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Login/Logout</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center px-6 py-12">
+      <div class="max-w-3xl w-full text-center">
+        <!-- Welcome Section -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-6">
+          Welcome to JobCompass
+        </h1>
+        <p class="text-lg text-gray-700 mb-4">
+        Master the navigation in the sea of irrelevant jobs
+        </p>
+
+        <!-- Search Section -->
+        <div class="max-w-2xl mx-auto text-left">
+          <!-- <div class="flex gap-3 mb-3">
+            <input
+              id="jobTitleInput"
+              type="text"
+              placeholder="Search by job title"
+              class="flex-grow px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+            />
+            <button
+              id="addTitleBtn"
+              class="bg-blue-500 text-white px-5 py-3 rounded-lg hover:bg-blue-600 transition"
+            >
+              Add
+            </button>
+          </div> -->
+
+          <!-- Added Titles -->
+          <div id="titlesList" class="mb-3 flex flex-wrap gap-2"></div>
+
+          <!-- Error -->
+
+          <!-- <p id="errorMessage" class="text-sm text-red-500 hidden">
+            Please add at least one job title.
+          </p> -->
+
+          <!-- Search -->
+          <!-- <button
+            id="searchBtn"
+            class="bg-gray-800 text-white px-8 py-3 rounded-lg hover:bg-gray-900 transition mt-4 mx-auto block"
+          >
+            Search
+          </button>
+        </div> -->
+
+        <div class="max-w-2xl mx-auto text-left">
+  <label for="jobTitleInput" class="block text-sm font-medium text-gray-700 mb-2">
+    Enter job title
+  </label>
+  <div class="flex gap-3 mb-3">
+    <input
+      id="jobTitleInput"
+      type="text"
+      placeholder="e.g. Web Developer"
+      class="flex-grow px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+    />
+    <button
+      id="searchBtn"
+      class="bg-gray-800 text-white px-8 py-3 rounded-lg hover:bg-gray-900 transition"
+    >
+      Search
+    </button>
+  </div>
+
+  <p id="errorMessage" class="text-sm text-red-500 hidden">
+    Please enter a job title.
+  </p>
+</div>
+
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <p class="text-xl text-gray-700">Footer</p>
+      </div>
+    </footer>
+
+    <script>
+      // const jobTitleInput = document.getElementById("jobTitleInput");
+      // const addTitleBtn = document.getElementById("addTitleBtn");
+      // const titlesList = document.getElementById("titlesList");
+      // const searchBtn = document.getElementById("searchBtn");
+      // const errorMessage = document.getElementById("errorMessage");
+
+      // let jobTitles = [];
+
+      // Add title function
+      // function addTitle() {
+      //   const title = jobTitleInput.value.trim();
+      //   if (title === "") return;
+
+      //   // Add to array
+      //   jobTitles.push(title);
+
+      //   // Create title element
+      //   const titleElement = document.createElement("div");
+      //   titleElement.className =
+      //     "flex items-center justify-between bg-gray-100 px-4 py-2 rounded";
+      //   titleElement.innerHTML = `
+      //           <span class="text-gray-800">${title}</span>
+      //           <button class="text-red-500 hover:text-red-700 text-sm font-medium" onclick="removeTitle('${title}', this)">
+      //               Remove
+      //           </button>
+      //       `;
+
+      //   titlesList.appendChild(titleElement);
+
+      //   // Reset input
+      //   jobTitleInput.value = "";
+      //   jobTitleInput.focus();
+
+      //   // Hide error
+      //   errorMessage.classList.add("hidden");
+      // }
+
+      // // Remove title
+      // window.removeTitle = function (title, button) {
+      //   jobTitles = jobTitles.filter((t) => t !== title);
+      //   button.parentElement.remove();
+      // };
+
+      // // Add title on click
+      // addTitleBtn.addEventListener("click", addTitle);
+
+      // // Add title on Enter key
+      // jobTitleInput.addEventListener("keypress", (e) => {
+      //   if (e.key === "Enter") addTitle();
+      // });
+
+      // // Search button
+      // searchBtn.addEventListener("click", () => {
+      //   if (jobTitles.length === 0) {
+      //     errorMessage.classList.remove("hidden");
+      //     jobTitleInput.focus();
+      //     return;
+      //   }
+
+      //   const searchString = jobTitles.join(", ");
+      //   console.log("Searching for:", searchString);
+      //   alert(`Searching for: ${searchString}`);
+      // });
+
+      const jobTitleInput = document.getElementById("jobTitleInput");
+const searchBtn = document.getElementById("searchBtn");
+const errorMessage = document.getElementById("errorMessage");
+
+function doSearch() {
+  const title = jobTitleInput.value.trim();
+  if (!title) {
+    errorMessage.classList.remove("hidden");
+    jobTitleInput.focus();
+    return;
+  }
+  errorMessage.classList.add("hidden");
+  console.log("Searching for:", title);
+  alert(`Searching for: ${title}`);
+}
+
+searchBtn.addEventListener("click", doSearch);
+jobTitleInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") doSearch();
+});
+
+
+
+    </script>
+  </body>
+</html>

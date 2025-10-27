@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Sign Up - JobFinder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-gray-200 shadow-sm">
+    <nav class="max-w-7xl mx-auto px-6 py-5">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="text-xl font-bold text-gray-800">LOGO</div>
+          <div class="text-xl text-gray-700">JobFinder</div>
+        </div>
+        <div class="flex items-center space-x-8">
+          <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+          <a href="#" class="text-gray-700 hover:text-gray-900">About</a>
+          <a href="#" class="text-gray-700 hover:text-gray-900">Job listings</a>
+          <a href="#" class="text-gray-700 hover:text-gray-900">Favorite jobs</a>
+          <a href="#" class="text-gray-700 hover:text-gray-900">Profile</a>
+          <a href="#" class="text-gray-700 hover:text-gray-900">Login/Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-grow flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-4xl">
+
+      <!-- Tabs -->
+      <div class="flex justify-center mb-8">
+        <button id="loginTab" class="px-8 py-3 text-lg font-semibold border-b-4 border-black text-gray-900">
+          Login
+        </button>
+        <button id="signupTab" class="px-8 py-3 text-lg font-semibold border-b-4 border-transparent text-gray-500 hover:text-gray-900">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="loginForm" class="max-w-sm mx-auto">
+        <div class="bg-white border border-gray-300 rounded-lg p-8">
+          <form>
+            <!-- Email -->
+            <div class="mb-6">
+              <label for="login-email" class="block text-sm font-medium text-gray-900 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="Enter your email"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+              >
+            </div>
+
+            <!-- Password -->
+            <div class="mb-6">
+              <label for="login-password" class="block text-sm font-medium text-gray-900 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Enter your password"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+              >
+            </div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition font-medium mb-4"
+            >
+              Login
+            </button>
+
+            <p class="text-center text-sm text-gray-600">
+              Don’t have a profile?
+              <a href="#" id="switchToSignup" class="text-gray-900 underline hover:text-gray-700">Sign Up</a>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div id="signupForm" class="max-w-sm mx-auto hidden">
+        <div class="bg-white border border-gray-300 rounded-lg p-8">
+          <form>
+            <!-- Name -->
+            <div class="mb-6">
+              <label for="signup-name" class="block text-sm font-medium text-gray-900 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                id="signup-name"
+                placeholder="Enter your name"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+              >
+            </div>
+
+            <!-- Email -->
+            <div class="mb-6">
+              <label for="signup-email" class="block text-sm font-medium text-gray-900 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="signup-email"
+                placeholder="Enter your email"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+              >
+            </div>
+
+            <!-- Password -->
+            <div class="mb-6">
+              <label for="signup-password" class="block text-sm font-medium text-gray-900 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="signup-password"
+                placeholder="Enter your password"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+              >
+            </div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition font-medium mb-4"
+            >
+              Sign Up
+            </button>
+
+            <p class="text-center text-sm text-gray-600">
+              Already have a profile?
+              <a href="#" id="switchToLogin" class="text-gray-900 underline hover:text-gray-700">Login</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <p class="text-xl text-gray-700">Footer</p>
+    </div>
+  </footer>
+
+  <!-- Success Popup -->
+  <div id="successPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
+    <div class="bg-white border border-gray-300 rounded-lg p-8 max-w-md w-full mx-4 text-center">
+      <div class="mb-4 flex justify-center">
+        <div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
+          <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+      </div>
+      <p class="text-gray-900 mb-6">You successfully created a profile and logged in</p>
+      <button id="popupContinue" type="button" class="px-8 py-3 bg-black text-white rounded hover:bg-gray-800 transition font-medium">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Tab logic
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+    const loginFormContainer = document.getElementById('loginForm');
+    const signupFormContainer = document.getElementById('signupForm');
+    const switchToSignup = document.getElementById('switchToSignup');
+    const switchToLogin = document.getElementById('switchToLogin');
+
+    function showLogin() {
+      loginFormContainer.classList.remove('hidden');
+      signupFormContainer.classList.add('hidden');
+      loginTab.classList.add('border-black', 'text-gray-900');
+      signupTab.classList.remove('border-black', 'text-gray-900');
+    }
+
+    function showSignup() {
+      signupFormContainer.classList.remove('hidden');
+      loginFormContainer.classList.add('hidden');
+      signupTab.classList.add('border-black', 'text-gray-900');
+      loginTab.classList.remove('border-black', 'text-gray-900');
+    }
+
+    loginTab.addEventListener('click', showLogin);
+    signupTab.addEventListener('click', showSignup);
+    switchToSignup.addEventListener('click', e => { e.preventDefault(); showSignup(); });
+    switchToLogin.addEventListener('click', e => { e.preventDefault(); showLogin(); });
+
+    // Popup logic
+    const popup = document.getElementById('successPopup');
+    const popupContinue = document.getElementById('popupContinue');
+    const signupForm = document.querySelector('#signupForm form');
+    const loginForm = document.querySelector('#loginForm form');
+
+    const showSuccessPopup = () => popup.classList.remove('hidden');
+    const closePopup = () => popup.classList.add('hidden');
+
+    popupContinue.addEventListener('click', closePopup);
+
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      showSuccessPopup();
+    });
+
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      showSuccessPopup();
+    });
+  </script>
+
+</body>
+</html>
