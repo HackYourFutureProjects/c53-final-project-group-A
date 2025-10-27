@@ -1,433 +1,634 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Job Listings - JobFinder</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
     <!-- Header/Navigation -->
     <header class="bg-gray-200 shadow-sm">
-        <nav class="max-w-7xl mx-auto px-6 py-5">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="text-xl font-bold text-gray-800">LOGO</div>
-                    <div class="text-xl text-gray-700">JobFinder</div>
-                </div>
-                <div class="flex items-center space-x-8">
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">About</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Job listings</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Favorites jobs</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Profile</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Login/Logout</a>
-                </div>
-            </div>
-        </nav>
+      <nav class="max-w-7xl mx-auto px-6 py-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="text-xl font-bold text-gray-800">LOGO</div>
+            <div class="text-xl text-gray-700">JobFinder</div>
+          </div>
+          <div class="flex items-center space-x-8">
+            <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900">About</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Job listings</a
+            >
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Favorites jobs</a
+            >
+            <a href="#" class="text-gray-700 hover:text-gray-900">Profile</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Login/Logout</a
+            >
+          </div>
+        </div>
+      </nav>
     </header>
 
     <!-- Filters Bar -->
     <div class="bg-white border-b border-gray-200 py-4">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <!-- Experience Level Dropdown -->
-                    <div class="relative">
-                        <button id="expBtn" class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2">
-                            <span>Experience level</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div id="expDropdown" class="hidden absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50">
-                            <div class="p-4 space-y-2">
-                                <div class="flex items-center justify-between pb-2 border-b">
-                                    <span class="font-medium">Experience level</span>
-                                    <button class="text-gray-400 hover:text-gray-600">×</button>
-                                </div>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Internship</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Entry level</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Associate</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Mid-Senior level</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Director</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Executive</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Job Type Dropdown -->
-                    <div class="relative">
-                        <button id="jobTypeBtn" class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2">
-                            <span>Job type</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div id="jobTypeDropdown" class="hidden absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50">
-                            <div class="p-4 space-y-2">
-                                <div class="flex items-center justify-between pb-2 border-b">
-                                    <span class="font-medium">Job type</span>
-                                    <button class="text-gray-400 hover:text-gray-600">×</button>
-                                </div>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Full time</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Contract</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Part-time</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Volunteer</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Work Mode Dropdown -->
-                    <div class="relative">
-                        <button id="workModeBtn" class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2">
-                            <span>Work mode</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div id="workModeDropdown" class="hidden absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50">
-                            <div class="p-4 space-y-2">
-                                <div class="flex items-center justify-between pb-2 border-b">
-                                    <span class="font-medium">Work mode</span>
-                                    <button class="text-gray-400 hover:text-gray-600">×</button>
-                                </div>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">On-site</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Hybrid</span>
-                                </label>
-                                <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                    <input type="checkbox" class="form-checkbox">
-                                    <span class="text-gray-700">Remote</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sort By Dropdown -->
-                    <div class="relative">
-                        <button id="sortBtn" class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2">
-                            <span>Sort by</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div id="sortDropdown" class="hidden absolute top-full mt-2 w-80 bg-white border border-gray-200 rounded shadow-lg z-50">
-                            <div class="p-4">
-                                <div class="flex items-center justify-between pb-2 border-b mb-3">
-                                    <span class="font-medium">Sort by</span>
-                                    <button class="text-gray-400 hover:text-gray-600">×</button>
-                                </div>
-                                <p class="text-xs text-gray-500 mb-2">Drag properties to the sort area below</p>
-                                <div class="mb-4">
-                                    <p class="text-sm font-medium mb-2">Selected sort order:</p>
-                                    <div id="selectedSort" class="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50">
-                                        <p class="text-xs text-gray-400 text-center">Drop here</p>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <p class="text-sm font-medium mb-2">Available properties:</p>
-                                    <div id="availableProps" class="space-y-2">
-                                        <div draggable="true" class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50">
-                                            Skill match
-                                        </div>
-                                        <div draggable="true" class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50">
-                                            Newest first
-                                        </div>
-                                        <div draggable="true" class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50">
-                                            Fewest applicants
-                                        </div>
-                                        <div draggable="true" class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50">
-                                            Nearest first
-                                        </div>
-                                        <div draggable="true" class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50">
-                                            Fewest transfers
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between pt-3 border-t">
-                                    <button id="clearSort" class="text-sm text-gray-600 hover:text-gray-900">Clear</button>
-                                    <button class="px-4 py-2 bg-black text-white rounded text-sm hover:bg-gray-800">Apply</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <!-- Experience Level Dropdown -->
+            <div class="relative">
+              <button
+                id="expBtn"
+                class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2"
+              >
+                <span>Experience level</span>
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                id="expDropdown"
+                class="hidden absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50"
+              >
+                <div class="p-4 space-y-2">
+                  <div class="flex items-center justify-between pb-2 border-b">
+                    <span class="font-medium">Experience level</span>
+                    <button class="text-gray-400 hover:text-gray-600">×</button>
+                  </div>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Internship</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Entry level</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Associate</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Mid-Senior level</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Director</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Executive</span>
+                  </label>
                 </div>
-
-                <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    Clear Filters
-                </button>
+              </div>
             </div>
+
+            <!-- Job Type Dropdown -->
+            <div class="relative">
+              <button
+                id="jobTypeBtn"
+                class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2"
+              >
+                <span>Job type</span>
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                id="jobTypeDropdown"
+                class="hidden absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50"
+              >
+                <div class="p-4 space-y-2">
+                  <div class="flex items-center justify-between pb-2 border-b">
+                    <span class="font-medium">Job type</span>
+                    <button class="text-gray-400 hover:text-gray-600">×</button>
+                  </div>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Full time</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Contract</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Part-time</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Volunteer</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Work Mode Dropdown -->
+            <div class="relative">
+              <button
+                id="workModeBtn"
+                class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2"
+              >
+                <span>Work mode</span>
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                id="workModeDropdown"
+                class="hidden absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50"
+              >
+                <div class="p-4 space-y-2">
+                  <div class="flex items-center justify-between pb-2 border-b">
+                    <span class="font-medium">Work mode</span>
+                    <button class="text-gray-400 hover:text-gray-600">×</button>
+                  </div>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">On-site</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Hybrid</span>
+                  </label>
+                  <label
+                    class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-gray-700">Remote</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sort By Dropdown -->
+            <div class="relative">
+              <button
+                id="sortBtn"
+                class="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2"
+              >
+                <span>Sort by</span>
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                id="sortDropdown"
+                class="hidden absolute top-full mt-2 w-80 bg-white border border-gray-200 rounded shadow-lg z-50"
+              >
+                <div class="p-4">
+                  <div
+                    class="flex items-center justify-between pb-2 border-b mb-3"
+                  >
+                    <span class="font-medium">Sort by</span>
+                    <button class="text-gray-400 hover:text-gray-600">×</button>
+                  </div>
+                  <p class="text-xs text-gray-500 mb-2">
+                    Drag properties to the sort area below
+                  </p>
+                  <div class="mb-4">
+                    <p class="text-sm font-medium mb-2">Selected sort order:</p>
+                    <div
+                      id="selectedSort"
+                      class="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50"
+                    >
+                      <p class="text-xs text-gray-400 text-center">Drop here</p>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <p class="text-sm font-medium mb-2">
+                      Available properties:
+                    </p>
+                    <div id="availableProps" class="space-y-2">
+                      <div
+                        draggable="true"
+                        class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50"
+                      >
+                        Skill match
+                      </div>
+                      <div
+                        draggable="true"
+                        class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50"
+                      >
+                        Newest first
+                      </div>
+                      <div
+                        draggable="true"
+                        class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50"
+                      >
+                        Fewest applicants
+                      </div>
+                      <div
+                        draggable="true"
+                        class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50"
+                      >
+                        Nearest first
+                      </div>
+                      <div
+                        draggable="true"
+                        class="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50"
+                      >
+                        Fewest transfers
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between pt-3 border-t">
+                    <button
+                      id="clearSort"
+                      class="text-sm text-gray-600 hover:text-gray-900"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      class="px-4 py-2 bg-black text-white rounded text-sm hover:bg-gray-800"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Clear Filters
+          </button>
         </div>
+      </div>
     </div>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
-        <!-- Search Results Header -->
-        <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">Search results</h1>
-            <p class="text-gray-400">Showing X results</p>
+      <!-- Search Results Header -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Search results</h1>
+        <p class="text-gray-400">Showing X results</p>
+      </div>
+
+      <!-- Job Listings -->
+      <div class="space-y-4">
+        <!-- Job Card 1 -->
+        <div class="bg-white border border-gray-200 rounded p-6">
+          <div class="flex">
+            <div
+              class="w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0"
+            >
+              <span class="text-gray-500">Logo</span>
+            </div>
+            <div class="flex-grow">
+              <div class="flex justify-between items-start mb-2">
+                <h2 class="text-xl font-semibold text-gray-900">Job Title</h2>
+                <button class="text-2xl text-gray-400 hover:text-red-500">
+                  ♡
+                </button>
+              </div>
+              <div class="flex space-x-2 mb-3">
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 1</span
+                >
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 2</span
+                >
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 3</span
+                >
+              </div>
+              <p class="text-gray-700 mb-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur.
+              </p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <span class="text-sm text-gray-600">Skills Match (1/15)</span>
+                  <span class="px-3 py-1 bg-gray-100 rounded text-sm">Tag</span>
+                </div>
+                <button
+                  class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
+                >
+                  More & Apply
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Job Listings -->
-        <div class="space-y-4">
-            <!-- Job Card 1 -->
-            <div class="bg-white border border-gray-200 rounded p-6">
-                <div class="flex">
-                    <div class="w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0">
-                        <span class="text-gray-500">Logo</span>
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h2 class="text-xl font-semibold text-gray-900">Job Title</h2>
-                            <button class="text-2xl text-gray-400 hover:text-red-500">♡</button>
-                        </div>
-                        <div class="flex space-x-2 mb-3">
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 1</span>
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 2</span>
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 3</span>
-                        </div>
-                        <p class="text-gray-700 mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-sm text-gray-600">Skills Match (1/15)</span>
-                                <span class="px-3 py-1 bg-gray-100 rounded text-sm">Tag</span>
-                            </div>
-                            <button class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800">
-                                More & Apply
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <!-- Job Card 2 -->
+        <div class="bg-white border border-gray-200 rounded p-6">
+          <div class="flex">
+            <div
+              class="w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0"
+            >
+              <span class="text-gray-500">Logo</span>
             </div>
-
-            <!-- Job Card 2 -->
-            <div class="bg-white border border-gray-200 rounded p-6">
-                <div class="flex">
-                    <div class="w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0">
-                        <span class="text-gray-500">Logo</span>
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h2 class="text-xl font-semibold text-gray-900">Job Title</h2>
-                            <button class="text-2xl hover:text-red-500">♥</button>
-                        </div>
-                        <div class="flex space-x-2 mb-3">
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 1</span>
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 2</span>
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 3</span>
-                        </div>
-                        <p class="text-gray-700 mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-sm text-gray-600">Skills Match (1/15)</span>
-                                <span class="px-3 py-1 bg-gray-100 rounded text-sm">Tag</span>
-                            </div>
-                            <button class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800">
-                                More & Apply
-                            </button>
-                        </div>
-                    </div>
+            <div class="flex-grow">
+              <div class="flex justify-between items-start mb-2">
+                <h2 class="text-xl font-semibold text-gray-900">Job Title</h2>
+                <button class="text-2xl hover:text-red-500">♥</button>
+              </div>
+              <div class="flex space-x-2 mb-3">
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 1</span
+                >
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 2</span
+                >
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 3</span
+                >
+              </div>
+              <p class="text-gray-700 mb-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur.
+              </p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <span class="text-sm text-gray-600">Skills Match (1/15)</span>
+                  <span class="px-3 py-1 bg-gray-100 rounded text-sm">Tag</span>
                 </div>
+                <button
+                  class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
+                >
+                  More & Apply
+                </button>
+              </div>
             </div>
-
-            <!-- Job Card 3 -->
-            <div class="bg-white border border-gray-200 rounded p-6">
-                <div class="flex">
-                    <div class="w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0">
-                        <span class="text-gray-500">Logo</span>
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h2 class="text-xl font-semibold text-gray-900">Job Title</h2>
-                            <button class="text-2xl hover:text-red-500">♥</button>
-                        </div>
-                        <div class="flex space-x-2 mb-3">
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 1</span>
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 2</span>
-                            <span class="px-3 py-1 border border-gray-300 rounded text-sm">Tag 3</span>
-                        </div>
-                        <p class="text-gray-700 mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-sm text-gray-600">Skills Match (1/15)</span>
-                                <span class="px-3 py-1 bg-gray-100 rounded text-sm">Tag</span>
-                            </div>
-                            <button class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800">
-                                More & Apply
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <!-- Pagination -->
-        <div class="flex justify-center items-center space-x-2 mt-8">
-            <button class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100">1</button>
-            <button class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100">2</button>
-            <button class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100">3</button>
-            <span class="px-2">...</span>
-            <button class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100">→</button>
+        <!-- Job Card 3 -->
+        <div class="bg-white border border-gray-200 rounded p-6">
+          <div class="flex">
+            <div
+              class="w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0"
+            >
+              <span class="text-gray-500">Logo</span>
+            </div>
+            <div class="flex-grow">
+              <div class="flex justify-between items-start mb-2">
+                <h2 class="text-xl font-semibold text-gray-900">Job Title</h2>
+                <button class="text-2xl hover:text-red-500">♥</button>
+              </div>
+              <div class="flex space-x-2 mb-3">
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 1</span
+                >
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 2</span
+                >
+                <span class="px-3 py-1 border border-gray-300 rounded text-sm"
+                  >Tag 3</span
+                >
+              </div>
+              <p class="text-gray-700 mb-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur.
+              </p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <span class="text-sm text-gray-600">Skills Match (1/15)</span>
+                  <span class="px-3 py-1 bg-gray-100 rounded text-sm">Tag</span>
+                </div>
+                <button
+                  class="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
+                >
+                  More & Apply
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center items-center space-x-2 mt-8">
+        <button
+          class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100"
+        >
+          1
+        </button>
+        <button
+          class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100"
+        >
+          2
+        </button>
+        <button
+          class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100"
+        >
+          3
+        </button>
+        <span class="px-2">...</span>
+        <button
+          class="w-10 h-10 border border-gray-300 rounded hover:bg-gray-100"
+        >
+          →
+        </button>
+      </div>
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-200 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-xl text-gray-700">Footer</p>
-        </div>
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <p class="text-xl text-gray-700">Footer</p>
+      </div>
     </footer>
 
     <script>
-        // Dropdown toggles
-        const dropdowns = [
-            { btn: 'expBtn', dropdown: 'expDropdown' },
-            { btn: 'jobTypeBtn', dropdown: 'jobTypeDropdown' },
-            { btn: 'workModeBtn', dropdown: 'workModeDropdown' },
-            { btn: 'sortBtn', dropdown: 'sortDropdown' }
-        ];
+      // Dropdown toggles
+      const dropdowns = [
+        { btn: "expBtn", dropdown: "expDropdown" },
+        { btn: "jobTypeBtn", dropdown: "jobTypeDropdown" },
+        { btn: "workModeBtn", dropdown: "workModeDropdown" },
+        { btn: "sortBtn", dropdown: "sortDropdown" },
+      ];
 
-        dropdowns.forEach(({ btn, dropdown }) => {
-            document.getElementById(btn).addEventListener('click', (e) => {
-                e.stopPropagation();
-                const dropdownEl = document.getElementById(dropdown);
-                dropdownEl.classList.toggle('hidden');
-                
-                // Close other dropdowns
-                dropdowns.forEach(({ dropdown: other }) => {
-                    if (other !== dropdown) {
-                        document.getElementById(other).classList.add('hidden');
-                    }
-                });
-            });
+      dropdowns.forEach(({ btn, dropdown }) => {
+        document.getElementById(btn).addEventListener("click", (e) => {
+          e.stopPropagation();
+          const dropdownEl = document.getElementById(dropdown);
+          dropdownEl.classList.toggle("hidden");
+
+          // Close other dropdowns
+          dropdowns.forEach(({ dropdown: other }) => {
+            if (other !== dropdown) {
+              document.getElementById(other).classList.add("hidden");
+            }
+          });
         });
+      });
 
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', () => {
-            dropdowns.forEach(({ dropdown }) => {
-                document.getElementById(dropdown).classList.add('hidden');
-            });
-        });
-
-        // Prevent dropdown from closing when clicking inside
+      // Close dropdowns when clicking outside
+      document.addEventListener("click", () => {
         dropdowns.forEach(({ dropdown }) => {
-            document.getElementById(dropdown).addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
+          document.getElementById(dropdown).classList.add("hidden");
+        });
+      });
+
+      // Prevent dropdown from closing when clicking inside
+      dropdowns.forEach(({ dropdown }) => {
+        document.getElementById(dropdown).addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      });
+
+      // Drag and drop functionality for sort
+      const selectedSort = document.getElementById("selectedSort");
+      const availableProps = document.getElementById("availableProps");
+      let draggedElement = null;
+
+      document.querySelectorAll(".sort-item").forEach((item) => {
+        item.addEventListener("dragstart", (e) => {
+          draggedElement = e.target;
+          e.target.style.opacity = "0.5";
         });
 
-        // Drag and drop functionality for sort
-        const selectedSort = document.getElementById('selectedSort');
-        const availableProps = document.getElementById('availableProps');
-        let draggedElement = null;
+        item.addEventListener("dragend", (e) => {
+          e.target.style.opacity = "1";
+        });
+      });
 
-        document.querySelectorAll('.sort-item').forEach(item => {
-            item.addEventListener('dragstart', (e) => {
-                draggedElement = e.target;
-                e.target.style.opacity = '0.5';
-            });
-
-            item.addEventListener('dragend', (e) => {
-                e.target.style.opacity = '1';
-            });
+      [selectedSort, availableProps].forEach((container) => {
+        container.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          container.classList.add("bg-blue-50");
         });
 
-        [selectedSort, availableProps].forEach(container => {
-            container.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                container.classList.add('bg-blue-50');
-            });
+        container.addEventListener("dragleave", () => {
+          container.classList.remove("bg-blue-50");
+        });
 
-            container.addEventListener('dragleave', () => {
-                container.classList.remove('bg-blue-50');
-            });
+        container.addEventListener("drop", (e) => {
+          e.preventDefault();
+          container.classList.remove("bg-blue-50");
 
-            container.addEventListener('drop', (e) => {
-                e.preventDefault();
-                container.classList.remove('bg-blue-50');
-                
-                if (draggedElement) {
-                    if (container === selectedSort) {
-                        // Remove placeholder text
-                        const placeholder = selectedSort.querySelector('p');
-                        if (placeholder) placeholder.remove();
-                        
-                        // Add tag style to selected items
-                        const newItem = draggedElement.cloneNode(true);
-                        newItem.classList.add('inline-flex', 'items-center', 'space-x-2', 'm-1');
-                        newItem.innerHTML = `
+          if (draggedElement) {
+            if (container === selectedSort) {
+              // Remove placeholder text
+              const placeholder = selectedSort.querySelector("p");
+              if (placeholder) placeholder.remove();
+
+              // Add tag style to selected items
+              const newItem = draggedElement.cloneNode(true);
+              newItem.classList.add(
+                "inline-flex",
+                "items-center",
+                "space-x-2",
+                "m-1",
+              );
+              newItem.innerHTML = `
                             <span>${draggedElement.textContent.trim()}</span>
                             <button class="text-gray-500 hover:text-gray-700" onclick="this.parentElement.remove()">×</button>
                         `;
-                        selectedSort.appendChild(newItem);
-                        draggedElement.remove();
-                    } else {
-                        // Return to available props
-                        availableProps.appendChild(draggedElement);
-                    }
-                }
-            });
+              selectedSort.appendChild(newItem);
+              draggedElement.remove();
+            } else {
+              // Return to available props
+              availableProps.appendChild(draggedElement);
+            }
+          }
+        });
+      });
+
+      // Clear sort
+      document.getElementById("clearSort").addEventListener("click", () => {
+        const selectedItems = selectedSort.querySelectorAll(".sort-item");
+        selectedItems.forEach((item) => {
+          const text = item.querySelector("span").textContent;
+          const newItem = document.createElement("div");
+          newItem.className =
+            "sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50";
+          newItem.draggable = true;
+          newItem.textContent = text;
+          availableProps.appendChild(newItem);
+          item.remove();
         });
 
-        // Clear sort
-        document.getElementById('clearSort').addEventListener('click', () => {
-            const selectedItems = selectedSort.querySelectorAll('.sort-item');
-            selectedItems.forEach(item => {
-                const text = item.querySelector('span').textContent;
-                const newItem = document.createElement('div');
-                newItem.className = 'sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50';
-                newItem.draggable = true;
-                newItem.textContent = text;
-                availableProps.appendChild(newItem);
-                item.remove();
-            });
-            
-            // Add placeholder back
-            if (selectedSort.children.length === 0) {
-                selectedSort.innerHTML = '<p class="text-xs text-gray-400 text-center">Drop here</p>';
-            }
-        });
+        // Add placeholder back
+        if (selectedSort.children.length === 0) {
+          selectedSort.innerHTML =
+            '<p class="text-xs text-gray-400 text-center">Drop here</p>';
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
