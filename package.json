@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "## Notable libraries",
   "main": "index.js",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "start": "npm run start:server",
     "start:server": "cd server && npm run start && cd ..",
