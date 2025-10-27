@@ -8,7 +8,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "setup": "npm install",
+    "setup": "npm ci",
     "start": "node ./src/index",
     "dev": "nodemon ./src/index",
     "code-style-check": "npm run prettier && npm run lint",
