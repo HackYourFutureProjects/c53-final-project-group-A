@@ -1,4 +1,4 @@
-export function validateJobInput({ text, existingTitles = [] }) {
+export function validateJobInput({ text }) {
   const trimmedText = text.trim();
 
   //  Check if the input is empty
@@ -24,15 +24,6 @@ export function validateJobInput({ text, existingTitles = [] }) {
     return {
       type: "warning",
       message: "Job title cannot consist of numbers only.",
-    };
-  }
-
-  //  Check for duplicates (case-insensitive)
-  const lowerCaseExisting = existingTitles.map((title) => title.toLowerCase());
-  if (lowerCaseExisting.includes(trimmedText.toLowerCase())) {
-    return {
-      type: "warning",
-      message: `"${trimmedText}" is already in your list of job titles.`,
     };
   }
 
