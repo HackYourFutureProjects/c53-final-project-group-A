@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobCompass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header/Navigation -->
+    <header class="bg-gray-200 shadow-sm">
+      <nav class="max-w-7xl mx-auto px-6 py-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="text-xl font-bold text-gray-800">LOGO</div>
+            <div class="text-xl text-gray-700">JobCompass</div>
+          </div>
+          <div class="flex items-center space-x-8">
+            <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900">About</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Job listings</a
+            >
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Favorite jobs</a
+            >
+            <a href="#" class="text-gray-700 hover:text-gray-900">Profile</a>
+            <a href="#" class="text-gray-700 hover:text-gray-900"
+              >Login/Logout</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-grow flex items-center justify-center px-6 py-12">
+      <div class="max-w-3xl w-full text-center">
+        <h1 class="text-4xl font-bold text-gray-900 mb-6">
+          Welcome to JobCompass
+        </h1>
+        <p class="text-lg text-gray-700 mb-4">
+          Master the navigation in the sea of irrelevant jobs
+        </p>
+
+        <!-- Search -->
+        <div class="max-w-2xl mx-auto text-left">
+          <label
+            for="jobTitleInput"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Enter job title
+          </label>
+          <div class="flex gap-3 mb-3">
+            <input
+              id="jobTitleInput"
+              type="text"
+              placeholder="e.g. Web Developer"
+              class="flex-grow px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+            />
+            <button
+              id="searchBtn"
+              class="bg-gray-800 text-white px-8 py-3 rounded-lg hover:bg-gray-900 transition"
+            >
+              Search
+            </button>
+          </div>
+
+          <p id="errorMessage" class="text-sm text-red-500 hidden">
+            Please enter a job title.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <p class="text-xl text-gray-700">Footer</p>
+      </div>
+    </footer>
+
+    <script>
+      const jobTitleInput = document.getElementById("jobTitleInput");
+      const searchBtn = document.getElementById("searchBtn");
+      const errorMessage = document.getElementById("errorMessage");
+
+      function doSearch() {
+        const title = jobTitleInput.value.trim();
+        if (!title) {
+          errorMessage.classList.remove("hidden");
+          jobTitleInput.focus();
+          return;
+        }
+        errorMessage.classList.add("hidden");
+        console.log("Searching for:", title);
+        alert(`Searching for: ${title}`);
+      }
+
+      searchBtn.addEventListener("click", doSearch);
+      jobTitleInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") doSearch();
+      });
+    </script>
+  </body>
+</html>
