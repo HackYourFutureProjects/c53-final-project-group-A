@@ -9,12 +9,14 @@ export function validateJobInput({ text }) {
     };
   }
 
-  //  Check for special characters
-  const hasSpecialChars = /[^a-zA-Z0-9\s]/.test(trimmedText);
-  if (hasSpecialChars) {
+  // Check for invalid special characters
+  // Allow: letters, numbers, spaces, and - / , ( ) . '
+  const hasInvalidChars = /[^a-zA-Z0-9\s\-\/,.()']/;
+  if (hasInvalidChars.test(trimmedText)) {
     return {
       type: "error",
-      message: "Special characters are not allowed in job titles.",
+      message:
+        "Invalid characters detected. Allowed characters are letters, numbers, spaces, and these symbols: - / , ( ) . '",
     };
   }
 
