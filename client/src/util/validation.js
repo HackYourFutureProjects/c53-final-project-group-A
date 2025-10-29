@@ -11,7 +11,7 @@ export function validateJobInput({ text }) {
 
   // Check for invalid special characters
   // Allow: letters, numbers, spaces, and - / , ( ) . '
-  const hasInvalidChars = /[^a-zA-Z0-9\s\-\/,.()']/;
+  const hasInvalidChars = /[^a-zA-Z0-9\s\-,().'/]/;
   if (hasInvalidChars.test(trimmedText)) {
     return {
       type: "error",
