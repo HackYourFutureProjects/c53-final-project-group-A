@@ -1,19 +1,805 @@
-*,
-::after,
-::before,
-::backdrop,
-::file-selector-button {
+/* Job Board Application - Complete CSS Stylesheet */
+/* This replaces all Tailwind classes used in the React component */
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-ol,
-ul,
-menu {
-  list-style: none;
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", sans-serif;
+  line-height: 1.5;
+  background: #f9fafb;
 }
 
-body {
-  padding: 20px;
+.hidden {
+  display: none !important;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+/* ============================================
+   LAYOUT UTILITIES
+   ============================================ */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.max-w-7xl {
+  max-width: 80rem;
+}
+.max-w-4xl {
+  max-width: 56rem;
+}
+.max-w-3xl {
+  max-width: 48rem;
+}
+.max-w-2xl {
+  max-width: 42rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.inline {
+  display: inline;
+}
+
+/* ============================================
+   SPACING
+   ============================================ */
+.p-1 {
+  padding: 0.25rem;
+}
+.p-2 {
+  padding: 0.5rem;
+}
+.p-3 {
+  padding: 0.75rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.p-5 {
+  padding: 1.25rem;
+}
+.p-6 {
+  padding: 1.5rem;
+}
+.p-8 {
+  padding: 2rem;
+}
+.p-12 {
+  padding: 3rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.m-1 {
+  margin: 0.25rem;
+}
+.m-2 {
+  margin: 0.5rem;
+}
+.m-3 {
+  margin: 0.75rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.mt-3 {
+  margin-top: 0.75rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-5 {
+  margin-left: 1.25rem;
+}
+.ml-8 {
+  margin-left: 2rem;
+}
+.ml-auto {
+  margin-left: auto;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+/* ============================================
+   SIZING
+   ============================================ */
+.w-3 {
+  width: 0.75rem;
+}
+.w-4 {
+  width: 1rem;
+}
+.w-5 {
+  width: 1.25rem;
+}
+.w-8 {
+  width: 2rem;
+}
+.w-10 {
+  width: 2.5rem;
+}
+.w-12 {
+  width: 3rem;
+}
+.w-14 {
+  width: 3.5rem;
+}
+.w-16 {
+  width: 4rem;
+}
+.w-20 {
+  width: 5rem;
+}
+.w-24 {
+  width: 6rem;
+}
+.w-28 {
+  width: 7rem;
+}
+.w-32 {
+  width: 8rem;
+}
+.w-36 {
+  width: 9rem;
+}
+.w-40 {
+  width: 10rem;
+}
+.w-48 {
+  width: 12rem;
+}
+.w-56 {
+  width: 14rem;
+}
+.w-64 {
+  width: 16rem;
+}
+.w-80 {
+  width: 20rem;
+}
+.w-full {
+  width: 100%;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+.h-3 {
+  height: 0.75rem;
+}
+.h-4 {
+  height: 1rem;
+}
+.h-5 {
+  height: 1.25rem;
+}
+.h-8 {
+  height: 2rem;
+}
+.h-10 {
+  height: 2.5rem;
+}
+.h-12 {
+  height: 3rem;
+}
+.h-16 {
+  height: 4rem;
+}
+.h-24 {
+  height: 6rem;
+}
+
+.min-h-\[60px\] {
+  min-height: 60px;
+}
+
+/* ============================================
+   COLORS & BACKGROUNDS
+   ============================================ */
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+.bg-gray-200 {
+  background-color: #e5e7eb;
+}
+.bg-gray-300 {
+  background-color: #d1d5db;
+}
+
+.bg-blue-50 {
+  background-color: #eff6ff;
+}
+.bg-blue-100 {
+  background-color: #dbeafe;
+}
+.bg-blue-200 {
+  background-color: #bfdbfe;
+}
+.bg-blue-300 {
+  background-color: #93c5fd;
+}
+.bg-blue-400 {
+  background-color: #60a5fa;
+}
+.bg-blue-500 {
+  background-color: #3b82f6;
+}
+.bg-blue-600 {
+  background-color: #2563eb;
+}
+
+.bg-green-100 {
+  background-color: #dcfce7;
+}
+.bg-purple-100 {
+  background-color: #f3e8ff;
+}
+.bg-yellow-100 {
+  background-color: #fef9c3;
+}
+.bg-red-100 {
+  background-color: #fee2e2;
+}
+
+.text-white {
+  color: #ffffff;
+}
+.text-gray-400 {
+  color: #9ca3af;
+}
+.text-gray-500 {
+  color: #6b7280;
+}
+.text-gray-600 {
+  color: #4b5563;
+}
+.text-gray-700 {
+  color: #374151;
+}
+.text-gray-800 {
+  color: #1f2937;
+}
+.text-gray-900 {
+  color: #111827;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+.text-blue-800 {
+  color: #1e40af;
+}
+.text-green-600 {
+  color: #16a34a;
+}
+.text-green-800 {
+  color: #166534;
+}
+.text-yellow-800 {
+  color: #854d0e;
+}
+.text-red-500 {
+  color: #ef4444;
+}
+.text-red-600 {
+  color: #dc2626;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+
+.leading-relaxed {
+  line-height: 1.75;
+}
+
+/* ============================================
+   BORDERS & ROUNDED
+   ============================================ */
+.border {
+  border-width: 1px;
+  border-style: solid;
+}
+.border-2 {
+  border-width: 2px;
+}
+
+.border-gray-200 {
+  border-color: #e5e7eb;
+}
+.border-gray-300 {
+  border-color: #d1d5db;
+}
+.border-gray-400 {
+  border-color: #9ca3af;
+}
+.border-blue-400 {
+  border-color: #60a5fa;
+}
+.border-blue-600 {
+  border-color: #2563eb;
+}
+.border-red-600 {
+  border-color: #dc2626;
+}
+.border-dashed {
+  border-style: dashed;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+.rounded-full {
+  border-radius: 9999px;
+}
+
+/* ============================================
+   SHADOWS & EFFECTS
+   ============================================ */
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.hover\:bg-gray-200:hover {
+  background-color: #e5e7eb;
+}
+
+.hover\:border-blue-400:hover {
+  border-color: #60a5fa;
+}
+
+.hover\:text-gray-900:hover {
+  color: #111827;
+}
+
+.transition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-move {
+  cursor: move;
+}
+
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+input[type="text"],
+input[type="search"],
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* ============================================
+   LISTS
+   ============================================ */
+.list-disc {
+  list-style-type: disc;
+}
+
+ul {
+  list-style-position: inside;
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .flex {
+    flex-direction: column;
+  }
+
+  .w-64,
+  .w-80 {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   CUSTOM COMPONENT STYLES
+   ============================================ */
+.job-card {
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ============================================
+   ICON ALIGNMENT
+   ============================================ */
+.icon-inline {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+}
+
+/* ============================================
+   SMALL HELPERS USED IN PAGES
+   ============================================ */
+.text-justify {
+  text-align: justify;
+}
+
+.min-h-16 {
+  min-height: 4rem;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border-black {
+  border-color: #000;
+}
+
+.bg-black {
+  background-color: #000;
+}
+
+.hover\:bg-gray-800:hover {
+  background-color: #1f2937;
+}
+
+.hover\:bg-blue-600:hover {
+  background-color: #2563eb;
+}
+
+.hover\:text-red-500:hover {
+  color: #ef4444;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+/* ============================================
+   FINAL HELPERS
+   ============================================ */
+.cursor-move {
+  cursor: move;
+}
+
+.sort-item {
+  user-select: none;
+}
+
+.inline-flex.items-center {
+  align-items: center;
+}
+
+.text-xs.text-gray-400 {
+  color: #9ca3af;
+}
+
+.focus-ring:focus {
+  outline: 2px solid rgba(37, 99, 235, 0.6);
+  outline-offset: 2px;
 }
