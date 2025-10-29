@@ -1,0 +1,50 @@
+.alert {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  animation: fadeSlide 0.4s ease-out;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+  color: #155724;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  border: 1px solid #dc3545;
+  color: #721c24;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+}
+
+.alert-info {
+  background-color: #cce5ff;
+  border: 1px solid #007bff;
+  color: #004085;
+}
+
+.icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Fade and slide animation */
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
