@@ -1,3 +1,6 @@
+/* ============================================
+  RESET & BASE STYLES
+  ============================================ */
 *,
 ::after,
 ::before,
@@ -16,4 +19,215 @@ menu {
 
 body {
   padding: 20px;
+}
+
+/* Tailwind base/components/utilities (enable @apply usage below) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   Tailwind-based component classes (grouped)
+   These are semantic classnames that compose Tailwind utility
+   classes used across the HTML pages in `src/pages`.
+   Grouping helps readers and keeps HTML cleaner by replacing
+   long utility lists with meaningful names.
+   ========================= */
+
+/* -------------------------
+   Layout
+   - page and major containers
+   ------------------------- */
+.page-body {
+  @apply bg-gray-50 min-h-screen flex flex-col;
+}
+
+.site-header {
+  @apply bg-gray-200 shadow-sm;
+}
+
+.nav-container {
+  @apply max-w-7xl mx-auto px-6 py-5;
+}
+
+.main-container {
+  @apply flex-grow max-w-7xl mx-auto px-6 py-12 w-full;
+}
+
+.centered-main {
+  @apply flex-grow flex items-center justify-center px-6 py-12;
+}
+
+/* -------------------------
+   Navigation / Branding
+   ------------------------- */
+.nav-inner {
+  @apply flex items-center justify-between;
+}
+
+.brand {
+  @apply flex items-center space-x-3;
+}
+
+.brand-logo {
+  @apply text-xl font-bold text-gray-800;
+}
+
+.brand-title {
+  @apply text-xl text-gray-700;
+}
+
+.nav-links {
+  @apply flex items-center space-x-8;
+}
+
+.nav-link {
+  @apply text-gray-700 hover:text-gray-900;
+}
+
+/* -------------------------
+   Typography
+   ------------------------- */
+.page-title {
+  @apply text-3xl font-semibold text-center text-gray-900 mb-12;
+}
+
+.section-title {
+  @apply text-lg font-semibold text-gray-900 mb-4;
+}
+
+.muted-text {
+  @apply text-gray-700;
+}
+
+.muted-sm {
+  @apply text-sm text-gray-600;
+}
+
+.lead {
+  @apply text-lg text-gray-700 mb-4;
+}
+
+/* -------------------------
+   Cards & Panels
+   ------------------------- */
+.card {
+  @apply bg-white border border-gray-300 rounded-lg p-6;
+}
+
+.card-md {
+  @apply p-8;
+}
+
+.card-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+/* -------------------------
+   Buttons
+   ------------------------- */
+.btn {
+  @apply px-4 py-2 border border-gray-300 rounded;
+}
+
+.btn-ghost {
+  @apply hover:bg-gray-50;
+}
+
+.btn-primary {
+  @apply px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition font-medium;
+}
+
+.btn-wide {
+  @apply px-8 py-3 bg-black text-white rounded hover:bg-gray-800 transition font-medium;
+}
+
+/* -------------------------
+   Forms / Inputs
+   ------------------------- */
+.form-label {
+  @apply block text-sm font-medium text-gray-900 mb-2;
+}
+
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400;
+}
+
+.input-center {
+  @apply text-center;
+}
+
+.input-shadow {
+  @apply shadow-sm;
+}
+
+.checkbox-row {
+  @apply flex items-center space-x-2;
+}
+
+/* -------------------------
+   Tags / Pills / Small UI bits
+   ------------------------- */
+.tag {
+  @apply px-3 py-1 border border-gray-300 rounded text-sm;
+}
+
+.tag-muted {
+  @apply px-3 py-1 bg-gray-100 rounded text-sm;
+}
+
+.skill-pill {
+  @apply inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm;
+}
+
+/* -------------------------
+   Grid / Flex helpers
+   ------------------------- */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-between {
+  @apply flex items-center justify-between;
+}
+
+.row-gap-4 {
+  @apply gap-4;
+}
+
+.col-gap-6 {
+  @apply space-y-6;
+}
+
+/* -------------------------
+   Modals / Overlays / Dropdowns
+   ------------------------- */
+.overlay-backdrop {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+.dropdown-panel {
+  @apply absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-50;
+}
+
+.dropdown-panel-lg {
+  @apply absolute top-full mt-2 w-80 bg-white border border-gray-200 rounded shadow-lg z-50;
+}
+
+/* -------------------------
+   Small utility helpers (semantic wrappers)
+   ------------------------- */
+.visually-hidden {
+  @apply hidden;
+}
+
+.avatar-lg {
+  @apply w-20 h-20 bg-gray-300 rounded flex items-center justify-center flex-shrink-0;
+}
+
+.avatar-xl {
+  @apply w-24 h-24 bg-gray-200 flex items-center justify-center rounded mr-6 flex-shrink-0;
+}
+
+/* end of Tailwind-extracted groups */
 }
