@@ -46,10 +46,10 @@
   align-items: center;
 }
 
-.nav-link{
+.nav-link {
   text-decoration: none;
-    outline: none;
-    color: #333333;
+  outline: none;
+  color: #333333;
 }
 
 .user-trigger {

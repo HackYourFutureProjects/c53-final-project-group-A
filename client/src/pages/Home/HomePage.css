@@ -1,11 +1,10 @@
 /* --- Global Container --- */
 .homepage-container {
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
   text-align: center;
   font-family: "Inter", Arial, sans-serif;
   background: #f9f9f9;
@@ -46,6 +45,45 @@ h2 {
   margin-bottom: 20px;
   color: #222;
   text-align: center;
+}
+
+.guest-notice {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: #eff6ff;
+  border-radius: 3px;
+  border: 1px solid #bfdbfe;
+
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* gap: 0.25rem; */
+  width: 600px;
+
+  color: #374151;
+  text-align: left;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.info-icon {
+  display: inline-block;
+
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: text-top;
+}
+
+.login-link {
+  text-decoration: underline;
+  color: #0975cd;
+  font-weight: 500;
 }
 
 /* --- Responsive adjustments (Mobile/Tablet) --- */

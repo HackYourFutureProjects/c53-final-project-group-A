@@ -4,6 +4,7 @@ import logo from "./images/logo.svg";
 
 //icons
 import arrow from "./icons/arrow.svg";
+import infoIcon from "./icons/info-icon.svg";
 
 export const images = {
   defaultAvatar: defaultAvatar,
@@ -12,4 +13,5 @@ export const images = {
 
 export const icons = {
   arrow: arrow,
+  info: infoIcon,
 };
