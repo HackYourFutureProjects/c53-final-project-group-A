@@ -26,11 +26,9 @@ export default function SearchInput() {
     setAlert({ type: "info", message: `Searching for "${query}"...` });
     setLoading(true);
 
- 
-      // Simple filter by query
-      const filteredJobs =  NorthHolland.filter((job) =>
-        job.title.toLowerCase().includes(query.toLowerCase()),
-      );
+    const filteredJobs = NorthHolland.filter((job) =>
+      job.title.toLowerCase().includes(query.toLowerCase()),
+    );
 
     navigate("/user/jobs", { state: { jobs: filteredJobs } });
     setLoading(false);
