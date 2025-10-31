@@ -8,7 +8,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        {/* <Route path='/jobs' element={<JobListingPage/>}> */}
+        {/* TODO: Add <Route path='/jobs' element={<JobListingPage/>} /> when JobListingPage is implemented. */}
       </Route>
     </Routes>
   );

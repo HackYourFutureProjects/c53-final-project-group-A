@@ -1,8 +1,7 @@
 import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { images } from "../../assets";
-import { icons } from "../../assets";
+import { images, icons } from "../../assets";
 
 //dropdown menu
 function UserMenu() {

@@ -1,6 +1,5 @@
 import "./Footer.css";
 import { Link } from "react-router-dom";
-import { images } from "../../assets";
 
 export default function Footer() {
   const handleBackToTop = () => {
@@ -11,8 +10,7 @@ export default function Footer() {
       <div className="footer-inner content-container">
         <div className="logo">
           <Link to="/" className="logo-link">
-            <img src={images.logo} alt="logo" className="logo-image-footer" />
-            <span className="logo-text">Job Compass</span>
+            <span className="logo-text-footer">Job Compass</span>
           </Link>
         </div>
 
