@@ -1,22 +1,17 @@
+import Layout from "./components/Layout";
+import "./index.css";
 import { Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav";
-import Home from "./pages/Home/Home";
-import CreateUser from "./pages/User/CreateUser";
-import UserList from "./pages/User/UserList";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home/HomePage";
 
-const App = () => {
+function App() {
   return (
-    <>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/user" element={<UserList />} />
-        <Route path="/user/create" element={<CreateUser />} />
-      </Routes>
-      <HomePage />
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        {/* TODO: Add <Route path='/jobs' element={<JobListingPage/>} /> when JobListingPage is implemented. */}
+      </Route>
+    </Routes>
   );
-};
+}
 
 export default App;
