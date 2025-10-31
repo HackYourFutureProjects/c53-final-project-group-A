@@ -1,0 +1,78 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem; /* Using the largest margin (2rem) */
+}
+
+.pagination button {
+  /* Base style for all pagination buttons */
+  padding: 6px 12px; /* Adopted from the original small padding */
+  border: 1px solid #2563eb; /* Border color for all buttons */
+  background-color: white;
+  color: #2563eb;
+  border-radius: 0.25rem; /* Adopted from newer styles */
+  cursor: pointer;
+  transition: background-color 0.1s;
+  width: auto; /* Allow text-size buttons */
+  height: auto;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 5px;
+}
+
+.page-number-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0; /* Override button padding for fixed size */
+}
+
+.pagination button:hover:not(:disabled):not(.active) {
+  background-color: #f3f4f6;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.7; /* Added opacity for visual clarity */
+}
+
+.page-number-btn.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+  font-weight: bold;
+}
+
+/* --- Back Button --- */
+.back-btn {
+  /* Clear button style using a link/text appearance */
+  color: #3b82f6;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 5px 0;
+  display: block; /* Changed to block for separation */
+  margin-top: 1.5rem; /* Add separation from pagination */
+  font-size: 16px;
+  background: none; /* Ensure no button background */
+  border: none; /* Ensure no button border */
+  text-align: left; /* Aligns text left in the block */
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+  color: #2563eb;
+}
+
+.back-btn::before {
+  content: "← ";
+}
