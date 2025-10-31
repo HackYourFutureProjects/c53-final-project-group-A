@@ -14,12 +14,12 @@ dotenv.config({ path: envPath });
 
 const RAPID_API_KEY = process.env.X_RAPIDAPI_KEY;
 
-const jobTitle = "web%20developer";
+const jobTitle = "developer";
 const location = "Netherlands";
 const offset = 0;
 const limit = 10;
 
-const url = `https://linkedin-job-search-api.p.rapidapi.com/active-jb-7d?limit=${limit}&offset=${offset}&title_filter=%22${jobTitle}%22&location_filter=%22${location}%22&description_type=text`;
+const url = `https://linkedin-job-search-api.p.rapidapi.com/active-jb-7d?limit=${limit}&offset=${offset}&title_filter=${encodeURIComponent(jobTitle)}&location_filter=${encodeURIComponent(location)}&description_type=text`;
 const options = {
   method: "GET",
   headers: {
@@ -30,8 +30,9 @@ const options = {
 
 try {
   const response = await fetch(url, options);
-  const result = await response.text();
-  logInfo(result);
+  const result = await response.json();
+  logInfo(result.length, "LinkedIn jobs fetched successfully");
+  logInfo(JSON.stringify(result, null, 2));
 } catch (error) {
   logError("Error fetching LinkedIn jobs:", error);
 }
