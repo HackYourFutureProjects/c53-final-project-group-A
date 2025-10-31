@@ -1,8 +1,8 @@
 import { useState } from "react";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/validation";
-import NorthHolland from "../assets/NorthHolland.json";
 import { useNavigate } from "react-router-dom";
+import NorthHolland from "../assets/NorthHolland.json";
 import "./SearchInput.css";
 
 export default function SearchInput() {
@@ -26,12 +26,11 @@ export default function SearchInput() {
     setAlert({ type: "info", message: `Searching for "${query}"...` });
     setLoading(true);
 
-    setAlert({ type: "info", message: `Searching for "${query}"...` });
-    setLoading(true);
-
-    const filteredJobs = NorthHolland.filter((job) =>
-      job.title.toLowerCase().includes(query.toLowerCase()),
-    );
+ 
+      // Simple filter by query
+      const filteredJobs =  NorthHolland.filter((job) =>
+        job.title.toLowerCase().includes(query.toLowerCase()),
+      );
 
     navigate("/user/jobs", { state: { jobs: filteredJobs } });
     setLoading(false);
