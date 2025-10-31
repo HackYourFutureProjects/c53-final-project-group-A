@@ -1,23 +1,15 @@
 import { useState } from "react";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/validation";
+import NorthHolland from "../assets/NorthHolland.json";
+import { useNavigate } from "react-router-dom";
 import "./SearchInput.css";
 
 export default function SearchInput() {
   const [query, setQuery] = useState("");
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Mock data for demonstration
-  const mockJobs = [
-    {
-      title: "Backend Developer",
-      company: "Topicus",
-      location: "Utrecht, Netherlands",
-      url: "https://www.werkenbijtopicus.nl/vacature/143/backend-developer",
-    },
-  ];
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     if (!navigator.onLine) {
@@ -34,20 +26,15 @@ export default function SearchInput() {
     setAlert({ type: "info", message: `Searching for "${query}"...` });
     setLoading(true);
 
-    // Simulate API delay
-    setTimeout(() => {
-      // Simple filter by query
-      const filteredJobs = mockJobs.filter((job) =>
-        job.title.toLowerCase().includes(query.toLowerCase()),
-      );
+    setAlert({ type: "info", message: `Searching for "${query}"...` });
+    setLoading(true);
 
-      setJobs(filteredJobs);
-      setAlert({
-        type: "success",
-        message: `Found ${filteredJobs.length} jobs for "${query}"`,
-      });
-      setLoading(false);
-    }, 1000);
+    const filteredJobs = NorthHolland.filter((job) =>
+      job.title.toLowerCase().includes(query.toLowerCase()),
+    );
+
+    navigate("/user/jobs", { state: { jobs: filteredJobs } });
+    setLoading(false);
   };
 
   return (
@@ -71,18 +58,6 @@ export default function SearchInput() {
       </div>
 
       <AlertMessage type={alert.type} message={alert.message} />
-
-      {jobs.length > 0 && (
-        <ul className="jobs-list">
-          {jobs.map((job, idx) => (
-            <li key={idx} className="job-item">
-              <a href={job.url} target="_blank" rel="noopener noreferrer">
-                <strong>{job.title}</strong> at {job.company} ({job.location})
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
