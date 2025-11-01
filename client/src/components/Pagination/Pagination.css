@@ -76,3 +76,17 @@
 .back-btn::before {
   content: "← ";
 }
+
+.ellipsis {
+  display: inline-block;
+  padding: 0 4px;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  user-select: none;
+}
+
+.ellipsis:hover {
+  background-color: transparent;
+  cursor: default;
+}

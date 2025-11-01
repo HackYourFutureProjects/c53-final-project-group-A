@@ -30,7 +30,7 @@ export default function SearchInput() {
       job.title.toLowerCase().includes(query.toLowerCase()),
     );
 
-    navigate("/user/jobs", { state: { jobs: filteredJobs } });
+    navigate("/jobs", { state: { jobs: filteredJobs } });
     setLoading(false);
   };
 
