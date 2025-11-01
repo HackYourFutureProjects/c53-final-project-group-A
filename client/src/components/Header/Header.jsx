@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { images, icons } from "../../assets";
 
 //dropdown menu
-function UserMenu() {
+function UserMenu({ user }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -32,7 +32,7 @@ function UserMenu() {
           className="user-avatar"
         />
         <span className="divider"></span>
-        <span className="user-name">Guest</span>
+        <span className="user-name">{user.name}</span>
 
         <img
           src={icons.arrow}
@@ -58,7 +58,7 @@ function UserMenu() {
   );
 }
 
-export default function Header() {
+export default function Header({ user }) {
   return (
     <header className="app-header">
       <nav className="header-nav">
@@ -80,7 +80,7 @@ export default function Header() {
         </div>
 
         <div className="header-actions">
-          <UserMenu />
+          <UserMenu user={user} />
         </div>
       </nav>
     </header>

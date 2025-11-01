@@ -13,7 +13,6 @@ export default function HomePage() {
           steer you to the right job.
         </p>
       </div>
-      <h2>Search for Jobs</h2>
       <SearchInput />
 
       <div className="guest-notice">
