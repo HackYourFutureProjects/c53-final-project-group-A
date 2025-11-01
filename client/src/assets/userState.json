@@ -1,0 +1,38 @@
+{
+  "email": "guest@example.com",
+  "username": "Guest",
+  "avatar": "./images/default-avatar.png",
+  "JWT": "",
+  "address": {
+    "street": "Keizersgracht",
+    "houseNumber": 123,
+    "city": "Amsterdam",
+    "country": "Netherlands"
+  },
+  "skillSet": [
+    "Project management",
+    "Risk management",
+    "Communication",
+    "Leadership",
+    "Adaptability",
+    "Data analysis",
+    "Collaboration",
+    "Creativity",
+    "Emotional Intelligence",
+    "Teamwork",
+    "Critical thinking",
+    "Strategic thinking",
+    "Attention to detail",
+    "Decision making",
+    "Goal setting",
+    "Initiative",
+    "Active listening",
+    "Digital literacy",
+    "Technical literacy",
+    "Negotiation",
+    "Problem-solving",
+    "Conflict resolution",
+    "Customer Service",
+    "Public speaking"
+  ]
+}
