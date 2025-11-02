@@ -15,7 +15,9 @@ export default function Skills({ item }) {
       return re.test(textSpaced);
     });
   }
-  const skillsInDescription = getSkillsInDescription(item.descriptionText || "");
+  const skillsInDescription = getSkillsInDescription(
+    item.descriptionText || "",
+  );
 
   return (
     <div className="flex gap-2">
