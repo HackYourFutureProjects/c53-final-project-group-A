@@ -12,11 +12,6 @@ export default function SearchInput() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (!query.trim()) {
-      setAlert({ type: "error", message: "Please enter a job title." });
-      return;
-    }
-
     const validationError = validateJobInput({ text: searchTerm });
     if (validationError) {
       setAlert(validationError);
