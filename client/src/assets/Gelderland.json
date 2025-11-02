@@ -37,7 +37,9 @@
     "companyWebsite": "https://www.spilberg.com",
     "companySlogan": "Creating careers in IT Development and Testing ",
     "companyDescription": "Spilberg focuses on the IT Development & Testing market. We connect professionals who excel in coding and testing to organisations - from start-ups to multinationals - so that together they can drive the digital revolution with unprecedented passion and creativity.  \n\nOur unique approach allows us to make the best match, fast. And focus is key. We choose to do one thing and do it right: each Spilberg consultant is an expert in one specific IT Development or Testing specialism, and focuses on one region, and one of four possible contract forms.   \n\nOur specialisms: Mobile Development, .Net/C#, Front-end/Web development, Embedded and Hardware Development, Java/Scala/Kotlin Development, Lowcode Mendix/Outsystems, Testing, Python Development, Go, Product Owners, and Scrum Masters & Business Analysts  \n \nSpilberg is part of Vibe Group, a fast-growing IT staffing and consulting organisation with offices in the Netherlands, Belgium and Germany. Would you like to know more about Spilberg and the way we work? Or are you interested in working for Spilberg as an IT professional? Please contact us today.  ",
-    "companyEmployeesCount": 137
+    "companyEmployeesCount": 137,
+    "travelTime": 66,
+    "TransportTransferNum": 1
   },
   {
     "id": "4262254970",
@@ -72,7 +74,9 @@
     "companyWebsite": "http://www.nedap.com",
     "companySlogan": "Creating technological solutions that make professionals happier and more successful in life.",
     "companyDescription": "Nedap is a leader in Digital Twin Technology, bridging the physical and digital worlds in Healthcare, Livestock, Retail and Security. Through our Technology for Life philosophy, we create and scale sustainable, forward-thinking solutions that help people and organizations succeed in an ever-changing world.\n\nWe are a proud team of over 1,000 people working together to make a global impact. With offices worldwide we connect cutting-edge technology with real-world challenges to improve lives and businesses everywhere. For nearly a century, our passion for innovation has driven us to create meaningful, sustainable solutions that make people happier and more successful in their work.",
-    "companyEmployeesCount": 1285
+    "companyEmployeesCount": 1285,
+    "travelTime": 170,
+    "TransportTransferNum": 2
   },
   {
     "id": "4302344314",
@@ -110,7 +114,9 @@
     },
     "companyWebsite": "http://thaiunion.com",
     "companyDescription": "Our company – we are a global seafood leader with ambitious growth goals and a dedication to sustainability and innovation. Our portfolio of brands includes convenient consumer favorites that have brought nutritious and tasty seafood to tables around the world for over a century.\n\nOur vision - To become the world’s leading marine health and nutrition company\n\nOur people – we are a team of passionate, yet humble individuals, working together collaboratively and respectfully to run our business in a responsible and innovative manner.\n\nOur goal – we are committed to “Healthy Living, Healthy Oceans.” With a focus on health and well-being across our Group’s portfolio, we will strengthen the growth and profitability of our core businesses and expand into new, attractive areas. We will continue to lead the industry on sustainability while attracting and retaining talent.",
-    "companyEmployeesCount": 1968
+    "companyEmployeesCount": 1968,
+    "travelTime": 28,
+    "TransportTransferNum": 0
   },
   {
     "id": "4308245268",
@@ -144,7 +150,9 @@
     "companyWebsite": "https://praatmetdedokter.nl",
     "companySlogan": "Digitale anamnesetool voor de huisartspraktijk",
     "companyDescription": "PraatmetdeDokter BV ontwikkeld een geavanceerde chatbot voor de huisartsenpraktijk. Patiënten kunnen via deze chatbot op een privacyvriendelijke manier aangeven waarvoor ze graag contact zouden willen met de huisarts. De chatbot vraagt afhankelijk van de geuite klacht relevante vervolgvragen volgens de NHG standaarden. \nVoordelen:\n-Minder drukte aan de telefoon bij de huisartsenpraktijk\n-Beter overzicht van de te verwachten hulpvragen die dag\n-Betere spreekuurplanning\n-Betere / completere verslaglegging\n-Meer tijd voor de patiënt\n ",
-    "companyEmployeesCount": 6
+    "companyEmployeesCount": 6,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4274638636",
@@ -183,7 +191,9 @@
     },
     "companyWebsite": "https://astekgroup.fr/?lang=en",
     "companyDescription": "Since 1988, we have been at the heart of the world's foremost digital transformations, supporting our clients with the same high-value service and expertise everywhere they are.\n\nDay after day, we rely on our highly scalable business model and our experts' and engineers' deep technical expertise, driven by the same purpose: Succeed in a sustainable digital transformation, placing humans at the heart of our development.\n\nThe Group supports its customers across 5 global business lines, offering them cutting-edge expertise in 3 primary services: Technology, Operations, and Engineering.\n·      Strategy & Management Consulting\n·      Digital Experience \n·      Data & Artificial Intelligence\n·      Cloud & Softwares\n·      Cybersecurity",
-    "companyEmployeesCount": 5431
+    "companyEmployeesCount": 5431,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4311252653",
@@ -223,7 +233,9 @@
     "companyWebsite": "https://www.spilberg.com",
     "companySlogan": "Creating careers in IT Development and Testing ",
     "companyDescription": "Spilberg focuses on the IT Development & Testing market. We connect professionals who excel in coding and testing to organisations - from start-ups to multinationals - so that together they can drive the digital revolution with unprecedented passion and creativity.  \n\nOur unique approach allows us to make the best match, fast. And focus is key. We choose to do one thing and do it right: each Spilberg consultant is an expert in one specific IT Development or Testing specialism, and focuses on one region, and one of four possible contract forms.   \n\nOur specialisms: Mobile Development, .Net/C#, Front-end/Web development, Embedded and Hardware Development, Java/Scala/Kotlin Development, Lowcode Mendix/Outsystems, Testing, Python Development, Go, Product Owners, and Scrum Masters & Business Analysts  \n \nSpilberg is part of Vibe Group, a fast-growing IT staffing and consulting organisation with offices in the Netherlands, Belgium and Germany. Would you like to know more about Spilberg and the way we work? Or are you interested in working for Spilberg as an IT professional? Please contact us today.  ",
-    "companyEmployeesCount": 137
+    "companyEmployeesCount": 137,
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4307547901",
@@ -262,7 +274,9 @@
     },
     "companyWebsite": "https://astekgroup.fr/?lang=en",
     "companyDescription": "Since 1988, we have been at the heart of the world's foremost digital transformations, supporting our clients with the same high-value service and expertise everywhere they are.\n\nDay after day, we rely on our highly scalable business model and our experts' and engineers' deep technical expertise, driven by the same purpose: Succeed in a sustainable digital transformation, placing humans at the heart of our development.\n\nThe Group supports its customers across 5 global business lines, offering them cutting-edge expertise in 3 primary services: Technology, Operations, and Engineering.\n·      Strategy & Management Consulting\n·      Digital Experience \n·      Data & Artificial Intelligence\n·      Cloud & Softwares\n·      Cybersecurity",
-    "companyEmployeesCount": 5431
+    "companyEmployeesCount": 5431,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4302541509",
@@ -297,7 +311,9 @@
     },
     "companyWebsite": "http://www.saltagroup.com",
     "companyDescription": "Salta Group is een bundeling van meer dan 25 organisaties op het gebied van onderwijs en opleidingen. Of liever gezegd, op het gebied van leven lang ontwikkelen. Zij delen namelijk dezelfde missie; leven lang ontwikkelen voor iedereen mogelijk maken. Ongeacht leeftijd, levensfase, privésituatie of beroep. Samen vormen zij de grootste private opleidingsorganisatie van de Benelux, mét wereldwijde ambities. Jaarlijks vergroten meer dan 1 miljoen mensen hun kennis of vaardigheden via een van de opleiders binnen Salta Group. En profiteren meer dan 15.000 werkgevers van hun expertise en leerplatformen.",
-    "companyEmployeesCount": 6863
+    "companyEmployeesCount": 6863,
+    "travelTime": 71,
+    "TransportTransferNum": 1
   },
   {
     "id": "4310925964",
@@ -337,7 +353,9 @@
     "companyWebsite": "https://www.spilberg.com",
     "companySlogan": "Creating careers in IT Development and Testing ",
     "companyDescription": "Spilberg focuses on the IT Development & Testing market. We connect professionals who excel in coding and testing to organisations - from start-ups to multinationals - so that together they can drive the digital revolution with unprecedented passion and creativity.  \n\nOur unique approach allows us to make the best match, fast. And focus is key. We choose to do one thing and do it right: each Spilberg consultant is an expert in one specific IT Development or Testing specialism, and focuses on one region, and one of four possible contract forms.   \n\nOur specialisms: Mobile Development, .Net/C#, Front-end/Web development, Embedded and Hardware Development, Java/Scala/Kotlin Development, Lowcode Mendix/Outsystems, Testing, Python Development, Go, Product Owners, and Scrum Masters & Business Analysts  \n \nSpilberg is part of Vibe Group, a fast-growing IT staffing and consulting organisation with offices in the Netherlands, Belgium and Germany. Would you like to know more about Spilberg and the way we work? Or are you interested in working for Spilberg as an IT professional? Please contact us today.  ",
-    "companyEmployeesCount": 137
+    "companyEmployeesCount": 137,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306156655",
@@ -373,7 +391,9 @@
     "companyWebsite": "https://rakoo.com/",
     "companySlogan": "Organizations grow when people grow. That's what we believe in. ",
     "companyDescription": "We are Rakoo. Your online academy for learning and performance, driven by AI.\n\nEvery organization wants to achieve goals, every team wants to grow and every employee wants to get better at something. That's why we focus on growth, both personal and professional. Together we set goals and realize them. We give you insight into the return on investment of online learning and do this based on smart technology. \n\nWe make learning and knowledge sharing accessible, interactive and effective. This is how we help organizations achieve goals. We create a smart online academy in which we connect people and make learning accessible. We do this through an extensive range of learning forms, a simple tool for developing learning activities, learning on-the-go, smart algorithms and real-time insight into the growth of your team. We do all this with a smart online academy for growth.\n\nRakoo. Growing greatness.",
-    "companyEmployeesCount": 33
+    "companyEmployeesCount": 33,
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4307253097",
@@ -409,7 +429,9 @@
     "companyWebsite": "http://www.powerkraut.nl",
     "companySlogan": "Voor mobiliteitsaanbieders met ambitie",
     "companyDescription": "Data. Dat is tegenwoordig het magische woord. Maar wat heb je hieraan? Nou, data is vier dingen: belangrijk, heel belangrijk, enorm belangrijk en behoorlijk saai. Dit leidt ons direct naar het grote probleem in moderne marketing. Ook al heb je alle data waar zelfs de CIA een moord voor zou plegen, (en geloof ons, wij kunnen deze data voor je verzamelen) dan ben je pas halverwege. Data maakt zelf geen slimme plannen. Data motiveert mensen niet. Van data krijg je geen lach op je gezicht. Data creëert geen emotie. Creatieve strategieën wel. Briljante ideeën wel. Interactieve activaties wel. Wat leidt tot succesvolle leads. Juist hierin blinken wij uit. Wij gebruiken data en de power van communicatie. We voegen daar onze kraut aan toe en laten data zijn wonderen verrichten. Noem het spicy. Noem het gedurfd. Wij noemen het PowerKraut. ",
-    "companyEmployeesCount": 95
+    "companyEmployeesCount": 95,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4299154679",
@@ -445,7 +467,9 @@
     "companyWebsite": "https://team.blue",
     "companySlogan": "Simplifying Online Success with our AI-powered ecosystem.",
     "companyDescription": "Empowering 3.3M+ entrepreneurs and SMBs across Europe with AI-powered tools and online services to grow and succeed. 🌍\n\nteam.blue is an ecosystem of 60+ trusted brands, united by one mission: helping entrepreneurs and small businesses thrive online.\n\nWith 3,600+ experts across Europe and beyond, we deliver everything businesses need to grow digitally, combining AI-powered products with a wide range of essential web and SaaS solutions.\n\nOur brands provide:\n➡️ SaaS tools for compliance, marketing, sales and online transaction formalization.\n➡️ Digital foundational services such as domains, email, hosting and website generators.\n\nBy bringing all of this together in one ecosystem, team.blue makes online success simple so businesses can focus on building their future.",
-    "companyEmployeesCount": 2982
+    "companyEmployeesCount": 2982,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4313225095",
@@ -478,7 +502,9 @@
     "companyWebsite": "http://www.wateriq.nl",
     "companySlogan": "The Value of Water: where water efficiency and product quality meet! 💧",
     "companyDescription": "The world is facing a big challenge - diminishing water resources and a rapidly changing climate. Our goal? To shake things up by rethinking how industries use water. \n\nWe’re redefining the connection between industry, water usage, and sustainability. Through targeted water treatment across diverse sectors, we promote a circular approach that not only prevents wastewater but also elevates production efficiency and quality. \n\nFrom beer production to horticulture, we transform processes by selectively treating the water during the production process. By removing unwanted substances, and retaining beneficial ones, we prevent the generation of wastewater, ultimately combining circularity with more efficient production and improved product quality. A win-win!",
-    "companyEmployeesCount": 11
+    "companyEmployeesCount": 11,
+    "travelTime": 28,
+    "TransportTransferNum": 0
   },
   {
     "id": "4312130542",
@@ -514,7 +540,9 @@
     "companyWebsite": "http://www.werkeningelderland.nl",
     "companySlogan": "Wat is jouw bijdrage aan een fijne gemeente, prachtige streek én unieke provincie? Laat je inspireren en solliciteer!",
     "companyDescription": "Van Rivierenland en de Veluwe, tot de Achterhoek en de stedelijke regio Arnhem/Nijmegen: geen enkele provincie is zo veelzijdig als Gelderland. Of het nu gaat over recreatie en toerisme, natuur, de maakindustrie, fruitteelt en tuinbouw of cultuur: je vindt het hier allemaal. Benieuwd wat jij daaraan kan bijdragen vanuit jouw vakgebied? Meer dan je denkt! Neem snel een kijkje bij de vacatures bij meer dan 100 Gelderse overheidsorganisaties en laat je inspireren door onze verhalen!",
-    "companyEmployeesCount": 31
+    "companyEmployeesCount": 31,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306519131",
@@ -551,7 +579,9 @@
     "companyWebsite": "https://sourceme.io",
     "companySlogan": "10+ years serving the European tech community | Hundreds of engineers placed | always delivering on promises.",
     "companyDescription": "A recruitment agency focused on all things tech.\n\n🐧 Software engineering, frontend, backend, Full-stack and mobile\n\n🐧 DevOps, SRE, platform\n\n🐧 Data scientists, Data engineers, ML engineers \n\n🐧 Product managers and Owners\n\nWith over a decade of experience in Europe's tech landscape, I've dedicated my career to building high-performing technical engineering teams. My approach is defined by transparency, a service-based mindset, and an unwavering commitment to delivering results.\n\nThe mission is really simple: to provide value to both our clients and candidates. We believe in transparency, trust, a strong work ethic, and building lasting relationships. \n\nWe all know actions speak louder than words… so let’s get to work!! 🚀\n\n📲 020 793 0821 |  0031 970 324 03432 \n💻 sam@sourceme.io\n\n",
-    "companyEmployeesCount": 1
+    "companyEmployeesCount": 1,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306295375",
@@ -579,7 +609,9 @@
     "companyWebsite": "http://www.kombijdepolitie.nl",
     "companySlogan": "Vergroot je talent. Vergroot jezelf. Voor elk talent is er politiewerk. Kom bij de politie.",
     "companyDescription": "Politiemensen staan midden in de maatschappij, dicht op het nieuws. De politie is daar waar het gebeurt. Het optreden van agenten ligt altijd onder een vergrootglas. Bij de politie ben je 24 uur per dag en voor iedereen in onze diverse samenleving. Integer, moedig, betrouwbaar en verbindend zijn daarom onze kernwaarden. \r\n\r\nBinnen de politieorganisatie kun je op verschillende manieren bijdragen aan een veilige samenleving. Op straat of achter de schermen; elke collega draagt bij aan het politiewerk. Agenten mogen ingrijpen en verdachten hun vrijheid ontnemen als dat nodig is. Je houdt toezicht op straat en bent daar waar jouw hulp nodig is. Je kunt ook kiezen voor een functie in de bedrijfsvoering, bijvoorbeeld in de administratie, ICT of beleid. Of voor een functie bij de financiële of digitale recherche. \r\n\r\nMaar wat je ook doet, in uniform of juist niet: vakmanschap staat voorop.",
-    "companyEmployeesCount": 24857
+    "companyEmployeesCount": 24857,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309263824",
@@ -619,7 +651,9 @@
     "companyWebsite": "https://www.talcom.nl",
     "companySlogan": "Talent teams, built your way.",
     "companyDescription": "Talcom: Talent teams, built your way. \n\nGreat talent is everywhere. We help you find it. \n\nHiring shouldn’t be a struggle—whether you’re looking locally or expanding globally. Talcom helps companies attract, relocate, and integrate top talent with ease. \n\nWhy Talcom? One Partner, Everything Covered. \n\nMost agencies focus on just one piece of the puzzle. We do it all: \n- Local & Global Recruitment – Access 30M+ candidates worldwide \n- Relocation Services – Move talent across borders, hassle-free \n- Nearshoring – Tap into Europe’s top tech talent for cost-effective scaling \n\nNo juggling multiple agencies. No endless back-and-forth. Just seamless hiring, from start to finish. \n\nThe Talcom Advantage: \n- Faster Hiring – Streamlined processes, from sourcing to onboarding \n- Borderless & Local Talent – The right people, wherever they are \n- Smarter Scaling – Cost-effective solutions without sacrificing quality \nSeamless Integration – From recruitment to relocation, we handle it all \n\nHiring, Simplified. \n\nFinding great talent—whether local or global—shouldn’t feel impossible. With Talcom, it’s simple, seamless, and human. \n\nHire smarter. Scale faster.  ",
-    "companyEmployeesCount": 24
+    "companyEmployeesCount": 24,
+    "travelTime": 88,
+    "TransportTransferNum": 1
   },
   {
     "id": "4304723036",
@@ -655,7 +689,9 @@
     "companyWebsite": "https://www.deftpower.com",
     "companySlogan": "We create leading mobility service providers.",
     "companyDescription": "Deftpower is an AI supported SaaS-platform with everything you need to embed EV charging into your core products. We provide high-end white-label software solutions to leading mobility service providers (MSPs), allowing them to optimize the electric vehicle (EV) charging process and integrate the flexible capacity of electric vehicles into the broader energy grid.\n\nOur talented team are passionate about transforming the industry with our state-of-the-art B2B solutions as a pioneering cleantech company, driving the transition to a cleaner, greener future by making EV adoption simpler for everyone. ",
-    "companyEmployeesCount": 70
+    "companyEmployeesCount": 70,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309368449",
@@ -695,7 +731,9 @@
     "companyWebsite": "https://dartcounter.net",
     "companySlogan": "The Future of Darts",
     "companyDescription": "DartCounter is an online darts platform that allows darters to keep track of their scores during the game of darts. With DartCounter you enter the score and the software automatically calculates the score that the darter has left, in which order he / she has to throw to win a leg and see what are his / her strengths and weaknesses.\n\nDartCounter has an app for iOS and Android and a web site on dartcounter.net where you can play various competition and training methods.\n\nWhen the darter creates a DartCounter account, all results of these game- and training methods are stored by DartCounter. This allows the darter to see his / her statistics both during and after the match and to see if there has been any improvement.\n\nHow many 100+ scores have I thrown? How good am I on my doubles? What is the average of my friends? What was my fastest leg? What was my highest finish?\nAll these questions are answered in the personal statistics in the app and on the website.\n\nUsers can add friends to see each other's results and statistics and analyze the match from each match in turn. In addition, during the games, all scores are announced by MasterCaller Ray Martin.\n\nDartCounter is very focused on the future and will therefore continue to develop continuously to ensure that every darter is more than satisfied with the functionality.",
-    "companyEmployeesCount": 10
+    "companyEmployeesCount": 10,
+    "travelTime": 105,
+    "TransportTransferNum": 1
   },
   {
     "id": "4307236214",
@@ -731,7 +769,9 @@
     "companyWebsite": "http://www.powerkraut.nl",
     "companySlogan": "Voor mobiliteitsaanbieders met ambitie",
     "companyDescription": "Data. Dat is tegenwoordig het magische woord. Maar wat heb je hieraan? Nou, data is vier dingen: belangrijk, heel belangrijk, enorm belangrijk en behoorlijk saai. Dit leidt ons direct naar het grote probleem in moderne marketing. Ook al heb je alle data waar zelfs de CIA een moord voor zou plegen, (en geloof ons, wij kunnen deze data voor je verzamelen) dan ben je pas halverwege. Data maakt zelf geen slimme plannen. Data motiveert mensen niet. Van data krijg je geen lach op je gezicht. Data creëert geen emotie. Creatieve strategieën wel. Briljante ideeën wel. Interactieve activaties wel. Wat leidt tot succesvolle leads. Juist hierin blinken wij uit. Wij gebruiken data en de power van communicatie. We voegen daar onze kraut aan toe en laten data zijn wonderen verrichten. Noem het spicy. Noem het gedurfd. Wij noemen het PowerKraut. ",
-    "companyEmployeesCount": 95
+    "companyEmployeesCount": 95,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4304980249",
@@ -771,7 +811,9 @@
     "companyWebsite": "https://www.panda-int.com/intelligence/",
     "companySlogan": "Powering life sciences through talent.",
     "companyDescription": "Behind every groundbreaking discovery in life sciences is a team of extraordinary people. At Panda, we connect that talent with organisations that are changing the world.\n \nAt Panda Intelligence, we are the Life Science recruitment experts specialising in the critical fields of artificial intelligence, machine learning, data analytics, and bioinformatics. Trust, expertise, and exceptional service are the foundation of everything we do, ensuring we connect top-tier talent with the unique challenges and specialised skills required in this dynamic industry.\n \nCovering regional complexities whilst providing tailored talent solutions, we help clients and candidates meet their ambitions in Data & AI, both today and tomorrow.\n \nYour organisation does extraordinary things every day. We help you find extraordinary people who make them happen. ",
-    "companyEmployeesCount": 11
+    "companyEmployeesCount": 11,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4219697353",
@@ -810,7 +852,9 @@
     "companyWebsite": "https://www.werkenbijobelink.nl/",
     "companySlogan": "Voel je vrij. Groei met Obelink.",
     "companyDescription": "Met plezier naar je werk, dat is wat wij bij Obelink belangrijk vinden. Jezelf kunnen zijn door rollen uit te voeren die bij je passen en waar je energie van krijgt. Wij geloven dat je zo het maximale uit jezelf kunt halen. Voel je vrij om nieuwe dingen te proberen, om fouten te maken en ervan te leren. Daar helpen we elkaar bij. Zo kunnen we samen groeien, groeien als persoon en als bedrijf, want bij Obelink zijn we nooit uitgegroeid, en jij kunt meegroeien.",
-    "companyEmployeesCount": 234
+    "companyEmployeesCount": 234,
+    "travelTime": 190,
+    "TransportTransferNum": 2
   },
   {
     "id": "4309498013",
@@ -846,7 +890,9 @@
     "companyWebsite": "https://www.cimsolutions.nl/",
     "companySlogan": "Learn, create and make IT work!",
     "companyDescription": "CIMSOLUTIONS levert hoogwaardige diensten en oplossingen op het gebied van industriële, technische en administratieve automatisering. Wij richten ons voornamelijk op het toepassen van state-of-the-art ICT concepten en technieken met als doel een optimale oplossing voor onze klanten. Onze passie is om te leren, te creëren, te implementeren en te beheren voor onze klanten. Onze expertise dekt alle fasen van de software levenscyclus: managen, plannen, onderzoeken, specificeren, selecteren, ontwerpen, analyseren, ontwikkelen, testen, implementeren en beheren van zowel maatwerk software als standaard applicaties, systemen, hardware en netwerken.\n\nLearn, create and make it work! Dat is waar ons team aan ervaren professionals voor staat. Je bent onderdeel van een betrokken bedrijf, dat voor echte kwaliteit gaat. Je kunt jezelf ontwikkelen via on-the-job training en gestructureerde programma’s voor doorgroei en ontwikkeling. Onze medewerkers leren iedere dag bij en gebruiken hun kennis en ervaring in uitdagende state-of-the-art en hightech projecten. \n\nOf je nu schoolverlater bent, een ervaren software engineer, informatie analist of projectmanager, er is bij  CIMSOLUTIONS altijd goede begeleiding en persoonlijke aandacht!\n\nEr zijn regelmatig bijeenkomsten, speciaal georganiseerd om kennis met andere medewerkers te delen. Je bent geen nummer en kent je collega’s. Je bent en wordt persoonlijk betrokken, zowel op werkgebied als bij sociale evenementen. Binnen CIMSOLUTIONS heerst een collegiale, informele en professionele werksfeer. \n\nEn bovendien... is CIMSOLUTIONS in 2021 opnieuw uitgeroepen tot TOP Employer Nederland! De volgende onderscheidende zaken hebben daarbij een belangrijke rol gespeeld: Een contract voor onbepaalde tijd, een goed salaris, een auto van de zaak, ruime ontplooiingsmogelijkheden, aantrekkelijke bonussen bij extra werkzaamheden, veel sociale evenementen, uitdagende projecten en gevarieerde opdrachten.",
-    "companyEmployeesCount": 282
+    "companyEmployeesCount": 282,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4277659462",
@@ -886,7 +932,9 @@
     "companyWebsite": "https://www.cm.com",
     "companySlogan": "Make Every Conversation Count",
     "companyDescription": "CM.com (AMS: CMCOM) is a global leader in cloud software for conversational commerce that enables businesses to deliver a superior customer experience. Our communications and payments platform empowers marketing, sales and customer support to automate engagement with customers across multiple mobile channels, blended with seamless payment capabilities that drive sales, gain customers and increase customer happiness.",
-    "companyEmployeesCount": 783
+    "companyEmployeesCount": 783,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4307967617",
@@ -926,7 +974,9 @@
     "companyWebsite": "https://www.spilberg.com",
     "companySlogan": "Creating careers in IT Development and Testing ",
     "companyDescription": "Spilberg focuses on the IT Development & Testing market. We connect professionals who excel in coding and testing to organisations - from start-ups to multinationals - so that together they can drive the digital revolution with unprecedented passion and creativity.  \n\nOur unique approach allows us to make the best match, fast. And focus is key. We choose to do one thing and do it right: each Spilberg consultant is an expert in one specific IT Development or Testing specialism, and focuses on one region, and one of four possible contract forms.   \n\nOur specialisms: Mobile Development, .Net/C#, Front-end/Web development, Embedded and Hardware Development, Java/Scala/Kotlin Development, Lowcode Mendix/Outsystems, Testing, Python Development, Go, Product Owners, and Scrum Masters & Business Analysts  \n \nSpilberg is part of Vibe Group, a fast-growing IT staffing and consulting organisation with offices in the Netherlands, Belgium and Germany. Would you like to know more about Spilberg and the way we work? Or are you interested in working for Spilberg as an IT professional? Please contact us today.  ",
-    "companyEmployeesCount": 137
+    "companyEmployeesCount": 137,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4301756674",
@@ -966,7 +1016,9 @@
     "companyWebsite": "http://www.lantech.com",
     "companySlogan": "Lantech is widely recognized as the world leader in stretch wrapping and case handling technology. ",
     "companyDescription": "Founded in 1972, at the peak of an energy crisis, Lantech made an impact on the world by inventing stretch wrapping and sparking a packaging revolution that spread around the globe and changed the way pallets of products are unitized for shipment. Now, billions of pallet loads are stretch wrapped every year. \r\n\r\nOur passion to do things better, faster, safer and at lower costs led to a culture of innovation and generated 277 patented inventions to date that create enormous value for our customers by eliminating waste from their supply chains. \r\n\r\nToday, we build case handling machines in the Netherlands and stretch wrapping machines in the United States. We have sales and technical support offices in North America, Europe, Australia, and China as well as a global network of independent distributors, integrators and service technicians. Where our customers are, we are. \r\n\r\nOur revolutionary fervor is unchanged. Our mission is simple: to reduce or eliminate the huge amount of shipping damage that occurs as products make their way from their point of manufacture to their destination.",
-    "companyEmployeesCount": 610
+    "companyEmployeesCount": 610,
+    "travelTime": 85,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309489916",
@@ -1002,7 +1054,9 @@
     "companyWebsite": "https://www.cimsolutions.nl/",
     "companySlogan": "Learn, create and make IT work!",
     "companyDescription": "CIMSOLUTIONS levert hoogwaardige diensten en oplossingen op het gebied van industriële, technische en administratieve automatisering. Wij richten ons voornamelijk op het toepassen van state-of-the-art ICT concepten en technieken met als doel een optimale oplossing voor onze klanten. Onze passie is om te leren, te creëren, te implementeren en te beheren voor onze klanten. Onze expertise dekt alle fasen van de software levenscyclus: managen, plannen, onderzoeken, specificeren, selecteren, ontwerpen, analyseren, ontwikkelen, testen, implementeren en beheren van zowel maatwerk software als standaard applicaties, systemen, hardware en netwerken.\n\nLearn, create and make it work! Dat is waar ons team aan ervaren professionals voor staat. Je bent onderdeel van een betrokken bedrijf, dat voor echte kwaliteit gaat. Je kunt jezelf ontwikkelen via on-the-job training en gestructureerde programma’s voor doorgroei en ontwikkeling. Onze medewerkers leren iedere dag bij en gebruiken hun kennis en ervaring in uitdagende state-of-the-art en hightech projecten. \n\nOf je nu schoolverlater bent, een ervaren software engineer, informatie analist of projectmanager, er is bij  CIMSOLUTIONS altijd goede begeleiding en persoonlijke aandacht!\n\nEr zijn regelmatig bijeenkomsten, speciaal georganiseerd om kennis met andere medewerkers te delen. Je bent geen nummer en kent je collega’s. Je bent en wordt persoonlijk betrokken, zowel op werkgebied als bij sociale evenementen. Binnen CIMSOLUTIONS heerst een collegiale, informele en professionele werksfeer. \n\nEn bovendien... is CIMSOLUTIONS in 2021 opnieuw uitgeroepen tot TOP Employer Nederland! De volgende onderscheidende zaken hebben daarbij een belangrijke rol gespeeld: Een contract voor onbepaalde tijd, een goed salaris, een auto van de zaak, ruime ontplooiingsmogelijkheden, aantrekkelijke bonussen bij extra werkzaamheden, veel sociale evenementen, uitdagende projecten en gevarieerde opdrachten.",
-    "companyEmployeesCount": 282
+    "companyEmployeesCount": 282,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4312036140",
@@ -1039,7 +1093,9 @@
     "companyWebsite": "https://sourceme.io",
     "companySlogan": "10+ years serving the European tech community | Hundreds of engineers placed | always delivering on promises.",
     "companyDescription": "A recruitment agency focused on all things tech.\n\n🐧 Software engineering, frontend, backend, Full-stack and mobile\n\n🐧 DevOps, SRE, platform\n\n🐧 Data scientists, Data engineers, ML engineers \n\n🐧 Product managers and Owners\n\nWith over a decade of experience in Europe's tech landscape, I've dedicated my career to building high-performing technical engineering teams. My approach is defined by transparency, a service-based mindset, and an unwavering commitment to delivering results.\n\nThe mission is really simple: to provide value to both our clients and candidates. We believe in transparency, trust, a strong work ethic, and building lasting relationships. \n\nWe all know actions speak louder than words… so let’s get to work!! 🚀\n\n📲 020 793 0821 |  0031 970 324 03432 \n💻 sam@sourceme.io\n\n",
-    "companyEmployeesCount": 1
+    "companyEmployeesCount": 1,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4312137810",
@@ -1075,7 +1131,9 @@
     "companyWebsite": "https://milence.com/",
     "companySlogan": "Power to go further",
     "companyDescription": "Established in July 2022 as a joint venture between Daimler Truck, the TRATON GROUP, and the Volvo Group, Milence is dedicated to making the future of road transport fossil-free. \n\nTo realize this vision, we are building a reliable charging network for all battery-electric heavy-duty trucks regardless of brand. Our goal is to deploy high-performance charging points along all major TEN-T corridors across Europe, aligning infrastructure roll-out with customer needs and market developments.\n\nWith an initial focus on 15 markets and operational hubs already open in several key locations, Milence is rapidly expanding its network to ensure that heavy-duty electric vehicles can operate seamlessly across the continent, supporting the transition to a sustainable and efficient transport system.   \n\nPower to go further",
-    "companyEmployeesCount": 190
+    "companyEmployeesCount": 190,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306296321",
@@ -1103,7 +1161,9 @@
     "companyWebsite": "http://www.kombijdepolitie.nl",
     "companySlogan": "Vergroot je talent. Vergroot jezelf. Voor elk talent is er politiewerk. Kom bij de politie.",
     "companyDescription": "Politiemensen staan midden in de maatschappij, dicht op het nieuws. De politie is daar waar het gebeurt. Het optreden van agenten ligt altijd onder een vergrootglas. Bij de politie ben je 24 uur per dag en voor iedereen in onze diverse samenleving. Integer, moedig, betrouwbaar en verbindend zijn daarom onze kernwaarden. \r\n\r\nBinnen de politieorganisatie kun je op verschillende manieren bijdragen aan een veilige samenleving. Op straat of achter de schermen; elke collega draagt bij aan het politiewerk. Agenten mogen ingrijpen en verdachten hun vrijheid ontnemen als dat nodig is. Je houdt toezicht op straat en bent daar waar jouw hulp nodig is. Je kunt ook kiezen voor een functie in de bedrijfsvoering, bijvoorbeeld in de administratie, ICT of beleid. Of voor een functie bij de financiële of digitale recherche. \r\n\r\nMaar wat je ook doet, in uniform of juist niet: vakmanschap staat voorop.",
-    "companyEmployeesCount": 24857
+    "companyEmployeesCount": 24857,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4123154118",
@@ -1143,7 +1203,9 @@
     "companyWebsite": "http://www.navara.nl",
     "companySlogan": "Business technology with impact.",
     "companyDescription": "At Navara we know that digitalisation is the proverbial backbone for almost every organisation. If you want to stay competitive you need to make sure you are digitally in top shape. Navara helps organisations become number 1 in their category when it comes to digitalisation. \n\nDon't expect a 'your wish is my command' from us. We first think deeply about the problem behind the question and the possible solutions. We see potential and come up with ideas, after which we can start working more effectively. \n\nTogether, we go for the best result. ",
-    "companyEmployeesCount": 219
+    "companyEmployeesCount": 219,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306223170",
@@ -1174,7 +1236,9 @@
     "companyWebsite": "https://www.abstract-it.nl",
     "companySlogan": "de slimme softwaremakers",
     "companyDescription": "Wij maken maatwerk ERP software die volledig is afgestemd op uw organisatie, zodat uw bedrijfsprocessen optimaal verlopen. Onze maatwerk ERP (of bedrijfs-) applicaties kunnen alle bedrijfsprocessen in uw organisatie ondersteunen, zoals logistiek, inkopen, verkopen en facturatie. Alle informatie is altijd en overal beschikbaar en optimaal op elkaar afgestemd, zodat altijd inzichtelijk is hoe uw organisatie ervoor staat.",
-    "companyEmployeesCount": 11
+    "companyEmployeesCount": 11,
+    "travelTime": 86,
+    "TransportTransferNum": 1
   },
   {
     "id": "4311626825",
@@ -1209,7 +1273,9 @@
     "companyWebsite": "http://www.nedap.com",
     "companySlogan": "Creating technological solutions that make professionals happier and more successful in life.",
     "companyDescription": "Nedap is a leader in Digital Twin Technology, bridging the physical and digital worlds in Healthcare, Livestock, Retail and Security. Through our Technology for Life philosophy, we create and scale sustainable, forward-thinking solutions that help people and organizations succeed in an ever-changing world.\n\nWe are a proud team of over 1,000 people working together to make a global impact. With offices worldwide we connect cutting-edge technology with real-world challenges to improve lives and businesses everywhere. For nearly a century, our passion for innovation has driven us to create meaningful, sustainable solutions that make people happier and more successful in their work.",
-    "companyEmployeesCount": 1285
+    "companyEmployeesCount": 1285,
+    "travelTime": 170,
+    "TransportTransferNum": 2
   },
   {
     "id": "4311388888",
@@ -1249,7 +1315,9 @@
     "companyWebsite": "http://www.wervingopmaat.nl",
     "companySlogan": "Recruitmentbureau met focus op IT, Finance & Sales | \nAmbitieus | Betrokken | Transparant | Geheel op Maat ",
     "companyDescription": "Wij zijn Werving op Maat. Een recruitmentbureau met meer aandacht voor jou. Wij maken recruitment persoonlijk, duurzaam en maatgericht. Want wij geloven dat recruitment ook anders kan. Persoonlijke oprechtheid, kwaliteit van werk maar bovenal plezier staat voorop. Juist door te focussen op de kandidaat en opdrachtgever en minder op targets en KPI’s gelooft Werving op Maat echt van waarde te kunnen zijn. Want die waarde zit 100% in het opbouwen van een relatie met de klant, kandidaat, collega’s en samenwerkingspartners. Alleen dan weet je zeker dat er vroeg of laat iets moois voor terugkomt. Daarom gaan wij voor Werving op Maat.\n\nWij richten ons op werving & selectie, detachering, interim en executive search binnen de vakgebieden IT, finance, bancair, accountancy en sales en zijn daarnaast gespecialiseerd in assessments.",
-    "companyEmployeesCount": 16
+    "companyEmployeesCount": 16,
+    "travelTime": 116,
+    "TransportTransferNum": 2
   },
   {
     "id": "4305556216",
@@ -1289,7 +1357,9 @@
     "companyWebsite": "http://www.experis.nl",
     "companySlogan": "Experis verbindt de ambities van organisaties met het potentieel van IT.",
     "companyDescription": "Experis maakt sinds 1998 de beste match tussen organisaties en IT-professionals. Duizenden IT’ers sloten zich al bij ons aan. Vervul lastige IT-vacatures, start complexe projecten of beman je helpdesk met de IT-specialisten in ons netwerk.\n\nWaarom kiezen voor Experis?\n\n•\tOnze ruim 200 consultants staan door het hele land voor je klaar en we zorgen voor een persoonlijke contactpersoon die jou de beste oplossingen in IT brengt.\n•\tComputable Awards heeft Experis maar liefst 7 keer bekroond met de prijs voor detachering- en recruitmentspecialist van het jaar.\n•\tDoor ons kwalitatieve selectieproces en opleidingsprocedure mag gemiddeld 1 op de 3 voorgestelde IT-professionals van Experis starten.\n•\tWe zetten een stap extra door onze IT-specialisten op te leiden in businesstransformatie, cloud en infrastructuur, cybersecurity en applicatieontwikkeling en -beheer. Of voor werkplekbeheer en de IT-servicedesk.\n•\tDe duizenden IT-professionals in ons netwerk volgen de ontwikkelingen in technologie op de voet. Kies voor een IT-partner die weet hoe jij de concurrentie voor blijft en klaarstaat voor de toekomst.\n\nNeem direct contact op: https://www.experis.nl/nl/over-ons/contact",
-    "companyEmployeesCount": 387
+    "companyEmployeesCount": 387,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309479981",
@@ -1325,7 +1395,9 @@
     "companyWebsite": "https://www.cimsolutions.nl/",
     "companySlogan": "Learn, create and make IT work!",
     "companyDescription": "CIMSOLUTIONS levert hoogwaardige diensten en oplossingen op het gebied van industriële, technische en administratieve automatisering. Wij richten ons voornamelijk op het toepassen van state-of-the-art ICT concepten en technieken met als doel een optimale oplossing voor onze klanten. Onze passie is om te leren, te creëren, te implementeren en te beheren voor onze klanten. Onze expertise dekt alle fasen van de software levenscyclus: managen, plannen, onderzoeken, specificeren, selecteren, ontwerpen, analyseren, ontwikkelen, testen, implementeren en beheren van zowel maatwerk software als standaard applicaties, systemen, hardware en netwerken.\n\nLearn, create and make it work! Dat is waar ons team aan ervaren professionals voor staat. Je bent onderdeel van een betrokken bedrijf, dat voor echte kwaliteit gaat. Je kunt jezelf ontwikkelen via on-the-job training en gestructureerde programma’s voor doorgroei en ontwikkeling. Onze medewerkers leren iedere dag bij en gebruiken hun kennis en ervaring in uitdagende state-of-the-art en hightech projecten. \n\nOf je nu schoolverlater bent, een ervaren software engineer, informatie analist of projectmanager, er is bij  CIMSOLUTIONS altijd goede begeleiding en persoonlijke aandacht!\n\nEr zijn regelmatig bijeenkomsten, speciaal georganiseerd om kennis met andere medewerkers te delen. Je bent geen nummer en kent je collega’s. Je bent en wordt persoonlijk betrokken, zowel op werkgebied als bij sociale evenementen. Binnen CIMSOLUTIONS heerst een collegiale, informele en professionele werksfeer. \n\nEn bovendien... is CIMSOLUTIONS in 2021 opnieuw uitgeroepen tot TOP Employer Nederland! De volgende onderscheidende zaken hebben daarbij een belangrijke rol gespeeld: Een contract voor onbepaalde tijd, een goed salaris, een auto van de zaak, ruime ontplooiingsmogelijkheden, aantrekkelijke bonussen bij extra werkzaamheden, veel sociale evenementen, uitdagende projecten en gevarieerde opdrachten.",
-    "companyEmployeesCount": 282
+    "companyEmployeesCount": 282,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4302552157",
@@ -1360,7 +1432,9 @@
     },
     "companyWebsite": "http://www.saltagroup.com",
     "companyDescription": "Salta Group is een bundeling van meer dan 25 organisaties op het gebied van onderwijs en opleidingen. Of liever gezegd, op het gebied van leven lang ontwikkelen. Zij delen namelijk dezelfde missie; leven lang ontwikkelen voor iedereen mogelijk maken. Ongeacht leeftijd, levensfase, privésituatie of beroep. Samen vormen zij de grootste private opleidingsorganisatie van de Benelux, mét wereldwijde ambities. Jaarlijks vergroten meer dan 1 miljoen mensen hun kennis of vaardigheden via een van de opleiders binnen Salta Group. En profiteren meer dan 15.000 werkgevers van hun expertise en leerplatformen.",
-    "companyEmployeesCount": 6863
+    "companyEmployeesCount": 6863,
+    "travelTime": 71,
+    "TransportTransferNum": 1
   },
   {
     "id": "4305733805",
@@ -1396,7 +1470,9 @@
     "companyWebsite": "http://www.alliander.com",
     "companySlogan": "Werken bij Alliander - Maakt het net beter",
     "companyDescription": "Als groot Nederlands energienetwerkbedrijf hebben wij de verantwoordelijkheid voor de energievoorziening van 3,3 miljoen klanten en nemen wij onze verantwoordelijkheid voor de energietoekomst voor Nederland. Alliander wordt gevormd door een groep bedrijven, waaronder Liander en Liandon. Samen staan we voor hoogwaardige kennis van energienetwerken, energietechniek en technische innovaties. Bij Alliander werken circa 7.000 medewerkers. \r\n\r\nWij zijn experts in het ontwikkelen, onderhouden en beheren van energienetwerken van hoge betrouwbaarheid; het inzichtelijk maken van energiestromen over die netwerken, zodat leverancier en klant elkaar vrij kunnen vinden en het helpen van klanten om over te schakelen naar duurzame vormen van energie.\r\n\r\nWij staan voor een energievoorziening die iedereen onder gelijke condities toegang geeft tot betrouwbare, betaalbare en duurzame energie. Dat is waar wij iedere dag aan werken.\r\n\r\nVia energienetwerken zorgt Alliander voor de distributie van gas en elektriciteit in een groot deel van Nederland. Met ons werk maken wij wonen, werken, transport en recreatie mogelijk. Wij willen de samenleving versterken door vrije toegang tot de energie-infrastructuur mogelijk te maken en onze klanten meer inzicht in hun energieverbruik te geven. Alliander brengt een open en duurzame energiemarkt dichterbij. \r\n\r\nOnze belangrijkste taak is om gas en elektriciteit te distribueren naar consumenten, bedrijven en instellingen. De netbeheerder Liander houdt daarom de energienetten in goede staat, zorgt voor de distributie en sluit klanten aan op de energienetten.\r\n \r\nOmdat het energielandschap verandert, werken we aan een toekomstbestendig en open netwerk met plaats voor meerdere energie-aanbieders. Om inzicht te krijgen in energieambities overleggen we met provincies, gemeenten en andere klanten. Wij helpen hen bij hun energievraagstukken en ontwikkelen complexe energie-infrastructuren, onder meer via Liandon.",
-    "companyEmployeesCount": 8972
+    "companyEmployeesCount": 8972,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309279310",
@@ -1433,7 +1509,9 @@
     "companyWebsite": "https://www.talcom.nl",
     "companySlogan": "Talent teams, built your way.",
     "companyDescription": "Talcom: Talent teams, built your way. \n\nGreat talent is everywhere. We help you find it. \n\nHiring shouldn’t be a struggle—whether you’re looking locally or expanding globally. Talcom helps companies attract, relocate, and integrate top talent with ease. \n\nWhy Talcom? One Partner, Everything Covered. \n\nMost agencies focus on just one piece of the puzzle. We do it all: \n- Local & Global Recruitment – Access 30M+ candidates worldwide \n- Relocation Services – Move talent across borders, hassle-free \n- Nearshoring – Tap into Europe’s top tech talent for cost-effective scaling \n\nNo juggling multiple agencies. No endless back-and-forth. Just seamless hiring, from start to finish. \n\nThe Talcom Advantage: \n- Faster Hiring – Streamlined processes, from sourcing to onboarding \n- Borderless & Local Talent – The right people, wherever they are \n- Smarter Scaling – Cost-effective solutions without sacrificing quality \nSeamless Integration – From recruitment to relocation, we handle it all \n\nHiring, Simplified. \n\nFinding great talent—whether local or global—shouldn’t feel impossible. With Talcom, it’s simple, seamless, and human. \n\nHire smarter. Scale faster.  ",
-    "companyEmployeesCount": 24
+    "companyEmployeesCount": 24,
+    "travelTime": 88,
+    "TransportTransferNum": 1
   },
   {
     "id": "4303980372",
@@ -1473,7 +1551,9 @@
     "companyWebsite": "http://www.enabldigital.com",
     "companySlogan": "Creators lead, technology follows. \n",
     "companyDescription": "Wij geloven in slimme technologie die volgt in plaats van stuurt. Geen verrassingen en eindeloze revisies, maar grip op wát en hóe je creëert. Gebouwd door en vóór makers, met gevoel voor merk en toon. Om efficiënter te werken, zonder creativiteit te verliezen. \n\nAt Enabl, creators lead. Technology follows.",
-    "companyEmployeesCount": 14
+    "companyEmployeesCount": 14,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4299650631",
@@ -1508,7 +1588,9 @@
     },
     "companyWebsite": "https://www.itproposal.com",
     "companyDescription": "As ITproposal we have a very large network of engineers (with our own employees) where we support our Partners all over the world. We combine our experience and knowledge to deliver the best IT solutions. When creating or obtaining projects, we focus on  the client and understanding their needs and expectations. We have the competences which allow us to offer a wide range of IT services.",
-    "companyEmployeesCount": 36
+    "companyEmployeesCount": 36,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4311600690",
@@ -1543,7 +1625,9 @@
     "companyWebsite": "https://h-it-s.nl/",
     "companySlogan": "Maatwerk recruitment, voor klant én kandidaat. @HappyCustomers label",
     "companyDescription": "Wij versterken IT-teams met professionals in vaste dienst. HITS excelleert in het vinden van talent. Met de juiste marktkennis en oog voor kwaliteit zorgen we voor duurzame versterking. HITS werft gericht op jouw organisatie. Van een enkele positie tot het structureel uitbouwen van IT-teams. Je krijgt commitment op wat nodig is. Maatwerk recruitment, voor klant én kandidaat.",
-    "companyEmployeesCount": 6
+    "companyEmployeesCount": 6,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309289305",
@@ -1580,7 +1664,9 @@
     "companyWebsite": "https://www.talcom.nl",
     "companySlogan": "Talent teams, built your way.",
     "companyDescription": "Talcom: Talent teams, built your way. \n\nGreat talent is everywhere. We help you find it. \n\nHiring shouldn’t be a struggle—whether you’re looking locally or expanding globally. Talcom helps companies attract, relocate, and integrate top talent with ease. \n\nWhy Talcom? One Partner, Everything Covered. \n\nMost agencies focus on just one piece of the puzzle. We do it all: \n- Local & Global Recruitment – Access 30M+ candidates worldwide \n- Relocation Services – Move talent across borders, hassle-free \n- Nearshoring – Tap into Europe’s top tech talent for cost-effective scaling \n\nNo juggling multiple agencies. No endless back-and-forth. Just seamless hiring, from start to finish. \n\nThe Talcom Advantage: \n- Faster Hiring – Streamlined processes, from sourcing to onboarding \n- Borderless & Local Talent – The right people, wherever they are \n- Smarter Scaling – Cost-effective solutions without sacrificing quality \nSeamless Integration – From recruitment to relocation, we handle it all \n\nHiring, Simplified. \n\nFinding great talent—whether local or global—shouldn’t feel impossible. With Talcom, it’s simple, seamless, and human. \n\nHire smarter. Scale faster.  ",
-    "companyEmployeesCount": 24
+    "companyEmployeesCount": 24,
+    "travelTime": 88,
+    "TransportTransferNum": 1
   },
   {
     "id": "4310152938",
@@ -1615,7 +1701,9 @@
     },
     "companyWebsite": "http://www.alten.nl",
     "companyDescription": "ALTEN is a leading company in technical consulting, engineering and IT. We work on diverse projects in all business sectors: industry, defence, traffic & transport, telecoms and finance.\n\nWithin The Netherlands, ALTEN offers its services from specialised business lines: Engineering, IT services and Life Sciences. \n\nALTEN has five offices in The Netherlands: Eindhoven, Capelle a/d IJssel, Amstelveen, Apeldoorn and Groningen. Internationally, we are part of the ALTEN Group, which has been operating since 1988. This makes us one of the largest providers of technical consultancy in Europe. ALTEN is listed on the Euronext stock exchange. \n\nWould you like more information about ALTEN? Take a look at our website ➡️ www.alten.nl",
-    "companyEmployeesCount": 479
+    "companyEmployeesCount": 479,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306730897",
@@ -1655,7 +1743,9 @@
     "companyWebsite": "http://www.craftr.nl",
     "companySlogan": "Crafting great employers, shaping good teams",
     "companyDescription": "Crafting great employers, shaping good teams\n\nWe are a recruitment and HR partner to start-, scaleups and \"MKB\" with their recruitment challenges in a flexible way. Work with us and you don't have to worry about your recruitment process, we make sure your candidates get the best candidate experience possible.\n\nWe are aiming to be a recruitment partner and become part of your organisation so we can work closely together to find the best new colleagues for you. \n\nIf needed we help you setting up an ATS, an efficient recruitment process, vacancy texts and we help you getting the right people on board. \n\nWe deliver recruitment services in a flexible way, but for the long term. We're that recruitment partner you can give a call when you need recruitment expertise. No long term strategy plans, pragmatic solutions for your needs. \n\nWe are long term partners, acting as one of the colleagues of your organisation. We're always around and ready to go when you got recruitment needs. This way you don't need a lot of time to get up to speed for your recruitment needs, we've been there all the time. ",
-    "companyEmployeesCount": 11
+    "companyEmployeesCount": 11,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4207769575",
@@ -1690,7 +1780,9 @@
     "companyWebsite": "http://www.nedap.com",
     "companySlogan": "Creating technological solutions that make professionals happier and more successful in life.",
     "companyDescription": "Nedap is a leader in Digital Twin Technology, bridging the physical and digital worlds in Healthcare, Livestock, Retail and Security. Through our Technology for Life philosophy, we create and scale sustainable, forward-thinking solutions that help people and organizations succeed in an ever-changing world.\n\nWe are a proud team of over 1,000 people working together to make a global impact. With offices worldwide we connect cutting-edge technology with real-world challenges to improve lives and businesses everywhere. For nearly a century, our passion for innovation has driven us to create meaningful, sustainable solutions that make people happier and more successful in their work.",
-    "companyEmployeesCount": 1285
+    "companyEmployeesCount": 1285,
+    "travelTime": 170,
+    "TransportTransferNum": 2
   },
   {
     "id": "4304030032",
@@ -1724,7 +1816,9 @@
     },
     "companyWebsite": "https://www.rensa.nl",
     "companyDescription": "Rensa Verwarming en Ventilatie neemt als technische groothandel een vooraanstaande plaats in op de markt van verwarming en ventilatie. Vanuit een modern logistiek concept levert Rensa goederen door heel Nederland aan de professionele installateur in de woning- en utiliteitsbouw. \n\nNaast een breed en diep assortiment ondersteunt Rensa haar afnemers met uitgebreide dienstverlening. Rensa heeft zich in de loop der jaren ontwikkeld van regionale groothandel tot ‘state-of-the art’ dienstverlener in klimaatbeheersing, met vestigingen en verkoopbalies door  heel Nederland. Een gestaag aantal klanten in de installatiebranche zet onze (product- en project)kennis, ons technisch advies en onze logistieke expertise in bij de succesvolle uitvoering van projecten in verwarming en ventilatie.",
-    "companyEmployeesCount": 251
+    "companyEmployeesCount": 251,
+    "travelTime": 116,
+    "TransportTransferNum": 2
   },
   {
     "id": "4243860970",
@@ -1763,7 +1857,9 @@
     "companyWebsite": "http://www.inteqnion.com/en",
     "companySlogan": "The process improvers",
     "companyDescription": "Inteqnion is specialized in the design, build and installation of automation for the batch and continuous controlled process industry. Our strength is asset management and improvement. We help our clients to cut costs, reduce risk, improve results and to optimize the performance of the assets. \r\nOur people want more than just meet your needs: it is the challenge to exceed your expectations.\r\n\r\nInteqnion offers you:\r\n\r\n•\tDesign & Engineering\r\n•\tBuild and installation MCC & PLC panels\r\n•\tSoftware engineering PLC & SCADA\r\n•\tMES application Batch Explorer\r\n•\tService, support & training\r\n•\tTurn Key installations\r\n\r\nInteqnion has extensive experience with a global track record in the grain-processing and compound feed industry and handling of bulk goods. In addition, we operate in various other markets. From small to large production sites. With smart and innovative solutions we strive for the best performance in your sector. We help you to perform more efficiently and to maximize your ROI.\r\n\r\nInteqnion is an European leading company for electric control and process automation for premix plants, feedmills, pet food plants, cereal processing plants, flour mills, concentrate plants, hammer mills, mixers, micro dosing units, silos.",
-    "companyEmployeesCount": 28
+    "companyEmployeesCount": 28,
+    "travelTime": 166,
+    "TransportTransferNum": 2
   },
   {
     "id": "4302951448",
@@ -1803,7 +1899,9 @@
     "companyWebsite": "http://www.gentes.nl",
     "companySlogan": "No Nonsense Recruitment",
     "companyDescription": "Gentes is een ondernemende organisatie die zich richt op het bij elkaar brengen van vraag en aanbod in de ICT. Wij doen dit door persoonlijk contact en langdurige relaties te onderhouden. Gentes maakt het verschil omdat de mens bij ons een net zo hoge prioriteit heeft als de vacature. Wij zoeken de volledige oplossing op het probleem. \r\n\r\nGentes ondersteunt haar klanten bij het vinden van de juiste professional voor het kennis of capaciteitsprobleem binnen een project of afdeling. Een goeie werksfeer hoort hier ook bij. Een hoofddoel van Gentes is ook bijdragen aan een positieve sfeer op de werkvloer.\r\n\r\nAls organisatie zijn wij expert op het gebied van het bemiddelen en contracteren van freelance IT Specialisten. Dit doen wij voor onze eigen eindklanten en ook voor een aantal grote software integrators in de ICT-markt. \r\n\r\nVoor meer informatie over onze dienstverlening en voor actuele vacatures verwijzen wij u graag door naar onze website en onze pagina op Freelance.\r\n\r\nwww.gentes.nl\r\nwww.freelance.nl/opdrachtgever/gentes",
-    "companyEmployeesCount": 14
+    "companyEmployeesCount": 14,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4302006561",
@@ -1842,7 +1940,9 @@
     },
     "companyWebsite": "http://www.nijhuissaurindustries.com",
     "companyDescription": "Founded in 1904, Nijhuis Saur Industries provides solid and adaptive solutions for sustainable and resilient water use, energy- and resource recovery. Since the inception of Saur’s Industrial Water platform in 2020 more than 14 companies have been successfully acquired and integrated into one global operating company supporting municipal and industrial clients in over 140 countries with engineering and consultancy services, EPC / DBFOM project execution, mobile water solutions and O&M site services. With an extensive portfolio of innovative technologies and game-changing solutions, Nijhuis Saur Industries is delivering local, scalable, and circular water-on-demand solutions to more than 6.000 references around the world and contributing to a more sustainable and resilient future. \n\nOur purpose is to be an advocate for water, ensuring everyone gives water the value it deserves. With our unique Customer for Life approach, we protect water resources, contribute to the water-, energy- and food transition, and help to restore and close the water loop. We call it #MissionWater.",
-    "companyEmployeesCount": 662
+    "companyEmployeesCount": 662,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4263492622",
@@ -1878,7 +1978,9 @@
     "companyWebsite": "https://www.monday.com",
     "companySlogan": "The work platform teams love to use. Built with AI to power faster, smarter work at any scale. 🤝",
     "companyDescription": "The monday.com Work OS is a low code- no code platform that democratizes the power of software so organizations can easily build work management tools and software applications to fit their every need. The platform intuitively connects people to processes and systems, empowering teams to excel in every aspect of their work while creating an environment of transparency in business. monday.com has offices in Tel Aviv, New York, Miami, Chicago, Denver, London, Warsaw, Sydney, Melbourne, São Paulo, and Tokyo. The platform is fully customizable to suit any business vertical and is currently used by over 225,000+ customers across 200 industries in over 200 countries and territories.",
-    "companyEmployeesCount": 3476
+    "companyEmployeesCount": 3476,
+    "travelTime": 137,
+    "TransportTransferNum": 2
   },
   {
     "id": "4264600655",
@@ -1914,7 +2016,9 @@
     "companyWebsite": "https://www.dnv.com",
     "companySlogan": "When trust matters",
     "companyDescription": "DNV is the independent expert in risk management and assurance, operating in more than 100 countries. Through its broad experience and deep expertise DNV advances safety and sustainable performance, sets industry benchmarks, and inspires and invents solutions. \n\nWhether assessing a new ship design, optimizing the performance of a wind farm, analyzing sensor data from a gas pipeline or certifying a food company’s supply chain, DNV enables its customers and their stakeholders to make critical decisions with confidence. \n\nDriven by its purpose, to safeguard life, property, and the environment, DNV helps tackle the challenges and global transformations facing its customers and the world today and is a trusted voice for many of the world’s most successful and forward-thinking companies. \n\nDNV uses cookies. For more information, please visit https://www.dnv.com/privacy/change-cookie-settings.html\n",
-    "companyEmployeesCount": 22269
+    "companyEmployeesCount": 22269,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4305557851",
@@ -1938,7 +2042,9 @@
     "employmentType": "Full-time",
     "jobFunction": "Information Technology",
     "industries": "Higher Education and Research Services",
-    "inputUrl": "https://www.linkedin.com/jobs/search?keywords=Developer&location=Gelderland&geoId=101469998&f_TPR=r2592000&position=1&pageNum=0"
+    "inputUrl": "https://www.linkedin.com/jobs/search?keywords=Developer&location=Gelderland&geoId=101469998&f_TPR=r2592000&position=1&pageNum=0",
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4312711720",
@@ -1978,7 +2084,9 @@
     "companyWebsite": "http://www.sprintintermediair.nl",
     "companySlogan": "Recruitment zonder nonsens. Resultaat zonder twijfel.",
     "companyDescription": "Sprint Intermediair is een specialistisch werving- en selectiebureau dat zich met haar activiteiten volledig focust op het commerciële segment van de arbeidsmarkt. In het verlengde hiervan assisteren wij organisaties met een personeelsbehoefte en begeleiden wij sales- en marketingprofessionals naar een nieuwe uitdaging. Een positief onderscheidende werkwijze heeft ertoe geleid dat Sprint Intermediair, binnen haar domein, een begrip is geworden in werving- en selectieland.\r\n\r\nEen positief onderscheidende werkwijze is een werkwijze waarbij wij investeren in kwalitatieve contacten met onze doelgroep en het vasthouden aan onze kernwaarden ons in staat stellen om werkgever en werknemer duurzaam te verbinden. Menselijk kapitaal werf en selecteer je op een menselijke manier!",
-    "companyEmployeesCount": 9
+    "companyEmployeesCount": 9,
+    "travelTime": 28,
+    "TransportTransferNum": 0
   },
   {
     "id": "4304104602",
@@ -2014,7 +2122,9 @@
     "companyWebsite": "https://jobs.treatwell.com/#jobs",
     "companySlogan": "We empower industry growth to bring more beauty and wellness to everyone, everywhere.",
     "companyDescription": "At Treatwell, we empower industry growth to bring more beauty and wellness to everyone, everywhere. As Europe’s No.1 beauty and wellness booking platform, we connect millions of people with salons and professionals across 13 countries. With the industry’s smartest salon management software at our core, we help beauty and wellness professionals grow their business while making treatments more accessible than ever.\n\nOur vision is simple: to create a world where everyone can treat themselves well. That means giving salons the tools, visibility, and support to thrive, while making it effortless for customers to book the treatments they love. Anytime, anywhere.\n\nBehind it all is a team of passionate, ambitious people united by our values: Treat everyone well, Think like a salon owner, Make every appointment count, and Play to win together. These values shape how we work, drive our growth, and keep us focused on building a company that truly makes a difference for our people, partners, and industry.\n\nReady to be part of the journey? Explore our careers page, your next chapter could start here.",
-    "companyEmployeesCount": 888
+    "companyEmployeesCount": 888,
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4157716922",
@@ -2050,7 +2160,9 @@
     "companyWebsite": "http://www.coopervision.com",
     "companySlogan": "Live Brightly.®",
     "companyDescription": "CooperVision, a unit of The Cooper Companies, Inc. (NASDAQ: COO), is one of the world’s leading manufacturers of soft contact lenses. The Company produces a full array of monthly, two-week and daily disposable contact lenses, all featuring advanced materials and optics. CooperVision has a strong heritage of solving the toughest vision challenges such as astigmatism and presbyopia; and offers the most complete collection of spherical, toric and multifocal products available. Through a combination of innovative products and focused practitioner support, the company brings a refreshing perspective to the marketplace, creating real advantages for customers and wearers. For more information, visit coopervision.com.",
-    "companyEmployeesCount": 7366
+    "companyEmployeesCount": 7366,
+    "travelTime": 83,
+    "TransportTransferNum": 1
   },
   {
     "id": "4308589741",
@@ -2090,7 +2202,9 @@
     "companyWebsite": "https://www.haystackpeople.nl/",
     "companySlogan": "We can find a needle in a haystack",
     "companyDescription": "Haystack People is a trusted recruitment agency specializing in the mediation of ambitious IT professionals. Since every organization and vacancy requires a different approach, we offer customized services. By making clear agreements with our partners in combination with our high-quality recruitment methodology, we manage to win the \"War for Talent\" every time.\n\nAre you looking for a job as CTO of a Tech Scale-up? Do you need a Scrum Master for your development team? Want to work with the latest technology as a Frontend Developer or hire a new developer? We only work with the most attractive organizations and know how to make the best matches through our specialist network!\n\nContact us to see how we can help you as a job seeker or employer.",
-    "companyEmployeesCount": 17
+    "companyEmployeesCount": 17,
+    "travelTime": 71,
+    "TransportTransferNum": 1
   },
   {
     "id": "4267781553",
@@ -2126,7 +2240,9 @@
     "companyWebsite": "http://www.acture.nl",
     "companySlogan": "Acture activeert: wij maken sociale zekerheid actief",
     "companyDescription": "Welkom op de LinkedIn-pagina van Acture. Wij zijn de grootste private uitvoerder van de Ziektewet voor eigenrisicodragers. Dit betekent dat Acture in plaats van UWV uitvoering geeft aan de Ziektewet voor mensen zonder arbeidsovereenkomst. In dit nog jonge werkveld heeft Acture een enorme expertise opgedaan over de toepassing en interpretatie van de wetgeving, omgang met vangnetters en uitvoering en uitbetaling van uitkeringen. Acture is opgericht door experts op het gebied van risicobeheersing rondom ziekteverzuim en de uitzendbranche. Het samenbrengen van deze twee expertises heeft geleid tot een dienstverleningsproduct waarin het verlagen van de schadelast rondom ziekteverzuim van uitzendkrachten centraal staat. \n\nVanwege het succes van deze dienstverlening voor de verzuimbegeleiding van de uitzendsector is het product nu verder ontwikkeld om ook het grootbedrijf te kunnen bedienen.\n\nWaarom is dat voor u als bedrijf interessant? Dit is interessant, omdat u nu aan UWV premie betaalt en wanneer u in plaats daarvan Acture inschakelt u gegarandeerd minder kosten heeft. Onze inzet leidt tot een bewezen beter resultaat; sneller herstel en lagere kosten. \n\nDe kenmerken van Acture zijn ontwikkelen en ondernemen, uitdagingen zien wij vol enthousiasme tegemoet!",
-    "companyEmployeesCount": 357
+    "companyEmployeesCount": 357,
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4288023539",
@@ -2166,7 +2282,9 @@
     "companyWebsite": "https://www.haystackpeople.nl/",
     "companySlogan": "We can find a needle in a haystack",
     "companyDescription": "Haystack People is a trusted recruitment agency specializing in the mediation of ambitious IT professionals. Since every organization and vacancy requires a different approach, we offer customized services. By making clear agreements with our partners in combination with our high-quality recruitment methodology, we manage to win the \"War for Talent\" every time.\n\nAre you looking for a job as CTO of a Tech Scale-up? Do you need a Scrum Master for your development team? Want to work with the latest technology as a Frontend Developer or hire a new developer? We only work with the most attractive organizations and know how to make the best matches through our specialist network!\n\nContact us to see how we can help you as a job seeker or employer.",
-    "companyEmployeesCount": 17
+    "companyEmployeesCount": 17,
+    "travelTime": 99,
+    "TransportTransferNum": 1
   },
   {
     "id": "4301279855",
@@ -2205,7 +2323,9 @@
     "companyWebsite": "http://www.kranendonk.com",
     "companySlogan": "Robotizing your non-repetitive production flow",
     "companyDescription": "Robots provide an incredible opportunity to accelerate your production. With tailored robot lines, we improve quality and productivity in steel processing industries. This enhances the entire work flow, making your production more efficient and company more competitive.\n\nAbout us\nKRANENDONK is the robot technology centre for non-repetitive production. By implementing intelligent robot technology, we enable manufacturing companies to produce more efficiently and effectively. The production systems that KRANENDONK supplies are custom-build solutions that are cleverly integrated into material and data flows.\n\nField of work\nThe field in which KRANENDONK operates is not bound by a product or industry, but by a production principle. Traditionally, robots are used for repetitive production. KRANENDONK’s competence however, lies in the opposite: realizing non-repetitive production by smart implementation of robotics. This opens a range of automation opportunities for manufacturing companies. KRANENDONK's ability to automate non-repetitive production proved to be succesfull in shipbuilding, offshore and structural steel industries, among others.\n\nOffices\nKRANENDONK is a Dutch company with subsidiaries in Japan, Singapore, China, USA and Denmark. A technology centre position is maintained by simultaneously fulfilling the roles of engineer, supplier, supporter and partner. A key part of KRANENDONK’s position is the ability to continuously work on new robot applications. It does this together with universities and other technology partners.",
-    "companyEmployeesCount": 80
+    "companyEmployeesCount": 80,
+    "travelTime": 63,
+    "TransportTransferNum": 1
   },
   {
     "id": "4311663428",
@@ -2241,7 +2361,9 @@
     "companyWebsite": "http://www.attract-pr.com",
     "companySlogan": "Consulting, strategy, marketing and PR for the international travel industry in French speaking Europe",
     "companyDescription": "Global ATTRACTIVITY MARKETING & PR for Territories and the Travel, Hospitality & Entertainment industry. France & international\r\n\r\nAttract visitors, talents, investments, clients and public opinion sympathy by growing competitive identity in tourism, culture, business and governance\r\n\r\nMission : Magnetize your Attractivity!",
-    "companyEmployeesCount": 1
+    "companyEmployeesCount": 1,
+    "travelTime": 99,
+    "TransportTransferNum": 1
   },
   {
     "id": "4302320587",
@@ -2281,7 +2403,9 @@
     "companyWebsite": "http://www.boldcompany.nl",
     "companySlogan": "Werving- en selectiebureau binnen de IT sector. Recruitment gespecialiseerd binnen .NET, PHP, Java, OutSystems en Mendix",
     "companyDescription": "BOLD Company is een recruitmentbureau, gespecialiseerd in werving en selectie binnen de IT sector. Wij bemiddelen IT professionals die werkzaam zijn in de software development, -engineering en -developmentmanagement. \n\nOnze missie is kandidaten met bedrijven te matchen op basis van kennis, werkervaring en persoonlijkheid. Wij helpen kandidaten bij het vinden van hun droombaan en bieden daarbij eerlijke en professionele begeleiding vanaf het begin tot einde van een sollicitatieproces. \n\nTegelijkertijd, helpen we organisaties in hun zoektocht naar de beste talenten binnen de IT sector, zodat ze hun volle potentieel kunnen realiseren en de juiste business doelen kunnen bereiken. \n\nBinnen het vakgebied van software development focussen wij ons op verschillende disciplines zoals: \n✔ JAVA ✔ PHP ✔ .NET / C# ✔ ASP.NET MVC ✔ Core JavaScript ✔ Outsystems ✔ C++/ Embedded ✔ Front-end/ UX UI ✔ Ruby on Rails ✔ Python ✔ Mobile iOS Android ✔ Mendix ✔ Sharepoint ",
-    "companyEmployeesCount": 4
+    "companyEmployeesCount": 4,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4303494112",
@@ -2320,7 +2444,9 @@
     "companyWebsite": "https://linthorst.world/",
     "companySlogan": "People.Planet.Power.",
     "companyDescription": "Linthorst World is een snelgroeiende groep familiebedrijven met meer dan 500 medewerkers. Het is onze missie om de wereld van techniek en energiesystemen blijvend te veranderen en daarmee duurzame en eerlijke energie mogelijk te maken voor iedereen. \n\nWe willen een belangrijke bijdrage leveren aan de oplossing van één van de grotere vraagstukken van deze tijd; het wereldwijd verminderen van de broeikasgasemissies. Linthorst World zet zich in voor een samenleving met honderd procent duurzame energie.   \n\nSamen met onze partners (Linthorst Techniek, Linthorst Energy, Linthorst FlexPower, Linthorst Techno Centre, Tecco Techniek en HoCoSto) staan wij voor volledig duurzame energieprojecten voor zowel nieuwbouw als bestaande bouw. We verzorgen technische oplossingen voor duurzame en betaalbare leef- en werkomgevingen. Van innovatie en ontwikkeling van nieuwe energiesystemen tot productie, installatie en levering: Linthorst World heeft alle disciplines onder één dak. Een uniek totaalconcept waardoor Linthorst in staat is innovaties snel te ontwikkelen. \n\nWe werken landelijk aan spraakmakende projecten waarbij wij een belangrijke bijdrage leveren aan de energietransitie.",
-    "companyEmployeesCount": 306
+    "companyEmployeesCount": 306,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4257687697",
@@ -2359,7 +2485,9 @@
     "companyWebsite": "https://linthorst.world/",
     "companySlogan": "People.Planet.Power.",
     "companyDescription": "Linthorst World is een snelgroeiende groep familiebedrijven met meer dan 500 medewerkers. Het is onze missie om de wereld van techniek en energiesystemen blijvend te veranderen en daarmee duurzame en eerlijke energie mogelijk te maken voor iedereen. \n\nWe willen een belangrijke bijdrage leveren aan de oplossing van één van de grotere vraagstukken van deze tijd; het wereldwijd verminderen van de broeikasgasemissies. Linthorst World zet zich in voor een samenleving met honderd procent duurzame energie.   \n\nSamen met onze partners (Linthorst Techniek, Linthorst Energy, Linthorst FlexPower, Linthorst Techno Centre, Tecco Techniek en HoCoSto) staan wij voor volledig duurzame energieprojecten voor zowel nieuwbouw als bestaande bouw. We verzorgen technische oplossingen voor duurzame en betaalbare leef- en werkomgevingen. Van innovatie en ontwikkeling van nieuwe energiesystemen tot productie, installatie en levering: Linthorst World heeft alle disciplines onder één dak. Een uniek totaalconcept waardoor Linthorst in staat is innovaties snel te ontwikkelen. \n\nWe werken landelijk aan spraakmakende projecten waarbij wij een belangrijke bijdrage leveren aan de energietransitie.",
-    "companyEmployeesCount": 306
+    "companyEmployeesCount": 306,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4305994047",
@@ -2399,7 +2527,9 @@
     "companyWebsite": "http://www.switch.career",
     "companySlogan": "Are you ready to SWITCH ?",
     "companyDescription": "SWITCH is specialised in recruitment and secondment of technical professionals with a bachelor and/or master level. Mainly in the disciplines IT, Mechanical Engineering and Electrotechnical Engineering.\n\nOur offices and training centre are located in the Brainport Eindhoven, a world-class high tech hotspot in the northwest of Europe. Our main clients are also located in this region, which is characterised by a large number of Tech and IT vacancies (currently more than 3,000).\n\nThe SWITCH team consists of professionals with extensive experience, both in technical (High Tech & IT) and global recruitment areas. They operate from a stable organisation with fixed contacts.\n",
-    "companyEmployeesCount": 22
+    "companyEmployeesCount": 22,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4301293421",
@@ -2438,7 +2568,9 @@
     "companyWebsite": "http://www.kranendonk.com",
     "companySlogan": "Robotizing your non-repetitive production flow",
     "companyDescription": "Robots provide an incredible opportunity to accelerate your production. With tailored robot lines, we improve quality and productivity in steel processing industries. This enhances the entire work flow, making your production more efficient and company more competitive.\n\nAbout us\nKRANENDONK is the robot technology centre for non-repetitive production. By implementing intelligent robot technology, we enable manufacturing companies to produce more efficiently and effectively. The production systems that KRANENDONK supplies are custom-build solutions that are cleverly integrated into material and data flows.\n\nField of work\nThe field in which KRANENDONK operates is not bound by a product or industry, but by a production principle. Traditionally, robots are used for repetitive production. KRANENDONK’s competence however, lies in the opposite: realizing non-repetitive production by smart implementation of robotics. This opens a range of automation opportunities for manufacturing companies. KRANENDONK's ability to automate non-repetitive production proved to be succesfull in shipbuilding, offshore and structural steel industries, among others.\n\nOffices\nKRANENDONK is a Dutch company with subsidiaries in Japan, Singapore, China, USA and Denmark. A technology centre position is maintained by simultaneously fulfilling the roles of engineer, supplier, supporter and partner. A key part of KRANENDONK’s position is the ability to continuously work on new robot applications. It does this together with universities and other technology partners.",
-    "companyEmployeesCount": 80
+    "companyEmployeesCount": 80,
+    "travelTime": 63,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309547895",
@@ -2473,7 +2605,9 @@
     },
     "companyWebsite": "https://www.maandag.com/nl-nl",
     "companyDescription": "Bij Maandag® werken we elke dag hard om mensen met werk te verbinden waar ze zin in hebben en zin in houden. \nDat is werk dat past bij hun capaciteiten, ambities en voorkeuren. Werk waarin ze hun talent kunnen benutten en ontwikkelen, dat voldoende uitdaging en afwisseling biedt. En in een omgeving die voldoende inclusief, divers en sociaal is. Want alleen dan brengen mensen elke dag weer frisse energie mee naar de werkvloer. Hebben ze zin om dingen aan te pakken. En krijgen ze dingen gedaan. Want: wie houdt van zijn of haar werk heeft altijd zin in maandag.",
-    "companyEmployeesCount": 1707
+    "companyEmployeesCount": 1707,
+    "travelTime": 99,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309001141",
@@ -2510,7 +2644,9 @@
     "companyWebsite": "https://baann.nl/",
     "companySlogan": "baann. gezocht? Gevonden!",
     "companyDescription": "Bij baann. richten we ons op engineers met een HBO- of WO-diploma. Of je nu op zoek bent naar een directe vaste baan of een uitdagend traineeship: wij helpen je vooruit.\nPersoonlijk, betrokken en met oog voor jouw ambities.\n\nbaann. is opgericht door Bas Akkermans en Anne ter Huerne, twee ervaren professionals met een passie voor techniek én talent. Met jarenlange ervaring in technische recruitment weten zij als geen ander hoe belangrijk de juiste eerste stap is in je carrière.\n\nWij noemen onszelf niet voor niets baann.brekers. We denken anders, kijken verder en geloven dat een carrière meer is dan alleen een job. Het gaat om groei, richting en zekerheid.\n\nMet slimme matches, een sterk netwerk en een flinke dosis enthousiasme zorgen wij dat jij niet zomaar een baan vindt, maar een baann.\n\nbaann. gezocht? Gevonden!",
-    "companyEmployeesCount": 3
+    "companyEmployeesCount": 3,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4297146937",
@@ -2546,7 +2682,9 @@
     "companyWebsite": "http://www.tcpm.nl",
     "companySlogan": "Engineering, industriële veiligheid en projectmanagement | #weloveengineering",
     "companyDescription": "TCPM Ingenieurs & Adviseurs, strategisch partner voor de industrie.\n\nTCPM is een onafhankelijk ingenieurs- en adviesbureau dat al meer dan 25 jaar zaken graag in beweging houdt. Uw zaken. \n\nDat doen wij inmiddels met ca 200 medewerkers vanuit 5 vestigingen in Nederland. Onze expertises zijn: Engineering (in-house / on-site), Industriële veiligheid en Projectmanagement. Wij werken aan uw projecten vanuit één van onze kantoren (in-house) of bij u op locatie (on-site). Net wat u wilt! Onze kennis van de marktsegmenten Food, Pharma, Energy en Capital Goods en Marine & Offshore zetten wij graag voor u in. Deze expertise wordt ingezet voor de klanten om, specialistisch of multidisciplinair, een passende oplossing te leveren. De kennis van TCPM helpt u verder. \n\nKijk op http://www.tcpm.nl, http://www.werkenbijtcpm.nl of neem contact op via tcpm@tcpm.nl",
-    "companyEmployeesCount": 220
+    "companyEmployeesCount": 220,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4305722242",
@@ -2579,7 +2717,9 @@
     "companyWebsite": "https://www.careers-page.com/naimar",
     "companySlogan": "Candidates first!",
     "companyDescription": "I help great professionals and great professional opportunities meet each other.",
-    "companyEmployeesCount": 2
+    "companyEmployeesCount": 2,
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4310774947",
@@ -2615,7 +2755,9 @@
     "companyWebsite": "http://www.sumedia.nl/",
     "companySlogan": "Mét 40+ experts bundelen we data-inzichten, design en technologie voor groei, business development en continuïteit.",
     "companyDescription": "Strategy always meets creativity\n\nSumedia is van nature een creatief, design gedreven agency. Maar mede door onze ruime kennis op het vlak van business development en de snelle ontwikkelingen in technologie, data en AI, zien we onszelf veel meer als een stevige businesspartner die vooruitstrevende organisaties ondersteunt bij transformatie en duurzame groei.\n\nDat betekent niet dat we ons afkomst verloochenen. Integendeel, wij geloven dat we juist door strategische kennis en inzichten te combineren met baanbrekend design en onderscheidende creativiteit, vernieuwende oplossingen creëren en uitzonderlijke resultaten behalen.\n\nDaarbij ligt de focus voor 100% op digital. Dáár liggen de kansen, dáár ligt onze expertise, dáár kunnen we onze kennis, ervaring en technologie inzetten om razendsnel nieuwe producten, diensten of oplossingen op de markt te brengen.",
-    "companyEmployeesCount": 48
+    "companyEmployeesCount": 48,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4243866704",
@@ -2654,7 +2796,9 @@
     "companyWebsite": "http://www.inteqnion.com/en",
     "companySlogan": "The process improvers",
     "companyDescription": "Inteqnion is specialized in the design, build and installation of automation for the batch and continuous controlled process industry. Our strength is asset management and improvement. We help our clients to cut costs, reduce risk, improve results and to optimize the performance of the assets. \r\nOur people want more than just meet your needs: it is the challenge to exceed your expectations.\r\n\r\nInteqnion offers you:\r\n\r\n•\tDesign & Engineering\r\n•\tBuild and installation MCC & PLC panels\r\n•\tSoftware engineering PLC & SCADA\r\n•\tMES application Batch Explorer\r\n•\tService, support & training\r\n•\tTurn Key installations\r\n\r\nInteqnion has extensive experience with a global track record in the grain-processing and compound feed industry and handling of bulk goods. In addition, we operate in various other markets. From small to large production sites. With smart and innovative solutions we strive for the best performance in your sector. We help you to perform more efficiently and to maximize your ROI.\r\n\r\nInteqnion is an European leading company for electric control and process automation for premix plants, feedmills, pet food plants, cereal processing plants, flour mills, concentrate plants, hammer mills, mixers, micro dosing units, silos.",
-    "companyEmployeesCount": 28
+    "companyEmployeesCount": 28,
+    "travelTime": 166,
+    "TransportTransferNum": 2
   },
   {
     "id": "4301520341",
@@ -2694,7 +2838,9 @@
     "companyWebsite": "https://www.ndus3.com/vacatures",
     "companySlogan": "Smart Industry Engineers",
     "companyDescription": "At Ndus3 we believe that smart technology creates tomorrow's solutions. That's why we are dedicated to supply the best engineers to the smart industry. Result driven engineers who aim for the perfect solution. Engineers that keep developing through our unlimited education and experienced colleagues. \n\nCurious about how we work and what we can do for your development? Call Gerben van Manen at +31 23 303 5922.\n\nNdus3 - Smart Industry Engineers",
-    "companyEmployeesCount": 39
+    "companyEmployeesCount": 39,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4308060534",
@@ -2731,7 +2877,9 @@
     "companyWebsite": "https://www.index.nl",
     "companySlogan": "B2B Technology Partner | Verhoog efficiëntie, systematiseer processen en genereer meer omzet",
     "companyDescription": "B2B Technology Partner voor Werving & Selectie en de Maakindustrie\n\nWij partneren met bedrijven in de Werving & Selectie en de Maakindustrie en helpen ze op te schalen door efficiëntie te verhogen, systemen op te zetten en meer omzet te genereren.\n\nHOE?\nWij komen jouw bedrijf binnen als partner. We analyseren interne processen en verhogen efficiëntie door maatwerk systemen op te zetten. Hierdoor krijg jij meer inzicht in data, motiveer je jouw team om betere resultaten te halen en bespaar je tijd bij bestaand personeel. Zo kun je hen effectiever inzetten voor verdere groei van jouw bedrijf.\n\nWij implementeren een 5 staps framework dat ervoor zorgt dat:\n\n► Jouw team gemotiveerder wordt en efficiënter te werk gaat\n► Personeel betere resultaten haalt en je sales verbetert\n► Je meer omzet kunt draaien zónder extra personeel aan te nemen\n► Je kunt focussen op taken die je bedrijf écht verder helpen\n\nEn als bonus zorgen wij er voor dat\n\n► Jij jouw bedrijf gesystematiseerd kunt schalen\n► Je personeel effectiever in kunt zetten\n► Systemen niet meer afhankelijk hoeven te zijn van personen\n\nEen aantal van onze klanten\n• Barneveldse Kraanverhuur: besparing van minimaal 1 uur per dag door de custom BKV inkoop app\n• The Next Label: Meer sales door een gemotiveerd team van consultants dankzij een live sales leaderboard\n• Hofweb: Een betere klantervaring en verhoging in sales door een verbeterde web app \n\nMeer weten over hoe wij als Technology Partner jouw bedrijf efficiënt kunnen laten groeien?\n\nPlan een Discovery call met Rick:\n\nhttps://meetings.hubspot.com/rick143",
-    "companyEmployeesCount": 10
+    "companyEmployeesCount": 10,
+    "travelTime": 99,
+    "TransportTransferNum": 1
   },
   {
     "id": "4311500714",
@@ -2766,7 +2914,9 @@
     "companyWebsite": "http://www.nedap.com",
     "companySlogan": "Creating technological solutions that make professionals happier and more successful in life.",
     "companyDescription": "Nedap is a leader in Digital Twin Technology, bridging the physical and digital worlds in Healthcare, Livestock, Retail and Security. Through our Technology for Life philosophy, we create and scale sustainable, forward-thinking solutions that help people and organizations succeed in an ever-changing world.\n\nWe are a proud team of over 1,000 people working together to make a global impact. With offices worldwide we connect cutting-edge technology with real-world challenges to improve lives and businesses everywhere. For nearly a century, our passion for innovation has driven us to create meaningful, sustainable solutions that make people happier and more successful in their work.",
-    "companyEmployeesCount": 1285
+    "companyEmployeesCount": 1285,
+    "travelTime": 170,
+    "TransportTransferNum": 2
   },
   {
     "id": "4291277922",
@@ -2800,7 +2950,9 @@
     },
     "companyWebsite": "http://werken.belastingdienst.nl",
     "companyDescription": "De organisatie bestaat uit diverse onderdelen, waaronder de Belastingdienst, Douane, Toeslagen, FIOD en enkele facilitaire organisaties. Met ruim 30.000 medewerkers werken we in kantoren die verspreid zijn over het hele land. Gezamenlijk heffen, innen en controleren we belastingen. Daarnaast  zorgen we ook voor het uitbetalen van toeslagen. En zijn we verantwoordelijk voor douanetaken en het opsporen van fraude.\r\n \r\nDe Belastingdienst is een organisatie die 24 uur per dag, 7 dagen per week in dienst staat van de samenleving. Waar jaarlijks miljoenen aangiften worden behandeld, en waar voor honderden miljoenen aan toeslagen worden uitbetaald. En waar de Douane dagelijks zorgt voor de vlotte en veilige in- en uitvoer van tonnen goederen. Ondanks deze grote aantallen streven wij waar mogelijk naar individuele en persoonlijke dienstverlening. En in de vorm van bijvoorbeeld convenanten en partnerships werken wij ook zo goed mogelijk samen met het bedrijfsleven en andere ketenpartners.\r\n\r\n\r\n\r\n\r\nDe Belastingdienst: grootschalig, veelzijdig en altijd maatschappelijk relevant.",
-    "companyEmployeesCount": 17995
+    "companyEmployeesCount": 17995,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4296063400",
@@ -2839,7 +2991,9 @@
     "companyWebsite": "http://www.nedap.com",
     "companySlogan": "Creating technological solutions that make professionals happier and more successful in life.",
     "companyDescription": "Nedap is a leader in Digital Twin Technology, bridging the physical and digital worlds in Healthcare, Livestock, Retail and Security. Through our Technology for Life philosophy, we create and scale sustainable, forward-thinking solutions that help people and organizations succeed in an ever-changing world.\n\nWe are a proud team of over 1,000 people working together to make a global impact. With offices worldwide we connect cutting-edge technology with real-world challenges to improve lives and businesses everywhere. For nearly a century, our passion for innovation has driven us to create meaningful, sustainable solutions that make people happier and more successful in their work.",
-    "companyEmployeesCount": 1285
+    "companyEmployeesCount": 1285,
+    "travelTime": 170,
+    "TransportTransferNum": 2
   },
   {
     "id": "4306522886",
@@ -2871,7 +3025,9 @@
     },
     "companyWebsite": "http://www.actemium.nl",
     "companyDescription": "Actemium adviseert over, ontwerpt, bouwt, optimaliseert en onderhoudt industriële processen. Improving industrial performance. Onze solutions & services sluiten uitstekend aan op de levenscyclus van jouw productiefaciliteiten. Met passie voor techniek, een marktgesegmenteerde aanpak en kennis van jouw proces maken wij ook voor jou graag het verschil. Dat doen we wereldwijd, maar toch dichtbij jou in de buurt.\n\nHet netwerk van Actemium – het merk van VINCI Energies voor de industrie – telt wereldwijd 24.400 specialisten en 400 business units in 40 landen. In Nederland bewegen 1100 ondernemende professionals vanuit 24 business units de industrie. Bij opdrachtgevers in de markten olie & gas, voeding, brouwerijen & dranken, feed, chemie en farmacie, groothandel & distributie en manufacturing.\n\nSamen bewegen is vooruitgaan.\nZonder beweging staat alles stil. Ook bij advisering, engineering, realisatie, inbedrijfstelling en onderhoud van industriële installaties draait het om wendbaarheid. Wereldwijd de juiste expertise op het juiste moment inzetten én managen. Flexibel inspelen op veranderingen. Voortdurend zoeken naar innovatieve Solutions & Services die jouw processen verbeteren. \n\nJe vindt ons in: Doetinchem, Dordrecht, Drachten, Eindhoven, Goes, Nijmegen, Roermond, Schijndel, Uden, Veendam, Veghel, Zevenaar, Zwijndrecht en Zwolle.",
-    "companyEmployeesCount": 574
+    "companyEmployeesCount": 574,
+    "travelTime": 86,
+    "TransportTransferNum": 1
   },
   {
     "id": "4300487735",
@@ -2906,7 +3062,9 @@
     },
     "companyWebsite": "https://www.rensafamily.company/",
     "companyDescription": "Rensa Family is een internationale groep van specialisten voor de installatiewereld. De gemeenschappelijke waarden van deze (uitsluitend) familiebedrijven zijn de verbindende factor; klantgericht denken en doen en altijd klaarstaan voor een ander.",
-    "companyEmployeesCount": 284
+    "companyEmployeesCount": 284,
+    "travelTime": 116,
+    "TransportTransferNum": 2
   },
   {
     "id": "4300819928",
@@ -2946,7 +3104,9 @@
     "companyWebsite": "https://www.amoriabond.com/en/",
     "companySlogan": "TALiNT’s Best Company to Work For/Recruiter’s Best Client Service/REC’s Best People Development/Global Rec Best Overseas",
     "companyDescription": "Amoria Bond is an international, award-winning recruitment company dedicated to progressing lives through specialist staffing and recruitment solutions. \n\nWith nearly 20 years’ experience, we connect businesses with skilled professionals across EMEA, North America and APAC to help build a greener, better future. \n\nWe offer flexible, value-led services including freelance solutions, staff augmentation, and permanent recruitment, such as executive search, across the pioneering industries of Advanced Engineering, Technology and Energy. \n\nOur ambitious goal of progressing lives everywhere is deeply embedded in our culture. We hold ourselves accountable for meeting this goal through our PROFES values (Positivity, Respect, Ownership, Fun, Excellence, Success) and our Best Service Charter, which defines the standards we promise to clients, candidates, colleagues and our wider community. \n\nOur commitment goes beyond recruitment. Through the Amoria Bond Charitable Trust, we've donated over £946,000 to global causes, partnered with Project Peru for 15+ years, planted 163,395 trees, and organised numerous local CSR initiatives annually.  \n\nOur employee-led culture is built on development and progression, supported by a transparent 10-step progression plan, multi-channel training for all levels, and personal development budgets. The results speak for themselves: 90% of our leaders began as trainees, 89 promotions over the last year, and 16 awards won for our learning and development programmes. \n\nThanks to our people-first approach, best service commitment and steady growth, we’ve received multiple accolades, including APSCo DE’s Staffing Company of the Year (2024), and featured for the seventh year running in the Recruiter Hot 100 (2025). ",
-    "companyEmployeesCount": 316
+    "companyEmployeesCount": 316,
+    "travelTime": 65,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306536179",
@@ -2978,7 +3138,9 @@
     },
     "companyWebsite": "http://www.actemium.nl",
     "companyDescription": "Actemium adviseert over, ontwerpt, bouwt, optimaliseert en onderhoudt industriële processen. Improving industrial performance. Onze solutions & services sluiten uitstekend aan op de levenscyclus van jouw productiefaciliteiten. Met passie voor techniek, een marktgesegmenteerde aanpak en kennis van jouw proces maken wij ook voor jou graag het verschil. Dat doen we wereldwijd, maar toch dichtbij jou in de buurt.\n\nHet netwerk van Actemium – het merk van VINCI Energies voor de industrie – telt wereldwijd 24.400 specialisten en 400 business units in 40 landen. In Nederland bewegen 1100 ondernemende professionals vanuit 24 business units de industrie. Bij opdrachtgevers in de markten olie & gas, voeding, brouwerijen & dranken, feed, chemie en farmacie, groothandel & distributie en manufacturing.\n\nSamen bewegen is vooruitgaan.\nZonder beweging staat alles stil. Ook bij advisering, engineering, realisatie, inbedrijfstelling en onderhoud van industriële installaties draait het om wendbaarheid. Wereldwijd de juiste expertise op het juiste moment inzetten én managen. Flexibel inspelen op veranderingen. Voortdurend zoeken naar innovatieve Solutions & Services die jouw processen verbeteren. \n\nJe vindt ons in: Doetinchem, Dordrecht, Drachten, Eindhoven, Goes, Nijmegen, Roermond, Schijndel, Uden, Veendam, Veghel, Zevenaar, Zwijndrecht en Zwolle.",
-    "companyEmployeesCount": 574
+    "companyEmployeesCount": 574,
+    "travelTime": 86,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309613413",
@@ -3017,7 +3179,9 @@
     },
     "companyWebsite": "http://www.starapple.nl",
     "companyDescription": "StarApple is een bemiddelingsbureau voor bedrijven die op zoek zijn naar ICT specialisten met uiterst specifieke vaardigheden. Wij bieden ontwikkelaars en overige ICT-ers precies de uitdagingen waarnaar ze op zoek zijn. Dankzij een grondige analyse van de beide partijen en kennis van de uit te voeren taken en  gevraagde vaardigheden, zijn wij in staat om goede en langdurige matches te maken.\n\nIn 2008 is StarApple gestart met de bemiddeling van Microsoft .NET development (C# / VB.NET / ASP.NET) specialisten voor een vast dienstverband. PHP en Java experts volgden al snel. Vanwege de groeiende vraag  naar een ‘one-stop-shop’ hebben we ervoor gekozen om naast software ontwikkeling ook beheer- en testspecialisten aan onze dienstverlening toe te voegen. Tegenwoordig hebben we ook data warehousing (Oracle en SQL dba), BI, ERP en CRM (Microsoft Dynamics, SAP en overige ERP en CRM pakketten) specialisten en consultants in huis.\n\nAl sinds onze start onderscheiden wij ons met een zeer gedreven en persoonlijke aanwezigheid op de Nederlandse ICT markt. Ambitie moet tenslotte van beide kanten komen. De drijvende kracht achter StarApple is een groep enthousiaste en gespecialiseerd opgeleide, service gerichte consultants. Iedere consultant beslaat een aparte regio en een technische expertise. Samen hebben ze al meer dan 5000 specialisten en bedrijven succesvol met elkaar verbonden.",
-    "companyEmployeesCount": 73
+    "companyEmployeesCount": 73,
+    "travelTime": 28,
+    "TransportTransferNum": 0
   },
   {
     "id": "4277839831",
@@ -3051,7 +3215,9 @@
     },
     "companyWebsite": "http://werken.belastingdienst.nl",
     "companyDescription": "De organisatie bestaat uit diverse onderdelen, waaronder de Belastingdienst, Douane, Toeslagen, FIOD en enkele facilitaire organisaties. Met ruim 30.000 medewerkers werken we in kantoren die verspreid zijn over het hele land. Gezamenlijk heffen, innen en controleren we belastingen. Daarnaast  zorgen we ook voor het uitbetalen van toeslagen. En zijn we verantwoordelijk voor douanetaken en het opsporen van fraude.\r\n \r\nDe Belastingdienst is een organisatie die 24 uur per dag, 7 dagen per week in dienst staat van de samenleving. Waar jaarlijks miljoenen aangiften worden behandeld, en waar voor honderden miljoenen aan toeslagen worden uitbetaald. En waar de Douane dagelijks zorgt voor de vlotte en veilige in- en uitvoer van tonnen goederen. Ondanks deze grote aantallen streven wij waar mogelijk naar individuele en persoonlijke dienstverlening. En in de vorm van bijvoorbeeld convenanten en partnerships werken wij ook zo goed mogelijk samen met het bedrijfsleven en andere ketenpartners.\r\n\r\n\r\n\r\n\r\nDe Belastingdienst: grootschalig, veelzijdig en altijd maatschappelijk relevant.",
-    "companyEmployeesCount": 17995
+    "companyEmployeesCount": 17995,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4299564183",
@@ -3086,7 +3252,9 @@
     },
     "companyWebsite": "http://www.traxion.com",
     "companyDescription": "SITS|Traxion is the independent specialist and market leader in the Benelux in the area of Identity  Access Management as part of our information security portfolio. With strategic, tactical and operational advice and services, we guide our customer towards robust, flexible solutions.\n\nYour security can only be guaranteed through a coherent approach of constant measurement and improvement. That is why we provide the complete spectrum – we find the problems, including the underlying causes in the processes and organization, and come up with real solutions that work in practice now and in the long term. Solutions that we can realize also in your organization.\n\nThe implementation of Information Security solutions can only be successful if they seamlessly meet the needs of the organization. Traxion takes care of this through a broad, professional approach and the involvement of management and IT as well as users.\n\nOne of our most important assets is knowledge. Gained through many years of experience, constantly maintained with specialist training courses and always with a view to future developments and challenges.\n\nOur specialists realize successful implementations in a wide range of organizations. Our cyclical approach results in a controllable, stable security infrastructure that can meet the strictest of compliancy requirements.\n\nFor more information please contact us via info@traxion.com or visit our website www.traxion.com\n",
-    "companyEmployeesCount": 164
+    "companyEmployeesCount": 164,
+    "travelTime": 95,
+    "TransportTransferNum": 1
   },
   {
     "id": "4312989413",
@@ -3123,7 +3291,9 @@
     "companyWebsite": "https://www.us3consulting.co.uk/",
     "companySlogan": "IT Recruitment & Consultancy",
     "companyDescription": "Us3 Consulting is a European recruitment provider that specialises in offering rapid and cost-effective candidate sourcing to all facets of the tech industry\n\nContact us at info@us3consulting.nl\n\n",
-    "companyEmployeesCount": 31
+    "companyEmployeesCount": 31,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306208749",
@@ -3161,7 +3331,9 @@
     "companyWebsite": "https://www.abstract-it.nl",
     "companySlogan": "de slimme softwaremakers",
     "companyDescription": "Wij maken maatwerk ERP software die volledig is afgestemd op uw organisatie, zodat uw bedrijfsprocessen optimaal verlopen. Onze maatwerk ERP (of bedrijfs-) applicaties kunnen alle bedrijfsprocessen in uw organisatie ondersteunen, zoals logistiek, inkopen, verkopen en facturatie. Alle informatie is altijd en overal beschikbaar en optimaal op elkaar afgestemd, zodat altijd inzichtelijk is hoe uw organisatie ervoor staat.",
-    "companyEmployeesCount": 11
+    "companyEmployeesCount": 11,
+    "travelTime": 86,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306986717",
@@ -3197,7 +3369,9 @@
     "companyWebsite": "https://www.kadaster.nl",
     "companySlogan": "Zet jezelf op de kaart bij het Kadaster.",
     "companyDescription": "Bij het Kadaster doen we meer dan zekerheid verschaffen bij het kopen van een huis. Dat we in opdracht van de landelijke overheid al het vastgoed in Nederland registreren is een feit. Maar het zal je misschien verrassen dat we met onze gegevens ook beleidsmakers helpen betere beslissingen te nemen. Zo kun je bij het Kadaster bijvoorbeeld een provincie adviseren over de gewenste uitbreiding van een rivier of wegennet.\r\n\r\n \r\nJaarlijks leveren onze 1800 medewerkers ruim 20 miljoen informatieproducten aan uiteenlopende partijen als notaris, financiële instellingen en particulieren. Maar het Kadaster is ook onafhankelijk adviseur bij ruimtelijke vraagstukken. En internationaal delen wij onze kennis met landen die onze hulp nodig hebben om bijvoorbeeld een Kadaster op te zetten. \r\n\r\n\r\nZoals het Kadaster de bron is van vastgoed en geo-informatie, zo vormen onze medewerkers de bron van ons succes. De wereld om ons heen is continu in beweging en daarmee ook ons werk. Hier moeten we tijdig en adequaat op reageren. Flexibiliteit en vitaliteit zijn voor onze organisatie én onze medewerkers dan ook belangrijke speerpunten.\r\n\r\n \r\nMet de kennis van onze mensen bouwen we verder aan onze klantgerichte dienstverlening. Het Kadaster is een mensgerichte organisatie die jouw ambities de ruimte geeft en waar jij het gevoel krijgt dat jouw kennis ertoe doet. We bieden je uitstekende arbeidsvoorwaarden, waaronder een goed salaris en ruime ontwikkelingsmogelijkheden. Kom jij onze kennis verrijken?",
-    "companyEmployeesCount": 2205
+    "companyEmployeesCount": 2205,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4309559041",
@@ -3233,7 +3407,9 @@
     "companyWebsite": "https://www.kadaster.nl",
     "companySlogan": "Zet jezelf op de kaart bij het Kadaster.",
     "companyDescription": "Bij het Kadaster doen we meer dan zekerheid verschaffen bij het kopen van een huis. Dat we in opdracht van de landelijke overheid al het vastgoed in Nederland registreren is een feit. Maar het zal je misschien verrassen dat we met onze gegevens ook beleidsmakers helpen betere beslissingen te nemen. Zo kun je bij het Kadaster bijvoorbeeld een provincie adviseren over de gewenste uitbreiding van een rivier of wegennet.\r\n\r\n \r\nJaarlijks leveren onze 1800 medewerkers ruim 20 miljoen informatieproducten aan uiteenlopende partijen als notaris, financiële instellingen en particulieren. Maar het Kadaster is ook onafhankelijk adviseur bij ruimtelijke vraagstukken. En internationaal delen wij onze kennis met landen die onze hulp nodig hebben om bijvoorbeeld een Kadaster op te zetten. \r\n\r\n\r\nZoals het Kadaster de bron is van vastgoed en geo-informatie, zo vormen onze medewerkers de bron van ons succes. De wereld om ons heen is continu in beweging en daarmee ook ons werk. Hier moeten we tijdig en adequaat op reageren. Flexibiliteit en vitaliteit zijn voor onze organisatie én onze medewerkers dan ook belangrijke speerpunten.\r\n\r\n \r\nMet de kennis van onze mensen bouwen we verder aan onze klantgerichte dienstverlening. Het Kadaster is een mensgerichte organisatie die jouw ambities de ruimte geeft en waar jij het gevoel krijgt dat jouw kennis ertoe doet. We bieden je uitstekende arbeidsvoorwaarden, waaronder een goed salaris en ruime ontwikkelingsmogelijkheden. Kom jij onze kennis verrijken?",
-    "companyEmployeesCount": 2205
+    "companyEmployeesCount": 2205,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4308821299",
@@ -3269,7 +3445,9 @@
     "companyWebsite": "http://www.overheidzzp.nl",
     "companySlogan": "Bekijk alle openstaande opdracten op www.overheidzzp.nl",
     "companyDescription": "OverheidZZP is een uniek en snelgroeiend netwerk van ruim 7500 professionals met een passie voor de publieke zaak! Wij bieden maatwerk in werving en selectie aan (semi)overheden, NGO's en bureaus. Door de slimme inzet van social media zoals Linkedin en minimale overhead biedt onze dienstverlening veel voor opdrachtgevers voordelen. \nMail ons: info@overheidzzp.nl ",
-    "companyEmployeesCount": 23
+    "companyEmployeesCount": 23,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4302615823",
@@ -3305,7 +3483,9 @@
     "companyWebsite": "http://www.eppix.com",
     "companySlogan": "Building Digital Bridges.",
     "companyDescription": "Eppix is een webapplicatie ontwikkelaar die sinds 2009 webapplicaties bouwt. Wij zijn een toegewijd team uit Elst, Nederland, dat oplossingen levert voor een breed scala aan klanten, variërend van MKB tot multinationals, met een specialisatie in de gezondheidszorg. Onze focus ligt op het leveren van producten van hoge kwaliteit in een nauwe samenwerking met de klant.\n\nVoel je vrij om contact met ons op te nemen via info@eppix.com",
-    "companyEmployeesCount": 10
+    "companyEmployeesCount": 10,
+    "travelTime": 54,
+    "TransportTransferNum": 1
   },
   {
     "id": "4308827163",
@@ -3341,7 +3521,9 @@
     "companyWebsite": "www.MiPublic.nl",
     "companySlogan": "Opdrachten binnen de publieke sector voor de Masters in Public!",
     "companyDescription": "Masters in Public is een jong en energiek uitzendbureau, vol passie en enthousiasme voor de publieke sector. We zijn opgericht door professionals met een groot hart voor de maatschappij! Sinds 2018 werken we samen met (semi)overheden aan recruitmentoplossingen.\n\nWe bieden een breed scala aan diensten, zoals interim opdrachten, consultancy, workshops, trainingen en traineeships. Elke organisatie is uniek en elke professional is uniek. Daarom zorgen wij met een persoonlijke benadering voor een unieke match.\n\nIn tijden van krapte of ruimte op de arbeidsmarkt is het vinden van de juiste match voor een vacature van groot belang. Dankzij onze praktijkervaring bij verschillende overheden begrijpen we de behoeften van overheidsorganisaties als het gaat om geschikte kandidaten.\n\nTegelijkertijd begrijpen we de professionals die op zoek zijn naar een passende opdracht en organisatie. Met onze jarenlange kennis en ervaring streven we ernaar om een passende match te bieden voor beide partijen.\n\nWe streven naar een transparante, betrouwbare en flexibele overheid die nauw verbonden is met de maatschappij. Ons doel is om niet alleen bij te dragen aan het realiseren van dit ideaal, maar ook om het te blijven ontwikkelen met een toekomstgerichte visie en missie.\n\nDoor zelfvertrouwen uit te stralen, zowel als organisatie als individu, werken we aan een samenleving die integer, duurzaam, eensgezind en verantwoordelijk is.",
-    "companyEmployeesCount": 2
+    "companyEmployeesCount": 2,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4312010680",
@@ -3380,7 +3562,9 @@
     },
     "companyWebsite": "http://www.traxion.com",
     "companyDescription": "SITS|Traxion is the independent specialist and market leader in the Benelux in the area of Identity  Access Management as part of our information security portfolio. With strategic, tactical and operational advice and services, we guide our customer towards robust, flexible solutions.\n\nYour security can only be guaranteed through a coherent approach of constant measurement and improvement. That is why we provide the complete spectrum – we find the problems, including the underlying causes in the processes and organization, and come up with real solutions that work in practice now and in the long term. Solutions that we can realize also in your organization.\n\nThe implementation of Information Security solutions can only be successful if they seamlessly meet the needs of the organization. Traxion takes care of this through a broad, professional approach and the involvement of management and IT as well as users.\n\nOne of our most important assets is knowledge. Gained through many years of experience, constantly maintained with specialist training courses and always with a view to future developments and challenges.\n\nOur specialists realize successful implementations in a wide range of organizations. Our cyclical approach results in a controllable, stable security infrastructure that can meet the strictest of compliancy requirements.\n\nFor more information please contact us via info@traxion.com or visit our website www.traxion.com\n",
-    "companyEmployeesCount": 164
+    "companyEmployeesCount": 164,
+    "travelTime": 95,
+    "TransportTransferNum": 1
   },
   {
     "id": "4214753362",
@@ -3420,7 +3604,9 @@
     "companyWebsite": "http://www.greefa.com",
     "companySlogan": "GREEFA’s innovative fruit-sorting solutions streamline your production process and give you that competitive edge.",
     "companyDescription": "GREEFA is the pioneer and current benchmark in the world of sorting technology. From our HQ in the Netherlands we design and develop innovative and high-tech grading and packaging solutions for fruit and vegetables. Virtually all new technologies, both hardware and software, are developed by our own R&D department. we have been at the top of the market for decades and we are active in more than 40 countries.\n\nFor more information, check out our brand-new website: www.greefa.com (available in English, Dutch, German, French, Italian and Spanish). If you are interested in working with us, please check our vacancies: www.werkenbijgreefa.nl (Dutch).",
-    "companyEmployeesCount": 158
+    "companyEmployeesCount": 158,
+    "travelTime": 85,
+    "TransportTransferNum": 1
   },
   {
     "id": "4302686224",
@@ -3456,7 +3642,9 @@
     "companyWebsite": "http://www.nippur.nl",
     "companySlogan": "Taking Data To Heart",
     "companyDescription": "The Nippur consultants take leading roles in BI projects at medior and large companies. They understand the business and technical issues these companies encounter and know how to deal with cultural and political issues to achieve good results for the customer. This is primarily because of their in depth knowledge of the BI arena and their extensive experience in various challenging projects.",
-    "companyEmployeesCount": 28
+    "companyEmployeesCount": 28,
+    "travelTime": 69,
+    "TransportTransferNum": 1
   },
   {
     "id": "4303996717",
@@ -3492,7 +3680,9 @@
     "companyWebsite": "https://jobs.treatwell.com/#jobs",
     "companySlogan": "We empower industry growth to bring more beauty and wellness to everyone, everywhere.",
     "companyDescription": "At Treatwell, we empower industry growth to bring more beauty and wellness to everyone, everywhere. As Europe’s No.1 beauty and wellness booking platform, we connect millions of people with salons and professionals across 13 countries. With the industry’s smartest salon management software at our core, we help beauty and wellness professionals grow their business while making treatments more accessible than ever.\n\nOur vision is simple: to create a world where everyone can treat themselves well. That means giving salons the tools, visibility, and support to thrive, while making it effortless for customers to book the treatments they love. Anytime, anywhere.\n\nBehind it all is a team of passionate, ambitious people united by our values: Treat everyone well, Think like a salon owner, Make every appointment count, and Play to win together. These values shape how we work, drive our growth, and keep us focused on building a company that truly makes a difference for our people, partners, and industry.\n\nReady to be part of the journey? Explore our careers page, your next chapter could start here.",
-    "companyEmployeesCount": 888
+    "companyEmployeesCount": 888,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   },
   {
     "id": "4306109479",
@@ -3528,7 +3718,9 @@
     "companyWebsite": "https://www.pivoton.nl",
     "companySlogan": "Vaste partner van flex",
     "companyDescription": "Pivoton biedt software voor de administratieve- en commerciële processen in de flexmarkt als SaaS en PaaS oplossing en verzorgt de complete backoffice verwerking van urendeclaraties en facturatie. Met 30% van alle uur declaraties bij uitzendbureaus zijn wij marktleider. Alles ondersteund met een adviesrol met een focus op partnership. \r\nPivoton is een nieuwe naam binnen de flexmarkt. Maar nieuw zijn we allerminst. Voorheen bekend als CTB Flex zetten wij onder een nieuwe naam 25 jaar expertise voort. Met een vernieuwende kijk op hoe de flexmarkt en informatietechnologie zich aan het ontwikkelen zijn en welke IT dienstverlening en –producten daarbij worden gewenst. \r\n\r\nDe Software as a Service software (SaaS) is een in de flexmarkt veel gebruikte “all-in-one cloud oplossing” voor het universele uitzendproces. De software wordt ingezet voor onder andere matching, inschrijving, plaatsing, online ondersteuning, personeelsplanning en managementinformatie tot aan het verlonen en factureren van de uren. In al onze producten vindt u de kennis van verlonen en factureren, wet- en regelgeving, cao’s, de branche en klanten terug. \r\nApplication Platform as a Service (PaaS) is in principe een gereedschapskist en ontwikkelomgeving voor programmeurs. De omgeving is hierbij geladen met de standaard SaaS software als systeem template met aanpasbare broncode en modules. Het Outsystems® platform ondersteunt bij het creëren van allerlei soorten maatsoftware en een cross-platform integratie van applicaties. Deze combinatie geeft een hoge mate van maatwerk flexibiliteit en configureerbaarheid gecombineerd met leversnelheid door IT. \r\nPivoton verzorgt de gehele procesoperatie van verwerking van urendeclaraties tot factuur en loongegevens. Al meer dan 25 jaar zijn wij in staat om leverantie continuïteit te verzekeren en onze software aan te passen aan de wijzigingen in de wet- en regelgeving, werkwijze in de flexbranche en technische specificaties van de hardware.",
-    "companyEmployeesCount": 40
+    "companyEmployeesCount": 40,
+    "travelTime": 31,
+    "TransportTransferNum": 0
   },
   {
     "id": "4304075281",
@@ -3562,7 +3754,9 @@
     },
     "companyWebsite": "http://www.saur.com",
     "companyDescription": "As a pure player in water and essential services, Saur works to protect the environment in the heart of the territories it serves.\n\nSaur has always acted to offer the same quality of service to small towns as to large cities, guided by its mission: to restore to water the value it deserves.\n\nSaur worldwide presence: Cyprus, France, Italia, Netherlands, Poland, Portugal, Saudi Arabia Scotland, Spain.\n\n2021 key figures: $2.0 billion Group net revenue, 9,500 local authorities and industrial clients contracted, 12,000 employees and 20 million consumers served worldwide.\n\nAt a time when the challenges of the ecological transition are central to the problems faced by society worldwide, Saur is reasserting its commitments to take action, advocating and rallying all stakeholders to ensure a safer world for future generations.\n\nFurther details on our web site: http://www.saur.com/\n\n\nPure player de l'eau et des services essentiels, Saur œuvre pour la protection de l'environnement au cœur des territoires qu'elle dessert.\n\nSaur a toujours agi pour offrir la même qualité de service aux petites communes et aux grandes villes, guidé par sa mission : redonner à l'eau la valeur qu'elle mérite.\n\nSaur est présent dans le monde entier : Chypre, France, Italie, Pays-Bas, Pologne, Portugal, Arabie Saoudite, Ecosse, Espagne.\n\nChiffres clés 2021 : 2,0 milliards de dollars de chiffre d'affaires net du Groupe, 9 500 collectivités locales et clients industriels sous contrat, 12 000 collaborateurs et 20 millions de consommateurs desservis dans le monde.",
-    "companyEmployeesCount": 6479
+    "companyEmployeesCount": 6479,
+    "travelTime": 116,
+    "TransportTransferNum": 2
   },
   {
     "id": "4306316644",
@@ -3596,7 +3790,9 @@
     },
     "companyWebsite": "http://werken.belastingdienst.nl",
     "companyDescription": "De organisatie bestaat uit diverse onderdelen, waaronder de Belastingdienst, Douane, Toeslagen, FIOD en enkele facilitaire organisaties. Met ruim 30.000 medewerkers werken we in kantoren die verspreid zijn over het hele land. Gezamenlijk heffen, innen en controleren we belastingen. Daarnaast  zorgen we ook voor het uitbetalen van toeslagen. En zijn we verantwoordelijk voor douanetaken en het opsporen van fraude.\r\n \r\nDe Belastingdienst is een organisatie die 24 uur per dag, 7 dagen per week in dienst staat van de samenleving. Waar jaarlijks miljoenen aangiften worden behandeld, en waar voor honderden miljoenen aan toeslagen worden uitbetaald. En waar de Douane dagelijks zorgt voor de vlotte en veilige in- en uitvoer van tonnen goederen. Ondanks deze grote aantallen streven wij waar mogelijk naar individuele en persoonlijke dienstverlening. En in de vorm van bijvoorbeeld convenanten en partnerships werken wij ook zo goed mogelijk samen met het bedrijfsleven en andere ketenpartners.\r\n\r\n\r\n\r\n\r\nDe Belastingdienst: grootschalig, veelzijdig en altijd maatschappelijk relevant.",
-    "companyEmployeesCount": 17995
+    "companyEmployeesCount": 17995,
+    "travelTime": 73,
+    "TransportTransferNum": 1
   },
   {
     "id": "4301777531",
@@ -3635,7 +3831,9 @@
     "companyWebsite": "http://www.accordis.nl",
     "companySlogan": "Betere zorg door betere informatie",
     "companyDescription": "Wij zijn specialisten in het grondig verbeteren van de prestaties van zorgorganisaties. Ambities realiseren van mensen in de zorg door onze kennis en ervaring over informatievoorziening, processen, systeeminrichting en leiderschap te delen. Dat is wat wij doen. Samen naar een hoger plan. Zodat het leven van iedereen die zorgt geeft of zorg krijgt aangenamer wordt. Geen dikke rapporten; wel zichtbare en duurzame resultaten.",
-    "companyEmployeesCount": 51
+    "companyEmployeesCount": 51,
+    "travelTime": 126,
+    "TransportTransferNum": 2
   },
   {
     "id": "4308800452",
@@ -3674,6 +3872,8 @@
     },
     "companyWebsite": "https://www.happyhorizon.com",
     "companyDescription": "As experts in critical thinking, creativity, campaigning and technology, we challenge your dot on the horizon. Hi, we’re your creative digital agency.\n\n#1 Enabler in Digital Transformation | MT/Sprout DX300 ",
-    "companyEmployeesCount": 442
+    "companyEmployeesCount": 442,
+    "travelTime": 48,
+    "TransportTransferNum": 1
   }
 ]
