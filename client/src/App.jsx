@@ -2,13 +2,13 @@ import Layout from "./components/Layout";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
-import { guestUser } from "./data/defaultUser";
+import { defaultUser } from "./data/defaultUser";
 import { useState } from "react";
 // import JobListingPage from "./pages/JobListing/JobListingPage";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useState(guestUser);
+  const [user, setUser] = useState(defaultUser);
 
   return (
     <Routes>

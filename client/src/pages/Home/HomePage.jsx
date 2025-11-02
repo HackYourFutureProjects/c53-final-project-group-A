@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import SearchInput from "../../components/SearchInput";
 import "./HomePage.css";
 import { icons } from "../../assets";
+import { defaultUser } from "../../data/defaultUser.js";
+import { formatAddress } from "../../data/defaultUser.js";
 
 export default function HomePage() {
+  const displayedSkills = defaultUser.skills.slice(0, 3).join(", ");
+
   return (
     <div className="homepage-container">
       <div className="mission-section">
@@ -18,11 +22,10 @@ export default function HomePage() {
       <div className="guest-notice">
         <img src={icons.info} alt="info" className="info-icon" />
         <span>
-          Guest mode is limited to default settings — general skills such as
-          communication, adaptability, teamwork, and others, along with the
-          guest’s home address (Noord-Holland, Amsterdam, Keizersgracht 123).
-        </span>
-
+          Guest mode is limited to default settings — general skills such as{" "}
+          {displayedSkills.toLowerCase()}, and others, along with the guest’s
+          home address ({formatAddress(defaultUser.address)}).
+        </span>{" "}
         <Link to="/login" className="login-link">
           Log in
         </Link>
