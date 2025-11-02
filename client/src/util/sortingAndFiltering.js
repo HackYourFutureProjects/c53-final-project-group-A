@@ -1,5 +1,11 @@
-export function sortAndFilterJobs(allJobs, activeFilters, sortBy) {
+export function sortAndFilterJobs(
+  allJobs,
+  activeFilters,
+  sortBy,
+  searchTerm = "",
+) {
   const { seniorityLevel, employmentType, workMode } = activeFilters;
+  const searchLower = searchTerm.toLowerCase().trim();
 
   let filtered = allJobs.filter((job) => {
     const matchesSeniority =
@@ -7,7 +13,14 @@ export function sortAndFilterJobs(allJobs, activeFilters, sortBy) {
     const matchesJobType =
       employmentType.size === 0 || employmentType.has(job.employmentType);
     const matchesWorkMode = workMode.size === 0 || workMode.has(job.workMode);
-    return matchesSeniority && matchesJobType && matchesWorkMode;
+    const matchesSearch =
+      !searchLower ||
+      job.title?.toLowerCase().includes(searchLower) ||
+      job.company?.toLowerCase().includes(searchLower) ||
+      job.location?.toLowerCase().includes(searchLower);
+    return (
+      matchesSeniority && matchesJobType && matchesWorkMode && matchesSearch
+    );
   });
 
   let sorted = [...filtered];

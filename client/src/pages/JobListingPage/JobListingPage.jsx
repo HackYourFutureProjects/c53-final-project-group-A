@@ -1,15 +1,13 @@
-import { useLocation } from "react-router-dom";
 import { useState, useMemo } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+import { useJobs } from "../../context/JobsContext";
 import "./JobListingPage.css";
 
 export default function JobListingPage() {
-  const location = useLocation();
-
-  const allJobs = location.state?.jobs || [];
+  const { allJobs, searchTerm, showResults } = useJobs();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
@@ -46,11 +44,6 @@ export default function JobListingPage() {
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleApplyClick = (job) => {
-    const applyLink = job.applyUrl || job.link;
-    if (applyLink) window.open(applyLink, "_blank");
-  };
-
   const handleFilterChange = (filterKey, value, isChecked) => {
     setActiveFilters((prev) => {
       const newSet = new Set(prev[filterKey]);
@@ -74,11 +67,11 @@ export default function JobListingPage() {
     setSortBy("Skill match");
     setCurrentPage(1);
   };
-
-  const filteredJobs = useMemo(
-    () => sortAndFilterJobs(allJobs, activeFilters, sortBy),
-    [allJobs, activeFilters, sortBy],
-  );
+  const filteredJobs = useMemo(() => {
+    // ✅ only compute filtered jobs if showResults is true
+    if (!showResults || !searchTerm.trim()) return [];
+    return sortAndFilterJobs(allJobs, activeFilters, sortBy, searchTerm);
+  }, [allJobs, activeFilters, sortBy, searchTerm, showResults]);
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -120,7 +113,9 @@ export default function JobListingPage() {
               options={sortOptions}
               filterKey="sort"
               activeValues={sortBy}
-              onFilterChange={handleSortChange}
+              onFilterChange={(filterKey, value) =>
+                handleSortChange(filterKey, value)
+              }
             />
           </div>
           <button onClick={handleClearFilters} className="clear-filters-btn">
@@ -133,7 +128,8 @@ export default function JobListingPage() {
         <div className="results-summary">
           <h1 className="results-title">Search results</h1>
           <p className="results-count">
-            Showing **{filteredJobs.length}** results
+            Showing **{filteredJobs.length}** results{" "}
+            {searchTerm && `for "${searchTerm}"`}
           </p>
         </div>
 
@@ -150,7 +146,9 @@ export default function JobListingPage() {
                   job={job}
                   favorites={favorites}
                   onFavoriteToggle={handleFavoriteToggle}
-                  onApplyClick={handleApplyClick}
+                  onApplyClick={(job) =>
+                    window.open(job.applyUrl || job.link, "_blank")
+                  }
                 />
               ))}
             </ul>

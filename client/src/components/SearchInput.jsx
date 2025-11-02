@@ -2,11 +2,11 @@ import { useState } from "react";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/validation";
 import { useNavigate } from "react-router-dom";
-import NorthHolland from "../assets/NorthHolland.json";
+import { useJobs } from "../context/JobsContext";
 import "./SearchInput.css";
 
 export default function SearchInput() {
-  const [query, setQuery] = useState("");
+  const { searchTerm, setSearchTerm, setShowResults } = useJobs();
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,20 +17,16 @@ export default function SearchInput() {
       return;
     }
 
-    const validationError = validateJobInput({ text: query });
+    const validationError = validateJobInput({ text: searchTerm });
     if (validationError) {
       setAlert(validationError);
       return;
     }
 
-    setAlert({ type: "info", message: `Searching for "${query}"...` });
+    setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
     setLoading(true);
-
-    const filteredJobs = NorthHolland.filter((job) =>
-      job.title.toLowerCase().includes(query.toLowerCase()),
-    );
-
-    navigate("/jobs", { state: { jobs: filteredJobs } });
+    setShowResults(true);
+    navigate("/jobs");
     setLoading(false);
   };
 
@@ -40,8 +36,8 @@ export default function SearchInput() {
         <input
           type="text"
           placeholder="Enter a job title..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           className={alert.type === "error" ? "input error" : "input"}
         />
