@@ -1,3 +1,4 @@
+import Skills from "../Skills";
 import "./JobCard.css";
 export default function JobCard({
   job,
@@ -58,9 +59,8 @@ export default function JobCard({
             <div className="job-card-footer">
               <div className="skill-match-container">
                 <span className="skill-match-text">
-                  Skills Match ({job.skillMatch || "N/A"})
+                  <Skills item={job} />
                 </span>
-                <span className="skill-match-tag">Match</span>
               </div>
 
               <button
