@@ -4,7 +4,6 @@ import { validateJobInput } from "../util/validation";
 import { useNavigate } from "react-router-dom";
 import { useJobs } from "../context/JobsContext";
 import "./SearchInput.css";
-import { useNavigate } from "react-router-dom";
 
 export default function SearchInput() {
   const { searchTerm, setSearchTerm, setShowResults } = useJobs();
@@ -40,10 +39,9 @@ export default function SearchInput() {
         <input
           id="job-search"
           type="text"
-          placeholder="e.g. Web Developer"     
+          placeholder="e.g. Web Developer"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           aria-describedby="search-alert"
         />
