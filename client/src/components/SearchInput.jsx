@@ -1,23 +1,15 @@
 import { useState } from "react";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/validation";
+import { useNavigate } from "react-router-dom";
+import { useJobs } from "../context/JobsContext";
 import "./SearchInput.css";
 
 export default function SearchInput() {
-  const [query, setQuery] = useState("");
+  const { searchTerm, setSearchTerm, setShowResults } = useJobs();
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Mock data for demonstration
-  const mockJobs = [
-    {
-      title: "Backend Developer",
-      company: "Topicus",
-      location: "Utrecht, Netherlands",
-      url: "https://www.werkenbijtopicus.nl/vacature/143/backend-developer",
-    },
-  ];
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     if (!navigator.onLine) {
@@ -25,29 +17,17 @@ export default function SearchInput() {
       return;
     }
 
-    const validationError = validateJobInput({ text: query });
+    const validationError = validateJobInput({ text: searchTerm });
     if (validationError) {
       setAlert(validationError);
       return;
     }
 
-    setAlert({ type: "info", message: `Searching for "${query}"...` });
+    setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
     setLoading(true);
-
-    // Simulate API delay
-    setTimeout(() => {
-      // Simple filter by query
-      const filteredJobs = mockJobs.filter((job) =>
-        job.title.toLowerCase().includes(query.toLowerCase()),
-      );
-
-      setJobs(filteredJobs);
-      setAlert({
-        type: "success",
-        message: `Found ${filteredJobs.length} jobs for "${query}"`,
-      });
-      setLoading(false);
-    }, 1000);
+    setShowResults(true);
+    navigate("/jobs");
+    setLoading(false);
   };
 
   return (
@@ -56,8 +36,8 @@ export default function SearchInput() {
         <input
           type="text"
           placeholder="Enter a job title..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           className={alert.type === "error" ? "input error" : "input"}
         />
@@ -69,20 +49,7 @@ export default function SearchInput() {
           {loading ? "Searching..." : "Search"}
         </button>
       </div>
-
       <AlertMessage type={alert.type} message={alert.message} />
-
-      {jobs.length > 0 && (
-        <ul className="jobs-list">
-          {jobs.map((job, idx) => (
-            <li key={idx} className="job-item">
-              <a href={job.url} target="_blank" rel="noopener noreferrer">
-                <strong>{job.title}</strong> at {job.company} ({job.location})
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
