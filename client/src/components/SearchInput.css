@@ -1,142 +1,106 @@
 /* --- VARIABLES --- */
 :root {
-  /* Color Variables */
-  --color-bg-container: #ffffff;
-  --color-input-border: #ccc;
-  --color-input-focus: #0077ff;
+  --color-input-border: #d1d5db;
+  --color-input-focus: #3b82f6;
   --color-input-error: #e63946;
-  --color-btn-add: #0077ff;
-  --color-btn-add-hover: #005fd1;
-  --color-btn-disabled: #999;
-  --color-bg-title-item: #f2f6ff;
-  --color-border-title-item: #cdddfc;
-  --color-text-title-item: #333;
-  --color-btn-search: #111827;
-  --color-btn-search-hover: #1f2937;
+  --color-btn-search: #1f2937;
+  --color-btn-search-hover: #111827;
+  --color-text-label: #374151;
+  --color-text-placeholder: #9ca3af;
 }
 
-/* --- Container (Global/Desktop) --- */
-.search-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  width: 90%;
+/* --- Search Input Container --- */
+.search-input {
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  background: var(--color-bg-container);
-  padding: 30px 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
 }
 
-/* --- Search Input Group --- */
+/* --- Label --- */
+.search-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-label);
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+/* --- Input Group --- */
 .input-group {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  gap: 0.75rem;
   width: 100%;
-  margin-bottom: 20px;
 }
 
-.input {
+.input-group input {
   flex: 1;
-  padding: 12px 10px;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
-  border: 2px solid var(--color-input-border);
-  border-radius: 8px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 0.5rem;
   outline: none;
   transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.input:focus {
-  border-color: var(--color-input-focus);
+.input-group input::placeholder {
+  color: var(--color-text-placeholder);
 }
-.input.error {
+
+.input-group input:focus {
+  border-color: var(--color-input-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-group input.error {
   border-color: var(--color-input-error);
 }
 
-/* Add button */
+/* --- Search Button --- */
 .input-group button {
-  padding: 12px 20px;
+  padding: 0.75rem 2rem;
   background-color: var(--color-btn-search);
   color: white;
   font-size: 1rem;
+  font-weight: 500;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
 }
+
 .input-group button:hover {
   background-color: var(--color-btn-search-hover);
 }
 
-.titles-list {
-  width: 100%;
-  margin: 15px 0 25px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.input-group button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
 }
 
-.title-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: auto;
-  background: var(--color-bg-title-item);
-  border: 1px solid var(--color-border-title-item);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  color: var(--color-text-title-item);
-}
-.title-item span {
-  margin-right: 10px;
-  white-space: nowrap;
-}
-.title-item button {
-  background-color: var(--color-btn-remove);
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  transition: background-color 0.3s ease;
-}
-.title-item button:hover {
-  background-color: var(--color-btn-remove-hover);
+/* --- Error Message --- */
+.search-input .alert-message {
+  margin-top: 0.5rem;
+  text-align: left;
 }
 
-/* --- RESPONSIVE ADJUSTMENTS (Max-width 600px) --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 600px) {
-  .search-container {
-    width: 95%;
-    padding: 20px 15px;
+  .search-input {
+    width: 100%;
+    padding: 0 1rem;
   }
 
   .input-group {
     flex-direction: column;
-    gap: 15px;
+    gap: 0.75rem;
   }
 
-  .input,
-  .input-group button,
-  .search-btn {
+  .input-group input,
+  .input-group button {
     width: 100%;
-  }
-
-  .title-item {
-    padding: 10px 15px;
-    font-size: 1rem;
-    flex-direction: row;
-    justify-content: space-between;
   }
 }

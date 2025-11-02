@@ -4,6 +4,7 @@ import { validateJobInput } from "../util/validation";
 import { useNavigate } from "react-router-dom";
 import { useJobs } from "../context/JobsContext";
 import "./SearchInput.css";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchInput() {
   const { searchTerm, setSearchTerm, setShowResults } = useJobs();
@@ -12,8 +13,8 @@ export default function SearchInput() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (!navigator.onLine) {
-      setAlert({ type: "error", message: "No internet connection." });
+    if (!query.trim()) {
+      setAlert({ type: "error", message: "Please enter a job title." });
       return;
     }
 
@@ -31,25 +32,26 @@ export default function SearchInput() {
   };
 
   return (
-    <div className="search-container">
+    <div className="search-input">
+      <label htmlFor="job-search" className="search-label">
+        Enter job title
+      </label>
       <div className="input-group">
         <input
+          id="job-search"
           type="text"
-          placeholder="Enter a job title..."
+          placeholder="e.g. Web Developer"     
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          className={alert.type === "error" ? "input error" : "input"}
+          aria-describedby="search-alert"
         />
-        <button
-          className="search-btn"
-          onClick={handleSearch}
-          disabled={loading}
-        >
-          {loading ? "Searching..." : "Search"}
-        </button>
+        <button onClick={handleSearch}>Search</button>
       </div>
-      <AlertMessage type={alert.type} message={alert.message} />
+      {alert.message && (
+        <AlertMessage type={alert.type} message={alert.message} />
+      )}
     </div>
   );
 }
