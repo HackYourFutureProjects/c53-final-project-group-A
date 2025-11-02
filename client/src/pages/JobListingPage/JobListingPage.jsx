@@ -3,11 +3,11 @@ import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
-import { useJobs } from "../../context/JobsContext";
+import { UseJobs } from "../../context/JobsContext";
 import "./JobListingPage.css";
 
 export default function JobListingPage() {
-  const { allJobs, searchTerm, showResults } = useJobs();
+  const { allJobs, searchTerm, showResults } = UseJobs();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;

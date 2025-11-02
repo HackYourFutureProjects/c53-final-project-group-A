@@ -3,7 +3,7 @@ import NorthHolland from "../assets/NorthHolland.json";
 
 const JobsContext = createContext();
 
-export const JobsProvider = ({ children }) => {
+const JobsProvider = ({ children }) => {
   const [allJobs, setAllJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState(""); //  global search term
@@ -35,4 +35,6 @@ export const JobsProvider = ({ children }) => {
   );
 };
 
-export const useJobs = () => useContext(JobsContext);
+const UseJobs = () => useContext(JobsContext);
+
+export { JobsProvider, UseJobs };
