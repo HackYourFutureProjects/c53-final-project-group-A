@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import SearchInput from "../../components/SearchInput";
-import "./HomePage.css";
-import { icons } from "../../assets";
+import SearchInput from "../../components/SearchInput.jsx";
+import "./JobSearch.css";
+import { icons } from "../../assets/index.js";
 import { defaultUser } from "../../data/defaultUser.js";
 import { formatAddress } from "../../data/defaultUser.js";
 
-export default function HomePage() {
+export default function JobSearch() {
   const displayedSkills = defaultUser.skills.slice(0, 3).join(", ");
 
   return (
-    <div className="homepage-container">
+    <div className="job-search-container">
       <div className="mission-section">
         <h1>Master navigating the sea of irrelevant jobs with JobCompass</h1>
         <p className="subtitle">

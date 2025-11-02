@@ -86,20 +86,29 @@ export default function Header({ user }) {
         </div>
 
         <div className="nav-links">
-          <NavLink to="/" className={({ isActive }) =>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
               isActive ? "user-item active" : "user-item"
-            }>
-            Home
+            }
+          >
+            Job search
           </NavLink>
-          <NavLink to="/jobs" className={({ isActive }) =>
+          <NavLink
+            to="/jobs"
+            className={({ isActive }) =>
               isActive ? "user-item active" : "user-item"
-            }>
-            Job listing
+            }
+          >
+            Open positions
           </NavLink>
-          <NavLink to="/favorites" className={({ isActive }) =>
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
               isActive ? "user-item active" : "user-item"
-            }>
-            Favorites
+            }
+          >
+            My favorites
           </NavLink>
         </div>
 

@@ -4,9 +4,9 @@ import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 import { UseJobs } from "../../context/JobsContext";
-import "./JobListingPage.css";
+import "./OpenPositions.css";
 
-export default function JobListingPage() {
+export default function OpenPositions() {
   const { allJobs, searchTerm, showResults } = UseJobs();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -79,7 +79,7 @@ export default function JobListingPage() {
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   return (
-    <div className="job-listing-page content-container">
+    <div className="open-positions content-container">
       <div className="job-filters-bar">
         <div className="filters-container">
           <div className="filter-dropdowns">
@@ -119,7 +119,7 @@ export default function JobListingPage() {
             />
           </div>
           <button onClick={handleClearFilters} className="clear-filters-btn">
-            Clear Filters
+            Clear filters
           </button>
         </div>
       </div>

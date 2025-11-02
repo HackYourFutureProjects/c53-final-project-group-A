@@ -23,6 +23,7 @@ export default function SearchInput() {
     setShowResults(true);
     navigate("/jobs");
     // setLoading(false);
+    setSearchTerm("");
   };
 
   return (
