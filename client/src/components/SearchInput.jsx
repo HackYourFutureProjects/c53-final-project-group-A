@@ -1,13 +1,15 @@
 import { useState } from "react";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/validation";
+import { useNavigate } from "react-router-dom";
+import { useJobs } from "../context/JobsContext";
 import "./SearchInput.css";
 import { useNavigate } from "react-router-dom";
 
 export default function SearchInput() {
-  const [query, setQuery] = useState("");
+  const { searchTerm, setSearchTerm, setShowResults } = useJobs();
   const [alert, setAlert] = useState({ type: "", message: "" });
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = () => {
@@ -15,14 +17,18 @@ export default function SearchInput() {
       setAlert({ type: "error", message: "Please enter a job title." });
       return;
     }
-    const validationError = validateJobInput({ text: query });
+
+    const validationError = validateJobInput({ text: searchTerm });
     if (validationError) {
       setAlert(validationError);
       return;
     }
 
-    setAlert({ type: "", message: "" });
-    navigate("/jobs", { state: { jobTitle: query } });
+    setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
+    setLoading(true);
+    setShowResults(true);
+    navigate("/jobs");
+    setLoading(false);
   };
 
   return (
@@ -34,9 +40,10 @@ export default function SearchInput() {
         <input
           id="job-search"
           type="text"
-          placeholder="e.g. Web Developer"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          placeholder="e.g. Web Developer"     
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           aria-describedby="search-alert"
         />

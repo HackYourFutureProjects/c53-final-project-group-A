@@ -2,9 +2,11 @@ import Layout from "./components/Layout";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
+
 import { defaultUser } from "./data/defaultUser";
 import { useState } from "react";
-// import JobListingPage from "./pages/JobListing/JobListingPage";
+import JobListingPage from "./pages/JobListingPage/JobListingPage";
+
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -13,8 +15,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout user={user} />}>
-        <Route index element={<HomePage user={user} />} />
-        {/* TODO: Add <Route path='/jobs' element={<JobListingPage user={ user} />} /> when JobListingPage is implemented. */}
+        <Route index element={<HomePage user={user} />} />        
+        <Route path="/jobs" element={<JobListingPage />} />
       </Route>
     </Routes>
   );
