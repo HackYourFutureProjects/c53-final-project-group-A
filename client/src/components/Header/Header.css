@@ -46,12 +46,6 @@
   align-items: center;
 }
 
-.nav-link {
-  text-decoration: none;
-  outline: none;
-  color: #333333;
-}
-
 .user-trigger {
   border: none;
   background: transparent;
@@ -113,7 +107,15 @@
   outline: none;
   text-decoration: none;
   color: #333333;
-  transition: background 0.2s;
+  transition: all 0.2s;
+}
+
+.user-item:hover {
+  color: #4a87e1;
+}
+
+.user-item.active {
+  color: #4a87e1;
 }
 
 .user-menu {

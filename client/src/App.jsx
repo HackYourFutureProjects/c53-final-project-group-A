@@ -1,6 +1,6 @@
 import Layout from "./components/Layout";
 import "./index.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 
 import { defaultUser } from "./data/defaultUser";
@@ -16,6 +16,7 @@ function App() {
       <Route path="/" element={<Layout user={user} />}>
         <Route index element={<HomePage user={user} />} />
         <Route path="/jobs" element={<JobListingPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   );

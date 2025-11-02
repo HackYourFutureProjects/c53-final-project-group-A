@@ -79,7 +79,7 @@ export default function JobListingPage() {
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   return (
-    <div className="job-listing-page">
+    <div className="job-listing-page content-container">
       <div className="job-filters-bar">
         <div className="filters-container">
           <div className="filter-dropdowns">

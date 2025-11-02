@@ -23,7 +23,7 @@ export default function Footer() {
           type="button"
           onClick={handleBackToTop}
           aria-label="Back to top"
-          className="back-btn"
+          className="back-btn-footer"
         >
           Back to top
         </button>
