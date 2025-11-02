@@ -3,8 +3,7 @@ import { defaultUser } from "../data/defaultUser";
 function normalizeForWordSearch(str) {
   return (" " + str + " ")
     .replace(/[.*+?^${}()|[\]\\]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/\s+/g, " ");
 }
 
 export default function Skills({ item }) {
