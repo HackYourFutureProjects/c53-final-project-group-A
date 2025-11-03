@@ -3,16 +3,26 @@ import { useMemo } from "react";
 // Description of the future job skill input validation:
 // Allowed characters are letters, digits, whitespace, -, /, +, and #.
 
-function normalizeForWordSearch(str) {
+function normalizeDescription(str) {
   return (" " + str + " ")
     .replace(/[^A-Za-z0-9+#]+/g, " ")
     .replace(/\s+/g, " ");
 }
+function normalizeSkills(skill) {
+  if (typeof skill === "string") {
+    return skill.replace(/[-/\s]+/g, " ").trim();
+  }
+  return "";
+}
+function escapeForRegex(skill) {
+  return skill.replace(/[.*+?^${}()|[\]\\#]/g, "\\$&");
+}
+
 function getSkillsInDescription(text, skillRegexes, defaultUser) {
-  const textSpaced = normalizeForWordSearch(text);
+  const textSpaced = normalizeDescription(text);
   if (defaultUser.skills && defaultUser.skills.length > 0) {
     const skills = [...defaultUser.skills].map((skill) =>
-      skill.replace(/[-/]+/g, " ").trim(),
+      normalizeSkills(skill),
     );
     return skills.filter((skill) => {
       const re = skillRegexes.get(skill);
@@ -22,16 +32,17 @@ function getSkillsInDescription(text, skillRegexes, defaultUser) {
 }
 
 export default function Skills({ item }) {
-  const skills = defaultUser.skills;
-  const skillRegexes = useMemo(() => {
+  const { skills, skillRegexes } = useMemo(() => {
+    const skillsList = Array.isArray(defaultUser.skills)
+      ? defaultUser.skills.map((s) => normalizeSkills(s)).filter(Boolean)
+      : [];
     const map = new Map();
-    const escapeForRegex = (s) => s.replace(/[.*+?^${}()|[\]\\#]/g, "\\$&");
-    skills.forEach((skill) => {
+    skillsList.forEach((skill) => {
       const escaped = escapeForRegex(skill);
       map.set(skill, new RegExp(" " + escaped + " ", "i"));
     });
-    return map;
-  }, [skills]);
+    return { skills: skillsList, skillRegexes: map };
+  }, [defaultUser.skills]);
   const skillsInDescription = getSkillsInDescription(
     item.descriptionText || "",
     skillRegexes,
