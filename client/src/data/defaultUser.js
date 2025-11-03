@@ -45,7 +45,7 @@ export const defaultUser = {
     "Public speaking",
     "C++",
     "C#",
-    "Data Science",
+    "Data-Science",
     "Data analysis",
   ],
 };
