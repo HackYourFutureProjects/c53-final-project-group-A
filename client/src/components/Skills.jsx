@@ -2,8 +2,11 @@ import { defaultUser } from "../data/defaultUser";
 import { useMemo } from "react";
 
 function normalizeForWordSearch(str) {
-  // replace any other non-word characters with spaces so skills are surrounded by spaces
-  return (" " + str + " ").replace(/[^\w+#\\|]+/g, " ").replace(/\s+/g, " ");
+  // Description of the future job skill input validation:
+  // Allowed characters are letters, digits, +, and #. Use spaces instead of other special characters. Such skills as 'Data-Science' or 'Broker/realtor', will still be found.
+  return (" " + str + " ")
+    .replace(/[^A-Za-z0-9+#]+/g, " ")
+    .replace(/\s+/g, " ");
 }
 function getSkillsInDescription(text, skillRegexes, defaultUser) {
   const textSpaced = normalizeForWordSearch(text);
