@@ -12,7 +12,7 @@ function getSkillsInDescription(text, skillRegexes, defaultUser) {
   const textSpaced = normalizeForWordSearch(text);
   if (defaultUser.skills && defaultUser.skills.length > 0) {
     const skills = [...defaultUser.skills].map((skill) =>
-      skill.replace(/[^A-Za-z0-9-/+#]+/g, " "),
+      skill.replace(/[-/]+/g, " ").trim(),
     );
     return skills.filter((skill) => {
       const re = skillRegexes.get(skill);
