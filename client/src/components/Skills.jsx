@@ -1,20 +1,24 @@
 import { defaultUser } from "../data/defaultUser";
 import { useMemo } from "react";
+// Description of the future job skill input validation:
+// Allowed characters are letters, digits, -, /, +, and #.
 
 function normalizeForWordSearch(str) {
-  // Description of the future job skill input validation:
-  // Allowed characters are letters, digits, +, and #. Use spaces instead of other special characters. Such skills as 'Data-Science' or 'Broker/realtor', will still be found.
   return (" " + str + " ")
-    .replace(/[^A-Za-z0-9+#]+/g, " ")
+    .replace(/[^A-Za-z0-9-/+#]+/g, " ")
     .replace(/\s+/g, " ");
 }
 function getSkillsInDescription(text, skillRegexes, defaultUser) {
   const textSpaced = normalizeForWordSearch(text);
-  const skills = defaultUser.skills;
-  return skills.filter((skill) => {
-    const re = skillRegexes.get(skill);
-    return re ? re.test(textSpaced) : false;
-  });
+  if (defaultUser.skills && defaultUser.skills.length > 0) {
+    const skills = [...defaultUser.skills].map((skill) =>
+      skill.replace(/[^A-Za-z0-9-/+#]+/g, " "),
+    );
+    return skills.filter((skill) => {
+      const re = skillRegexes.get(skill);
+      return re ? re.test(textSpaced) : false;
+    });
+  }
 }
 
 export default function Skills({ item }) {
