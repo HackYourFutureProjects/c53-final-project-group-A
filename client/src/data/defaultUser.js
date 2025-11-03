@@ -43,9 +43,5 @@ export const defaultUser = {
     "Conflict resolution",
     "Customer Service",
     "Public speaking",
-    "C++",
-    "C#",
-    "Data-Science",
-    "Data analysis",
   ],
 };
