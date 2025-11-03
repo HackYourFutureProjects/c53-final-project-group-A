@@ -8,7 +8,6 @@ import "./SearchInput.css";
 export default function SearchInput() {
   const { searchTerm, setSearchTerm, setShowResults } = UseJobs();
   const [alert, setAlert] = useState({ type: "", message: "" });
-  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = () => {
@@ -19,11 +18,8 @@ export default function SearchInput() {
     }
 
     setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
-    // setLoading(true);
     setShowResults(true);
     navigate("/jobs");
-    // setLoading(false);
-    setSearchTerm("");
   };
 
   return (

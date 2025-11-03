@@ -1,6 +1,6 @@
 import "./Header.css";
 import { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { images, icons } from "../../assets";
 
 //dropdown menu
@@ -80,10 +80,10 @@ export default function Header({ user }) {
   return (
     <header className="app-header">
       <nav className="header-nav">
-        <div className="brand">
+        <Link to="/" className="brand">
           <img src={images.logo} alt="logo" className="logo-image-header" />
-          <span className="logo-text">Job Compass</span>
-        </div>
+          <span className="logo-text-header">Job Compass</span>
+        </Link>
 
         <div className="nav-links">
           <NavLink
