@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 function normalizeForWordSearch(str) {
   return (" " + str + " ")
-    .replace(/[^A-Za-z0-9-/+#]+/g, " ")
+    .replace(/[^A-Za-z0-9+#]+/g, " ")
     .replace(/\s+/g, " ");
 }
 function getSkillsInDescription(text, skillRegexes, defaultUser) {
