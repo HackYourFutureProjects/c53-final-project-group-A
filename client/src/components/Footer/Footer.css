@@ -33,7 +33,8 @@ footer {
 
 .footer-inner {
   text-align: center;
-  padding: 1rem 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   font-size: 0.9rem;
   height: 64px;
   z-index: 100;
@@ -48,6 +49,10 @@ footer {
   font-size: 0.9rem;
 }
 
-.back-btn {
+.copyright p {
+  margin: 0;
+}
+
+.back-btn-footer {
   background-color: #e2e6e9;
 }

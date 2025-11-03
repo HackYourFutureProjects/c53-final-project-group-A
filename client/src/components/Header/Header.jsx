@@ -1,6 +1,6 @@
 import "./Header.css";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { images, icons } from "../../assets";
 
 //dropdown menu
@@ -43,15 +43,33 @@ function UserMenu({ user }) {
 
       {open && (
         <div className="user-dropdown" role="menu">
-          <Link to="/profile" className="user-item" role="menuitem">
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive ? "user-item active" : "user-item"
+            }
+            role="menuitem"
+          >
             Profile
-          </Link>
-          <Link to="/about" className="user-item" role="menuitem">
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive ? "user-item active" : "user-item"
+            }
+            role="menuitem"
+          >
             About
-          </Link>
-          <Link to="/login" className="user-item" role="menuitem">
+          </NavLink>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive ? "user-item active" : "user-item"
+            }
+            role="menuitem"
+          >
             Login
-          </Link>
+          </NavLink>
         </div>
       )}
     </div>
@@ -62,21 +80,36 @@ export default function Header({ user }) {
   return (
     <header className="app-header">
       <nav className="header-nav">
-        <div className="brand">
+        <Link to="/" className="brand">
           <img src={images.logo} alt="logo" className="logo-image-header" />
-          <span className="logo-text">Job Compass</span>
-        </div>
+          <span className="logo-text-header">Job Compass</span>
+        </Link>
 
         <div className="nav-links">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-          <Link to="/jobs" className="nav-link">
-            Job listing
-          </Link>
-          <Link to="/favorites" className="nav-link">
-            Favorites
-          </Link>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "user-item active" : "user-item"
+            }
+          >
+            Job search
+          </NavLink>
+          <NavLink
+            to="/jobs"
+            className={({ isActive }) =>
+              isActive ? "user-item active" : "user-item"
+            }
+          >
+            Open positions
+          </NavLink>
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
+              isActive ? "user-item active" : "user-item"
+            }
+          >
+            My favorites
+          </NavLink>
         </div>
 
         <div className="header-actions">

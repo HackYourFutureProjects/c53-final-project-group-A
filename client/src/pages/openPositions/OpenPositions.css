@@ -7,10 +7,7 @@
 
 /* --- Global Layout for Main Content --- */
 .main-content {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 0 1.5rem;
-  width: 100%;
+  padding-top: 2rem;
 }
 
 .results-summary {
@@ -39,19 +36,17 @@
 .job-filters-bar {
   background-color: white;
   border-bottom: 1px solid #e5e7eb;
-  padding: 1rem 0;
+  padding-top: 1rem;
   width: 100%;
 }
 
 .filters-container {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   flex-grow: 1;
+  gap: 1rem;
 }
 
 .filter-dropdowns {
