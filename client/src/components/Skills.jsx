@@ -4,15 +4,14 @@ import { useMemo } from "react";
 // Allowed characters are letters, digits, whitespace, -, /, +, and #.
 
 function normalizeDescription(str) {
-  return (" " + str + " ")
-    .replace(/[^A-Za-z0-9+#]+/g, " ")
-    .replace(/\s+/g, " ");
+  return " " + str.replace(/ +/g, " ").replace(/[^A-Za-z0-9+#]/g, " ") + " ";
 }
 function normalizeSkills(skill) {
+  let skillTrimmed = "";
   if (typeof skill === "string") {
-    return skill.replace(/[-/\s]+/g, " ").trim();
+    skillTrimmed = skill.replace(/[-/\s]/g, " ");
   }
-  return "";
+  return skillTrimmed;
 }
 function escapeForRegex(skill) {
   return skill.replace(/[.*+?^${}()|[\]\\#]/g, "\\$&");
