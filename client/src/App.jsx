@@ -4,7 +4,7 @@ import JobSearch from "./pages/jobSearch/JobSearch";
 import OpenPositions from "./pages/openPositions/OpenPositions";
 import Profile from "./pages/User/Profile";
 import "./index.css";
-
+import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import { defaultUser } from "./data/defaultUser";
 import { useState } from "react";
 
@@ -18,6 +18,7 @@ function App() {
         <Route index element={<JobSearch user={user} />} />
         <Route path="/jobs" element={<OpenPositions />} />
         <Route path="/profile" element={<Profile user={user} />} />
+        <Route path="/favorites" element={<MyFavorites />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
