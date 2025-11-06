@@ -4,10 +4,12 @@ import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 import { UseJobs } from "../../context/JobsContext";
+import { useFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
 
 export default function OpenPositions() {
   const { allJobs, searchTerm, showResults } = UseJobs();
+  const { favorites, toggleFavorite } = useFavorites();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
@@ -18,7 +20,6 @@ export default function OpenPositions() {
     workMode: new Set(),
   });
   const [sortBy, setSortBy] = useState("Skill match");
-  const [favorites, setFavorites] = useState({});
 
   const experienceOptions = [
     "Internship",
@@ -38,11 +39,6 @@ export default function OpenPositions() {
     "Fewest applicants",
     "Fewest transfers",
   ];
-
-  const handleFavoriteToggle = (jobId) => {
-    const id = jobId ?? "__unknown__";
-    setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
 
   const handleFilterChange = (filterKey, value, isChecked) => {
     setActiveFilters((prev) => {
@@ -145,7 +141,7 @@ export default function OpenPositions() {
                   key={job.id || idx}
                   job={job}
                   favorites={favorites}
-                  onFavoriteToggle={handleFavoriteToggle}
+                  onFavoriteToggle={toggleFavorite}
                   onApplyClick={(job) =>
                     window.open(job.applyUrl || job.link, "_blank")
                   }
