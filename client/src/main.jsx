@@ -4,12 +4,15 @@ import App from "./App.jsx";
 import { StrictMode } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { JobsProvider } from "./context/JobsContext.jsx";
+import { FavoritesProvider } from "./context/FavoritesContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <JobsProvider>
-        <App />
+        <FavoritesProvider>
+          <App />
+        </FavoritesProvider>
       </JobsProvider>
     </BrowserRouter>
   </StrictMode>,
