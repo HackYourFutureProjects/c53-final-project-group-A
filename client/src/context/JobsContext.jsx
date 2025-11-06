@@ -1,34 +1,28 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import NorthHolland from "../assets/NorthHolland.json";
+import { createContext, useContext, useState } from "react";
 
 const JobsContext = createContext();
 
 const JobsProvider = ({ children }) => {
   const [allJobs, setAllJobs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); //  global search term
   const [showResults, setShowResults] = useState(false); //control when results appear
-
-  useEffect(() => {
-    // asynchronous to avoid React warning about synchronous setState in useEffect
-    const timer = setTimeout(() => {
-      setAllJobs(NorthHolland);
-      setIsLoading(false);
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <JobsContext.Provider
       value={{
         allJobs,
+        setAllJobs,
         isLoading,
+        setIsLoading,
+        error,
+        setError,
         searchTerm,
         setSearchTerm,
         showResults,
         setShowResults,
-      }} // provide new state
+      }}
     >
       {children}
     </JobsContext.Provider>
