@@ -2,6 +2,8 @@ import express from "express";
 
 import userRouter from "./routes/user.js";
 
+import { getJobs } from "./controllers/jobData.js";
+
 // Create an express server
 const app = express();
 
@@ -14,5 +16,7 @@ app.use(express.json());
  * As we also host our client code on heroku we want to separate the API endpoints.
  */
 app.use("/api/users", userRouter);
+
+app.get("/api/connect", getJobs);
 
 export default app;
