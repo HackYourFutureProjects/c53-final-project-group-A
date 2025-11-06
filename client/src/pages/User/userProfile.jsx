@@ -1,14 +1,9 @@
-import { Link } from "react-router-dom";
-import SearchInput from ".././components/SearchInput.jsx";
-import "./JobSearch.css";
-import { icons } from ".././assets/index.js";
-import { defaultUser } from ".././data/defaultUser.js";
-import { formatAddress } from ".././data/defaultUser.js";
+import { useEffect, useRef } from "react";
 
 export default function UserProfile() {
-  const skillInput = document.getElementById("skillInput");
-  const addSkillBtn = document.getElementById("addSkillBtn");
-  const skillsList = document.getElementById("skillsList");
+  const skillInputRef = useRef(null);
+  const addSkillBtnRef = useRef(null);
+  const skillsListRef = useRef(null);
 
   let skills = [
     "React",
@@ -39,12 +34,14 @@ export default function UserProfile() {
                     </svg>
                 </button>
             `;
-    skillsList.appendChild(skillElement);
+    const list = skillsListRef.current;
+    if (list) list.appendChild(skillElement);
   }
 
   // Add skill function
   function addSkill() {
-    const skill = skillInput.value.trim();
+    const input = skillInputRef.current;
+    const skill = input ? input.value.trim() : "";
 
     if (skill === "") return;
 
@@ -61,31 +58,42 @@ export default function UserProfile() {
     addSkillToDOM(skill);
 
     // Clear input
-    skillInput.value = "";
-    skillInput.focus();
+    if (input) {
+      input.value = "";
+      input.focus();
+    }
   }
 
-  // Remove skill function
-  window.removeSkill = function (skill, button) {
-    // Remove from array
-    skills = skills.filter((s) => s !== skill);
+  // Remove skill function is attached to window in useEffect (after mount)
 
-    // Remove from DOM
-    button.parentElement.remove();
-  };
+  // Attach listeners after mount
+  useEffect(() => {
+    // expose removeSkill on window for the inline onclick in innerHTML
+    window.removeSkill = function (skill, button) {
+      // Remove from array
+      skills = skills.filter((s) => s !== skill);
 
-  // Add skill on button click
-  addSkillBtn.addEventListener("click", addSkill);
+      // Remove from DOM
+      if (button && button.parentElement) button.parentElement.remove();
+    };
+    const addSkillBtn = addSkillBtnRef.current;
+    const input = skillInputRef.current;
 
-  // Add skill on Enter key
-  skillInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      addSkill();
+    function handleKeypress(e) {
+      if (e.key === "Enter") addSkill();
     }
-  });
 
-  // Initialize skills on page load
-  initializeSkills();
+    if (addSkillBtn) addSkillBtn.addEventListener("click", addSkill);
+    if (input) input.addEventListener("keypress", handleKeypress);
+
+    // Initialize skills on mount
+    initializeSkills();
+
+    return () => {
+      if (addSkillBtn) addSkillBtn.removeEventListener("click", addSkill);
+      if (input) input.removeEventListener("keypress", handleKeypress);
+    };
+  }, []);
 
   return (
     <>
@@ -225,12 +233,14 @@ export default function UserProfile() {
           <div className="flex gap-3 mb-3">
             <input
               id="skillInput"
+              ref={skillInputRef}
               type="text"
               placeholder="e.g. React, TypeScript, Docker"
               className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               id="addSkillBtn"
+              ref={addSkillBtnRef}
               className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition"
             >
               Add
@@ -240,6 +250,7 @@ export default function UserProfile() {
           {/* Skills List */}
           <div
             id="skillsList"
+            ref={skillsListRef}
             className="flex flex-wrap gap-2 min-h-[60px] border border-gray-300 rounded p-3 bg-gray-50"
           ></div>
         </div>

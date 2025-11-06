@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import JobSearch from "./pages/jobSearch/JobSearch";
 import OpenPositions from "./pages/openPositions/OpenPositions";
-import UserProfile from "./pages/userProfile/UserProfile";
+import UserProfile from "./pages/User/userProfile";
 import "./index.css";
 
 import { defaultUser } from "./data/defaultUser";
