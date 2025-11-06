@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import JobSearch from "./pages/jobSearch/JobSearch";
 import OpenPositions from "./pages/openPositions/OpenPositions";
-import UserProfile from "./pages/User/userProfile";
+import Profile from "./pages/User/Profile";
 import "./index.css";
 
 import { defaultUser } from "./data/defaultUser";
@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<Layout user={user} />}>
         <Route index element={<JobSearch user={user} />} />
         <Route path="/jobs" element={<OpenPositions />} />
-        <Route path="/user-profile" element={<UserProfile user={user} />} />
+        <Route path="/profile" element={<Profile user={user} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

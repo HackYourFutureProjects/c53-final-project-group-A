@@ -44,13 +44,13 @@ function UserMenu({ user }) {
       {open && (
         <div className="user-dropdown" role="menu">
           <NavLink
-            to="/user-profile"
+            to="/profile"
             className={({ isActive }) =>
               isActive ? "user-item active" : "user-item"
             }
             role="menuitem"
           >
-            User Profile
+            Profile
           </NavLink>
           <NavLink
             to="/about"

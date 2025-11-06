@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function UserProfile() {
+export default function Profile() {
   const skillInputRef = useRef(null);
   const skillsListRef = useRef(null);
 
