@@ -52,7 +52,7 @@ export default function Profile() {
     setSettings((prev) => {
       const newSettings = { ...prev };
       newSettings.skills = (newSettings.skills || []).filter(
-        (s) => s !== skill,
+        (s) => s.skill !== skill.skill,
       );
       return newSettings;
     });
