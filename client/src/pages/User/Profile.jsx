@@ -3,6 +3,7 @@ import { UseSettings } from "../../context/SettingsContext";
 import { validateSkillInput } from "../../util/skillValidation";
 import AlertMessage from "../../components/AlertMessage";
 import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
+import { defaultUser } from "../../data/defaultUser";
 
 export default function Profile() {
   const skillInputRef = useRef(null);
@@ -69,8 +70,12 @@ export default function Profile() {
       <div className="mb-8">
         <div className="flex items-start space-x-4">
           <div className="relative">
-            <div className="w-20 h-20 bg-gray-300 rounded flex items-center justify-center flex-shrink-0">
-              <span className="text-gray-700 font-semibold text-lg">JV</span>
+            <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
+              <img
+                src={defaultUser.avatar}
+                alt={defaultUser.name}
+                className="w-20 h-20 object-cover"
+              />
             </div>
             <button className="absolute bottom-0 right-0 w-6 h-6 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50">
               <svg
@@ -94,7 +99,7 @@ export default function Profile() {
             </label>
             <input
               type="text"
-              defaultValue="Jan de Vries"
+              defaultValue={defaultUser.name}
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
