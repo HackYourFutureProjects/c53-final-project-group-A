@@ -1,17 +1,13 @@
 import { useEffect, useRef } from "react";
+import { UseSettings } from "../../context/SettingsContext";
+import { useState } from "react";
 
 export default function Profile() {
+  const [skill, setSkill] = useState([]);
   const skillInputRef = useRef(null);
   const skillsListRef = useRef(null);
-
-  let skills = [
-    "React",
-    "TypeScript",
-    "Node.js",
-    "PostgreSQL",
-    "Docker",
-    "AWS",
-  ];
+  const { settings, setSettings } = UseSettings();
+  const { address, skills } = settings;
 
   // Initialize with existing skills
   function initializeSkills() {
@@ -36,22 +32,24 @@ export default function Profile() {
     const list = skillsListRef.current;
     if (list) list.appendChild(skillElement);
   }
-
+  const input = skillInputRef.current;
   // Add skill function
   function addSkill() {
-    const input = skillInputRef.current;
-    const skill = input ? input.value.trim() : "";
-
-    if (skill === "") return;
-
-    // Check if skill already exists
-    if (skills.includes(skill)) {
-      alert("This skill is already added!");
-      return;
+    if (input) {
+      // Check if skill already exists
+      if (skills.includes(input.value.trim())) {
+        alert("This skill is already added!");
+        return;
+      }
+      setSettings((prev) => {
+        const newSettings = { ...prev };
+        newSettings.skills = [
+          ...(newSettings.skills || []),
+          input.value.trim(),
+        ];
+        return newSettings;
+      });
     }
-
-    // Add to array
-    skills.push(skill);
 
     // Add to DOM
     addSkillToDOM(skill);
@@ -66,23 +64,23 @@ export default function Profile() {
   // Remove skill function is attached to window in useEffect (after mount)
 
   // Attach listeners after mount
-  useEffect(() => {
-    // expose removeSkill on window for the inline onclick in innerHTML
-    window.removeSkill = function (skill, button) {
-      // Remove from array
-      skills = skills.filter((s) => s !== skill);
+  // useEffect(() => {
+  //   // expose removeSkill on window for the inline onclick in innerHTML
+  //   window.removeSkill = function (skill, button) {
+  //     // Remove from array
+  //     skills = skills.filter((s) => s !== skill);
 
-      // Remove from DOM
-      if (button && button.parentElement) button.parentElement.remove();
-    };
+  //     // Remove from DOM
+  //     if (button && button.parentElement) button.parentElement.remove();
+  //   };
 
-    // Initialize skills on mount
-    initializeSkills();
+  // Initialize skills on mount
+  //   initializeSkills();
 
-    return () => {
-      // nothing to cleanup because we use React event handlers on elements
-    };
-  }, []);
+  //   return () => {
+  //     // nothing to cleanup because we use React event handlers on elements
+  //   };
+  // }, []);
 
   return (
     <div className="content-container">
@@ -205,11 +203,34 @@ export default function Profile() {
         </div>
 
         {/* Skills List */}
-        <div
-          id="skillsList"
-          ref={skillsListRef}
-          className="flex flex-wrap gap-2 min-h-[60px] border border-gray-300 rounded p-3 bg-gray-50"
-        ></div>
+        <div id="skillsList" ref={skillsListRef}>
+          {skills.map((skill) => (
+            <div
+              key={skill}
+              className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
+            >
+              <span className="text-gray-800 mr-2">{skill}</span>
+              <button
+                className="text-gray-500 hover:text-red-600 transition"
+                onClick={() => removeSkill(skill)}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* <!-- Save Button --> */}
