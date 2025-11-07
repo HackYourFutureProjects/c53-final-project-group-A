@@ -20,7 +20,8 @@ export default function Profile() {
 
   function addSkill() {
     const skillInput = skillInputRef.current;
-    const rawValue = (skillInput && skillInput.value) || "";
+    if (!skillInput) return;
+    const rawValue = skillInput.value || "";
     const newSkill = rawValue
       .replace(/\s+/g, " ")
       .replace(/-+/g, "-")
