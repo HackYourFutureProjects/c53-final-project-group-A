@@ -3,7 +3,7 @@ import { UseSettings } from "../../context/SettingsContext";
 import { useState } from "react";
 import { validateSkillInput } from "../../util/skillValidation";
 import AlertMessage from "../../components/AlertMessage";
-import { mapSkillToRegex } from "../../util/mapSkillToRegex";
+import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
 
 export default function Profile() {
   const skillInputRef = useRef(null);
@@ -37,7 +37,7 @@ export default function Profile() {
       const newSettings = { ...prev };
       newSettings.skills = [
         ...(newSettings.skills || []),
-        mapSkillToRegex(newSkill),
+        regexEndNormalizeSkill(newSkill),
       ];
       return newSettings;
     });

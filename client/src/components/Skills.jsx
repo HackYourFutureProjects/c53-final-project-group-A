@@ -1,49 +1,26 @@
-import { defaultUser } from "../data/defaultUser";
-import { useMemo } from "react";
+import { UseSettings } from "../context/SettingsContext";
 
 function normalizeDescription(str) {
   return " " + str.replace(/ +/g, " ").replace(/[^A-Za-z0-9+#]/g, " ") + " ";
 }
-function normalizeSkills(skill) {
-  let skillTrimmed = "";
-  if (typeof skill === "string") {
-    skillTrimmed = skill.replace(/[-/\s]/g, " ");
-  }
-  return skillTrimmed;
-}
-function escapeForRegex(skill) {
-  return skill.replace(/[.*+?^${}()|[\]\\#]/g, "\\$&");
-}
 
-function getSkillsInDescription(text, skillRegexes, defaultUser) {
+function getSkillsInDescription(text, skills = []) {
   const textSpaced = normalizeDescription(text);
-  if (defaultUser.skills && defaultUser.skills.length > 0) {
-    const skills = [...defaultUser.skills].map((skill) =>
-      normalizeSkills(skill),
-    );
-    return skills.filter((skill) => {
-      const re = skillRegexes.get(skill);
+  return skills
+    .filter((skill) => {
+      const re = skill.skillRegex;
       return re ? re.test(textSpaced) : false;
-    });
-  }
+    })
+    .map((skill) => skill.skill);
 }
 
 export default function Skills({ item }) {
-  const { skills, skillRegexes } = useMemo(() => {
-    const skillsList = Array.isArray(defaultUser.skills)
-      ? defaultUser.skills.map((s) => normalizeSkills(s)).filter(Boolean)
-      : [];
-    const map = new Map();
-    skillsList.forEach((skill) => {
-      const escaped = escapeForRegex(skill);
-      map.set(skill, new RegExp(" " + escaped + " ", "i"));
-    });
-    return { skills: skillsList, skillRegexes: map };
-  }, [defaultUser.skills]);
+  const { settings, setSettings } = UseSettings();
+  const { address, skills } = settings;
+
   const skillsInDescription = getSkillsInDescription(
     item.descriptionText || "",
-    skillRegexes,
-    defaultUser,
+    skills,
   );
 
   return (
