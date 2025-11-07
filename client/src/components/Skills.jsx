@@ -15,8 +15,8 @@ function getSkillsInDescription(text, skills = []) {
 }
 
 export default function Skills({ item }) {
-  const { settings, setSettings } = UseSettings();
-  const { address, skills } = settings;
+  const { settings } = UseSettings();
+  const { skills } = settings;
 
   const skillsInDescription = getSkillsInDescription(
     item.descriptionText || "",

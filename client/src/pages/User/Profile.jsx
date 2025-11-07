@@ -10,7 +10,7 @@ export default function Profile() {
   const skillsListRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
   const { settings, setSettings } = UseSettings();
-  const { address, skills } = settings;
+  const { skills } = settings;
 
   useEffect(() => {
     if (alert.message && skills) {
