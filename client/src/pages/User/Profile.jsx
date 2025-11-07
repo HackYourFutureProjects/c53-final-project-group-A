@@ -42,9 +42,10 @@ export default function Profile() {
       return newSettings;
     });
 
-    skillInput.value = "";
-    skillInput.focus();
-  }
+    if (skillInput) {
+      skillInput.value = "";
+      skillInput.focus();
+    }
 
   function removeSkill(skill) {
     setSettings((prev) => {
