@@ -1,25 +1,41 @@
 import { useEffect, useRef } from "react";
 import { UseSettings } from "../../context/SettingsContext";
 import { useState } from "react";
+import { validateSkillInput } from "../../util/skillValidation";
+import AlertMessage from "../../components/AlertMessage";
 
 export default function Profile() {
   const skillInputRef = useRef(null);
   const skillsListRef = useRef(null);
+  const [alert, setAlert] = useState({ type: "", message: "" });
   const { settings, setSettings } = UseSettings();
   const { address, skills } = settings;
 
+  useEffect(() => {
+    if (alert.message && skills) {
+      setAlert({ type: "", message: "" });
+    }
+  }, [skills]);
+
   function addSkill() {
     const skillInput = skillInputRef.current;
-    if (!skillInput) return;
-    const newSkill = skillInput.value.trim();
-    if (!newSkill) {
+    const rawValue = (skillInput && skillInput.value) || "";
+    const newSkill = rawValue
+      .replace(/\s+/g, " ")
+      .replace(/-+/g, "-")
+      .replace(/\/+/g, "/")
+      .trim();
+
+    const validationError = validateSkillInput({ text: newSkill, skills });
+    if (validationError) {
+      setAlert(validationError);
       return;
     }
 
-    if ((skills || []).includes(newSkill)) {
-      alert("This skill is already added!");
-      return;
-    }
+    // if ((skills || []).includes(newSkill)) {
+    //   alert("This skill is already added!");
+    //   return;
+    // }
 
     setSettings((prev) => {
       const newSettings = { ...prev };
@@ -160,6 +176,9 @@ export default function Profile() {
             Add
           </button>
         </div>
+        {alert.message && (
+          <AlertMessage type={alert.type} message={alert.message} />
+        )}
 
         {/* Skills List */}
         <div id="skillsList" ref={skillsListRef}>

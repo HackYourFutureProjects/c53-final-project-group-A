@@ -1,7 +1,5 @@
 import { defaultUser } from "../data/defaultUser";
 import { useMemo } from "react";
-// Description of the future job skill input validation:
-// Allowed characters are letters, digits, whitespace, -, /, +, and #.
 
 function normalizeDescription(str) {
   return " " + str.replace(/ +/g, " ").replace(/[^A-Za-z0-9+#]/g, " ") + " ";

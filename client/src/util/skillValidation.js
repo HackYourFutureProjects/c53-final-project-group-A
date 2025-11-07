@@ -1,15 +1,13 @@
-export function validateSkillInput({ text }) {
-  const trimmedText = text.trim();
-
-  if (trimmedText === "") {
+export function validateSkillInput({ text, skills = [] }) {
+  if (text === "") {
     return {
       type: "error",
-      message: "You entered an empty string. Please enter the a skill name",
+      message: "You entered an empty string. Please enter a skill name",
     };
   }
 
   const hasInvalidChars = /[^a-zA-Z0-9 \-/#+]/;
-  if (hasInvalidChars.test(trimmedText)) {
+  if (hasInvalidChars.test(text)) {
     return {
       type: "error",
       message:
@@ -17,11 +15,20 @@ export function validateSkillInput({ text }) {
     };
   }
 
-  const isNumbersOnly = /^\d+$/.test(trimmedText);
+  const isNumbersOnly = /^\d+$/.test(text);
   if (isNumbersOnly) {
     return {
       type: "warning",
       message: "The skill cannot consist of numbers only.",
+    };
+  }
+
+  const normalizedText = text.trim().toLowerCase();
+  const normalizedSkills = skills.map((s) => String(s).trim().toLowerCase());
+  if (normalizedSkills.includes(normalizedText)) {
+    return {
+      type: "error",
+      message: "This skill is already added.",
     };
   }
 
