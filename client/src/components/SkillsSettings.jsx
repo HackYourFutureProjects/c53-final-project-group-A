@@ -3,6 +3,7 @@ import { UseSettings } from "../context/SettingsContext";
 import { validateSkillInput } from "../util/skillValidation";
 import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
+import { cleanUpText } from "../util/cleanUpText";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
@@ -21,11 +22,7 @@ export default function SkillsSettings() {
     const skillInput = skillInputRef.current;
     if (!skillInput) return;
     const rawValue = skillInput.value || "";
-    const newSkill = rawValue
-      .replace(/\s+/g, " ")
-      .replace(/-+/g, "-")
-      .replace(/\/+/g, "/")
-      .trim();
+    const newSkill = cleanUpText(rawValue);
 
     const validationError = validateSkillInput({ text: newSkill, skills });
     if (validationError) {
