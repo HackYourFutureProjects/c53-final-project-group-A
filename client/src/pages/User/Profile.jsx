@@ -46,6 +46,7 @@ export default function Profile() {
       skillInput.value = "";
       skillInput.focus();
     }
+  }
 
   function removeSkill(skill) {
     setSettings((prev) => {
