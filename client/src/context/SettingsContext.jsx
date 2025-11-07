@@ -1,9 +1,10 @@
 import { createContext, useContext, useState } from "react";
 import { defaultUser } from "../data/defaultUser";
+import { mapSkillToRegex } from "../util/mapSkillToRegex";
 
 const initialSettings = {
   address: defaultUser.address,
-  skills: defaultUser.skills,
+  skills: defaultUser.skills.map((skill) => mapSkillToRegex(skill)),
 };
 const SettingsContext = createContext();
 function UseSettings() {

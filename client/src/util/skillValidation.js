@@ -24,7 +24,9 @@ export function validateSkillInput({ text, skills = [] }) {
   }
 
   const normalizedText = text.trim().toLowerCase();
-  const normalizedSkills = skills.map((s) => String(s).trim().toLowerCase());
+  const normalizedSkills = skills.map((s) =>
+    String(s.skill).trim().toLowerCase(),
+  );
   if (normalizedSkills.includes(normalizedText)) {
     return {
       type: "error",

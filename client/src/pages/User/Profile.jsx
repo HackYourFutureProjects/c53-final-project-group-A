@@ -3,6 +3,7 @@ import { UseSettings } from "../../context/SettingsContext";
 import { useState } from "react";
 import { validateSkillInput } from "../../util/skillValidation";
 import AlertMessage from "../../components/AlertMessage";
+import { mapSkillToRegex } from "../../util/mapSkillToRegex";
 
 export default function Profile() {
   const skillInputRef = useRef(null);
@@ -32,14 +33,12 @@ export default function Profile() {
       return;
     }
 
-    // if ((skills || []).includes(newSkill)) {
-    //   alert("This skill is already added!");
-    //   return;
-    // }
-
     setSettings((prev) => {
       const newSettings = { ...prev };
-      newSettings.skills = [...(newSettings.skills || []), newSkill];
+      newSettings.skills = [
+        ...(newSettings.skills || []),
+        mapSkillToRegex(newSkill),
+      ];
       return newSettings;
     });
 
@@ -182,15 +181,15 @@ export default function Profile() {
 
         {/* Skills List */}
         <div id="skillsList" ref={skillsListRef}>
-          {(skills || []).map((skill, idx) => (
+          {(skills || []).map((s, idx) => (
             <div
-              key={`${skill}-${idx}`}
+              key={`${s.skill}-${idx}`}
               className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
             >
-              <span className="text-gray-800 mr-2">{skill}</span>
+              <span className="text-gray-800 mr-2">{s.skill}</span>
               <button
                 className="text-gray-500 hover:text-red-600 transition"
-                onClick={() => removeSkill(skill)}
+                onClick={() => removeSkill(s)}
               >
                 <svg
                   className="w-4 h-4"
