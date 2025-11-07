@@ -1,7 +1,7 @@
 import { UseSettings } from "../context/SettingsContext";
 
 function normalizeDescription(str) {
-  return " " + str.replace(/ +/g, " ").replace(/[^A-Za-z0-9+#]/g, " ") + " ";
+  return " " + str.replace(/[^A-Za-z0-9+#]/g, " ").replace(/ +/g, " ") + " ";
 }
 
 function getSkillsInDescription(text, skills = []) {
