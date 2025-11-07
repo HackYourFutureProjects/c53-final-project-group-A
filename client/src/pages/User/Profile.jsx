@@ -1,88 +1,62 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { UseSettings } from "../../context/SettingsContext";
+import { validateSkillInput } from "../../util/skillValidation";
+import AlertMessage from "../../components/AlertMessage";
+import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
 
 export default function Profile() {
   const skillInputRef = useRef(null);
   const skillsListRef = useRef(null);
+  const [alert, setAlert] = useState({ type: "", message: "" });
+  const { settings, setSettings } = UseSettings();
+  const { skills } = settings;
 
-  let skills = [
-    "React",
-    "TypeScript",
-    "Node.js",
-    "PostgreSQL",
-    "Docker",
-    "AWS",
-  ];
+  useEffect(() => {
+    if (alert.message && skills) {
+      setAlert({ type: "", message: "" });
+    }
+  }, [skills]);
 
-  // Initialize with existing skills
-  function initializeSkills() {
-    skills.forEach((skill) => {
-      addSkillToDOM(skill);
-    });
-  }
-
-  // Add skill to DOM
-  function addSkillToDOM(skill) {
-    const skillElement = document.createElement("div");
-    skillElement.className =
-      "inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm";
-    skillElement.innerHTML = `
-                <span class="text-gray-800 mr-2">${skill}</span>
-                <button class="text-gray-500 hover:text-red-600 transition" onclick="removeSkill('${skill}', this)">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            `;
-    const list = skillsListRef.current;
-    if (list) list.appendChild(skillElement);
-  }
-
-  // Add skill function
   function addSkill() {
-    const input = skillInputRef.current;
-    const skill = input ? input.value.trim() : "";
+    const skillInput = skillInputRef.current;
+    if (!skillInput) return;
+    const rawValue = skillInput.value || "";
+    const newSkill = rawValue
+      .replace(/\s+/g, " ")
+      .replace(/-+/g, "-")
+      .replace(/\/+/g, "/")
+      .trim();
 
-    if (skill === "") return;
-
-    // Check if skill already exists
-    if (skills.includes(skill)) {
-      alert("This skill is already added!");
+    const validationError = validateSkillInput({ text: newSkill, skills });
+    if (validationError) {
+      setAlert(validationError);
       return;
     }
 
-    // Add to array
-    skills.push(skill);
+    setSettings((prev) => {
+      const newSettings = { ...prev };
+      newSettings.skills = [
+        ...(newSettings.skills || []),
+        regexEndNormalizeSkill(newSkill),
+      ];
+      return newSettings;
+    });
 
-    // Add to DOM
-    addSkillToDOM(skill);
-
-    // Clear input
-    if (input) {
-      input.value = "";
-      input.focus();
+    if (skillInput) {
+      skillInput.value = "";
+      skillInput.focus();
     }
   }
 
-  // Remove skill function is attached to window in useEffect (after mount)
-
-  // Attach listeners after mount
-  useEffect(() => {
-    // expose removeSkill on window for the inline onclick in innerHTML
-    window.removeSkill = function (skill, button) {
-      // Remove from array
-      skills = skills.filter((s) => s !== skill);
-
-      // Remove from DOM
-      if (button && button.parentElement) button.parentElement.remove();
-    };
-
-    // Initialize skills on mount
-    initializeSkills();
-
-    return () => {
-      // nothing to cleanup because we use React event handlers on elements
-    };
-  }, []);
+  function removeSkill(skill) {
+    setSettings((prev) => {
+      const newSettings = { ...prev };
+      newSettings.skills = (newSettings.skills || []).filter(
+        (s) => s.skill !== skill.skill,
+      );
+      return newSettings;
+    });
+  }
 
   return (
     <div className="content-container">
@@ -203,13 +177,39 @@ export default function Profile() {
             Add
           </button>
         </div>
+        {alert.message && (
+          <AlertMessage type={alert.type} message={alert.message} />
+        )}
 
         {/* Skills List */}
-        <div
-          id="skillsList"
-          ref={skillsListRef}
-          className="flex flex-wrap gap-2 min-h-[60px] border border-gray-300 rounded p-3 bg-gray-50"
-        ></div>
+        <div id="skillsList" ref={skillsListRef}>
+          {(skills || []).map((s, idx) => (
+            <div
+              key={`${s.skill}-${idx}`}
+              className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
+            >
+              <span className="text-gray-800 mr-2">{s.skill}</span>
+              <button
+                className="text-gray-500 hover:text-red-600 transition"
+                onClick={() => removeSkill(s)}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* <!-- Save Button --> */}
