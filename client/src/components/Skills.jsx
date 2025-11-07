@@ -7,11 +7,11 @@ function normalizeDescription(str) {
 function getSkillsInDescription(text, skills = []) {
   const textSpaced = normalizeDescription(text);
   return skills
-    .filter((skill) => {
-      const re = skill.skillRegex;
+    .filter((s) => {
+      const re = s.skillRegex;
       return re ? re.test(textSpaced) : false;
     })
-    .map((skill) => skill.skill);
+    .map((s) => s.skill);
 }
 
 export default function Skills({ item }) {

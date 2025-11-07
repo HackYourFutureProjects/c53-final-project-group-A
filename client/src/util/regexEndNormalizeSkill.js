@@ -21,10 +21,13 @@
  *   spaces (useful for normalization and comparisons).
  */
 export function regexEndNormalizeSkill(skill) {
-  let escaped = skill;
   let normalizedSkill = skill;
+  normalizedSkill = normalizedSkill
+    .toLowerCase()
+    .replace(/[-/\s]/g, " ")
+    .replace(/ +/g, " ");
+  let escaped = normalizedSkill;
   escaped = escaped.replace(/[.*+?^${}()|[\]\\#]/g, "\\$&");
   const skillRegex = new RegExp(" " + escaped + " ", "i");
-  normalizedSkill = normalizedSkill.replace(/[-/\s]/g, " ");
   return { skill, skillRegex, normalizedSkill };
 }
