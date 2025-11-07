@@ -1,6 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UseSettings } from "../../context/SettingsContext";
-import { useState } from "react";
 import { validateSkillInput } from "../../util/skillValidation";
 import AlertMessage from "../../components/AlertMessage";
 import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
