@@ -58,7 +58,7 @@ export default function Profile() {
             Set New Password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="Type 8 characters or more"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
