@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { JobsProvider } from "./context/JobsContext.jsx";
 import { FavoritesProvider } from "./context/FavoritesContext.jsx";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -13,7 +14,9 @@ createRoot(document.getElementById("root")).render(
       <SettingsProvider>
         <JobsProvider>
           <FavoritesProvider>
-            <App />
+            <AuthProvider>
+              <App />
+            </AuthProvider>
           </FavoritesProvider>
         </JobsProvider>
       </SettingsProvider>

@@ -5,19 +5,14 @@ import OpenPositions from "./pages/openPositions/OpenPositions";
 import Profile from "./pages/User/Profile";
 import "./index.css";
 import MyFavorites from "./pages/MyFavorites/MyFavorites";
-import { defaultUser } from "./data/defaultUser";
-import { useState } from "react";
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useState(defaultUser);
-
   return (
     <Routes>
-      <Route path="/" element={<Layout user={user} />}>
-        <Route index element={<JobSearch user={user} />} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<JobSearch />} />
         <Route path="/jobs" element={<OpenPositions />} />
-        <Route path="/profile" element={<Profile user={user} />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/favorites" element={<MyFavorites />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

@@ -2,9 +2,11 @@ import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { images, icons } from "../../assets";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 //dropdown menu
-function UserMenu({ user }) {
+function UserMenu() {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -32,7 +34,8 @@ function UserMenu({ user }) {
           className="user-avatar"
         />
         <span className="divider"></span>
-        <span className="user-name">{user.name}</span>
+        {/* <span className="user-name">{user.name}</span> */}
+        <span className="user-name">{user ? user.name : "Guest"}</span>
 
         <img
           src={icons.arrow}
@@ -49,6 +52,7 @@ function UserMenu({ user }) {
               isActive ? "user-item active" : "user-item"
             }
             role="menuitem"
+            onClick={() => setOpen(false)}
           >
             Profile
           </NavLink>
@@ -58,6 +62,7 @@ function UserMenu({ user }) {
               isActive ? "user-item active" : "user-item"
             }
             role="menuitem"
+            onClick={() => setOpen(false)}
           >
             About
           </NavLink>
@@ -67,6 +72,7 @@ function UserMenu({ user }) {
               isActive ? "user-item active" : "user-item"
             }
             role="menuitem"
+            onClick={() => setOpen(false)}
           >
             Login
           </NavLink>
@@ -76,7 +82,7 @@ function UserMenu({ user }) {
   );
 }
 
-export default function Header({ user }) {
+export default function Header() {
   return (
     <header className="app-header">
       <nav className="header-nav">
@@ -113,7 +119,7 @@ export default function Header({ user }) {
         </div>
 
         <div className="header-actions">
-          <UserMenu user={user} />
+          <UserMenu />
         </div>
       </nav>
     </header>
