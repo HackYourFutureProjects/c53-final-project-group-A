@@ -1,0 +1,162 @@
+.auth-container {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+  font-size: 20px;
+  gap: 16px;
+}
+
+.tabs button {
+  padding: 12px 32px;
+  font-weight: 600;
+  border-bottom: 4px solid transparent;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  transition:
+    color 0.3s,
+    border-bottom-color 0.3s,
+    transform 0.2s;
+  position: relative;
+}
+
+.tabs button:hover {
+  color: #111827;
+  transform: translateY(-2px);
+}
+
+.active-tab {
+  border-bottom-color: #000;
+  color: #111827;
+}
+
+.tabs button::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tabs button.active-tab::after {
+  transform: scaleX(1);
+}
+
+.form-card {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 32px;
+}
+
+.form-card label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.form-card input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.form-card input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.form-card button {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.form-card button:hover {
+  background: #111827;
+}
+
+.switch-text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 12px;
+}
+
+.switch-link {
+  color: #3b82f6;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.switch-link:hover {
+  color: #2563eb;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.password-rule-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.password-rule-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.password-rule-item svg {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.password-rule-item.valid {
+  color: #10b981;
+}
+
+.password-rule-item.invalid {
+  color: #ef4444;
+}
