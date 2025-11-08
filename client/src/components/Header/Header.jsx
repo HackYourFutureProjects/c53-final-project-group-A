@@ -82,7 +82,7 @@ function UserMenu() {
   );
 }
 
-export default function Header({ user }) {
+export default function Header() {
   return (
     <header className="app-header">
       <nav className="header-nav">
@@ -119,7 +119,7 @@ export default function Header({ user }) {
         </div>
 
         <div className="header-actions">
-          <UserMenu user={user} />
+          <UserMenu />
         </div>
       </nav>
     </header>
