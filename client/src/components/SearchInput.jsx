@@ -5,6 +5,7 @@ import { UseJobs } from "../context/JobsContext";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/validation";
 import "./SearchInput.css";
+import { cleanUpText } from "../util/cleanUpText";
 
 export default function SearchInput() {
   const {
@@ -25,12 +26,15 @@ export default function SearchInput() {
     }
   }, [searchTerm]);
 
-  const { performFetch } = useFetch(`/connect?q=${searchTerm}`, (response) => {
-    setAllJobs(response.result);
-  });
+  const { performFetch } = useFetch(
+    `/connect?q=${cleanUpText(searchTerm)}`,
+    (response) => {
+      setAllJobs(response.result);
+    },
+  );
 
   const handleSearch = async () => {
-    const validationError = validateJobInput({ text: searchTerm });
+    const validationError = validateJobInput({ text: cleanUpText(searchTerm) });
     if (validationError) {
       setAlert(validationError);
       return;

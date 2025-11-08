@@ -1,8 +1,6 @@
 export function validateJobInput({ text }) {
-  const trimmedText = text.trim();
-
   //  Check if the input is empty
-  if (trimmedText === "") {
+  if (text === "") {
     return {
       type: "error",
       message: "Please add at least one job title before you search.",
@@ -12,7 +10,7 @@ export function validateJobInput({ text }) {
   // Check for invalid special characters
   // Allow: letters, numbers, spaces, and - / , ( ) . '
   const hasInvalidChars = /[^a-zA-Z0-9\s\-,().'/]/;
-  if (hasInvalidChars.test(trimmedText)) {
+  if (hasInvalidChars.test(text)) {
     return {
       type: "error",
       message:
@@ -21,7 +19,7 @@ export function validateJobInput({ text }) {
   }
 
   //  Check if the input is only numbers
-  const isNumbersOnly = /^\d+$/.test(trimmedText);
+  const isNumbersOnly = /^\d+$/.test(text);
   if (isNumbersOnly) {
     return {
       type: "warning",
