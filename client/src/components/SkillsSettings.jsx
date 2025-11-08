@@ -35,7 +35,11 @@ export default function SkillsSettings() {
       newSettings.skills = [
         ...(newSettings.skills || []),
         regexEndNormalizeSkill(newSkill),
-      ];
+      ].sort((a, b) =>
+        String(a?.normalizedSkill ?? "").localeCompare(
+          String(b?.normalizedSkill ?? ""),
+        ),
+      );
       return newSettings;
     });
 
