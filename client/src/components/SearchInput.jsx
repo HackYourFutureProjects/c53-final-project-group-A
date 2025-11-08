@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { UseJobs } from "../context/JobsContext";
 import AlertMessage from "../components/AlertMessage";
-import { validateJobInput } from "../util/validation";
+import { validateJobInput } from "../util/searchValidation";
 import "./SearchInput.css";
 import { cleanUpText } from "../util/cleanUpText";
 
