@@ -11,7 +11,7 @@ export function validateSkillInput({ text, skills = [] }) {
     return {
       type: "error",
       message:
-        "Invalid characters detected. Allowed characters are letters, numbers, spaces, and these symbols: -/+#",
+        "Invalid characters detected. Allowed characters are letters, numbers, spaces, and these symbols: -/#+",
     };
   }
 
@@ -23,10 +23,8 @@ export function validateSkillInput({ text, skills = [] }) {
     };
   }
 
-  const normalizedText = text.trim().toLowerCase();
-  const normalizedSkills = skills.map((s) =>
-    String(s.skill).trim().toLowerCase(),
-  );
+  const normalizedText = text.toLowerCase();
+  const normalizedSkills = skills.map((s) => s.normalizedSkill);
   if (normalizedSkills.includes(normalizedText)) {
     return {
       type: "error",

@@ -4,7 +4,13 @@ import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
 const initialSettings = {
   address: defaultUser.address,
-  skills: defaultUser.skills.map((skill) => regexEndNormalizeSkill(skill)),
+  skills: defaultUser.skills
+    .map((skill) => regexEndNormalizeSkill(skill))
+    .sort((a, b) =>
+      String(a?.normalizedSkill ?? "").localeCompare(
+        String(b?.normalizedSkill ?? ""),
+      ),
+    ),
 };
 const SettingsContext = createContext();
 function UseSettings() {
