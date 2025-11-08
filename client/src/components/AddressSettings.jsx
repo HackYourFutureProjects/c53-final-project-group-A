@@ -1,13 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import { UseSettings } from "../context/SettingsContext";
-import AlertMessage from "./AlertMessage";
 
 export default function AddressSettings() {
-  const skillInputRef = useRef(null);
-  const skillsListRef = useRef(null);
-  const [alert, setAlert] = useState({ type: "", message: "" });
-  const { settings, setSettings } = UseSettings();
-  const { skills } = settings;
+  const { settings } = UseSettings();
 
   return (
     <div className="mb-6">
