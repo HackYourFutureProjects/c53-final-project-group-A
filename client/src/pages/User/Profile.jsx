@@ -1,8 +1,48 @@
+import { useRef } from "react";
 import { defaultUser } from "../../data/defaultUser";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 
 export default function Profile() {
+  const nameInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const confirmPasswordInputRef = useRef(null);
+  const streetInputRef = useRef(null);
+  const houseInputRef = useRef(null);
+  const cityInputRef = useRef(null);
+  const countryInputRef = useRef(null);
+
+  function saveProfileSettings(
+    streetRef = "",
+    houseRef = "",
+    cityRef = "",
+    countryRef = "",
+  ) {
+    // Placeholder function for saving settings
+    const name = nameInputRef.current ? nameInputRef.current.value : "";
+    const password = passwordInputRef.current
+      ? passwordInputRef.current.value
+      : "";
+    const confirmPassword = confirmPasswordInputRef.current
+      ? confirmPasswordInputRef.current.value
+      : "";
+    const street = streetRef.current ? streetRef.current.value : "";
+    const house = houseRef.current ? houseRef.current.value : "";
+    const city = cityRef.current ? cityRef.current.value : "";
+    const country = countryRef.current ? countryRef.current.value : "";
+    console.log("Saving settings for:", name);
+    console.log("Address:", { street, house, city, country });
+    if (password || confirmPassword) {
+      if (password === confirmPassword) {
+        console.log("Password updated.");
+      } else {
+        console.log("Passwords do not match.");
+      }
+    }
+  }
+  function pressEnterKey(e) {
+    if (e.key === "Enter") saveProfileSettings();
+  }
   return (
     <div className="content-container">
       {/* <!-- Page Title --> */}
@@ -41,9 +81,12 @@ export default function Profile() {
               Name
             </label>
             <input
+              id="nameInput"
+              ref={nameInputRef}
               type="text"
               defaultValue={defaultUser.name}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onKeyDown={pressEnterKey}
             />
           </div>
         </div>
@@ -58,9 +101,12 @@ export default function Profile() {
             Set New Password
           </label>
           <input
+            id="newPasswordInput"
+            ref={passwordInputRef}
             type="password"
             placeholder="Type 8 characters or more"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={pressEnterKey}
           />
         </div>
         <div>
@@ -68,9 +114,12 @@ export default function Profile() {
             Confirm Password
           </label>
           <input
+            id="confirmPasswordInput"
+            ref={confirmPasswordInputRef}
             type="text"
             placeholder="Write the same password again"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={pressEnterKey}
           />
         </div>
       </div>
@@ -78,11 +127,28 @@ export default function Profile() {
       <hr className="border-gray-300 mb-8" />
       {/* Settings Section */}
       <h2 className="text-lg font-semibold text-gray-900 mb-6">Settings</h2>
-      <AddressSettings />
+      <AddressSettings
+        saveProfileSettings={saveProfileSettings}
+        streetInputRef={streetInputRef}
+        houseInputRef={houseInputRef}
+        cityInputRef={cityInputRef}
+        countryInputRef={countryInputRef}
+      />
       <SkillsSettings />
       {/* <!-- Save Button --> */}
       <div className="flex justify-end mb-8">
-        <button className="px-8 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium">
+        <button
+          id="saveBtn"
+          onClick={() =>
+            saveProfileSettings(
+              streetInputRef,
+              houseInputRef,
+              cityInputRef,
+              countryInputRef,
+            )
+          }
+          className="px-8 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
+        >
           Save
         </button>
       </div>
