@@ -11,7 +11,7 @@ export function validateSkillInput({ text, skills = [] }) {
     return {
       type: "error",
       message:
-        "Invalid characters detected. Allowed characters are letters, numbers, spaces, and these symbols: -/+#",
+        "Invalid characters detected. Allowed characters are letters, numbers, spaces, and these symbols: -/#+",
     };
   }
 
