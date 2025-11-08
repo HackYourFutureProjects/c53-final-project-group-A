@@ -63,8 +63,6 @@ export default function Profile() {
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
           <label className="block text-xs text-gray-600 mb-1">
             Confirm Password
