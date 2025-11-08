@@ -48,6 +48,35 @@ export default function Profile() {
           </div>
         </div>
       </div>
+
+      <label className="block text-sm font-medium text-gray-900 mb-3">
+        Password
+      </label>
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        <div>
+          <label className="block text-xs text-gray-600 mb-1">
+            Set New Password
+          </label>
+          <input
+            type="text"
+            placeholder="Type 8 characters or more"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        <div>
+          <label className="block text-xs text-gray-600 mb-1">
+            Confirm Password
+          </label>
+          <input
+            type="text"
+            placeholder="Write the same password again"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
       <hr className="border-gray-300 mb-8" />
       {/* Settings Section */}
       <h2 className="text-lg font-semibold text-gray-900 mb-6">Settings</h2>
