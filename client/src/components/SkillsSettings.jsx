@@ -7,7 +7,6 @@ import { cleanUpText } from "../util/cleanUpText";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
-  const skillsListRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
   const { settings, setSettings } = UseSettings();
   const { skills } = settings;
@@ -87,7 +86,7 @@ export default function SkillsSettings() {
         <AlertMessage type={alert.type} message={alert.message} />
       )}
       {/* Skills List */}
-      <div id="skillsList" ref={skillsListRef}>
+      <div id="skillsList">
         {(skills || []).map((s, idx) => (
           <div
             key={`${s.skill}-${idx}`}

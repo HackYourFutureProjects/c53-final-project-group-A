@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { defaultUser } from "../../data/defaultUser";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
+import { UseSettings } from "../../context/SettingsContext";
 
 export default function Profile() {
   const nameInputRef = useRef(null);
@@ -11,6 +12,8 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
+  const { settings } = UseSettings();
+  const { skills } = settings;
 
   function saveProfileSettings(
     streetRef = "",
@@ -38,6 +41,9 @@ export default function Profile() {
       } else {
         console.log("Passwords do not match.");
       }
+    }
+    if (skills) {
+      console.log("Skills:", skills);
     }
   }
   function pressEnterKey(e) {
