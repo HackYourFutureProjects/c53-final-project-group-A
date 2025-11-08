@@ -1,5 +1,4 @@
 export function validateAddressTextInputs({ text }) {
-  //  Check if the input is empty
   if (text === "") {
     return {
       type: "error",
@@ -7,7 +6,6 @@ export function validateAddressTextInputs({ text }) {
     };
   }
 
-  // Check for invalid special characters
   const hasInvalidChars = /[^a-zA-Z0-9\s\-/.']/;
   if (hasInvalidChars.test(text)) {
     return {

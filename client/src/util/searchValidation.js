@@ -1,5 +1,4 @@
 export function validateJobInput({ text }) {
-  //  Check if the input is empty
   if (text === "") {
     return {
       type: "error",
@@ -7,8 +6,6 @@ export function validateJobInput({ text }) {
     };
   }
 
-  // Check for invalid special characters
-  // Allow: letters, numbers, spaces, and - / , ( ) . '
   const hasInvalidChars = /[^a-zA-Z0-9\s\-.'/]/;
   if (hasInvalidChars.test(text)) {
     return {
@@ -18,7 +15,6 @@ export function validateJobInput({ text }) {
     };
   }
 
-  //  Check if the input is only numbers
   const isNumbersOnly = /^\d+$/.test(text);
   if (isNumbersOnly) {
     return {
