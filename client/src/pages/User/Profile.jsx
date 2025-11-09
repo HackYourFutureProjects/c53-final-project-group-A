@@ -63,7 +63,8 @@ export default function Profile() {
       if (password === confirmPassword) {
         console.log("Password updated.");
       } else {
-        console.log("Passwords do not match.");
+        setAlert({ type: "error", message: "Passwords do not match." });
+        return;
       }
     }
     // Address
