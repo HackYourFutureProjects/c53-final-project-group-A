@@ -109,7 +109,13 @@ export default function Profile() {
     });
   }
   function pressEnterKey(e) {
-    if (e.key === "Enter") saveProfileSettings(streetInputRef, houseInputRef, cityInputRef, countryInputRef);
+    if (e.key === "Enter")
+      saveProfileSettings(
+        streetInputRef,
+        houseInputRef,
+        cityInputRef,
+        countryInputRef,
+      );
   }
   return (
     <div className="content-container">
