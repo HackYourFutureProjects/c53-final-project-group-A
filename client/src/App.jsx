@@ -12,9 +12,9 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<JobSearch />} />
-        <Route path="/jobs" element={<OpenPositions />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/favorites" element={<MyFavorites />} />
+        <Route path="jobs" element={<OpenPositions />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="favorites" element={<MyFavorites />} />
         <Route path="login" element={<AuthForms />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
