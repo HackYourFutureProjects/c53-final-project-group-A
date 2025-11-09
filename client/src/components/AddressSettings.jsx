@@ -8,18 +8,14 @@ export default function AddressSettings({
   countryInputRef,
 }) {
   const { settings } = UseSettings();
-  const streetInputRefInt = streetInputRef;
-  const houseInputRefInt = houseInputRef;
-  const cityInputRefInt = cityInputRef;
-  const countryInputRefInt = countryInputRef;
 
   function pressEnterKey(e) {
     if (e.key === "Enter") {
       saveProfileSettings(
-        streetInputRefInt,
-        houseInputRefInt,
-        cityInputRefInt,
-        countryInputRefInt,
+        streetInputRef,
+        houseInputRef,
+        cityInputRef,
+        countryInputRef,
       );
     }
   }
@@ -33,7 +29,7 @@ export default function AddressSettings({
           <label className="block text-xs text-gray-600 mb-1">Street</label>
           <input
             id="streetInput"
-            ref={streetInputRefInt}
+            ref={streetInputRef}
             type="text"
             defaultValue={settings.address.street}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -44,7 +40,7 @@ export default function AddressSettings({
           <label className="block text-xs text-gray-600 mb-1">House no.</label>
           <input
             id="houseInput"
-            ref={houseInputRefInt}
+            ref={houseInputRef}
             type="text"
             defaultValue={settings.address.houseNumber}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -55,7 +51,7 @@ export default function AddressSettings({
           <label className="block text-xs text-gray-600 mb-1">City</label>
           <input
             id="cityInput"
-            ref={cityInputRefInt}
+            ref={cityInputRef}
             type="text"
             defaultValue={settings.address.city}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -66,7 +62,7 @@ export default function AddressSettings({
           <label className="block text-xs text-gray-600 mb-1">Country</label>
           <input
             id="countryInput"
-            ref={countryInputRefInt}
+            ref={countryInputRef}
             type="text"
             defaultValue={settings.address.country}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
