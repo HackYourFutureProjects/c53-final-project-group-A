@@ -95,6 +95,7 @@ const SignupForm = ({
             <label>First Name</label>
             <input
               type="text"
+              placeholder="Enter your first name"
               value={signupData.firstName}
               onChange={(e) =>
                 setSignupData({ ...signupData, firstName: e.target.value })
@@ -106,6 +107,7 @@ const SignupForm = ({
             <label>Last Name</label>
             <input
               type="text"
+              placeholder="Enter your last name"
               value={signupData.lastName}
               onChange={(e) =>
                 setSignupData({ ...signupData, lastName: e.target.value })
@@ -118,6 +120,7 @@ const SignupForm = ({
         <label>Email</label>
         <input
           type="email"
+          placeholder="Enter your email"
           value={signupData.email}
           onChange={(e) =>
             setSignupData({ ...signupData, email: e.target.value })
@@ -128,6 +131,7 @@ const SignupForm = ({
         <label>Password</label>
         <input
           type="password"
+          placeholder="Enter your password"
           value={signupData.password}
           onChange={(e) =>
             setSignupData({ ...signupData, password: e.target.value })
@@ -138,6 +142,7 @@ const SignupForm = ({
         <label>Confirm Password</label>
         <input
           type="password"
+          placeholder="Confirm your password"
           value={signupData.confirmPassword}
           onChange={(e) =>
             setSignupData({ ...signupData, confirmPassword: e.target.value })

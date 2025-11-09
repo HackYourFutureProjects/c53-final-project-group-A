@@ -17,6 +17,7 @@ const LoginForm = ({ login, switchToSignup }) => {
         <label>Email</label>
         <input
           type="email"
+          placeholder="Enter your email"
           value={loginData.email}
           onChange={(e) =>
             setLoginData({ ...loginData, email: e.target.value })
@@ -27,6 +28,7 @@ const LoginForm = ({ login, switchToSignup }) => {
         <label>Password</label>
         <input
           type="password"
+          placeholder="Enter your password"
           value={loginData.password}
           onChange={(e) =>
             setLoginData({ ...loginData, password: e.target.value })
