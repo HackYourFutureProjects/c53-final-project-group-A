@@ -2,17 +2,18 @@ import { UseSettings } from "../context/SettingsContext";
 
 export default function AddressSettings({
   saveProfileSettings,
-  streetInputRefExt,
-  houseInputRefExt,
-  cityInputRefExt,
-  countryInputRefExt,
+  streetInputRef,
+  houseInputRef,
+  cityInputRef,
+  countryInputRef,
 }) {
   const { settings } = UseSettings();
 
-  const streetInputRefInt = streetInputRefExt;
-  const houseInputRefInt = houseInputRefExt;
-  const cityInputRefInt = cityInputRefExt;
-  const countryInputRefInt = countryInputRefExt;
+  // use the refs passed from the parent (Profile)
+  const streetInputRefInt = streetInputRef;
+  const houseInputRefInt = houseInputRef;
+  const cityInputRefInt = cityInputRef;
+  const countryInputRefInt = countryInputRef;
 
   function pressEnterKey(e) {
     if (e.key === "Enter") {

@@ -1,10 +1,14 @@
-import { useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { defaultUser } from "../../data/defaultUser";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
+import AlertMessage from "../../components/AlertMessage";
 import { UseSettings } from "../../context/SettingsContext";
+import { cleanUpText } from "../../util/cleanUpText";
+import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 
 export default function Profile() {
+  const [alert, setAlert] = useState({ type: "", message: "" });
   const firstNameInputRef = useRef(null);
   const lastNameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -16,38 +20,92 @@ export default function Profile() {
   const { settings } = UseSettings();
   const { skills } = settings;
 
+  useEffect(() => {
+    if (alert.message && skills) {
+      setAlert({ type: "", message: "" });
+    }
+  }, [skills]);
+
+  // Placeholder function for saving settings
+  // If called without args, default to the local refs defined above so
+  // pressing Enter from inputs in this component still works.
   function saveProfileSettings(
-    streetRef = "",
-    houseRef = "",
-    cityRef = "",
-    countryRef = "",
+    // streetRef = streetInputRef,
+    // houseRef = houseInputRef,
+    // cityRef = cityInputRef,
+    // countryRef = countryInputRef,
+    streetInputRef,
+    houseInputRef,
+    cityInputRef,
+    countryInputRef,
   ) {
-    // Placeholder function for saving settings
-    const firstName = firstNameInputRef.current
-      ? firstNameInputRef.current.value
-      : "";
-    const lastName = lastNameInputRef.current
-      ? lastNameInputRef.current.value
-      : "";
-    const password = passwordInputRef.current
-      ? passwordInputRef.current.value
-      : "";
-    const confirmPassword = confirmPasswordInputRef.current
-      ? confirmPasswordInputRef.current.value
-      : "";
-    const street = streetRef.current ? streetRef.current.value : "";
-    const house = houseRef.current ? houseRef.current.value : "";
-    const city = cityRef.current ? cityRef.current.value : "";
-    const country = countryRef.current ? countryRef.current.value : "";
+    // console.log(streetRef, houseRef, cityRef, countryRef);
+    let firstName = firstNameInputRef.current;
+    let lastName = lastNameInputRef.current;
+    let password = passwordInputRef.current;
+    let confirmPassword = confirmPasswordInputRef.current;
+    // let street = streetRef.current;
+    // let house = houseRef.current;
+    // let city = cityRef.current;
+    // let country = countryRef.current;
+    let street = streetInputRef.current;
+    let house = houseInputRef.current;
+    let city = cityInputRef.current;
+    let country = countryInputRef.current;
+    if (
+      !firstName ||
+      !lastName ||
+      !password ||
+      !confirmPassword ||
+      !street ||
+      !house ||
+      !city ||
+      !country
+    )
+      return;
+    // First and Last Name
+    firstName = cleanUpText(firstName.value || "");
+    lastName = cleanUpText(lastName.value || "");
     console.log("Saving settings for:", firstName, lastName);
-    console.log("Address:", { street, house, city, country });
+    // Passwords
+    password = password.value || "";
+    confirmPassword = confirmPassword.value || "";
     if (password || confirmPassword) {
+      console.log("password, confirmPassword", password, confirmPassword);
       if (password === confirmPassword) {
         console.log("Password updated.");
       } else {
         console.log("Passwords do not match.");
       }
     }
+    // Address
+    street = cleanUpText(street.value || "");
+    console.log("street:", street);
+    house = cleanUpText(house.value || "");
+    city = cleanUpText(city.value || "");
+    country = cleanUpText(country.value || "");
+    const streetValidationError = validateAddressTextInputs({
+      text: street,
+    });
+    const cityValidationError = validateAddressTextInputs({
+      text: city,
+    });
+    const countryValidationError = validateAddressTextInputs({
+      text: country,
+      type: "country",
+    });
+    if (
+      streetValidationError ||
+      cityValidationError ||
+      countryValidationError
+    ) {
+      setAlert(
+        streetValidationError || cityValidationError || countryValidationError,
+      );
+      return;
+    }
+    console.log("Address:", { street, house, city, country });
+    // Skills
     if (skills) {
       console.log("Skills:", skills);
     }
@@ -168,21 +226,28 @@ export default function Profile() {
       />
       <SkillsSettings />
       {/* <!-- Save Button --> */}
-      <div className="flex justify-end mb-8">
-        <button
-          id="saveBtn"
-          onClick={() =>
-            saveProfileSettings(
-              streetInputRef,
-              houseInputRef,
-              cityInputRef,
-              countryInputRef,
-            )
-          }
-          className="px-8 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
-        >
-          Save
-        </button>
+      <div className="flex items-center justify-end mb-8 space-x-4">
+        {alert.message && (
+          <div className="md:w-auto">
+            <AlertMessage type={alert.type} message={alert.message} />
+          </div>
+        )}
+        <div>
+          <button
+            id="saveBtn"
+            onClick={() =>
+              saveProfileSettings(
+                streetInputRef,
+                houseInputRef,
+                cityInputRef,
+                countryInputRef,
+              )
+            }
+            className="px-8 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
+          >
+            Save
+          </button>
+        </div>
       </div>
       <hr className="border-gray-300 mb-8" />
       {/* <!-- Profile Management Section --> */}

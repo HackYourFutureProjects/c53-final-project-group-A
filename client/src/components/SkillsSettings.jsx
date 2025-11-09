@@ -20,8 +20,7 @@ export default function SkillsSettings() {
   function addSkill() {
     const skillInput = skillInputRef.current;
     if (!skillInput) return;
-    const rawValue = skillInput.value || "";
-    const newSkill = cleanUpText(rawValue);
+    const newSkill = cleanUpText(skillInput.value || "");
 
     const validationError = validateSkillInput({ text: newSkill, skills });
     if (validationError) {

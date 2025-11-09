@@ -1,4 +1,12 @@
-export function validateAddressTextInputs({ text }) {
+export function validateAddressTextInputs({ text, type = "general" }) {
+  if (type === "country" && text !== "Netherlands") {
+    return {
+      type: "error",
+      message:
+        "Sorry, at the moment our app only supports addresses in the Netherlands.",
+    };
+  }
+
   if (text === "") {
     return {
       type: "error",
