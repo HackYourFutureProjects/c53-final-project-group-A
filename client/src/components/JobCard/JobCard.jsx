@@ -6,14 +6,21 @@ export default function JobCard({
   onFavoriteToggle,
   onApplyClick,
 }) {
+  const workMode = job.remote_derived ? "Remote" : "On-site";
+
+  const location =
+    job.locations_derived && job.locations_derived.length > 0
+      ? job.locations_derived[0]
+      : null;
+
   return (
     <li key={job.id} className="job-item">
       <div className="job-card">
         <div className="job-card-content">
           <div className="company-logo-container">
             <img
-              src={job.companyLogo || "placeholder-logo.png"}
-              alt={job.companyName || "Company Logo"}
+              src={job.organization_logo || "placeholder-logo.png"}
+              alt={`${job.organization_logo}` || "Company logo"}
               className="company-logo"
             />
           </div>
@@ -35,12 +42,7 @@ export default function JobCard({
             </div>
 
             <div className="job-tags">
-              {[
-                job.seniorityLevel,
-                job.employmentType,
-                job.workMode,
-                job.location,
-              ].map(
+              {[job.seniority, job.employment_type, workMode, location].map(
                 (tag, idx) =>
                   tag && (
                     <span key={idx} className="job-tag-item">
@@ -51,8 +53,8 @@ export default function JobCard({
             </div>
 
             <p className="job-description">
-              {job.descriptionText
-                ? job.descriptionText.substring(0, 150) + "..."
+              {job.linkedin_org_description
+                ? job.linkedin_org_description.substring(0, 150) + "..."
                 : "No description available."}
             </p>
 
@@ -67,7 +69,7 @@ export default function JobCard({
                 className="more-apply-btn"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onApplyClick(job);
+                  onApplyClick(job.url);
                 }}
               >
                 More & Apply

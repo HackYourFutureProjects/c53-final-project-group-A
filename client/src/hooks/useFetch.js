@@ -54,15 +54,19 @@ const useFetch = (route, onReceived) => {
       const url = `/api${route}`;
       const res = await fetch(url, { ...baseOptions, ...options, signal });
 
+      const jsonResult = await res.json();
+
       if (!res.ok) {
         setError(
-          `Fetch for ${url} returned an invalid status (${
-            res.status
-          }). Received: ${JSON.stringify(res)}`,
+          jsonResult.msg ||
+            `Fetch for ${url} returned an invalid status (${res.status})`,
         );
+        setIsLoading(false);
+        return;
       }
 
-      const jsonResult = await res.json();
+      // Received: ${JSON.stringify(res)}`,
+      // );
 
       if (jsonResult.success === true) {
         onReceived(jsonResult);

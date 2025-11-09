@@ -19,36 +19,49 @@ export default function SearchInput() {
   const [alert, setAlert] = useState({ type: "", message: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (alert.message && searchTerm) {
-      setAlert({ type: "", message: "" });
-    }
-  }, [searchTerm]);
+  //post route
+  const {
+    performFetch,
+    isLoading: isFetchLoading,
+    cancelFetch,
+  } = useFetch("/jobs/search", (data) => {
+    setAllJobs((prevJobs) => {
+      const newJobs = [...prevJobs, ...data.result];
 
-  const { performFetch } = useFetch(`/connect?q=${searchTerm}`, (response) => {
-    setAllJobs(response.result);
+      const uniqueJobs = new Map(newJobs.map((job) => [job.job_id, job]));
+      return Array.from(uniqueJobs.values());
+    });
   });
 
-  const handleSearch = async () => {
+  useEffect(() => {
+    return cancelFetch;
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(isFetchLoading);
+  }, [isFetchLoading, setIsLoading]);
+
+  const handleSearch = () => {
     const validationError = validateJobInput({ text: searchTerm });
     if (validationError) {
       setAlert(validationError);
       return;
     }
 
-    setIsLoading(true);
+    setAllJobs([]);
     setError(null);
     setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
 
-    try {
-      await performFetch();
-      setShowResults(true);
-      navigate("/jobs");
-    } catch (err) {
-      setError(err);
-    } finally {
-      setIsLoading(false);
-    }
+    const searchWords = searchTerm.trim().split(/\s+/);
+    searchWords.forEach((word) => {
+      performFetch({
+        method: "POST",
+        body: JSON.stringify({ search_terms: word.trim() }),
+      });
+    });
+
+    setShowResults(true);
+    navigate("/jobs");
   };
 
   return (

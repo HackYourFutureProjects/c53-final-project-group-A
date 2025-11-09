@@ -2,7 +2,10 @@ import { useState, useMemo } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+
+// WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
+// import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+
 import { UseJobs } from "../../context/JobsContext";
 import { useFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
@@ -63,9 +66,14 @@ export default function OpenPositions() {
     setSortBy("Skill match");
     setCurrentPage(1);
   };
+
+  // FOR DEBUGGING
+  // const filteredJobs = allJobs;
+
   const filteredJobs = useMemo(() => {
     // ✅ only compute filtered jobs if showResults is true
     if (!showResults || !searchTerm.trim()) return [];
+    // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
     return sortAndFilterJobs(allJobs, activeFilters, sortBy, searchTerm);
   }, [allJobs, activeFilters, sortBy, searchTerm, showResults]);
 
@@ -142,9 +150,7 @@ export default function OpenPositions() {
                   job={job}
                   favorites={favorites}
                   onFavoriteToggle={toggleFavorite}
-                  onApplyClick={(job) =>
-                    window.open(job.applyUrl || job.link, "_blank")
-                  }
+                  onApplyClick={(url) => window.open(url, "_blank")}
                 />
               ))}
             </ul>
