@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { UseJobs } from "../context/JobsContext";
@@ -8,24 +8,14 @@ import "./SearchInput.css";
 import { cleanUpText } from "../util/cleanUpText";
 
 export default function SearchInput() {
-  const {
-    searchTerm,
-    setSearchTerm,
-    setShowResults,
-    setAllJobs,
-    setIsLoading,
-    setError,
-  } = UseJobs();
+  const { searchTerm, setSearchTerm, setShowResults, setAllJobs, setError } =
+    UseJobs();
 
   const [alert, setAlert] = useState({ type: "", message: "" });
   const navigate = useNavigate();
 
   //post route
-  const {
-    performFetch,
-    isLoading: isFetchLoading,
-    cancelFetch,
-  } = useFetch("/jobs/search", (data) => {
+  const { performFetch } = useFetch("/jobs/search", (data) => {
     setAllJobs((prevJobs) => {
       const newJobs = [...prevJobs, ...data.result];
 
@@ -33,19 +23,6 @@ export default function SearchInput() {
       return Array.from(uniqueJobs.values());
     });
   });
-
-  useEffect(() => {
-    if (alert.message && searchTerm) {
-      setAlert({ type: "", message: "" });
-    }
-  }, [searchTerm]);
-
-  const { performFetch } = useFetch(
-    `/connect?q=${cleanUpText(searchTerm)}`,
-    (response) => {
-      setAllJobs(response.result);
-    },
-  );
 
   const handleSearch = async () => {
     const validationError = validateJobInput({ text: cleanUpText(searchTerm) });
