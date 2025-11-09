@@ -107,7 +107,6 @@ export default function Profile() {
       };
       return newSettings;
     });
-    console.log("newSettings:", settings);
   }
   function pressEnterKey(e) {
     if (e.key === "Enter") saveProfileSettings();

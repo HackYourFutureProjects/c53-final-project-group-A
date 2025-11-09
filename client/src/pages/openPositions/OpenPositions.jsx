@@ -6,6 +6,7 @@ import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 import { UseJobs } from "../../context/JobsContext";
 import { UseFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
+import SkillsSettings from "../../components/SkillsSettings";
 
 export default function OpenPositions() {
   const { allJobs, searchTerm, showResults } = UseJobs();
@@ -76,6 +77,7 @@ export default function OpenPositions() {
 
   return (
     <div className="open-positions content-container">
+      <SkillsSettings />
       <div className="job-filters-bar">
         <div className="filters-container">
           <div className="filter-dropdowns">
