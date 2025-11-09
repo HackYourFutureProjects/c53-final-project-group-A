@@ -1,17 +1,26 @@
-import { useState, useMemo } from "react";
+// PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
+import { useState } from "react";
+
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
+// PLEASE UNCOMMENT NEXT 2 LINES AFTER IMPLEMENTING SORTING AND FILTERING
 // import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+// import { useState, useMemo } from "react";
 
 import { UseJobs } from "../../context/JobsContext";
 import { useFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
 
 export default function OpenPositions() {
-  const { allJobs, searchTerm, showResults } = UseJobs();
+  // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
+  const { allJobs, searchTerm } = UseJobs();
+
+  // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
+  // const { allJobs, searchTerm, showResults } = UseJobs();
+
   const { favorites, toggleFavorite } = useFavorites();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -67,15 +76,15 @@ export default function OpenPositions() {
     setCurrentPage(1);
   };
 
-  // FOR DEBUGGING
-  // const filteredJobs = allJobs;
+  // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
+  const filteredJobs = allJobs;
 
-  const filteredJobs = useMemo(() => {
-    // ✅ only compute filtered jobs if showResults is true
-    if (!showResults || !searchTerm.trim()) return [];
-    // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
-    return sortAndFilterJobs(allJobs, activeFilters, sortBy, searchTerm);
-  }, [allJobs, activeFilters, sortBy, searchTerm, showResults]);
+  // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
+  // const filteredJobs = useMemo(() => {
+  //   // ✅ only compute filtered jobs if showResults is true
+  //   if (!showResults || !searchTerm.trim()) return [];
+  //   return sortAndFilterJobs(allJobs, activeFilters, sortBy, searchTerm);
+  // }, [allJobs, activeFilters, sortBy, searchTerm, showResults]);
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;

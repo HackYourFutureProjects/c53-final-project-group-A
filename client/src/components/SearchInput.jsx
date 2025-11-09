@@ -16,12 +16,7 @@ export default function SearchInput() {
 
   //post route
   const { performFetch } = useFetch("/jobs/search", (data) => {
-    setAllJobs((prevJobs) => {
-      const newJobs = [...prevJobs, ...data.result];
-
-      const uniqueJobs = new Map(newJobs.map((job) => [job.job_id, job]));
-      return Array.from(uniqueJobs.values());
-    });
+    setAllJobs(data.result);
   });
 
   const handleSearch = async () => {
