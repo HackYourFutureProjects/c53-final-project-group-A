@@ -204,7 +204,7 @@ export default function Profile() {
           <input
             id="confirmPasswordInput"
             ref={confirmPasswordInputRef}
-            type="text"
+            type="password"
             placeholder="Write the same password again"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
