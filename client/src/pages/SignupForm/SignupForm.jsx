@@ -95,7 +95,7 @@ const SignupForm = ({
             <label>First Name</label>
             <input
               type="text"
-              placeholder="Enter your first name"
+              placeholder="First name"
               value={signupData.firstName}
               onChange={(e) =>
                 setSignupData({ ...signupData, firstName: e.target.value })
@@ -107,7 +107,7 @@ const SignupForm = ({
             <label>Last Name</label>
             <input
               type="text"
-              placeholder="Enter your last name"
+              placeholder="Last name"
               value={signupData.lastName}
               onChange={(e) =>
                 setSignupData({ ...signupData, lastName: e.target.value })
