@@ -8,8 +8,6 @@ export default function AddressSettings({
   countryInputRef,
 }) {
   const { settings } = UseSettings();
-
-  // use the refs passed from the parent (Profile)
   const streetInputRefInt = streetInputRef;
   const houseInputRefInt = houseInputRef;
   const cityInputRefInt = cityInputRef;

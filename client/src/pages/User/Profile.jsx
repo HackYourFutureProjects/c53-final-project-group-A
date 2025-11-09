@@ -6,6 +6,7 @@ import AlertMessage from "../../components/AlertMessage";
 import { UseSettings } from "../../context/SettingsContext";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
+import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 
 export default function Profile() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -17,37 +18,24 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { settings } = UseSettings();
-  const { skills } = settings;
+  const { settings, setSettings } = UseSettings();
 
   useEffect(() => {
-    if (alert.message && skills) {
+    if (alert.message && settings) {
       setAlert({ type: "", message: "" });
     }
-  }, [skills]);
+  }, [settings]);
 
-  // Placeholder function for saving settings
-  // If called without args, default to the local refs defined above so
-  // pressing Enter from inputs in this component still works.
   function saveProfileSettings(
-    // streetRef = streetInputRef,
-    // houseRef = houseInputRef,
-    // cityRef = cityInputRef,
-    // countryRef = countryInputRef,
     streetInputRef,
     houseInputRef,
     cityInputRef,
     countryInputRef,
   ) {
-    // console.log(streetRef, houseRef, cityRef, countryRef);
     let firstName = firstNameInputRef.current;
     let lastName = lastNameInputRef.current;
     let password = passwordInputRef.current;
     let confirmPassword = confirmPasswordInputRef.current;
-    // let street = streetRef.current;
-    // let house = houseRef.current;
-    // let city = cityRef.current;
-    // let country = countryRef.current;
     let street = streetInputRef.current;
     let house = houseInputRef.current;
     let city = cityInputRef.current;
@@ -80,7 +68,6 @@ export default function Profile() {
     }
     // Address
     street = cleanUpText(street.value || "");
-    console.log("street:", street);
     house = cleanUpText(house.value || "");
     city = cleanUpText(city.value || "");
     country = cleanUpText(country.value || "");
@@ -94,21 +81,33 @@ export default function Profile() {
       text: country,
       type: "country",
     });
+    const houseValidationError = validateHouseNoInput({ text: house });
     if (
       streetValidationError ||
       cityValidationError ||
-      countryValidationError
+      countryValidationError ||
+      houseValidationError
     ) {
       setAlert(
-        streetValidationError || cityValidationError || countryValidationError,
+        streetValidationError ||
+          cityValidationError ||
+          countryValidationError ||
+          houseValidationError,
       );
       return;
     }
-    console.log("Address:", { street, house, city, country });
-    // Skills
-    if (skills) {
-      console.log("Skills:", skills);
-    }
+    setSettings((prev) => {
+      const newSettings = { ...prev };
+      newSettings.address = {
+        ...(newSettings.address || {}),
+        street,
+        house,
+        city,
+        country,
+      };
+      return newSettings;
+    });
+    console.log("newSettings:", settings);
   }
   function pressEnterKey(e) {
     if (e.key === "Enter") saveProfileSettings();
