@@ -5,7 +5,8 @@ import AddressSettings from "../../components/AddressSettings";
 import { UseSettings } from "../../context/SettingsContext";
 
 export default function Profile() {
-  const nameInputRef = useRef(null);
+  const firstNameInputRef = useRef(null);
+  const lastNameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
   const streetInputRef = useRef(null);
@@ -22,7 +23,12 @@ export default function Profile() {
     countryRef = "",
   ) {
     // Placeholder function for saving settings
-    const name = nameInputRef.current ? nameInputRef.current.value : "";
+    const firstName = firstNameInputRef.current
+      ? firstNameInputRef.current.value
+      : "";
+    const lastName = lastNameInputRef.current
+      ? lastNameInputRef.current.value
+      : "";
     const password = passwordInputRef.current
       ? passwordInputRef.current.value
       : "";
@@ -33,7 +39,7 @@ export default function Profile() {
     const house = houseRef.current ? houseRef.current.value : "";
     const city = cityRef.current ? cityRef.current.value : "";
     const country = countryRef.current ? countryRef.current.value : "";
-    console.log("Saving settings for:", name);
+    console.log("Saving settings for:", firstName, lastName);
     console.log("Address:", { street, house, city, country });
     if (password || confirmPassword) {
       if (password === confirmPassword) {
@@ -58,6 +64,7 @@ export default function Profile() {
       {/* <!-- Profile Section with Avatar and Name --> */}
       <div className="mb-8">
         <div className="flex items-start space-x-4">
+          {/* <!-- Avatar with the editing/updating button --> */}
           <div className="relative">
             <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
               <img
@@ -83,17 +90,36 @@ export default function Profile() {
             </button>
           </div>
           <div className="flex-grow">
+            {/* <!-- First and Last Name --> */}
             <label className="block text-sm font-medium text-gray-900 mb-2">
               Name
             </label>
-            <input
-              id="nameInput"
-              ref={nameInputRef}
-              type="text"
-              defaultValue={defaultUser.name}
-              className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyDown={pressEnterKey}
-            />
+            <div className="grid grid-cols-2 gap-4 mb-3">
+              <div>
+                <label className="block text-xs text-gray-600 mb-1">
+                  First Name
+                </label>
+                <input
+                  ref={firstNameInputRef}
+                  type="text"
+                  defaultValue={defaultUser.name}
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onKeyDown={pressEnterKey}
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-600 mb-1">
+                  Last Name
+                </label>
+                <input
+                  ref={lastNameInputRef}
+                  type="text"
+                  defaultValue={defaultUser.name}
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onKeyDown={pressEnterKey}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
