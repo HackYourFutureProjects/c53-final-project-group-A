@@ -6,7 +6,7 @@ import {
   validatePassword,
   validatePasswordMatch,
   validateEmail,
-} from "../../util/skillValidation";
+} from "../../util/AuthValidation";
 
 const SignupForm = ({
   signup,
