@@ -1,17 +1,15 @@
 import Skills from "../Skills";
 import "./JobCard.css";
+import { icons } from "../../assets";
+
 export default function JobCard({
   job,
   favorites,
   onFavoriteToggle,
   onApplyClick,
 }) {
-  const workMode = job.remote_derived ? "Remote" : "On-site";
-
-  const location =
-    job.locations_derived && job.locations_derived.length > 0
-      ? job.locations_derived[0]
-      : null;
+  const workMode = job.workMode || "On-site";
+  const location = job.displayLocation || null;
 
   return (
     <li key={job.id} className="job-item">
@@ -19,8 +17,8 @@ export default function JobCard({
         <div className="job-card-content">
           <div className="company-logo-container">
             <img
-              src={job.organization_logo || "placeholder-logo.png"}
-              alt={`${job.organization_logo}` || "Company logo"}
+              src={job.organization_logo || icons.defaultCompany}
+              alt={job.organization_name || "Company logo"}
               className="company-logo"
             />
           </div>
