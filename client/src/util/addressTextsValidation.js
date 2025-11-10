@@ -14,6 +14,14 @@ export function validateAddressTextInputs({ text, type = "general" }) {
     };
   }
 
+  const isNumbersOnly = /^\d+$/.test(text);
+  if (isNumbersOnly) {
+    return {
+      type: "error",
+      message: "The name of a city or street cannot consist only of numbers.",
+    };
+  }
+
   const hasInvalidChars = /[^a-zA-Z0-9\s\-/.']/;
   if (hasInvalidChars.test(text)) {
     return {
