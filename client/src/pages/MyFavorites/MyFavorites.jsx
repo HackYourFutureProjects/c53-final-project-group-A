@@ -1,10 +1,10 @@
 import { UseJobs } from "../../context/JobsContext";
-import { useFavorites } from "../../context/FavoritesContext";
+import { UseFavorites } from "../../context/FavoritesContext";
 import JobCard from "../../components/JobCard/JobCard";
 
 export default function MyFavorites() {
   const { allJobs } = UseJobs();
-  const { favorites, toggleFavorite } = useFavorites();
+  const { favorites, toggleFavorite } = UseFavorites();
 
   const favoriteJobs = allJobs.filter((job) => favorites[job.id]);
 
