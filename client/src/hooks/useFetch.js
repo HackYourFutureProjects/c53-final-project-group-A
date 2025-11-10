@@ -51,41 +51,41 @@ const useFetch = (route, onReceived) => {
 
     const fetchData = async () => {
       // We add the /api subsection here to make it a single point of change if our configuration changes
-      const url = `/api${route}`;
-      const res = await fetch(url, { ...baseOptions, ...options, signal });
 
-      const jsonResult = await res.json();
+      try {
+        const url = `/api${route}`;
+        const res = await fetch(url, { ...baseOptions, ...options, signal });
 
-      if (!res.ok) {
-        setError(
-          jsonResult.msg ||
-            `Fetch for ${url} returned an invalid status (${res.status})`,
-        );
+        const jsonResult = await res.json();
+
+        if (!res.ok) {
+          setError(
+            jsonResult.msg ||
+              `Fetch for ${url} returned an invalid status (${res.status})`,
+          );
+          setIsLoading(false);
+          return;
+        }
+
+        if (jsonResult.success === true) {
+          onReceived(jsonResult);
+        } else {
+          setError(
+            jsonResult.msg ||
+              `The result from our API did not have an error message. Received: ${JSON.stringify(
+                jsonResult,
+              )}`,
+          );
+        }
+
         setIsLoading(false);
-        return;
+      } catch (error) {
+        setError(error.message || "An error occurred during fetch");
+        setIsLoading(false);
       }
-
-      // Received: ${JSON.stringify(res)}`,
-      // );
-
-      if (jsonResult.success === true) {
-        onReceived(jsonResult);
-      } else {
-        setError(
-          jsonResult.msg ||
-            `The result from our API did not have an error message. Received: ${JSON.stringify(
-              jsonResult,
-            )}`,
-        );
-      }
-
-      setIsLoading(false);
     };
 
-    fetchData().catch((error) => {
-      setError(error);
-      setIsLoading(false);
-    });
+    fetchData();
   };
 
   return { isLoading, error, performFetch, cancelFetch };
