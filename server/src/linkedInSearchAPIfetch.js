@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 const envPath = path.resolve(__dirname, "..", ".env");
 dotenv.config({ path: envPath });
 
-const RAPID_API_KEY = process.env.X_RAPIDAPI_KEY;
+const RAPID_API_KEY = process.env.REACT_APP_X_RAPIDAPI_KEY;
 
 const jobTitle = "developer";
 const location = "Netherlands";
