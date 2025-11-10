@@ -9,8 +9,9 @@ import Pagination from "../../components/Pagination/Pagination";
 // import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 
 import { UseJobs } from "../../context/JobsContext";
-import { useFavorites } from "../../context/FavoritesContext";
+import { UseFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
+import SkillsSettings from "../../components/SkillsSettings";
 
 //preprocessing
 const preprocessJobs = (jobs) => {
@@ -44,7 +45,7 @@ export default function OpenPositions() {
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  const { favorites, toggleFavorite } = useFavorites();
+  const { favorites, toggleFavorite } = UseFavorites();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
@@ -121,6 +122,7 @@ export default function OpenPositions() {
 
   return (
     <div className="open-positions content-container">
+      <SkillsSettings />
       <div className="job-filters-bar">
         <div className="filters-container">
           <div className="filter-dropdowns">
