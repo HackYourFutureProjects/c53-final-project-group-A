@@ -7,10 +7,18 @@ export function validateAddressTextInputs({ text, type = "general" }) {
     };
   }
 
-  if (text === "" && type !== "city") {
+  if (text === "" && type === "city") {
     return {
       type: "error",
       message: "Before saving, add at least one line with the city.",
+    };
+  }
+
+  const isNumbersOnly = /^\d+$/.test(text);
+  if (isNumbersOnly) {
+    return {
+      type: "error",
+      message: "The name of a city or street cannot consist only of numbers.",
     };
   }
 
