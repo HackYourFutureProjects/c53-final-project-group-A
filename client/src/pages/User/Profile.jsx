@@ -77,6 +77,7 @@ export default function Profile() {
     });
     const cityValidationError = validateAddressTextInputs({
       text: city,
+      type: "city",
     });
     const countryValidationError = validateAddressTextInputs({
       text: country,

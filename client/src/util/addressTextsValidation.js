@@ -7,10 +7,10 @@ export function validateAddressTextInputs({ text, type = "general" }) {
     };
   }
 
-  if (text === "") {
+  if (text === "" && type !== "city") {
     return {
       type: "error",
-      message: "Please add at least one address line before you save.",
+      message: "Before saving, add at least one line with the city.",
     };
   }
 
