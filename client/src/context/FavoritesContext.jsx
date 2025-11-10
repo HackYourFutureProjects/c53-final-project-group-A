@@ -21,4 +21,4 @@ export const FavoritesProvider = ({ children }) => {
   );
 };
 
-export const useFavorites = () => useContext(FavoritesContext);
+export const UseFavorites = () => useContext(FavoritesContext);

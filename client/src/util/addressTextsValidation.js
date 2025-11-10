@@ -1,8 +1,16 @@
-export function validateAddressTextInputs({ text }) {
-  if (text === "") {
+export function validateAddressTextInputs({ text, type = "general" }) {
+  if (type === "country" && text !== "Netherlands") {
     return {
       type: "error",
-      message: "Please add at least one address line before you save.",
+      message:
+        "Sorry, at the moment our app only supports addresses in the Netherlands.",
+    };
+  }
+
+  if (text === "" && type !== "city") {
+    return {
+      type: "error",
+      message: "Before saving, add at least one line with the city.",
     };
   }
 

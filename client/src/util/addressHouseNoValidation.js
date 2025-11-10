@@ -9,7 +9,7 @@ export function validateHouseNoInput({ text }) {
   const isNumbersOnly = /^\d+$/.test(text);
   if (!isNumbersOnly) {
     return {
-      type: "warning",
+      type: "error",
       message:
         "House number must contain only numbers, no letters or special characters.",
     };
