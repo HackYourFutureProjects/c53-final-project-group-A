@@ -21,7 +21,7 @@ export const searchJobs = async (req, res) => {
     const options = {
       method: "GET",
       headers: {
-        "x-rapidapi-key": process.env.X_RAPIDAPI_KEY,
+        "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
         "x-rapidapi-host": "linkedin-job-search-api.p.rapidapi.com",
       },
     };
