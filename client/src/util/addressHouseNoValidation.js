@@ -1,13 +1,6 @@
 export function validateHouseNoInput({ text }) {
-  if (text === "") {
-    return {
-      type: "error",
-      message: "Please add a house number before you save.",
-    };
-  }
-
   const isNumbersOnly = /^\d+$/.test(text);
-  if (!isNumbersOnly) {
+  if (text !== "" && !isNumbersOnly) {
     return {
       type: "error",
       message:

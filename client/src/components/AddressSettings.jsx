@@ -48,12 +48,15 @@ export default function AddressSettings({
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-600 mb-1">City</label>
+          <label className="block text-xs text-gray-600 mb-1">
+            City <span className="text-red-500">*</span>
+          </label>
           <input
             id="cityInput"
             ref={cityInputRef}
             type="text"
             defaultValue={settings.address.city}
+            aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
           />
