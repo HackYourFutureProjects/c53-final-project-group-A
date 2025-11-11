@@ -22,7 +22,14 @@ const SignupForm = ({
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const { loading, error } = useAuth();
+  const { loading, error, clearError } = useAuth();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData({ ...signupData, [name]: value });
+    clearError(); // clear context error while typing
+    setErrorMessage(""); //clear local error while typing
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,11 +102,10 @@ const SignupForm = ({
             <label>First Name</label>
             <input
               type="text"
+              name="firstName" // added name for handleChange
               placeholder="First name"
               value={signupData.firstName}
-              onChange={(e) =>
-                setSignupData({ ...signupData, firstName: e.target.value })
-              }
+              onChange={handleChange}
               required
             />
           </div>
@@ -107,11 +113,10 @@ const SignupForm = ({
             <label>Last Name</label>
             <input
               type="text"
+              name="lastName" //added name
               placeholder="Last name"
               value={signupData.lastName}
-              onChange={(e) =>
-                setSignupData({ ...signupData, lastName: e.target.value })
-              }
+              onChange={handleChange}
               required
             />
           </div>
@@ -120,33 +125,30 @@ const SignupForm = ({
         <label>Email</label>
         <input
           type="email"
+          name="email"
           placeholder="Enter your email"
           value={signupData.email}
-          onChange={(e) =>
-            setSignupData({ ...signupData, email: e.target.value })
-          }
+          onChange={handleChange}
           required
         />
 
         <label>Password</label>
         <input
           type="password"
+          name="password"
           placeholder="Enter your password"
           value={signupData.password}
-          onChange={(e) =>
-            setSignupData({ ...signupData, password: e.target.value })
-          }
+          onChange={handleChange}
           required
         />
 
         <label>Confirm Password</label>
         <input
           type="password"
+          name="confirmPassword"
           placeholder="Confirm your password"
           value={signupData.confirmPassword}
-          onChange={(e) =>
-            setSignupData({ ...signupData, confirmPassword: e.target.value })
-          }
+          onChange={handleChange}
           required
         />
 
@@ -205,7 +207,14 @@ const SignupForm = ({
 
       <p className="switch-text">
         Already have a profile?{" "}
-        <span className="switch-link" onClick={switchToLogin}>
+        <span
+          className="switch-link"
+          onClick={() => {
+            switchToLogin();
+            clearError(); // clear error when switching to login
+            setErrorMessage(""); //clear local error when switching
+          }}
+        >
           Login
         </span>
       </p>

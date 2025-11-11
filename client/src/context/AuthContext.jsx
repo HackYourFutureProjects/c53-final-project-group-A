@@ -7,10 +7,13 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // -------------------- CLEAR ERROR --------------------
+  const clearError = () => setError(null);
+
   const login = async (email, _password) => {
     void _password;
     setLoading(true);
-    setError(null);
+    clearError();
     try {
       await new Promise((res) => setTimeout(res, 100)); // simulate API call
       //Simulate success or failure
@@ -26,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (firstName, lastName, email, _password) => {
     void _password;
     setLoading(true);
-    setError(null);
+    clearError();
     try {
       await new Promise((res) => setTimeout(res, 100));
       if (email === "yahya@yahoo.com")
@@ -43,7 +46,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, error, login, signup, logout }}
+      value={{ user, loading, error, login, signup, logout, clearError }}
     >
       {children}
     </AuthContext.Provider>
