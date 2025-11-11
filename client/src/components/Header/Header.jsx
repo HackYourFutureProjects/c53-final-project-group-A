@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 
 //dropdown menu
 function UserMenu() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -18,6 +18,11 @@ function UserMenu() {
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
   const toggle = () => setOpen((v) => !v);
+
+  const handleLogout = async () => {
+    await logout(); // log out the user
+    setOpen(false); // close dropdown
+  };
 
   return (
     <div className="user-menu" ref={ref}>
@@ -34,7 +39,6 @@ function UserMenu() {
           className="user-avatar"
         />
         <span className="divider"></span>
-        {/* <span className="user-name">{user.name}</span> */}
         <span className="user-name">{user ? user.name : "Guest"}</span>
 
         <img
@@ -66,16 +70,30 @@ function UserMenu() {
           >
             About
           </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              isActive ? "user-item active" : "user-item"
-            }
-            role="menuitem"
-            onClick={() => setOpen(false)}
-          >
-            Login
-          </NavLink>
+          {user ? (
+            <NavLink
+              to="/"
+              className="user-item"
+              role="menuitem"
+              onClick={() => {
+                handleLogout();
+                setOpen(false);
+              }}
+            >
+              Logout
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive ? "user-item active" : "user-item"
+              }
+              role="menuitem"
+              onClick={() => setOpen(false)}
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       )}
     </div>

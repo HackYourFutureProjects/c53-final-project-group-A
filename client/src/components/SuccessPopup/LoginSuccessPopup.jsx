@@ -12,7 +12,10 @@ const LoginSuccessPopup = ({ onClose }) => {
     <div className="popup-overlay">
       <div className="popup-card">
         <h2>Success!</h2>
-        <p>You successfully created a profile and logged in</p>
+        <p>
+          You successfully logged in! Update your skill set and address in your
+          profile to get the most relevant jobs.
+        </p>
         <div className="popup-buttons">
           <button className="btn-primary" onClick={handleContinue}>
             Continue

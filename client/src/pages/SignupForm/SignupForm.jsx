@@ -22,7 +22,14 @@ const SignupForm = ({
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const { loading, error } = useAuth();
+  const { loading, error, clearError } = useAuth();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData({ ...signupData, [name]: value });
+    clearError(); // clear context error while typing
+    setErrorMessage(""); //clear local error while typing
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,61 +99,69 @@ const SignupForm = ({
       <form onSubmit={handleSubmit}>
         <div style={{ display: "flex", gap: "1rem", marginBottom: "16px" }}>
           <div style={{ flex: 1 }}>
-            <label>First Name</label>
+            <label>
+              First Name{" "}
+              <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+            </label>
             <input
               type="text"
+              name="firstName" // added name for handleChange
               placeholder="First name"
               value={signupData.firstName}
-              onChange={(e) =>
-                setSignupData({ ...signupData, firstName: e.target.value })
-              }
+              onChange={handleChange}
               required
             />
           </div>
           <div style={{ flex: 1 }}>
-            <label>Last Name</label>
+            <label>
+              Last Name{" "}
+              <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+            </label>
             <input
               type="text"
+              name="lastName" //added name
               placeholder="Last name"
               value={signupData.lastName}
-              onChange={(e) =>
-                setSignupData({ ...signupData, lastName: e.target.value })
-              }
+              onChange={handleChange}
               required
             />
           </div>
         </div>
 
-        <label>Email</label>
+        <label>
+          Email <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="email"
+          name="email"
           placeholder="Enter your email"
           value={signupData.email}
-          onChange={(e) =>
-            setSignupData({ ...signupData, email: e.target.value })
-          }
+          onChange={handleChange}
           required
         />
 
-        <label>Password</label>
+        <label>
+          Password <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="password"
+          name="password"
           placeholder="Enter your password"
           value={signupData.password}
-          onChange={(e) =>
-            setSignupData({ ...signupData, password: e.target.value })
-          }
+          onChange={handleChange}
           required
         />
 
-        <label>Confirm Password</label>
+        <label>
+          Confirm Password{" "}
+          <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="password"
+          name="confirmPassword"
           placeholder="Confirm your password"
           value={signupData.confirmPassword}
-          onChange={(e) =>
-            setSignupData({ ...signupData, confirmPassword: e.target.value })
-          }
+          onChange={handleChange}
           required
         />
 
@@ -160,14 +175,14 @@ const SignupForm = ({
           {renderRuleItem(passwordRules.length(pw), "At least 8 characters")}
           {renderRuleItem(
             passwordRules.uppercase(pw),
-            "Contains uppercase letter",
+            "Contains uppercase letters",
           )}
           {renderRuleItem(
             passwordRules.lowercase(pw),
-            "Contains lowercase letter",
+            "Contains lowercase letters",
           )}
-          {renderRuleItem(passwordRules.number(pw), "Contains number")}
-          {renderRuleItem(passwordRules.symbol(pw), "Contains symbol")}
+          {renderRuleItem(passwordRules.number(pw), "Contains numbers")}
+          {renderRuleItem(passwordRules.symbol(pw), "Contains symbols")}
         </ul>
 
         {errorMessage && (
@@ -205,7 +220,14 @@ const SignupForm = ({
 
       <p className="switch-text">
         Already have a profile?{" "}
-        <span className="switch-link" onClick={switchToLogin}>
+        <span
+          className="switch-link"
+          onClick={() => {
+            switchToLogin();
+            clearError(); // clear error when switching to login
+            setErrorMessage(""); //clear local error when switching
+          }}
+        >
           Login
         </span>
       </p>

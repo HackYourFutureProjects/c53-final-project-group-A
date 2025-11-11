@@ -1,12 +1,12 @@
 import "./SuccessPopup.css";
-const SuccessPopup = ({ user, onClose, goToProfile }) => {
+const SignupSuccessPopup = ({ user, onClose, goToProfile }) => {
   return (
     <div className="popup-overlay">
       <div className="popup-card">
         <h2>Welcome {user}</h2>
         <p>
-          You are signed up! You can manage your favorite jobs and profile
-          settings in the profile section.
+          You successfully signed up! Manage your skill set and address in your
+          profile to get the most relevant jobs.
         </p>
         <div className="popup-buttons">
           <button className="btn-primary" onClick={goToProfile}>
@@ -21,4 +21,4 @@ const SuccessPopup = ({ user, onClose, goToProfile }) => {
   );
 };
 
-export default SuccessPopup;
+export default SignupSuccessPopup;
