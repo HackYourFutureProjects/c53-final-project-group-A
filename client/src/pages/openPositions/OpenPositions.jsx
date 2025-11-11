@@ -1,15 +1,50 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+
+// WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
+// PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
+// import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+
 import { UseJobs } from "../../context/JobsContext";
 import { UseFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 
+//preprocessing
+const preprocessJobs = (jobs) => {
+  return jobs.map((job) => {
+    // handle workMode logic - checking all the edge cases
+    let workMode = "On-site"; //default - covers all falsy values
+    if (job.remote_derived === true || job.remote_derived === "Remote") {
+      workMode = "Remote";
+    } else if (job.remote_derived === "Hybrid") {
+      workMode = "Hybrid";
+    }
+
+    // handle location logic
+    const displayLocation =
+      job.locations_derived && job.locations_derived.length > 0
+        ? job.locations_derived[0]
+        : null;
+
+    return {
+      ...job,
+      workMode,
+      displayLocation,
+    };
+  });
+};
+
 export default function OpenPositions() {
-  const { allJobs, searchTerm, showResults } = UseJobs();
+  // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
+  const { allJobs, searchTerm } = UseJobs();
+
+  // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
+  // const { allJobs, searchTerm, showResults } = UseJobs();
+
   const { favorites, toggleFavorite } = UseFavorites();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,6 +76,11 @@ export default function OpenPositions() {
     "Fewest transfers",
   ];
 
+  //preprocess jobs wit useMemo - avoid recalculating
+  const processedJobsWithMemo = useMemo(() => {
+    return preprocessJobs(allJobs);
+  }, [allJobs]);
+
   const handleFilterChange = (filterKey, value, isChecked) => {
     setActiveFilters((prev) => {
       const newSet = new Set(prev[filterKey]);
@@ -64,11 +104,16 @@ export default function OpenPositions() {
     setSortBy("Skill match");
     setCurrentPage(1);
   };
-  const filteredJobs = useMemo(() => {
-    // ✅ only compute filtered jobs if showResults is true
-    if (!showResults || !searchTerm.trim()) return [];
-    return sortAndFilterJobs(allJobs, activeFilters, sortBy, searchTerm);
-  }, [allJobs, activeFilters, sortBy, searchTerm, showResults]);
+
+  // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
+  const filteredJobs = processedJobsWithMemo;
+
+  // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
+  // const filteredJobs = useMemo(() => {
+  //   // ✅ only compute filtered jobs if showResults is true
+  //   if (!showResults || !searchTerm.trim()) return [];
+  //   return sortAndFilterJobs(processedJobsWithMemo, activeFilters, sortBy, searchTerm);
+  // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm, showResults]);
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -144,9 +189,7 @@ export default function OpenPositions() {
                   job={job}
                   favorites={favorites}
                   onFavoriteToggle={toggleFavorite}
-                  onApplyClick={(job) =>
-                    window.open(job.applyUrl || job.link, "_blank")
-                  }
+                  onApplyClick={(url) => window.open(url, "_blank")}
                 />
               ))}
             </ul>

@@ -1,6 +1,7 @@
 //images
 import defaultAvatar from "./images/default-avatar.png";
 import logo from "./images/logo.svg";
+import defaultCompany from "./icons/default-company-img.svg";
 
 //icons
 import arrow from "./icons/arrow.svg";
@@ -14,4 +15,5 @@ export const images = {
 export const icons = {
   arrow: arrow,
   info: infoIcon,
+  defaultCompany: defaultCompany,
 };

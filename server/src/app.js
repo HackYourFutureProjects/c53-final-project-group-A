@@ -1,8 +1,6 @@
 import express from "express";
-
 import userRouter from "./routes/user.js";
-
-import { getJobs } from "./controllers/jobData.js";
+import jobsRouter from "./routes/job.js";
 
 // Create an express server
 const app = express();
@@ -17,6 +15,6 @@ app.use(express.json());
  */
 app.use("/api/users", userRouter);
 
-app.get("/api/connect", getJobs);
+app.use("/api/jobs", jobsRouter);
 
 export default app;
