@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../../pages/LoginForm/LoginForm";
 import SignupForm from "../../pages/SignupForm/SignupForm";
-import SuccessPopup from "../SuccessPopup/SuccessPopup";
+import SignupSuccessPopup from "../SuccessPopup/SignupSuccessPopup";
 import LoginSuccessPopup from "../SuccessPopup/LoginSuccessPopup";
 import { useAuth } from "../../context/AuthContext";
 import "./AuthForms.css";
@@ -67,7 +67,7 @@ const AuthForms = () => {
 
       {/* --- SUCCESS POPUP signup --- */}
       {successPopup && (
-        <SuccessPopup
+        <SignupSuccessPopup
           user={signedUpUser}
           onClose={() => setSuccessPopup(false)}
           goToProfile={goToProfile}
