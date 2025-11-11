@@ -99,7 +99,10 @@ const SignupForm = ({
       <form onSubmit={handleSubmit}>
         <div style={{ display: "flex", gap: "1rem", marginBottom: "16px" }}>
           <div style={{ flex: 1 }}>
-            <label>First Name</label>
+            <label>
+              First Name{" "}
+              <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+            </label>
             <input
               type="text"
               name="firstName" // added name for handleChange
@@ -110,7 +113,10 @@ const SignupForm = ({
             />
           </div>
           <div style={{ flex: 1 }}>
-            <label>Last Name</label>
+            <label>
+              Last Name{" "}
+              <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+            </label>
             <input
               type="text"
               name="lastName" //added name
@@ -122,7 +128,9 @@ const SignupForm = ({
           </div>
         </div>
 
-        <label>Email</label>
+        <label>
+          Email <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="email"
           name="email"
@@ -132,7 +140,9 @@ const SignupForm = ({
           required
         />
 
-        <label>Password</label>
+        <label>
+          Password <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="password"
           name="password"
@@ -142,7 +152,10 @@ const SignupForm = ({
           required
         />
 
-        <label>Confirm Password</label>
+        <label>
+          Confirm Password{" "}
+          <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="password"
           name="confirmPassword"
@@ -162,14 +175,14 @@ const SignupForm = ({
           {renderRuleItem(passwordRules.length(pw), "At least 8 characters")}
           {renderRuleItem(
             passwordRules.uppercase(pw),
-            "Contains uppercase letter",
+            "Contains uppercase letters",
           )}
           {renderRuleItem(
             passwordRules.lowercase(pw),
-            "Contains lowercase letter",
+            "Contains lowercase letters",
           )}
-          {renderRuleItem(passwordRules.number(pw), "Contains number")}
-          {renderRuleItem(passwordRules.symbol(pw), "Contains symbol")}
+          {renderRuleItem(passwordRules.number(pw), "Contains numbers")}
+          {renderRuleItem(passwordRules.symbol(pw), "Contains symbols")}
         </ul>
 
         {errorMessage && (

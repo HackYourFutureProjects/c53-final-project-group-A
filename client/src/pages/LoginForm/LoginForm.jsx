@@ -20,23 +20,27 @@ const LoginForm = ({ login, switchToSignup }) => {
   return (
     <div className="form-card" id="login-form">
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
+        <label>
+          Email <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="email"
           name="email"
           placeholder="Enter your email"
           value={loginData.email}
-          onChange={handleChange} // CHANGED: call handleChange
+          onChange={handleChange} // call handleChange
           required
         />
 
-        <label>Password</label>
+        <label>
+          Password <span style={{ color: "red", marginLeft: "2px" }}>*</span>
+        </label>
         <input
           type="password"
           name="password"
           placeholder="Enter your password"
           value={loginData.password}
-          onChange={handleChange} // CHANGED: call handleChange
+          onChange={handleChange} //call handleChange
           required
         />
 
