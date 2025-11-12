@@ -1,13 +1,34 @@
 import Skills from "../Skills";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import "./JobCard.css";
 import { icons } from "../../assets";
 
-export default function JobCard({
-  job,
-  favorites,
-  onFavoriteToggle,
-  onApplyClick,
-}) {
+export default function JobCard({ job, favorites, onFavoriteToggle }) {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  //  New state for showing popup
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleApplyClick = (e) => {
+    e.stopPropagation();
+
+    if (user) {
+      window.open(job.applyLink || job.url, "_blank");
+      return;
+    }
+
+    setShowPopup(true);
+  };
+
+  const handleLoginRedirect = () => {
+    setShowPopup(false);
+    navigate("/login", {});
+  };
+
   const workMode = job.workMode || "On-site";
   const location = job.displayLocation || null;
 
@@ -63,19 +84,19 @@ export default function JobCard({
                 </span>
               </div>
 
-              <button
-                className="more-apply-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onApplyClick(job.url);
-                }}
-              >
+              <button className="more-apply-btn" onClick={handleApplyClick}>
                 More & Apply
               </button>
             </div>
           </div>
         </div>
       </div>
+      {showPopup && (
+        <PopupForMoreAndApply
+          handleLoginRedirect={handleLoginRedirect}
+          setShowPopup={setShowPopup}
+        />
+      )}
     </li>
   );
 }

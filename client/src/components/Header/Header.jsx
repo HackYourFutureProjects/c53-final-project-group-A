@@ -39,7 +39,7 @@ function UserMenu() {
           className="user-avatar"
         />
         <span className="divider"></span>
-        <span className="user-name">{user ? user.name : "Guest"}</span>
+        <span className="user-name">{user ? user.firstName : "Guest"}</span>
 
         <img
           src={icons.arrow}

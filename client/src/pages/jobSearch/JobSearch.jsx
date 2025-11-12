@@ -4,9 +4,11 @@ import "./JobSearch.css";
 import { icons } from "../../assets/index.js";
 import { defaultUser } from "../../data/defaultUser.js";
 import { formatAddress } from "../../data/defaultUser.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function JobSearch() {
   const displayedSkills = defaultUser.skills.slice(0, 3).join(", ");
+  const { user } = useAuth();
 
   return (
     <div className="job-search-container">
@@ -18,19 +20,20 @@ export default function JobSearch() {
         </p>
       </div>
       <SearchInput />
-
-      <div className="guest-notice">
-        <img src={icons.info} alt="info" className="info-icon" />
-        <span>
-          Guest mode is limited to default settings — general skills such as{" "}
-          {displayedSkills.toLowerCase()}, and others, along with the guest’s
-          home address ({formatAddress(defaultUser.address)}).
-        </span>{" "}
-        <Link to="/login" className="login-link">
-          Log in
-        </Link>
-        <span> to get more relevant results!</span>
-      </div>
+      {!user && (
+        <div className="guest-notice">
+          <img src={icons.info} alt="info" className="info-icon" />
+          <span>
+            Guest mode is limited to default settings — general skills such as{" "}
+            {displayedSkills.toLowerCase()}, and others, along with the guest’s
+            home address ({formatAddress(defaultUser.address)}).
+          </span>{" "}
+          <Link to="/login" className="login-link">
+            Log in
+          </Link>
+          <span> to get more relevant results!</span>
+        </div>
+      )}
     </div>
   );
 }
