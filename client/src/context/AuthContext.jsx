@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
       await new Promise((res) => setTimeout(res, 100)); // simulate API call
       //Simulate success or failure
       if (email === "fail@example.com") throw new Error("Invalid credentials");
-      setUser({ name: "Yahya User", email });
+      setUser({ firstName: "userlogged", lastName: "User", email });
     } catch (err) {
       setError(err.message);
     } finally {

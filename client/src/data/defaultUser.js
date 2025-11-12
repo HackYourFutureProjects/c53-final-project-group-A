@@ -5,7 +5,8 @@ export const formatAddress = (address) => {
 };
 
 export const defaultUser = {
-  name: "Guest",
+  firstName: "Guest",
+  lastName: "User",
   avatar: images.defaultAvatar,
   email: "guest@example.com",
   JWT: "",

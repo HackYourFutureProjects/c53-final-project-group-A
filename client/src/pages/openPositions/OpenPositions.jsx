@@ -189,7 +189,7 @@ export default function OpenPositions() {
                   job={job}
                   favorites={favorites}
                   onFavoriteToggle={toggleFavorite}
-                  onApplyClick={(url) => window.open(url, "_blank")}
+                  // onApplyClick={(url) => window.open(url, "_blank")}
                 />
               ))}
             </ul>
