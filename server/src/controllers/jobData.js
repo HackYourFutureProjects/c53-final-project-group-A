@@ -1,4 +1,8 @@
 import { logError } from "../util/logging.js";
+import { realJobSearch } from "./realJobSearch.js";
+import { fakeJobSearch } from "./fakeJobSearch.js";
+
+const isSearchReal = false; // Set to true to enable real job search
 
 export const searchJobs = async (req, res) => {
   try {
@@ -10,38 +14,11 @@ export const searchJobs = async (req, res) => {
         msg: "You need to provide 'search_terms' in the request body.",
       });
     }
-
     const jobTitle = search_terms;
-    const location = "Netherlands";
-    const offset = 0;
-    const limit = 10;
 
-    const url = `https://linkedin-job-search-api.p.rapidapi.com/active-jb-7d?limit=${limit}&offset=${offset}&title_filter=${encodeURIComponent(jobTitle)}&location_filter=${encodeURIComponent(location)}&description_type=text`;
-
-    const options = {
-      method: "GET",
-      headers: {
-        "x-rapidapi-key": process.env.X_RAPIDAPI_KEY,
-        "x-rapidapi-host": "linkedin-job-search-api.p.rapidapi.com",
-      },
-    };
-
-    const apiResponse = await fetch(url, options);
-    const apiResult = await apiResponse.json();
-
-    if (!apiResponse.ok) {
-      logError(
-        `Linkedin API Error: ${apiResponse.status} - ${apiResponse.statusText}`,
-        apiResult,
-      );
-      return res.status(apiResponse.status).json({
-        success: false,
-        msg: "Failed to fetch from Linkedin API.",
-        error: apiResult,
-      });
-    }
-
-    const filteredJobs = apiResult;
+    const filteredJobs = isSearchReal
+      ? await realJobSearch({ jobTitle })
+      : fakeJobSearch({ jobTitle });
 
     res.status(200).json({ success: true, result: filteredJobs });
   } catch (error) {
