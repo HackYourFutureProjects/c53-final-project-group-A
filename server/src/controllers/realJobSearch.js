@@ -3,7 +3,7 @@ import { logError } from "../util/logging.js";
 export const realJobSearch = async ({
   jobTitle,
   location = "Netherlands",
-  limit = 3,
+  limit = 10,
   maxIterations = 2,
   initialOffset = 0,
 } = {}) => {
