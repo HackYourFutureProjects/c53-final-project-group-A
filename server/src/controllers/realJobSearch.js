@@ -24,15 +24,15 @@ export const realJobSearch = async ({
     };
 
     const apiResponse = await fetch(url, options);
-    const apiResult = await apiResponse.json();
-
     if (!apiResponse.ok) {
+      const errorText = await apiResponse.text();
       logError(
         `Linkedin API Error: ${apiResponse.status} - ${apiResponse.statusText}`,
-        apiResult,
+        errorText,
       );
-      throw new Error(`Failed to fetch from Linkedin API: ${apiResult}`);
+      throw new Error(`Failed to fetch from Linkedin API: ${errorText}`);
     }
+    const apiResult = await apiResponse.json();
 
     const items = apiResult || [];
     if (items.length === 0) {
