@@ -1,5 +1,8 @@
 import { logError } from "../util/logging.js";
 import { realJobSearch } from "./realJobSearch.js";
+import { fakeJobSearch } from "./fakeJobSearch.js";
+
+const isSearchReal = false; // Set to true to enable real job search
 
 export const searchJobs = async (req, res) => {
   try {
@@ -11,11 +14,11 @@ export const searchJobs = async (req, res) => {
         msg: "You need to provide 'search_terms' in the request body.",
       });
     }
-
     const jobTitle = search_terms;
 
-    // Delegate the actual job-fetching logic to the realJobSearch helper
-    const filteredJobs = await realJobSearch({ jobTitle });
+    const filteredJobs = isSearchReal
+      ? await realJobSearch({ jobTitle })
+      : fakeJobSearch({ jobTitle });
 
     res.status(200).json({ success: true, result: filteredJobs });
   } catch (error) {
