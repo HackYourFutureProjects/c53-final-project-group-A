@@ -45,7 +45,7 @@ export default function OpenPositions() {
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  const { favorites, toggleFavorite } = UseFavorites();
+  const { toggleFavorite } = UseFavorites();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
