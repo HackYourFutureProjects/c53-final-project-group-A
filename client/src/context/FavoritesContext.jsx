@@ -5,10 +5,10 @@ const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
   // Use user and setUser from the Auth context
-  const { user, setUser } = UseAuth();
+  const { setUser } = UseAuth();
 
   // Ensure favorites is an array on the user object
-  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
+  // const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   // Toggle a job id in the favorites array (add if missing, remove if present)
   const toggleFavorite = (jobId) => {
