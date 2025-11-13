@@ -110,7 +110,7 @@ export default function Profile() {
       newUser.address = {
         ...(newUser.address || {}),
         street,
-        house,
+        houseNumber: house,
         city,
         country,
       };
