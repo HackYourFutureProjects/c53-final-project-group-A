@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import defaultUser from "../data/defaultUser";
+import { defaultUser } from "../data/defaultUser";
 
 const AuthContext = createContext();
 
