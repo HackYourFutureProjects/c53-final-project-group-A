@@ -3,7 +3,7 @@ import { validateSkillInput } from "../util/skillValidation";
 import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
-import { UseAuth } from "../../context/AuthContext";
+import { UseAuth } from "../context/AuthContext";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
