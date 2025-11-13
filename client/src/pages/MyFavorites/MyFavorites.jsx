@@ -42,6 +42,7 @@ export default function MyFavorites() {
               job={job}
               favorites={favorites}
               onFavoriteToggle={toggleFavorite}
+              isFavoritesPage={true}
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")
               }

@@ -4,24 +4,32 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
-import PopupShowRemoveConfirmation from "../SuccessPopup/PopupShowRemoveConfirmation";
 import "./JobCard.css";
 import { icons } from "../../assets";
 
-export default function JobCard({ job, favorites, onFavoriteToggle }) {
+export default function JobCard({
+  job,
+  favorites,
+  onFavoriteToggle,
+  isFavoritesPage = false,
+  onApplyClick,
+}) {
   const navigate = useNavigate();
   const { user } = useAuth();
 
   //  New state for showing popup
   const [showPopup, setShowPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
-  const [showAuthRequiredPopup, setShowAuthRequiredPopup] = useState(false);
 
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
-    if (user) {
-      window.open(job.applyLink || job.url, "_blank");
+    if (user || isFavoritesPage) {
+      if (onApplyClick) {
+        window.open(job.applyLink || job.url, "_blank");
+      } else {
+        window.open(job.applyLink || job.url || "_blank");
+      }
       return;
     }
 
@@ -31,27 +39,16 @@ export default function JobCard({ job, favorites, onFavoriteToggle }) {
   const handleLoginRedirect = () => {
     setShowPopup(false);
     setShowFavoritesPopup(false);
-    setShowAuthRequiredPopup(false);
     navigate("/login", {});
   };
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
 
-    if (user) {
-      if (!favorites[job.id]) {
-        onFavoriteToggle(job.id);
-      } else {
-        onFavoriteToggle(job.id);
-      }
+    if (user || isFavoritesPage) {
+      onFavoriteToggle(job.id);
     } else {
-      // User is logged out
-      if (favorites[job.id] ?? job.isFavorite) {
-        setShowAuthRequiredPopup(true);
-      } else {
-        // Not in favorites => show "login to save" popup
-        setShowFavoritesPopup(true);
-      }
+      setShowFavoritesPopup(true);
     }
   };
 
@@ -124,13 +121,6 @@ export default function JobCard({ job, favorites, onFavoriteToggle }) {
         <PopupForFavorites
           handleLoginRedirect={handleLoginRedirect}
           setShowPopup={setShowFavoritesPopup}
-        />
-      )}
-
-      {showAuthRequiredPopup && (
-        <PopupShowRemoveConfirmation
-          handleLoginRedirect={handleLoginRedirect}
-          setShowPopup={setShowAuthRequiredPopup}
         />
       )}
     </li>
