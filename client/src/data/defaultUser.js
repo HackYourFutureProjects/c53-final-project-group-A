@@ -10,8 +10,6 @@ export const defaultUser = {
   avatar: images.defaultAvatar,
   email: "guest@example.com",
   JWT: "",
-  isAuthenticated: false,
-  isRegistered: false,
 
   address: {
     street: "Keizersgracht",
@@ -45,4 +43,5 @@ export const defaultUser = {
     "Customer Service",
     "Public speaking",
   ],
+  favorites: [],
 };
