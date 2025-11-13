@@ -50,9 +50,7 @@ export default function JobCard({ job, onFavoriteToggle }) {
               <h3 className="job-title">{job.title}</h3>
               <button
                 className={`favorite-btn ${
-                  (Array.isArray(favorites)
-                    ? favorites.includes(job.id)
-                    : false) || job.isFavorite
+                  favorites.includes(job.id) || job.isFavorite
                     ? "favorited"
                     : ""
                 }`}
@@ -61,11 +59,7 @@ export default function JobCard({ job, onFavoriteToggle }) {
                   onFavoriteToggle(job.id);
                 }}
               >
-                {(Array.isArray(favorites)
-                  ? favorites.includes(job.id)
-                  : false) || job.isFavorite
-                  ? "♥"
-                  : "♡"}
+                {favorites.includes(job.id) || job.isFavorite ? "♥" : "♡"}
               </button>
             </div>
 
