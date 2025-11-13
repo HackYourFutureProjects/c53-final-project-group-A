@@ -1,4 +1,4 @@
-import { UseAuth } from "../../context/AuthContext";
+import { UseAuth } from "../context/AuthContext";
 
 export default function AddressSettings({
   saveProfileSettings,
