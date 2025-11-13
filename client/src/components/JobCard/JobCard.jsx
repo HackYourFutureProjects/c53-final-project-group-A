@@ -54,6 +54,7 @@ export default function JobCard({
 
   const workMode = job.workMode || "On-site";
   const location = job.displayLocation || null;
+  const isFavorited = favorites[job.id] ?? job.isFavorite;
 
   return (
     <li key={job.id} className="job-item">
@@ -75,6 +76,9 @@ export default function JobCard({
                   (favorites[job.id] ?? job.isFavorite) ? "favorited" : ""
                 }`}
                 onClick={handleFavoriteClick}
+                title={
+                  isFavorited ? "Remove from favourites" : "Save to favourites"
+                }
               >
                 {(favorites[job.id] ?? job.isFavorite) ? "♥" : "♡"}
               </button>
