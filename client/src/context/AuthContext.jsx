@@ -1,9 +1,10 @@
 import { createContext, useState, useContext } from "react";
+import defaultUser from "../data/defaultUser";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,7 +19,12 @@ export const AuthProvider = ({ children }) => {
       await new Promise((res) => setTimeout(res, 100)); // simulate API call
       //Simulate success or failure
       if (email === "fail@example.com") throw new Error("Invalid credentials");
-      setUser({ firstName: "userlogged", lastName: "User", email });
+      setUser((prev) => ({
+        ...prev,
+        firstName: "userlogged",
+        lastName: "User",
+        email,
+      }));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -34,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       await new Promise((res) => setTimeout(res, 100));
       if (email === "yahya@yahoo.com")
         throw new Error("Email already registered");
-      setUser({ firstName, lastName, email });
+      setUser((prev) => ({ ...prev, firstName, lastName, email }));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -42,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => setUser(null);
+  const logout = () => setUser(defaultUser);
 
   return (
     <AuthContext.Provider
