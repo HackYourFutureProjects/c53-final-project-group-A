@@ -6,6 +6,7 @@ function normalizeDescription(str) {
 
 function getSkillsInDescription(text, skills = []) {
   const textSpaced = normalizeDescription(text);
+  console.log("Normalized description:", textSpaced);
   return skills
     .filter((s) => {
       let re = null;
@@ -19,9 +20,11 @@ export default function Skills({ item }) {
   const { user } = UseAuth();
   // user may be undefined during initial render; default to empty array
   const skills = user?.skills || [];
+  console.log("Item", item);
+  console.log("User skills:", skills);
 
   const skillsInDescription = getSkillsInDescription(
-    item.descriptionText || "",
+    item.description_text || "",
     skills,
   );
 
