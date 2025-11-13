@@ -13,7 +13,10 @@ export default function SkillsSettings() {
 
   useEffect(() => {
     if (alert.message && skills) {
-      setAlert({ type: "", message: "" });
+      // Defer clearing the alert to avoid synchronous setState inside the effect
+      // which can trigger cascading renders and is flagged by the linter.
+      const tid = setTimeout(() => setAlert({ type: "", message: "" }), 0);
+      return () => clearTimeout(tid);
     }
   }, [skills]);
 

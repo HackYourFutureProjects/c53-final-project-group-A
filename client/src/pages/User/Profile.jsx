@@ -21,10 +21,17 @@ export default function Profile() {
   const { user, setUser } = useAuth();
 
   useEffect(() => {
-    if (alert.message && user) {
+    // Clear alert when the authenticated user changes, but avoid calling
+    // setState synchronously inside the effect to prevent cascading renders
+    // (and to satisfy the linter). Schedule the update on the next tick
+    // and include alert.message in the dependency list.
+    if (!alert.message) return;
+    if (!user) return;
+    const id = setTimeout(() => {
       setAlert({ type: "", message: "" });
-    }
-  }, [user]);
+    }, 0);
+    return () => clearTimeout(id);
+  }, [user, alert.message]);
 
   function saveProfileSettings(
     streetInputRef,
