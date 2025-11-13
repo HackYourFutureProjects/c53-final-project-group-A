@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Loader, X, UserPlus, CheckCircle, XCircle } from "lucide-react";
-import { UseAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import {
   passwordRules,
   validatePassword,
@@ -22,7 +22,7 @@ const SignupForm = ({
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const { loading, error, clearError } = UseAuth();
+  const { loading, error, clearError } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;

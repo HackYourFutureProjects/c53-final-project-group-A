@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import { UseAuth } from "./AuthContext";
+import { useAuth } from "./AuthContext";
 
 const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
   // Use user and setUser from the Auth context
-  const { setUser } = UseAuth();
+  const { setUser } = useAuth();
 
   // Ensure favorites is an array on the user object
   // const favorites = Array.isArray(user?.favorites) ? user.favorites : [];

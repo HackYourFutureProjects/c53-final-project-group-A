@@ -4,11 +4,11 @@ import "./JobSearch.css";
 import { icons } from "../../assets/index.js";
 import { defaultUser } from "../../data/defaultUser.js";
 import { formatAddress } from "../../data/defaultUser.js";
-import { UseAuth } from "../../context/AuthContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function JobSearch() {
   const displayedSkills = defaultUser.skills.slice(0, 3).join(", ");
-  const { user } = UseAuth();
+  const { user } = useAuth();
 
   return (
     <div className="job-search-container">

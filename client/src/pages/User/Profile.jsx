@@ -6,7 +6,7 @@ import AlertMessage from "../../components/AlertMessage";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
-import { UseAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Profile() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -18,7 +18,7 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, setUser } = UseAuth();
+  const { user, setUser } = useAuth();
 
   useEffect(() => {
     if (alert.message && user) {
