@@ -27,8 +27,6 @@ export default function JobCard({
     if (user || isFavoritesPage) {
       if (onApplyClick) {
         window.open(job.applyLink || job.url, "_blank");
-      } else {
-        window.open(job.applyLink || job.url || "_blank");
       }
       return;
     }
