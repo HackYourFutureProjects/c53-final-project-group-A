@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { UseSettings } from "../context/SettingsContext";
 import { validateSkillInput } from "../util/skillValidation";
 import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
@@ -9,7 +8,7 @@ import { UseAuth } from "../../context/AuthContext";
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const { user, setUser } = UseSettings();
+  const { user, setUser } = UseAuth();
   const { skills } = user;
 
   useEffect(() => {
