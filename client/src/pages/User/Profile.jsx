@@ -3,10 +3,10 @@ import { defaultUser } from "../../data/defaultUser";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
-import { UseSettings } from "../../context/SettingsContext";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function Profile() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -18,13 +18,13 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { settings, setSettings } = UseSettings();
+  const { user, setUser } = UseAuth();
 
   useEffect(() => {
-    if (alert.message && settings) {
+    if (alert.message && user) {
       setAlert({ type: "", message: "" });
     }
-  }, [settings]);
+  }, [user]);
 
   function saveProfileSettings(
     streetInputRef,
@@ -98,16 +98,16 @@ export default function Profile() {
       );
       return;
     }
-    setSettings((prev) => {
-      const newSettings = { ...prev };
-      newSettings.address = {
-        ...(newSettings.address || {}),
+    setUser((prev) => {
+      const newUser = { ...prev };
+      newUser.address = {
+        ...(newUser.address || {}),
         street,
         house,
         city,
         country,
       };
-      return newSettings;
+      return newUser;
     });
   }
   function pressEnterKey(e) {

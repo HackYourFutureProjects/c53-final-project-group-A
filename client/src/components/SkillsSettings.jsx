@@ -4,12 +4,13 @@ import { validateSkillInput } from "../util/skillValidation";
 import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const { settings, setSettings } = UseSettings();
-  const { skills } = settings;
+  const { user, setUser } = UseSettings();
+  const { skills } = user;
 
   useEffect(() => {
     if (alert.message && skills) {
@@ -28,17 +29,17 @@ export default function SkillsSettings() {
       return;
     }
 
-    setSettings((prev) => {
-      const newSettings = { ...prev };
-      newSettings.skills = [
-        ...(newSettings.skills || []),
+    setUser((prev) => {
+      const newUser = { ...prev };
+      newUser.skills = [
+        ...(newUser.skills || []),
         regexEndNormalizeSkill(newSkill),
       ].sort((a, b) =>
         String(a?.normalizedSkill ?? "").localeCompare(
           String(b?.normalizedSkill ?? ""),
         ),
       );
-      return newSettings;
+      return newUser;
     });
 
     if (skillInput) {
@@ -48,12 +49,12 @@ export default function SkillsSettings() {
   }
 
   function removeSkill(skill) {
-    setSettings((prev) => {
-      const newSettings = { ...prev };
-      newSettings.skills = (newSettings.skills || []).filter(
+    setUser((prev) => {
+      const newUser = { ...prev };
+      newUser.skills = (newUser.skills || []).filter(
         (s) => s.skill !== skill.skill,
       );
-      return newSettings;
+      return newUser;
     });
   }
 

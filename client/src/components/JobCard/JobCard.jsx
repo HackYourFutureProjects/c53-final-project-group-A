@@ -1,14 +1,14 @@
 import Skills from "../Skills";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import "./JobCard.css";
 import { icons } from "../../assets";
 
 export default function JobCard({ job, favorites, onFavoriteToggle }) {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = UseAuth();
 
   //  New state for showing popup
   const [showPopup, setShowPopup] = useState(false);
