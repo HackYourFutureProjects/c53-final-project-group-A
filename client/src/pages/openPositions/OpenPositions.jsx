@@ -40,12 +40,16 @@ const preprocessJobs = (jobs) => {
 
 export default function OpenPositions() {
   // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-  const { allJobs, searchTerm } = UseJobs();
+  // Defensive: if UseJobs() returns undefined (no provider mounted), fall back to safe defaults
+  const _jobsContext = UseJobs() || {};
+  const { allJobs = [], searchTerm = "" } = _jobsContext;
 
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  const { toggleFavorite } = UseFavorites();
+  // Defensive: if UseFavorites() returns undefined (no provider mounted), use a no-op toggle
+  const _favoritesContext = UseFavorites() || {};
+  const { toggleFavorite = () => {} } = _favoritesContext;
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
