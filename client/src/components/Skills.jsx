@@ -8,7 +8,8 @@ function getSkillsInDescription(text, skills = []) {
   const textSpaced = normalizeDescription(text);
   return skills
     .filter((s) => {
-      const re = s.skillRegex;
+      let re = null;
+      if (s.skillRegex instanceof RegExp) re = s.skillRegex;
       return re ? re.test(textSpaced) : false;
     })
     .map((s) => s.skill);
