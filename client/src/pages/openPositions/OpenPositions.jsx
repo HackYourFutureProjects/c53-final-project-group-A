@@ -187,7 +187,6 @@ export default function OpenPositions() {
                 <JobCard
                   key={job.id || idx}
                   job={job}
-                  favorites={favorites}
                   onFavoriteToggle={toggleFavorite}
                   // onApplyClick={(url) => window.open(url, "_blank")}
                 />

@@ -1,12 +1,15 @@
 import { UseJobs } from "../../context/JobsContext";
 import { UseFavorites } from "../../context/FavoritesContext";
 import JobCard from "../../components/JobCard/JobCard";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function MyFavorites() {
   const { allJobs } = UseJobs();
-  const { favorites, toggleFavorite } = UseFavorites();
+  const { toggleFavorite } = UseFavorites();
+  const { user } = UseAuth();
+  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
-  const favoriteJobs = allJobs.filter((job) => favorites[job.id]);
+  const favoriteJobs = allJobs.filter((job) => favorites.includes(job.id));
 
   if (favoriteJobs.length === 0) {
     return (
@@ -40,7 +43,6 @@ export default function MyFavorites() {
             <JobCard
               key={job.id || idx}
               job={job}
-              favorites={favorites}
               onFavoriteToggle={toggleFavorite}
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")

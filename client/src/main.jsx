@@ -12,13 +12,13 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       {/* <SettingsProvider> */}
-      <JobsProvider>
-        <FavoritesProvider>
-          <AuthProvider>
+      <AuthProvider>
+        <JobsProvider>
+          <FavoritesProvider>
             <App />
-          </AuthProvider>
-        </FavoritesProvider>
-      </JobsProvider>
+          </FavoritesProvider>
+        </JobsProvider>
+      </AuthProvider>
       {/* </SettingsProvider> */}
     </BrowserRouter>
   </StrictMode>,

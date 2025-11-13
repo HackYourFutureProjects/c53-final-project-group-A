@@ -6,9 +6,10 @@ import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import "./JobCard.css";
 import { icons } from "../../assets";
 
-export default function JobCard({ job, favorites, onFavoriteToggle }) {
+export default function JobCard({ job, onFavoriteToggle }) {
   const navigate = useNavigate();
   const { user } = UseAuth();
+  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
   const [showPopup, setShowPopup] = useState(false);
@@ -49,14 +50,22 @@ export default function JobCard({ job, favorites, onFavoriteToggle }) {
               <h3 className="job-title">{job.title}</h3>
               <button
                 className={`favorite-btn ${
-                  (favorites[job.id] ?? job.isFavorite) ? "favorited" : ""
+                  (Array.isArray(favorites)
+                    ? favorites.includes(job.id)
+                    : false) || job.isFavorite
+                    ? "favorited"
+                    : ""
                 }`}
                 onClick={(e) => {
                   e.stopPropagation();
                   onFavoriteToggle(job.id);
                 }}
               >
-                {(favorites[job.id] ?? job.isFavorite) ? "♥" : "♡"}
+                {(Array.isArray(favorites)
+                  ? favorites.includes(job.id)
+                  : false) || job.isFavorite
+                  ? "♥"
+                  : "♡"}
               </button>
             </div>
 
