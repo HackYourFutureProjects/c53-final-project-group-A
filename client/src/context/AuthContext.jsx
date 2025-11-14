@@ -39,7 +39,7 @@ function AuthProvider({ children }) {
     clearError();
     try {
       await new Promise((res) => setTimeout(res, 100));
-      if (email === "yahya@yahoo.com")
+      if (email === "guest@example.com" || email === "yahya@yahoo.com")
         throw new Error("Email already registered");
       setUser((prev) => ({ ...prev, firstName, lastName, email }));
     } catch (err) {
