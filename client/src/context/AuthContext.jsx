@@ -18,7 +18,7 @@ function AuthProvider({ children }) {
     try {
       await new Promise((res) => setTimeout(res, 100)); // simulate API call
       //Simulate success or failure
-      if (email === "guest@example.com" || email === "fail@example.com")
+      if (email === defaultUser.email || email === "fail@example.com")
         throw new Error("Invalid credentials");
       setUser((prev) => ({
         ...prev,
@@ -39,7 +39,7 @@ function AuthProvider({ children }) {
     clearError();
     try {
       await new Promise((res) => setTimeout(res, 100));
-      if (email === "guest@example.com" || email === "yahya@yahoo.com")
+      if (email === defaultUser.email || email === "yahya@yahoo.com")
         throw new Error("Email already registered");
       setUser((prev) => ({ ...prev, firstName, lastName, email }));
     } catch (err) {

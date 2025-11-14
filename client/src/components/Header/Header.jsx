@@ -70,7 +70,7 @@ function UserMenu() {
           >
             About
           </NavLink>
-          {user.email !== "guest@example.com" ? (
+          {user.email !== defaultUser.email ? (
             <NavLink
               to="/"
               className="user-item"

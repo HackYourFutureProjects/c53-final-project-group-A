@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { defaultUser } from "../../data/defaultUser";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
@@ -18,7 +17,7 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { setUser } = UseAuth();
+  const { user, setUser } = UseAuth();
 
   function handleClearAlert() {
     if (!alert.message) return;
@@ -131,8 +130,8 @@ export default function Profile() {
           <div className="relative">
             <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
               <img
-                src={defaultUser.avatar}
-                alt={defaultUser.name}
+                src={user.avatar}
+                alt={user.name}
                 className="w-20 h-20 object-cover"
               />
             </div>
@@ -165,7 +164,7 @@ export default function Profile() {
                 <input
                   ref={firstNameInputRef}
                   type="text"
-                  defaultValue={defaultUser.name}
+                  defaultValue={user.name}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
                   onChange={handleClearAlert}
@@ -178,7 +177,7 @@ export default function Profile() {
                 <input
                   ref={lastNameInputRef}
                   type="text"
-                  defaultValue={defaultUser.name}
+                  defaultValue={user.name}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
                   onChange={handleClearAlert}

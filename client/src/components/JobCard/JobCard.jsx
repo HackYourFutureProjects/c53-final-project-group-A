@@ -6,6 +6,7 @@ import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
+import { defaultUser } from "../../data/defaultUser";
 
 export default function JobCard({
   job,
@@ -24,7 +25,7 @@ export default function JobCard({
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
-    if (user && user.email !== "guest@example.com") {
+    if (user && user.email !== defaultUser.email) {
       if (onApplyClick) {
         window.open(job.applyLink || job.url, "_blank");
       }
@@ -43,7 +44,7 @@ export default function JobCard({
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
 
-    if (user && user.email !== "guest@example.com") {
+    if (user && user.email !== defaultUser.email) {
       onFavoriteToggle(job.id);
     } else {
       setShowFavoritesPopup(true);
