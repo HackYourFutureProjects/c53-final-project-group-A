@@ -1,12 +1,12 @@
 import { UseJobs } from "../../context/JobsContext";
 import { UseFavorites } from "../../context/FavoritesContext";
 import JobCard from "../../components/JobCard/JobCard";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function MyFavorites() {
   const { allJobs } = UseJobs();
   const { toggleFavorite } = UseFavorites();
-  const { user } = useAuth();
+  const { user } = UseAuth();
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   const favoriteJobs = allJobs.filter((job) => favorites.includes(job.id));

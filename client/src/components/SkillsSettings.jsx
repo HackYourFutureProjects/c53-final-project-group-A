@@ -3,12 +3,12 @@ import { validateSkillInput } from "../util/skillValidation";
 import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
-import { useAuth } from "../context/AuthContext";
+import { UseAuth } from "../context/AuthContext";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const { user, setUser } = useAuth();
+  const { user, setUser } = UseAuth();
   const { skills } = user;
 
   useEffect(() => {

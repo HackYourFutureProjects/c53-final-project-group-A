@@ -3,7 +3,7 @@ import { defaultUser } from "../data/defaultUser";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+function AuthProvider({ children }) {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -66,6 +66,10 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+function UseAuth() {
+  return useContext(AuthContext);
+}
+
+export { AuthProvider, UseAuth };

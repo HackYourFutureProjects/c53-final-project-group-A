@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthContext";
+import { UseAuth } from "../context/AuthContext";
 
 export default function AddressSettings({
   saveProfileSettings,
@@ -7,7 +7,7 @@ export default function AddressSettings({
   cityInputRef,
   countryInputRef,
 }) {
-  const { user } = useAuth();
+  const { user } = UseAuth();
 
   function pressEnterKey(e) {
     if (e.key === "Enter") {
