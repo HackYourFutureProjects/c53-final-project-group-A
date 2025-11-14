@@ -17,9 +17,7 @@ function userReducer(state, action) {
       return action.payload || defaultUser;
     case "ADD_SKILL": {
       const newSkill = action.payload;
-      const prevSkills = Array.isArray(state?.skills)
-        ? state.skills.slice()
-        : [];
+      const prevSkills = Array.isArray(state?.skills) ? state.skills : [];
       const combined = [...prevSkills, newSkill].sort((a, b) =>
         String(a?.normalizedSkill ?? "").localeCompare(
           String(b?.normalizedSkill ?? ""),
