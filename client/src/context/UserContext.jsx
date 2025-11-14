@@ -1,10 +1,61 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useReducer, useState, useContext } from "react";
 import { defaultUser } from "../data/defaultUser";
 
 const UserContext = createContext();
 
+function userReducer(state, action) {
+  switch (action.type) {
+    case "REGISTER":
+    case "LOGIN":
+      return { ...defaultUser, ...action.payload };
+    case "LOGOUT":
+      return action.payload || defaultUser;
+    case "ADD_SKILL": {
+      const newSkill = action.payload;
+      const prevSkills = Array.isArray(state?.skills)
+        ? state.skills.slice()
+        : [];
+      const combined = [...prevSkills, newSkill].sort((a, b) =>
+        String(a?.normalizedSkill ?? "").localeCompare(
+          String(b?.normalizedSkill ?? ""),
+        ),
+      );
+      return { ...state, skills: combined };
+    }
+    case "REMOVE_SKILL": {
+      const skill = action.payload;
+      const filtered = (state.skills || []).filter(
+        (s) => s.skill !== skill.skill,
+      );
+      return { ...state, skills: filtered };
+    }
+    case "TOGGLE_FAVORITE": {
+      const jobId = action.payload;
+      const prevFavorites = Array.isArray(state?.favorites)
+        ? state.favorites
+        : [];
+      const exists = prevFavorites.includes(jobId);
+      const newFavorites = exists
+        ? prevFavorites.filter((id) => id !== jobId)
+        : [...prevFavorites, jobId];
+      return { ...state, favorites: newFavorites };
+    }
+    case "UPDATE_USER": {
+      const payload = action.payload || {};
+      // Shallow merge; merge nested address specifically
+      const next = { ...state, ...payload };
+      if (payload.address) {
+        next.address = { ...(state.address || {}), ...payload.address };
+      }
+      return next;
+    }
+    default:
+      return state;
+  }
+}
+
 function UserContextProvider({ children }) {
-  const [user, setUser] = useState(defaultUser);
+  const [user, dispatch] = useReducer(userReducer, defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,12 +70,10 @@ function UserContextProvider({ children }) {
       //Simulate success or failure
       if (email === defaultUser.email || email === "fail@example.com")
         throw new Error("Invalid credentials");
-      setUser((prev) => ({
-        ...prev,
-        firstName: "userlogged",
-        lastName: "User",
-        email,
-      }));
+      dispatch({
+        type: "LOGIN",
+        payload: { firstName: "userlogged", lastName: "User", email },
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -40,7 +89,7 @@ function UserContextProvider({ children }) {
       await new Promise((res) => setTimeout(res, 100));
       if (email === defaultUser.email || email === "yahya@yahoo.com")
         throw new Error("Email already registered");
-      setUser((prev) => ({ ...prev, firstName, lastName, email }));
+      dispatch({ type: "REGISTER", payload: { firstName, lastName, email } });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -48,26 +97,17 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const logout = () => setUser(defaultUser);
+  const logout = () => dispatch({ type: "LOGOUT", payload: defaultUser });
 
   const toggleFavorite = (jobId) => {
-    setUser((prev) => {
-      const prevFavorites = Array.isArray(prev?.favorites)
-        ? prev.favorites
-        : [];
-      const exists = prevFavorites.includes(jobId);
-      const newFavorites = exists
-        ? prevFavorites.filter((id) => id !== jobId)
-        : [...prevFavorites, jobId];
-      return { ...prev, favorites: newFavorites };
-    });
+    dispatch({ type: "TOGGLE_FAVORITE", payload: jobId });
   };
 
   return (
     <UserContext.Provider
       value={{
         user,
-        setUser,
+        dispatch,
         loading,
         error,
         login,

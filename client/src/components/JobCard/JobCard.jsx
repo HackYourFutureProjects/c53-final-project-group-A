@@ -8,9 +8,9 @@ import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
 
-export default function JobCard({ job, onFavoriteToggle, onApplyClick }) {
+export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
-  const { user } = UseUser();
+  const { user, dispatch } = UseUser();
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
@@ -40,7 +40,7 @@ export default function JobCard({ job, onFavoriteToggle, onApplyClick }) {
     e.stopPropagation();
 
     if (user && user.email !== defaultUser.email) {
-      onFavoriteToggle(job.id);
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id });
     } else {
       setShowFavoritesPopup(true);
     }

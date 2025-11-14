@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { UseUser } from "../../context/UserContext";
+// removed UseUser import; JobCard now uses favorites from context directly
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
@@ -45,8 +45,7 @@ export default function OpenPositions() {
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  // const { toggleFavorite } = UseFavorites();
-  const { toggleFavorite } = UseUser();
+  // JobCard reads toggleFavorite from UserContext directly now
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
@@ -188,8 +187,6 @@ export default function OpenPositions() {
                 <JobCard
                   key={job.id || idx}
                   job={job}
-                  onFavoriteToggle={toggleFavorite}
-                  // isFavoritesPage={false}
                   onApplyClick={(url) => window.open(url, "_blank")}
                 />
               ))}

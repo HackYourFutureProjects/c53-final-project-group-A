@@ -17,7 +17,7 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, setUser } = UseUser();
+  const { user, dispatch } = UseUser();
 
   function handleClearAlert() {
     if (!alert.message) return;
@@ -96,16 +96,13 @@ export default function Profile() {
       );
       return;
     }
-    setUser((prev) => {
-      const newUser = { ...prev };
-      newUser.address = {
-        ...(newUser.address || {}),
-        street,
-        houseNumber: house,
-        city,
-        country,
-      };
-      return newUser;
+    dispatch({
+      type: "UPDATE_USER",
+      payload: {
+        firstName,
+        lastName,
+        address: { street, houseNumber: house, city, country },
+      },
     });
   }
   function pressEnterKey(e) {

@@ -8,7 +8,7 @@ import { UseUser } from "../context/UserContext";
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const { user, setUser } = UseUser();
+  const { user, dispatch } = UseUser();
   const { skills } = user;
 
   function handleClearAlert() {
@@ -27,18 +27,8 @@ export default function SkillsSettings() {
       return;
     }
 
-    setUser((prev) => {
-      const newUser = { ...prev };
-      newUser.skills = [
-        ...(newUser.skills || []),
-        regexEndNormalizeSkill(newSkill),
-      ].sort((a, b) =>
-        String(a?.normalizedSkill ?? "").localeCompare(
-          String(b?.normalizedSkill ?? ""),
-        ),
-      );
-      return newUser;
-    });
+    // dispatch normalized skill to reducer which will add & sort
+    dispatch({ type: "ADD_SKILL", payload: regexEndNormalizeSkill(newSkill) });
 
     if (skillInput) {
       skillInput.value = "";
@@ -47,13 +37,7 @@ export default function SkillsSettings() {
   }
 
   function removeSkill(skill) {
-    setUser((prev) => {
-      const newUser = { ...prev };
-      newUser.skills = (newUser.skills || []).filter(
-        (s) => s.skill !== skill.skill,
-      );
-      return newUser;
-    });
+    dispatch({ type: "REMOVE_SKILL", payload: skill });
   }
 
   return (

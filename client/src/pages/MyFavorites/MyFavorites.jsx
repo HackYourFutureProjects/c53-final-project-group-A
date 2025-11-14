@@ -4,7 +4,7 @@ import { UseUser } from "../../context/UserContext";
 
 export default function MyFavorites() {
   const { allJobs } = UseJobs();
-  const { user, toggleFavorite } = UseUser();
+  const { user } = UseUser();
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   const favoriteJobs = allJobs.filter((job) => favorites.includes(job.id));
@@ -41,7 +41,6 @@ export default function MyFavorites() {
             <JobCard
               key={job.id || idx}
               job={job}
-              onFavoriteToggle={toggleFavorite}
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")
               }
