@@ -10,7 +10,7 @@ import { icons } from "../../assets";
 export default function JobCard({
   job,
   onFavoriteToggle,
-  isFavoritesPage = false,
+  // isFavoritesPage = false,
   onApplyClick,
 }) {
   const navigate = useNavigate();
