@@ -24,7 +24,7 @@ export default function JobCard({
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
-    if ((user && user.email !== "guest@example.com") || isFavoritesPage) {
+    if (user && user.email !== "guest@example.com") {
       if (onApplyClick) {
         window.open(job.applyLink || job.url, "_blank");
       }
