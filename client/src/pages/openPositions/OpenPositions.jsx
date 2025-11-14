@@ -3,14 +3,13 @@ import { useMemo, useState } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { UseAuth } from "../../context/AuthContext";
+import { UseUser } from "../../context/UserContext";
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
 // import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 
 import { UseJobs } from "../../context/JobsContext";
-// import { UseFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 
@@ -47,7 +46,7 @@ export default function OpenPositions() {
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
   // const { toggleFavorite } = UseFavorites();
-  const { toggleFavorite } = UseAuth();
+  const { toggleFavorite } = UseUser();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;

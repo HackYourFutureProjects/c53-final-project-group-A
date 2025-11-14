@@ -4,12 +4,12 @@ import LoginForm from "../../pages/LoginForm/LoginForm";
 import SignupForm from "../../pages/SignupForm/SignupForm";
 import SignupSuccessPopup from "../SuccessPopup/SignupSuccessPopup";
 import LoginSuccessPopup from "../SuccessPopup/LoginSuccessPopup";
-import { UseAuth } from "../../context/AuthContext";
+import { UseUser } from "../../context/UserContext";
 import "./AuthForms.css";
 
 const AuthForms = () => {
   const navigate = useNavigate();
-  const { login, signup, clearError } = UseAuth();
+  const { login, signup, clearError } = UseUser();
   const [tab, setTab] = useState("login");
   const [successPopup, setSuccessPopup] = useState(false);
   const [signedUpUser, setSignedUpUser] = useState("");
