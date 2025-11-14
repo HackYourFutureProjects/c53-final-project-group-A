@@ -14,7 +14,7 @@ export default function JobCard({ job, onApplyClick }) {
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
-  const [showPopup, setShowPopup] = useState(false);
+  const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
   const handleApplyClick = (e) => {
@@ -27,11 +27,11 @@ export default function JobCard({ job, onApplyClick }) {
       return;
     }
 
-    setShowPopup(true);
+    setShowApplyPopup(true);
   };
 
   const handleLoginRedirect = () => {
-    setShowPopup(false);
+    setShowApplyPopup(false);
     setShowFavoritesPopup(false);
     navigate("/login", {});
   };
@@ -111,10 +111,10 @@ export default function JobCard({ job, onApplyClick }) {
           </div>
         </div>
       </div>
-      {showPopup && (
+      {showApplyPopup && (
         <PopupForMoreAndApply
           handleLoginRedirect={handleLoginRedirect}
-          setShowPopup={setShowPopup}
+          setShowPopup={setShowApplyPopup}
         />
       )}
       {showFavoritesPopup && (

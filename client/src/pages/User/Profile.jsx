@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
@@ -6,9 +7,13 @@ import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
+import PopupForSave from "../../components/SuccessPopup/PopupForSave";
+import { defaultUser } from "../../data/defaultUser";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
+  const [showSavePopup, setShowSavePopup] = useState(false);
   const firstNameInputRef = useRef(null);
   const lastNameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -24,7 +29,12 @@ export default function Profile() {
     setAlert({ type: "", message: "" });
   }
 
-  function saveProfileSettings(
+  const handleLoginRedirect = () => {
+    setShowSavePopup(false);
+    navigate("/login", {});
+  };
+
+  function handleSaveClick(
     streetInputRef,
     houseInputRef,
     cityInputRef,
@@ -38,6 +48,10 @@ export default function Profile() {
     let house = houseInputRef.current;
     let city = cityInputRef.current;
     let country = countryInputRef.current;
+    if (user && user.email !== defaultUser.email) {
+      return;
+    }
+    setShowSavePopup(true);
     if (
       !firstName ||
       !lastName ||
@@ -107,7 +121,7 @@ export default function Profile() {
   }
   function pressEnterKey(e) {
     if (e.key === "Enter")
-      saveProfileSettings(
+      handleSaveClick(
         streetInputRef,
         houseInputRef,
         cityInputRef,
@@ -223,7 +237,7 @@ export default function Profile() {
       {/* Settings Section */}
       <h2 className="text-lg font-semibold text-gray-900 mb-6">Settings</h2>
       <AddressSettings
-        saveProfileSettings={saveProfileSettings}
+        handleSaveClick={handleSaveClick}
         streetInputRef={streetInputRef}
         houseInputRef={houseInputRef}
         cityInputRef={cityInputRef}
@@ -242,7 +256,7 @@ export default function Profile() {
           <button
             id="saveBtn"
             onClick={() =>
-              saveProfileSettings(
+              handleSaveClick(
                 streetInputRef,
                 houseInputRef,
                 cityInputRef,
@@ -253,6 +267,13 @@ export default function Profile() {
           >
             Save
           </button>
+          {/* Popup for saving settings */}
+          {showSavePopup && (
+            <PopupForSave
+              handleLoginRedirect={handleLoginRedirect}
+              setShowSavePopup={setShowSavePopup}
+            />
+          )}
         </div>
       </div>
       <hr className="border-gray-300 mb-8" />

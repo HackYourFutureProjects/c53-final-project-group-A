@@ -1,7 +1,7 @@
 import { UseUser } from "../context/UserContext";
 
 export default function AddressSettings({
-  saveProfileSettings,
+  handleSaveClick,
   streetInputRef,
   houseInputRef,
   cityInputRef,
@@ -12,7 +12,7 @@ export default function AddressSettings({
 
   function pressEnterKey(e) {
     if (e.key === "Enter") {
-      saveProfileSettings(
+      handleSaveClick(
         streetInputRef,
         houseInputRef,
         cityInputRef,
