@@ -18,7 +18,8 @@ function AuthProvider({ children }) {
     try {
       await new Promise((res) => setTimeout(res, 100)); // simulate API call
       //Simulate success or failure
-      if (email === "fail@example.com") throw new Error("Invalid credentials");
+      if (email === "guest@example.com" || email === "fail@example.com")
+        throw new Error("Invalid credentials");
       setUser((prev) => ({
         ...prev,
         firstName: "userlogged",
@@ -50,6 +51,19 @@ function AuthProvider({ children }) {
 
   const logout = () => setUser(defaultUser);
 
+  const toggleFavorite = (jobId) => {
+    setUser((prev) => {
+      const prevFavorites = Array.isArray(prev?.favorites)
+        ? prev.favorites
+        : [];
+      const exists = prevFavorites.includes(jobId);
+      const newFavorites = exists
+        ? prevFavorites.filter((id) => id !== jobId)
+        : [...prevFavorites, jobId];
+      return { ...prev, favorites: newFavorites };
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -61,6 +75,7 @@ function AuthProvider({ children }) {
         signup,
         logout,
         clearError,
+        toggleFavorite,
       }}
     >
       {children}
