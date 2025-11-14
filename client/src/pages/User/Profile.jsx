@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { defaultUser } from "../../data/defaultUser";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
@@ -18,20 +18,12 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, setUser } = UseAuth();
+  const { setUser } = UseAuth();
 
-  useEffect(() => {
-    // Clear alert when the authenticated user changes, but avoid calling
-    // setState synchronously inside the effect to prevent cascading renders
-    // (and to satisfy the linter). Schedule the update on the next tick
-    // and include alert.message in the dependency list.
+  function handleClearAlert() {
     if (!alert.message) return;
-    if (!user) return;
-    const id = setTimeout(() => {
-      setAlert({ type: "", message: "" });
-    }, 0);
-    return () => clearTimeout(id);
-  }, [user, alert.message]);
+    setAlert({ type: "", message: "" });
+  }
 
   function saveProfileSettings(
     streetInputRef,
@@ -176,6 +168,7 @@ export default function Profile() {
                   defaultValue={defaultUser.name}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
+                  onChange={handleClearAlert}
                 />
               </div>
               <div>
@@ -188,6 +181,7 @@ export default function Profile() {
                   defaultValue={defaultUser.name}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
+                  onChange={handleClearAlert}
                 />
               </div>
             </div>
@@ -210,6 +204,7 @@ export default function Profile() {
             placeholder="Type 8 characters or more"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={handleClearAlert}
           />
         </div>
         <div>
@@ -223,6 +218,7 @@ export default function Profile() {
             placeholder="Write the same password again"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={handleClearAlert}
           />
         </div>
       </div>
@@ -236,6 +232,7 @@ export default function Profile() {
         houseInputRef={houseInputRef}
         cityInputRef={cityInputRef}
         countryInputRef={countryInputRef}
+        clearAlert={handleClearAlert}
       />
       <SkillsSettings />
       {/* <!-- Save Button --> */}

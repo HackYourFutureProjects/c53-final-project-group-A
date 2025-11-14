@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { validateSkillInput } from "../util/skillValidation";
 import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
@@ -11,14 +11,10 @@ export default function SkillsSettings() {
   const { user, setUser } = UseAuth();
   const { skills } = user;
 
-  useEffect(() => {
-    if (alert.message && skills) {
-      // Defer clearing the alert to avoid synchronous setState inside the effect
-      // which can trigger cascading renders and is flagged by the linter.
-      const tid = setTimeout(() => setAlert({ type: "", message: "" }), 0);
-      return () => clearTimeout(tid);
-    }
-  }, [skills]);
+  function handleClearAlert() {
+    if (!alert.message) return;
+    setAlert({ type: "", message: "" });
+  }
 
   function addSkill() {
     const skillInput = skillInputRef.current;
@@ -75,6 +71,7 @@ export default function SkillsSettings() {
           onKeyDown={(e) => {
             if (e.key === "Enter") addSkill();
           }}
+          onChange={handleClearAlert}
         />
         <button
           id="addSkillBtn"
