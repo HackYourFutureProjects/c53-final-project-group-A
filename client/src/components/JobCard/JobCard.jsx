@@ -24,7 +24,7 @@ export default function JobCard({
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
-    if (user || isFavoritesPage) {
+    if ((user && user.email !== "guest@example.com") || isFavoritesPage) {
       if (onApplyClick) {
         window.open(job.applyLink || job.url, "_blank");
       }
@@ -43,7 +43,7 @@ export default function JobCard({
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
 
-    if (user || isFavoritesPage) {
+    if (user && user.email !== "guest@example.com") {
       onFavoriteToggle(job.id);
     } else {
       setShowFavoritesPopup(true);
