@@ -1,5 +1,8 @@
 import "../JobCard/JobCard.css";
-export default function PopupForSave({ handleLoginRedirect, setShowPopup }) {
+export default function PopupForSave({
+  handleLoginRedirect,
+  setShowSavePopup,
+}) {
   return (
     <div className="popup-overlay">
       <div className="popup-card">
@@ -9,7 +12,10 @@ export default function PopupForSave({ handleLoginRedirect, setShowPopup }) {
           <button className="btn-primary" onClick={handleLoginRedirect}>
             Log in
           </button>
-          <button className="btn-secondary" onClick={() => setShowPopup(false)}>
+          <button
+            className="btn-secondary"
+            onClick={() => setShowSavePopup(false)}
+          >
             Cancel
           </button>
         </div>
