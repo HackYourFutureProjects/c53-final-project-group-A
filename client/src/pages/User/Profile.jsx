@@ -49,76 +49,66 @@ export default function Profile() {
     let city = cityInputRef.current;
     let country = countryInputRef.current;
     if (user && user.email !== defaultUser.email) {
-      return;
-    }
-    setShowSavePopup(true);
-    if (
-      !firstName ||
-      !lastName ||
-      !password ||
-      !confirmPassword ||
-      !street ||
-      !house ||
-      !city ||
-      !country
-    )
-      return;
-    // First and Last Name
-    firstName = cleanUpText(firstName.value || "");
-    lastName = cleanUpText(lastName.value || "");
-    console.log("Saving settings for:", firstName, lastName);
-    // Passwords
-    password = password.value || "";
-    confirmPassword = confirmPassword.value || "";
-    if (password || confirmPassword) {
-      console.log("password, confirmPassword", password, confirmPassword);
-      if (password === confirmPassword) {
-        console.log("Password updated.");
-      } else {
-        setAlert({ type: "error", message: "Passwords do not match." });
+      // First and Last Name
+      firstName = cleanUpText(firstName.value || "");
+      lastName = cleanUpText(lastName.value || "");
+      console.log("Saving settings for:", firstName, lastName);
+      // Passwords
+      password = password.value || "";
+      confirmPassword = confirmPassword.value || "";
+      if (password || confirmPassword) {
+        console.log("password, confirmPassword", password, confirmPassword);
+        if (password === confirmPassword) {
+          console.log("Password updated.");
+        } else {
+          setAlert({ type: "error", message: "Passwords do not match." });
+          return;
+        }
+      }
+      // Address
+      street = cleanUpText(street.value || "");
+      house = cleanUpText(house.value || "");
+      city = cleanUpText(city.value || "");
+      country = cleanUpText(country.value || "");
+      const streetValidationError = validateAddressTextInputs({
+        text: street,
+      });
+      const cityValidationError = validateAddressTextInputs({
+        text: city,
+        type: "city",
+      });
+      const countryValidationError = validateAddressTextInputs({
+        text: country,
+        type: "country",
+      });
+      const houseValidationError = validateHouseNoInput({ text: house });
+      if (
+        streetValidationError ||
+        cityValidationError ||
+        countryValidationError ||
+        houseValidationError
+      ) {
+        setAlert(
+          streetValidationError ||
+            cityValidationError ||
+            countryValidationError ||
+            houseValidationError,
+        );
         return;
       }
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          firstName,
+          lastName,
+          address: { street, houseNumber: house, city, country },
+        },
+      });
+    } else {
+      setShowSavePopup(true);
     }
-    // Address
-    street = cleanUpText(street.value || "");
-    house = cleanUpText(house.value || "");
-    city = cleanUpText(city.value || "");
-    country = cleanUpText(country.value || "");
-    const streetValidationError = validateAddressTextInputs({
-      text: street,
-    });
-    const cityValidationError = validateAddressTextInputs({
-      text: city,
-      type: "city",
-    });
-    const countryValidationError = validateAddressTextInputs({
-      text: country,
-      type: "country",
-    });
-    const houseValidationError = validateHouseNoInput({ text: house });
-    if (
-      streetValidationError ||
-      cityValidationError ||
-      countryValidationError ||
-      houseValidationError
-    ) {
-      setAlert(
-        streetValidationError ||
-          cityValidationError ||
-          countryValidationError ||
-          houseValidationError,
-      );
-      return;
-    }
-    dispatch({
-      type: "UPDATE_USER",
-      payload: {
-        firstName,
-        lastName,
-        address: { street, houseNumber: house, city, country },
-      },
-    });
   }
+
   function pressEnterKey(e) {
     if (e.key === "Enter")
       handleSaveClick(
@@ -175,7 +165,7 @@ export default function Profile() {
                 <input
                   ref={firstNameInputRef}
                   type="text"
-                  defaultValue={user.name}
+                  defaultValue={user.firstName}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
                   onChange={handleClearAlert}
@@ -188,7 +178,7 @@ export default function Profile() {
                 <input
                   ref={lastNameInputRef}
                   type="text"
-                  defaultValue={user.name}
+                  defaultValue={user.lastName}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
                   onChange={handleClearAlert}
