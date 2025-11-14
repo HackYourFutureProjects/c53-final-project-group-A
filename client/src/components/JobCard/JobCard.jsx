@@ -8,12 +8,7 @@ import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
 
-export default function JobCard({
-  job,
-  onFavoriteToggle,
-  // isFavoritesPage = false,
-  onApplyClick,
-}) {
+export default function JobCard({ job, onFavoriteToggle, onApplyClick }) {
   const navigate = useNavigate();
   const { user } = UseUser();
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
@@ -97,8 +92,8 @@ export default function JobCard({
             </div>
 
             <p className="job-description">
-              {job.linkedin_org_description
-                ? job.linkedin_org_description.substring(0, 150) + "..."
+              {job.description_text
+                ? job.description_text.substring(0, 150) + "..."
                 : "No description available."}
             </p>
 
