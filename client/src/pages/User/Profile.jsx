@@ -48,6 +48,9 @@ export default function Profile() {
     let house = houseInputRef.current;
     let city = cityInputRef.current;
     let country = countryInputRef.current;
+    if (!firstName || !lastName || !street || !house || !city || !country) {
+      return;
+    }
     if (user && user.email !== defaultUser.email) {
       // First and Last Name
       firstName = cleanUpText(firstName.value || "");
