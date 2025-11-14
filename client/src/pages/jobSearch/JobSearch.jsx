@@ -20,7 +20,7 @@ export default function JobSearch() {
         </p>
       </div>
       <SearchInput />
-      {!user && (
+      {user && user.email === "guest@example.com" && (
         <div className="guest-notice">
           <img src={icons.info} alt="info" className="info-icon" />
           <span>
