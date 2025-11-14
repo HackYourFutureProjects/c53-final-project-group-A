@@ -1,4 +1,4 @@
-import { UseSettings } from "../context/SettingsContext";
+import { UseAuth } from "../context/AuthContext";
 
 export default function AddressSettings({
   saveProfileSettings,
@@ -6,8 +6,9 @@ export default function AddressSettings({
   houseInputRef,
   cityInputRef,
   countryInputRef,
+  clearAlert,
 }) {
-  const { settings } = UseSettings();
+  const { user } = UseAuth();
 
   function pressEnterKey(e) {
     if (e.key === "Enter") {
@@ -31,9 +32,10 @@ export default function AddressSettings({
             id="streetInput"
             ref={streetInputRef}
             type="text"
-            defaultValue={settings.address.street}
+            defaultValue={user.address.street}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={clearAlert}
           />
         </div>
         <div>
@@ -42,9 +44,10 @@ export default function AddressSettings({
             id="houseInput"
             ref={houseInputRef}
             type="text"
-            defaultValue={settings.address.houseNumber}
+            defaultValue={user.address.houseNumber}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={clearAlert}
           />
         </div>
         <div>
@@ -55,10 +58,11 @@ export default function AddressSettings({
             id="cityInput"
             ref={cityInputRef}
             type="text"
-            defaultValue={settings.address.city}
+            defaultValue={user.address.city}
             aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={clearAlert}
           />
         </div>
         <div>
@@ -67,9 +71,10 @@ export default function AddressSettings({
             id="countryInput"
             ref={countryInputRef}
             type="text"
-            defaultValue={settings.address.country}
+            defaultValue={user.address.country}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={clearAlert}
           />
         </div>
       </div>

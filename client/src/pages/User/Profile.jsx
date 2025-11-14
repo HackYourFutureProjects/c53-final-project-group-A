@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import { defaultUser } from "../../data/defaultUser";
+import { useState, useRef } from "react";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
-import { UseSettings } from "../../context/SettingsContext";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function Profile() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -18,13 +17,12 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { settings, setSettings } = UseSettings();
+  const { user, setUser } = UseAuth();
 
-  useEffect(() => {
-    if (alert.message && settings) {
-      setAlert({ type: "", message: "" });
-    }
-  }, [settings]);
+  function handleClearAlert() {
+    if (!alert.message) return;
+    setAlert({ type: "", message: "" });
+  }
 
   function saveProfileSettings(
     streetInputRef,
@@ -98,16 +96,16 @@ export default function Profile() {
       );
       return;
     }
-    setSettings((prev) => {
-      const newSettings = { ...prev };
-      newSettings.address = {
-        ...(newSettings.address || {}),
+    setUser((prev) => {
+      const newUser = { ...prev };
+      newUser.address = {
+        ...(newUser.address || {}),
         street,
-        house,
+        houseNumber: house,
         city,
         country,
       };
-      return newSettings;
+      return newUser;
     });
   }
   function pressEnterKey(e) {
@@ -132,8 +130,8 @@ export default function Profile() {
           <div className="relative">
             <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
               <img
-                src={defaultUser.avatar}
-                alt={defaultUser.name}
+                src={user.avatar}
+                alt={user.name}
                 className="w-20 h-20 object-cover"
               />
             </div>
@@ -166,9 +164,10 @@ export default function Profile() {
                 <input
                   ref={firstNameInputRef}
                   type="text"
-                  defaultValue={defaultUser.name}
+                  defaultValue={user.name}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
+                  onChange={handleClearAlert}
                 />
               </div>
               <div>
@@ -178,9 +177,10 @@ export default function Profile() {
                 <input
                   ref={lastNameInputRef}
                   type="text"
-                  defaultValue={defaultUser.name}
+                  defaultValue={user.name}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
+                  onChange={handleClearAlert}
                 />
               </div>
             </div>
@@ -203,6 +203,7 @@ export default function Profile() {
             placeholder="Type 8 characters or more"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={handleClearAlert}
           />
         </div>
         <div>
@@ -216,6 +217,7 @@ export default function Profile() {
             placeholder="Write the same password again"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
+            onChange={handleClearAlert}
           />
         </div>
       </div>
@@ -229,6 +231,7 @@ export default function Profile() {
         houseInputRef={houseInputRef}
         cityInputRef={cityInputRef}
         countryInputRef={countryInputRef}
+        clearAlert={handleClearAlert}
       />
       <SkillsSettings />
       {/* <!-- Save Button --> */}

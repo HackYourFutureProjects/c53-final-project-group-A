@@ -3,13 +3,14 @@ import { useMemo, useState } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
+import { UseAuth } from "../../context/AuthContext";
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
 // import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 
 import { UseJobs } from "../../context/JobsContext";
-import { UseFavorites } from "../../context/FavoritesContext";
+// import { UseFavorites } from "../../context/FavoritesContext";
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 
@@ -45,7 +46,8 @@ export default function OpenPositions() {
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  const { favorites, toggleFavorite } = UseFavorites();
+  // const { toggleFavorite } = UseFavorites();
+  const { toggleFavorite } = UseAuth();
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
@@ -187,9 +189,8 @@ export default function OpenPositions() {
                 <JobCard
                   key={job.id || idx}
                   job={job}
-                  favorites={favorites}
                   onFavoriteToggle={toggleFavorite}
-                  isFavoritesPage={false}
+                  // isFavoritesPage={false}
                   onApplyClick={(url) => window.open(url, "_blank")}
                 />
               ))}

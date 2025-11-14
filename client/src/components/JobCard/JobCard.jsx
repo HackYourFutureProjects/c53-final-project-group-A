@@ -1,21 +1,22 @@
 import Skills from "../Skills";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
+import { defaultUser } from "../../data/defaultUser";
 
 export default function JobCard({
   job,
-  favorites,
   onFavoriteToggle,
-  isFavoritesPage = false,
+  // isFavoritesPage = false,
   onApplyClick,
 }) {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = UseAuth();
+  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
   const [showPopup, setShowPopup] = useState(false);
@@ -24,7 +25,7 @@ export default function JobCard({
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
-    if (user || isFavoritesPage) {
+    if (user && user.email !== defaultUser.email) {
       if (onApplyClick) {
         window.open(job.applyLink || job.url, "_blank");
       }
@@ -43,7 +44,7 @@ export default function JobCard({
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
 
-    if (user || isFavoritesPage) {
+    if (user && user.email !== defaultUser.email) {
       onFavoriteToggle(job.id);
     } else {
       setShowFavoritesPopup(true);
@@ -71,14 +72,16 @@ export default function JobCard({
               <h3 className="job-title">{job.title}</h3>
               <button
                 className={`favorite-btn ${
-                  (favorites[job.id] ?? job.isFavorite) ? "favorited" : ""
+                  favorites.includes(job.id) || job.isFavorite
+                    ? "favorited"
+                    : ""
                 }`}
                 onClick={handleFavoriteClick}
                 title={
                   isFavorited ? "Remove from favourites" : "Save to favourites"
                 }
               >
-                {(favorites[job.id] ?? job.isFavorite) ? "♥" : "♡"}
+                {favorites.includes(job.id) || job.isFavorite ? "♥" : "♡"}
               </button>
             </div>
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Loader, X, LogIn } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 const LoginForm = ({ login, switchToSignup }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const { loading, error, clearError } = useAuth();
+  const { loading, error, clearError } = UseAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;

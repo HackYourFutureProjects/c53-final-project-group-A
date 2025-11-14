@@ -1,9 +1,10 @@
 import { createContext, useState, useContext } from "react";
+import { defaultUser } from "../data/defaultUser";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,8 +18,14 @@ export const AuthProvider = ({ children }) => {
     try {
       await new Promise((res) => setTimeout(res, 100)); // simulate API call
       //Simulate success or failure
-      if (email === "fail@example.com") throw new Error("Invalid credentials");
-      setUser({ firstName: "userlogged", lastName: "User", email });
+      if (email === defaultUser.email || email === "fail@example.com")
+        throw new Error("Invalid credentials");
+      setUser((prev) => ({
+        ...prev,
+        firstName: "userlogged",
+        lastName: "User",
+        email,
+      }));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -32,9 +39,9 @@ export const AuthProvider = ({ children }) => {
     clearError();
     try {
       await new Promise((res) => setTimeout(res, 100));
-      if (email === "yahya@yahoo.com")
+      if (email === defaultUser.email || email === "yahya@yahoo.com")
         throw new Error("Email already registered");
-      setUser({ firstName, lastName, email });
+      setUser((prev) => ({ ...prev, firstName, lastName, email }));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -42,15 +49,42 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => setUser(null);
+  const logout = () => setUser(defaultUser);
+
+  const toggleFavorite = (jobId) => {
+    setUser((prev) => {
+      const prevFavorites = Array.isArray(prev?.favorites)
+        ? prev.favorites
+        : [];
+      const exists = prevFavorites.includes(jobId);
+      const newFavorites = exists
+        ? prevFavorites.filter((id) => id !== jobId)
+        : [...prevFavorites, jobId];
+      return { ...prev, favorites: newFavorites };
+    });
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, error, login, signup, logout, clearError }}
+      value={{
+        user,
+        setUser,
+        loading,
+        error,
+        login,
+        signup,
+        logout,
+        clearError,
+        toggleFavorite,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+function UseAuth() {
+  return useContext(AuthContext);
+}
+
+export { AuthProvider, UseAuth };

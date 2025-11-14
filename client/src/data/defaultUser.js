@@ -1,8 +1,37 @@
 import { images } from "../assets";
+import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
 export const formatAddress = (address) => {
   return `${address.street} ${address.houseNumber}, ${address.city}, ${address.country}`;
 };
+
+// list of default skill display names
+const defaultSkillNames = [
+  "Adaptability",
+  "Active listening",
+  "Attention to detail",
+  "Collaboration",
+  "Communication",
+  "Conflict resolution",
+  "Creativity",
+  "Critical thinking",
+  "Customer Service",
+  "Data analysis",
+  "Decision making",
+  "Digital literacy",
+  "Emotional Intelligence",
+  "Goal setting",
+  "Initiative",
+  "Leadership",
+  "Negotiation",
+  "Problem-solving",
+  "Project management",
+  "Public speaking",
+  "Risk management",
+  "Strategic thinking",
+  "Teamwork",
+  "Technical literacy",
+];
 
 export const defaultUser = {
   firstName: "Guest",
@@ -17,31 +46,9 @@ export const defaultUser = {
     city: "Amsterdam",
     country: "Netherlands",
   },
-  skills: [
-    "Communication",
-    "Adaptability",
-    "Teamwork",
-    "Project management",
-    "Risk management",
-    "Leadership",
-    "Data analysis",
-    "Collaboration",
-    "Creativity",
-    "Emotional Intelligence",
-    "Critical thinking",
-    "Strategic thinking",
-    "Attention to detail",
-    "Decision making",
-    "Goal setting",
-    "Initiative",
-    "Active listening",
-    "Digital literacy",
-    "Technical literacy",
-    "Negotiation",
-    "Problem-solving",
-    "Conflict resolution",
-    "Customer Service",
-    "Public speaking",
-  ],
+  skills: defaultSkillNames.map((name) => {
+    const { skillRegex, normalizedSkill } = regexEndNormalizeSkill(name);
+    return { skill: name, normalizedSkill, skillRegex };
+  }),
   favorites: [],
 };

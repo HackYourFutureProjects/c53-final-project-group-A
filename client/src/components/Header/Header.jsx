@@ -2,11 +2,11 @@ import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { images, icons } from "../../assets";
-import { useAuth } from "../../context/AuthContext.jsx";
-
+import { UseAuth } from "../../context/AuthContext.jsx";
+import { defaultUser } from "../../data/defaultUser.js";
 //dropdown menu
 function UserMenu() {
-  const { user, logout } = useAuth();
+  const { user, logout } = UseAuth();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -70,7 +70,7 @@ function UserMenu() {
           >
             About
           </NavLink>
-          {user ? (
+          {user.email !== defaultUser.email ? (
             <NavLink
               to="/"
               className="user-item"
