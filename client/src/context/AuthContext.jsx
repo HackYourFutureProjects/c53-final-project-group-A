@@ -7,49 +7,106 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [token, setToken] = useState(null);
+  const [message, setMessage] = useState(null);
+
+  const API_URL = "http://localhost:3000/api/users";
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
+  const clearMessage = () => setMessage(null);
 
-  const login = async (email, _password) => {
-    void _password;
+  // -------------------- LOGIN --------------------
+
+  const login = async (email, password) => {
     setLoading(true);
     clearError();
+    clearMessage();
     try {
-      await new Promise((res) => setTimeout(res, 100)); // simulate API call
-      //Simulate success or failure
-      if (email === defaultUser.email || email === "fail@example.com")
-        throw new Error("Invalid credentials");
-      setUser((prev) => ({
-        ...prev,
-        firstName: "userlogged",
-        lastName: "User",
-        email,
-      }));
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(
+          errorData.msg || `Signup failed with status ${res.status}`,
+        );
+      }
+
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.msg || "Login failed");
+
+      // Set the user and token received from the server
+      setUser(data.user);
+      setToken(data.token);
+      return data.user;
     } catch (err) {
       setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+  // -------------------- SIGNUP --------------------
+
+  const signup = async (firstName, lastName, email, password) => {
+    setLoading(true);
+    clearError();
+    clearMessage();
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: { firstName, lastName, email, password },
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.msg || "Signup failed");
+
+      // Set the user and token received from the server
+      setUser(data.user);
+      setToken(data.token);
+      return data.user;
+    } catch (err) {
+      setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  const signup = async (firstName, lastName, email, _password) => {
-    void _password;
-    setLoading(true);
-    clearError();
+  // const logout = () => setUser(defaultUser);
+
+  // -------------------- LOGOUT --------------------
+  const logout = async () => {
     try {
-      await new Promise((res) => setTimeout(res, 100));
-      if (email === defaultUser.email || email === "yahya@yahoo.com")
-        throw new Error("Email already registered");
-      setUser((prev) => ({ ...prev, firstName, lastName, email }));
+      if (token) {
+        // Attempt to log out on the server side
+        await fetch(`${API_URL}/logout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+      setMessage("Logged out successfully!");
     } catch (err) {
-      setError(err.message);
+      console.error("Error logging out:", err);
+      // We clear the user and token state even if the server request fails
+      setMessage("Failed to log out from server, but local state cleared.");
     } finally {
-      setLoading(false);
+      setUser(defaultUser);
+      setToken(null);
+      clearError();
     }
   };
-
-  const logout = () => setUser(defaultUser);
 
   const toggleFavorite = (jobId) => {
     setUser((prev) => {
@@ -76,6 +133,10 @@ function AuthProvider({ children }) {
         logout,
         clearError,
         toggleFavorite,
+        token,
+        message,
+        setMessage,
+        clearMessage,
       }}
     >
       {children}
