@@ -8,6 +8,11 @@ function userReducer(state, action) {
     case "REGISTER":
     case "LOGIN":
       return { ...defaultUser, ...action.payload };
+    case "UPDATE_USER": {
+      const payload = action.payload || {};
+      const next = { ...state, ...payload };
+      return next;
+    }
     case "LOGOUT":
       return action.payload || defaultUser;
     case "ADD_SKILL": {
@@ -40,15 +45,7 @@ function userReducer(state, action) {
         : [...prevFavorites, jobId];
       return { ...state, favorites: newFavorites };
     }
-    case "UPDATE_USER": {
-      const payload = action.payload || {};
-      // Shallow merge; merge nested address specifically
-      const next = { ...state, ...payload };
-      if (payload.address) {
-        next.address = { ...(state.address || {}), ...payload.address };
-      }
-      return next;
-    }
+
     default:
       return state;
   }
