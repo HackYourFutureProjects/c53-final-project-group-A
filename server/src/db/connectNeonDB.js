@@ -42,10 +42,6 @@ const connectNeonDB = async () => {
   });
 
   try {
-    // `client.connect()` resolves when connected but does not return
-    // the client instance. Assign the created `client` to
-    // `connectedClient` after a successful connect so callers receive
-    // the active client instance.
     await client.connect();
     connectedClient = client;
   } catch (err) {
