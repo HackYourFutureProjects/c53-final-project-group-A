@@ -50,7 +50,7 @@ const testConnectionNeon = async () => {
       });
     }
   } catch (err) {
-    logError("✗ Query failed:", err.message);
+    logError(`✗ Query failed: ${err.message}`);
   } finally {
     await endConnection();
   }
