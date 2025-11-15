@@ -37,7 +37,7 @@ const connectNeonDB = async () => {
     client
       .end()
       .catch((e) =>
-        logError("Error during failed connection cleanup:" + e.message),
+        logError("Error during failed connection cleanup: " + e.message),
       );
   });
 
