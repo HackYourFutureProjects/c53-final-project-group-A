@@ -57,30 +57,24 @@ const connectNeonDB = async () => {
     });
   }
 
+  async function endConnection() {
+    // Prefer to close the active client instance (connectedClient if set,
+    // otherwise fallback to the client we created) so we don't leave sockets open.
+    const toClose = connectedClient || client;
+    if (toClose) {
+      try {
+        await toClose.end();
+      } catch (err) {
+        logError("Error closing database connection:" + err.message);
+      }
+    }
+  }
+
   return {
     error,
     connectedClient,
-    endConnection: async () => {
-      // Prefer to close the active client instance (connectedClient if set,
-      // otherwise fallback to the client we created) so we don't leave sockets open.
-      const toClose = connectedClient || client;
-      if (toClose) {
-        try {
-          await toClose.end();
-        } catch (err) {
-          logError("Error closing database connection:" + err.message);
-        }
-      }
-    },
+    endConnection,
   };
 };
-
-const { error, connectedClient, endConnection } = await connectNeonDB();
-console.log(
-  "connectNeonDB module loaded",
-  error,
-  connectedClient,
-  endConnection,
-);
 
 export default connectNeonDB;
