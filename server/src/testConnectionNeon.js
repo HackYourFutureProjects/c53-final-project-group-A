@@ -6,6 +6,7 @@ const testConnectionNeon = async () => {
 
   if (error) {
     logError("Connection failed: " + error.message);
+    await endConnection();
     return;
   }
 
