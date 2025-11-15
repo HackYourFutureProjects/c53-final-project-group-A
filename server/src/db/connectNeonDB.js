@@ -37,7 +37,7 @@ const connectNeonDB = async () => {
     return {
       error,
       connectedClient,
-      endConnection: () => logError("Postgres client error:", error.message),
+      endConnection: () => logError("Postgres client error: " + error.message),
     };
   });
 
