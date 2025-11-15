@@ -5,7 +5,7 @@ const testConnectionNeon = async () => {
   const { error, connectedClient, endConnection } = await connectNeonDB();
 
   if (error) {
-    logError("Connection failed:", error.message);
+    logError("Connection failed: " + error.message);
     return;
   }
 
