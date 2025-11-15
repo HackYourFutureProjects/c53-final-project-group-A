@@ -33,7 +33,7 @@ const connectNeonDB = async () => {
   });
 
   client.on("error", (err) => {
-    logError("Client emitted error:", err);
+    logError("Client emitted error: " + err.message);
     client
       .end()
       .catch((e) =>
