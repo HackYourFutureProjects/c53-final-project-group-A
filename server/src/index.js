@@ -21,7 +21,7 @@ async function connectWithRetry(connectFn, initialError) {
   // connectFn: function to call to attempt a connection (e.g. connectNeonDB)
   // initialError: the error returned from the first connection attempt
   let attempt = 1;
-  const maxAttempts = 5;
+  const maxAttempts = 4;
   const delayMs = 100; // milliseconds to wait between attempts
   let err = initialError;
 
