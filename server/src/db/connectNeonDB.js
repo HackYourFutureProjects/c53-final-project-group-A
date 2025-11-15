@@ -14,7 +14,7 @@ const connectNeonDB = async () => {
   let client = null;
   let connectedClient = null;
 
-  //validation check
+  // validation check
   if (!process.env.DATABASE_URL) {
     const errMessage =
       "DATABASE_URL is not defined in environment variables. Please check your .env file";
