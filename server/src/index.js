@@ -25,7 +25,7 @@ async function connectWithRetry(connectFn, initialError) {
   const delayMs = 100; // milliseconds to wait between attempts
   let err = initialError;
 
-  while (err && attempt <= maxAttempts) {
+  while (err && attempt < maxAttempts) {
     logInfo(
       "Attempting to connect to NeonDB (attempt " +
         attempt +
