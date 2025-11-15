@@ -11,7 +11,9 @@ const testConnectionNeon = async () => {
 
   try {
     const timeResult = await connectedClient.query("SELECT NOW()");
-    logInfo(`✓ Connection successful! Current DB Time: ${JSON.stringify(timeResult.rows[0])}`);
+    logInfo(
+      `✓ Connection successful! Current DB Time: ${JSON.stringify(timeResult.rows[0])}`,
+    );
 
     const tablesQuery = `
       SELECT table_name
