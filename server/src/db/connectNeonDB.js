@@ -33,11 +33,11 @@ const connectNeonDB = async () => {
   });
 
   client.on("error", (err) => {
-    logError("Client emitted error:", err);
+    logError("Client emitted error: " + err.message);
     client
       .end()
       .catch((e) =>
-        logError("Error during failed connection cleanup:" + e.message),
+        logError("Error during failed connection cleanup: " + e.message),
       );
   });
 
@@ -46,7 +46,7 @@ const connectNeonDB = async () => {
     connectedClient = client;
   } catch (err) {
     error = err;
-    logError("Database immediate connection rejection:" + err.message);
+    logError("Database immediate connection rejection: " + err.message);
     await client.end().catch((e) => {
       error = e;
       logError("Error during failed connection cleanup:" + e.message);
