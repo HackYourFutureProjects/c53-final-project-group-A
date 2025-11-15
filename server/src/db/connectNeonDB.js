@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
@@ -11,9 +11,10 @@ dotenv.config({ path: resolve(__dirname, "../../.env") });
 
 const connectNeonDB = async () => {
   let error = null;
+  let client = null;
   let connectedClient = null;
 
-  //validation check
+  // validation check
   if (!process.env.DATABASE_URL) {
     const errMessage =
       "DATABASE_URL is not defined in environment variables. Please check your .env file";
@@ -27,40 +28,49 @@ const connectNeonDB = async () => {
     };
   }
 
-  const client = new Client({
+  client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
   });
 
-  const endConnection = async () => {
-    if (connectedClient) {
-      try {
-        await connectedClient.end();
-        logInfo("Database connection closed");
-      } catch (err) {
-        logError("Error closing database connection:", err.message);
-      }
-    }
-  };
+  client.on("error", (err) => {
+    logError("Client emitted error: " + err.message);
+    client
+      .end()
+      .catch((e) =>
+        logError("Error during failed connection cleanup: " + e.message),
+      );
+  });
 
   try {
     await client.connect();
     connectedClient = client;
-    logInfo("Connected to Neon database successfully!");
   } catch (err) {
     error = err;
-    logError("Database connection error:", err.message);
-
-    await client
-      .end()
-      .catch((e) =>
-        logError("Error during failed connection cleanup:", e.message),
-      );
+    logError("Database immediate connection rejection: " + err.message);
+    await client.end().catch((e) => {
+      error = e;
+      logError("Error during failed connection cleanup: " + e.message);
+    });
   }
 
-  return { error, connectedClient, endConnection };
+  async function endConnection() {
+    // Prefer to close the active client instance (connectedClient if set,
+    // otherwise fallback to the client we created) so we don't leave sockets open.
+    const toClose = connectedClient || client;
+    if (toClose) {
+      try {
+        await toClose.end();
+      } catch (err) {
+        logError("Error closing database connection: " + err.message);
+      }
+    }
+  }
+
+  return {
+    error,
+    connectedClient,
+    endConnection,
+  };
 };
 
 export default connectNeonDB;
