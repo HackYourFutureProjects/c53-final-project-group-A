@@ -11,6 +11,7 @@ dotenv.config({ path: resolve(__dirname, "../../.env") });
 
 const connectNeonDB = async () => {
   let error = null;
+  let client = null;
   let connectedClient = null;
 
   //validation check
@@ -27,19 +28,31 @@ const connectNeonDB = async () => {
     };
   }
 
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-  });
+  // client = new Client({
+  //   connectionString: process.env.DATABASE_URL,
+  // });
 
-  client.on("error", (err) => {
-    // error = new Error(err && err.message ? err.message : String(err)); - to come back to this, if more simple approach fails
-    error = err;
+  // client.on("error", (err) => {
+  //   // error = new Error(err && err.message ? err.message : String(err)); - to come back to this, if more simple approach fails
+  //   error = err;
+  //   return {
+  //     error,
+  //     connectedClient,
+  //     endConnection: () => logError("Postgres client error:" + error.message),
+  //   };
+  // });
+
+  try {
+    client = new Client({
+      connectionString: process.env.DATABASE_URL,
+    });
+  } catch (error) {
     return {
       error,
       connectedClient,
-      endConnection: () => logError("Postgres client error:", error.message),
+      endConnection: () => logError("Postgres client error:" + error.message),
     };
-  });
+  }
 
   const endConnection = async () => {
     // Prefer to close the active client instance (connectedClient if set,
@@ -50,8 +63,7 @@ const connectNeonDB = async () => {
         await toClose.end();
         logInfo("Database connection closed");
       } catch (err) {
-        const _msg = err && err.message ? err.message : String(err);
-        logError("Error closing database connection:", _msg);
+        logError("Error closing database connection:" + _msg);
       }
     }
   };
@@ -62,12 +74,12 @@ const connectNeonDB = async () => {
     logInfo("Connected to Neon database successfully!");
   } catch (err) {
     error = err;
-    logError("Database connection error:", err.message);
+    logError("Database connection error:" + err.message);
 
     await client
       .end()
       .catch((e) =>
-        logError("Error during failed connection cleanup:", e.message),
+        logError("Error during failed connection cleanup:" + e.message),
       );
   }
 
