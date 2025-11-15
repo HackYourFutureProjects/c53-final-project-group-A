@@ -61,7 +61,7 @@ const connectNeonDB = async () => {
       try {
         await toClose.end();
       } catch (err) {
-        logError("Error closing database connection:" + err.message);
+        logError("Error closing database connection: " + err.message);
       }
     }
   }
