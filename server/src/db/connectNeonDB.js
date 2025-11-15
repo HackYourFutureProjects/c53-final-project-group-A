@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
