@@ -28,62 +28,46 @@ const connectNeonDB = async () => {
     };
   }
 
-  // client = new Client({
-  //   connectionString: process.env.DATABASE_URL,
-  // });
+  client = new Client({
+    connectionString: process.env.DATABASE_URL,
+  });
 
-  // client.on("error", (err) => {
-  //   // error = new Error(err && err.message ? err.message : String(err)); - to come back to this, if more simple approach fails
-  //   error = err;
-  //   return {
-  //     error,
-  //     connectedClient,
-  //     endConnection: () => logError("Postgres client error:" + error.message),
-  //   };
-  // });
-
-  try {
-    client = new Client({
-      connectionString: process.env.DATABASE_URL,
-    });
-  } catch (error) {
-    return {
-      error,
-      connectedClient,
-      endConnection: () => logError("Postgres client error: " + error.message),
-    };
-  }
-
-  const endConnection = async () => {
-    // Prefer to close the active client instance (connectedClient if set,
-    // otherwise fallback to the client we created) so we don't leave sockets open.
-    const toClose = connectedClient || client;
-    if (toClose) {
-      try {
-        await toClose.end();
-        logInfo("Database connection closed");
-      } catch (err) {
-        logError("Error closing database connection:" + err.message);
-      }
-    }
-  };
-
-  try {
-    await client.connect();
-    connectedClient = client;
-    logInfo("Connected to Neon database successfully!");
-  } catch (err) {
-    error = err;
-    logError("Database connection error:" + err.message);
-
-    await client
+  client.on("error", (err) => {
+    logError("Client emitted error:", err);
+    client
       .end()
       .catch((e) =>
         logError("Error during failed connection cleanup:" + e.message),
       );
+  });
+
+  try {
+    connectedClient = await client.connect();
+  } catch (err) {
+    error = err;
+    logError("Database immediate connection rejection:" + err.message);
+    await client.end().catch((e) => {
+      error = e;
+      logError("Error during failed connection cleanup:" + e.message);
+    });
   }
 
-  return { error, connectedClient, endConnection };
+  return {
+    error,
+    connectedClient,
+    endConnection: async () => {
+      // Prefer to close the active client instance (connectedClient if set,
+      // otherwise fallback to the client we created) so we don't leave sockets open.
+      const toClose = connectedClient || client;
+      if (toClose) {
+        try {
+          await toClose.end();
+        } catch (err) {
+          logError("Error closing database connection:" + err.message);
+        }
+      }
+    },
+  };
 };
 
 export default connectNeonDB;
