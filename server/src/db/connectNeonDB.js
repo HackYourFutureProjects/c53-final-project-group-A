@@ -42,7 +42,12 @@ const connectNeonDB = async () => {
   });
 
   try {
-    connectedClient = await client.connect();
+    // `client.connect()` resolves when connected but does not return
+    // the client instance. Assign the created `client` to
+    // `connectedClient` after a successful connect so callers receive
+    // the active client instance.
+    await client.connect();
+    connectedClient = client;
   } catch (err) {
     error = err;
     logError("Database immediate connection rejection:" + err.message);
@@ -69,5 +74,13 @@ const connectNeonDB = async () => {
     },
   };
 };
+
+const { error, connectedClient, endConnection } = await connectNeonDB();
+console.log(
+  "connectNeonDB module loaded",
+  error,
+  connectedClient,
+  endConnection,
+);
 
 export default connectNeonDB;
