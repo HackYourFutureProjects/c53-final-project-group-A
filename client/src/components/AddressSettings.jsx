@@ -1,18 +1,18 @@
-import { UseAuth } from "../context/AuthContext";
+import { UseUser } from "../context/UserContext";
 
 export default function AddressSettings({
-  saveProfileSettings,
+  handleSaveClick,
   streetInputRef,
   houseInputRef,
   cityInputRef,
   countryInputRef,
   clearAlert,
 }) {
-  const { user } = UseAuth();
+  const { user } = UseUser();
 
   function pressEnterKey(e) {
     if (e.key === "Enter") {
-      saveProfileSettings(
+      handleSaveClick(
         streetInputRef,
         houseInputRef,
         cityInputRef,

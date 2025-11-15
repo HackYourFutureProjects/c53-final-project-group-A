@@ -2,11 +2,11 @@ import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { images, icons } from "../../assets";
-import { UseAuth } from "../../context/AuthContext.jsx";
+import { UseUser } from "../../context/UserContext.jsx";
 import { defaultUser } from "../../data/defaultUser.js";
 //dropdown menu
 function UserMenu() {
-  const { user, logout } = UseAuth();
+  const { user, logout } = UseUser();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 

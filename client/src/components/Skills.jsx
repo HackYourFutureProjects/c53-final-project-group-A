@@ -1,4 +1,4 @@
-import { UseAuth } from "../context/AuthContext";
+import { UseUser } from "../context/UserContext";
 
 function normalizeDescription(str) {
   return " " + str.replace(/[^A-Za-z0-9+#]/g, " ").replace(/ +/g, " ") + " ";
@@ -16,7 +16,7 @@ function getSkillsInDescription(text, skills = []) {
 }
 
 export default function Skills({ item }) {
-  const { user } = UseAuth();
+  const { user } = UseUser();
   // user may be undefined during initial render; default to empty array
   const skills = user?.skills || [];
 

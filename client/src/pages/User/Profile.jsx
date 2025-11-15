@@ -1,14 +1,19 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
-import { UseAuth } from "../../context/AuthContext";
+import { UseUser } from "../../context/UserContext";
+import PopupForSave from "../../components/SuccessPopup/PopupForSave";
+import { defaultUser } from "../../data/defaultUser";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
+  const [showSavePopup, setShowSavePopup] = useState(false);
   const firstNameInputRef = useRef(null);
   const lastNameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -17,14 +22,19 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, setUser } = UseAuth();
+  const { user, dispatch } = UseUser();
 
   function handleClearAlert() {
     if (!alert.message) return;
     setAlert({ type: "", message: "" });
   }
 
-  function saveProfileSettings(
+  const handleLoginRedirect = () => {
+    setShowSavePopup(false);
+    navigate("/login", {});
+  };
+
+  function handleSaveClick(
     streetInputRef,
     houseInputRef,
     cityInputRef,
@@ -38,79 +48,73 @@ export default function Profile() {
     let house = houseInputRef.current;
     let city = cityInputRef.current;
     let country = countryInputRef.current;
-    if (
-      !firstName ||
-      !lastName ||
-      !password ||
-      !confirmPassword ||
-      !street ||
-      !house ||
-      !city ||
-      !country
-    )
+    if (!firstName || !lastName || !street || !house || !city || !country) {
       return;
-    // First and Last Name
-    firstName = cleanUpText(firstName.value || "");
-    lastName = cleanUpText(lastName.value || "");
-    console.log("Saving settings for:", firstName, lastName);
-    // Passwords
-    password = password.value || "";
-    confirmPassword = confirmPassword.value || "";
-    if (password || confirmPassword) {
-      console.log("password, confirmPassword", password, confirmPassword);
-      if (password === confirmPassword) {
-        console.log("Password updated.");
-      } else {
-        setAlert({ type: "error", message: "Passwords do not match." });
+    }
+    if (user && user.email !== defaultUser.email) {
+      // First and Last Name
+      firstName = cleanUpText(firstName.value || "");
+      lastName = cleanUpText(lastName.value || "");
+      console.log("Saving settings for:", firstName, lastName);
+      // Passwords
+      password = password.value || "";
+      confirmPassword = confirmPassword.value || "";
+      if (password || confirmPassword) {
+        console.log("password, confirmPassword", password, confirmPassword);
+        if (password === confirmPassword) {
+          console.log("Password updated.");
+        } else {
+          setAlert({ type: "error", message: "Passwords do not match." });
+          return;
+        }
+      }
+      // Address
+      street = cleanUpText(street.value || "");
+      house = cleanUpText(house.value || "");
+      city = cleanUpText(city.value || "");
+      country = cleanUpText(country.value || "");
+      const streetValidationError = validateAddressTextInputs({
+        text: street,
+      });
+      const cityValidationError = validateAddressTextInputs({
+        text: city,
+        type: "city",
+      });
+      const countryValidationError = validateAddressTextInputs({
+        text: country,
+        type: "country",
+      });
+      const houseValidationError = validateHouseNoInput({ text: house });
+      if (
+        streetValidationError ||
+        cityValidationError ||
+        countryValidationError ||
+        houseValidationError
+      ) {
+        setAlert(
+          streetValidationError ||
+            cityValidationError ||
+            countryValidationError ||
+            houseValidationError,
+        );
         return;
       }
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          firstName,
+          lastName,
+          address: { street, houseNumber: house, city, country },
+        },
+      });
+    } else {
+      setShowSavePopup(true);
     }
-    // Address
-    street = cleanUpText(street.value || "");
-    house = cleanUpText(house.value || "");
-    city = cleanUpText(city.value || "");
-    country = cleanUpText(country.value || "");
-    const streetValidationError = validateAddressTextInputs({
-      text: street,
-    });
-    const cityValidationError = validateAddressTextInputs({
-      text: city,
-      type: "city",
-    });
-    const countryValidationError = validateAddressTextInputs({
-      text: country,
-      type: "country",
-    });
-    const houseValidationError = validateHouseNoInput({ text: house });
-    if (
-      streetValidationError ||
-      cityValidationError ||
-      countryValidationError ||
-      houseValidationError
-    ) {
-      setAlert(
-        streetValidationError ||
-          cityValidationError ||
-          countryValidationError ||
-          houseValidationError,
-      );
-      return;
-    }
-    setUser((prev) => {
-      const newUser = { ...prev };
-      newUser.address = {
-        ...(newUser.address || {}),
-        street,
-        houseNumber: house,
-        city,
-        country,
-      };
-      return newUser;
-    });
   }
+
   function pressEnterKey(e) {
     if (e.key === "Enter")
-      saveProfileSettings(
+      handleSaveClick(
         streetInputRef,
         houseInputRef,
         cityInputRef,
@@ -164,7 +168,7 @@ export default function Profile() {
                 <input
                   ref={firstNameInputRef}
                   type="text"
-                  defaultValue={user.name}
+                  defaultValue={user.firstName}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
                   onChange={handleClearAlert}
@@ -177,7 +181,7 @@ export default function Profile() {
                 <input
                   ref={lastNameInputRef}
                   type="text"
-                  defaultValue={user.name}
+                  defaultValue={user.lastName}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onKeyDown={pressEnterKey}
                   onChange={handleClearAlert}
@@ -226,7 +230,7 @@ export default function Profile() {
       {/* Settings Section */}
       <h2 className="text-lg font-semibold text-gray-900 mb-6">Settings</h2>
       <AddressSettings
-        saveProfileSettings={saveProfileSettings}
+        handleSaveClick={handleSaveClick}
         streetInputRef={streetInputRef}
         houseInputRef={houseInputRef}
         cityInputRef={cityInputRef}
@@ -245,7 +249,7 @@ export default function Profile() {
           <button
             id="saveBtn"
             onClick={() =>
-              saveProfileSettings(
+              handleSaveClick(
                 streetInputRef,
                 houseInputRef,
                 cityInputRef,
@@ -256,6 +260,13 @@ export default function Profile() {
           >
             Save
           </button>
+          {/* Popup for saving settings */}
+          {showSavePopup && (
+            <PopupForSave
+              handleLoginRedirect={handleLoginRedirect}
+              setShowSavePopup={setShowSavePopup}
+            />
+          )}
         </div>
       </div>
       <hr className="border-gray-300 mb-8" />

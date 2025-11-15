@@ -1,25 +1,20 @@
 import Skills from "../Skills";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { UseAuth } from "../../context/AuthContext";
+import { UseUser } from "../../context/UserContext";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
 
-export default function JobCard({
-  job,
-  onFavoriteToggle,
-  // isFavoritesPage = false,
-  onApplyClick,
-}) {
+export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
-  const { user } = UseAuth();
+  const { user, dispatch } = UseUser();
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
-  const [showPopup, setShowPopup] = useState(false);
+  const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
   const handleApplyClick = (e) => {
@@ -32,11 +27,11 @@ export default function JobCard({
       return;
     }
 
-    setShowPopup(true);
+    setShowApplyPopup(true);
   };
 
   const handleLoginRedirect = () => {
-    setShowPopup(false);
+    setShowApplyPopup(false);
     setShowFavoritesPopup(false);
     navigate("/login", {});
   };
@@ -45,7 +40,7 @@ export default function JobCard({
     e.stopPropagation();
 
     if (user && user.email !== defaultUser.email) {
-      onFavoriteToggle(job.id);
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id });
     } else {
       setShowFavoritesPopup(true);
     }
@@ -97,8 +92,8 @@ export default function JobCard({
             </div>
 
             <p className="job-description">
-              {job.linkedin_org_description
-                ? job.linkedin_org_description.substring(0, 150) + "..."
+              {job.description_text
+                ? job.description_text.substring(0, 150) + "..."
                 : "No description available."}
             </p>
 
@@ -116,10 +111,10 @@ export default function JobCard({
           </div>
         </div>
       </div>
-      {showPopup && (
+      {showApplyPopup && (
         <PopupForMoreAndApply
           handleLoginRedirect={handleLoginRedirect}
-          setShowPopup={setShowPopup}
+          setShowPopup={setShowApplyPopup}
         />
       )}
       {showFavoritesPopup && (
