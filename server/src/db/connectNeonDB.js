@@ -49,7 +49,7 @@ const connectNeonDB = async () => {
     logError("Database immediate connection rejection: " + err.message);
     await client.end().catch((e) => {
       error = e;
-      logError("Error during failed connection cleanup:" + e.message);
+      logError("Error during failed connection cleanup: " + e.message);
     });
   }
 
