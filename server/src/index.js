@@ -5,7 +5,8 @@ dotenv.config();
 
 import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
-import connectDB from "./db/connectDB.js";
+// import connectDB from "./db/connectDB.js";
+import connectNeonDB from "./db/connectNeonDB.js";
 import testRouter from "./testRouter.js";
 
 // The environment should set the port
@@ -16,16 +17,62 @@ if (port == null) {
   logError(new Error("Cannot find a PORT number, did you create a .env file?"));
 }
 
-const startServer = async () => {
+async function connectWithRetry(connectFn, initialError) {
+  // connectFn: function to call to attempt a connection (e.g. connectNeonDB)
+  // initialError: the error returned from the first connection attempt
+  let attempt = 1;
+  const maxAttempts = 5;
+  const delayMs = 100; // milliseconds to wait between attempts
+  let err = initialError;
+
+  while (err && attempt <= maxAttempts) {
+    logInfo(
+      "Attempting to connect to NeonDB (attempt " +
+        attempt +
+        "/" +
+        maxAttempts +
+        ")",
+    );
+
+    // Try to connect using the provided function
+    const { error } = await connectFn();
+    err = error;
+
+    if (err) {
+      // If we'll attempt again, wait for delayMs before retrying
+      if (attempt < maxAttempts) {
+        logInfo(`Connection failed, retrying in ${delayMs}ms...`);
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+      attempt++;
+    }
+  }
+
+  if (err) {
+    // All attempts exhausted
+    logError(
+      new Error(`Failed to connect to NeonDB after ${maxAttempts} attempts`),
+    );
+  }
+
+  return { error: err };
+}
+
+async function startServer() {
   try {
-    await connectDB();
+    const { error } = await connectNeonDB();
+    // Try to connect to the NeonDB with retries in case the DB isn't ready yet
+    if (error) {
+      await connectWithRetry(connectNeonDB, error);
+    }
+
     app.listen(port, () => {
       logInfo(`Server started on port ${port}`);
     });
   } catch (error) {
     logError(error);
   }
-};
+}
 
 /****** Host our client code for Heroku *****/
 /**

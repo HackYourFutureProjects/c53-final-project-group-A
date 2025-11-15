@@ -29,18 +29,29 @@ const connectNeonDB = async () => {
 
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
+  });
+
+  client.on("error", (err) => {
+    // error = new Error(err && err.message ? err.message : String(err)); - to come back to this, if more simple approach fails
+    error = err;
+    return {
+      error,
+      connectedClient,
+      endConnection: () => logError("Postgres client error:", error.message),
+    };
   });
 
   const endConnection = async () => {
-    if (connectedClient) {
+    // Prefer to close the active client instance (connectedClient if set,
+    // otherwise fallback to the client we created) so we don't leave sockets open.
+    const toClose = connectedClient || client;
+    if (toClose) {
       try {
-        await connectedClient.end();
+        await toClose.end();
         logInfo("Database connection closed");
       } catch (err) {
-        logError("Error closing database connection:", err.message);
+        const _msg = err && err.message ? err.message : String(err);
+        logError("Error closing database connection:", _msg);
       }
     }
   };
