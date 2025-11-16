@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import connectNeonDB from "../db/connectNeonDB.js";
-import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 
 import validationErrorMessage from "../util/validationErrorMessage.js";
@@ -9,9 +8,8 @@ import { logError } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
 
-dotenv.config();
-
 // JWT Configuration
+
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
