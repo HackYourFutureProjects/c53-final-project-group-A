@@ -8,12 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 // Create an express server
 const app = express();
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 // Tell express to use the json middleware
 app.use(express.json());
