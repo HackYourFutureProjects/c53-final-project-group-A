@@ -69,10 +69,11 @@ export const createUser = async (req, res) => {
     const newUserId = uuidv4();
     const hashedPassword = await bcrypt.hash(user.password, 12); // Insert user into DB using parameterized query for SQL injection prevention
 
+    // Do not return the password hash
     const result = await client.query(
       `INSERT INTO users (user_id, "firstname", "lastname", email, password)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING user_id, "firstname", "lastname", email`, // Do not return the password hash
+      RETURNING user_id, "firstname", "lastname", email`,
       [newUserId, user.firstname, user.lastname, user.email, hashedPassword],
     );
 
