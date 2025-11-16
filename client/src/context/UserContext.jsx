@@ -141,8 +141,6 @@ function UserContextProvider({ children }) {
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.msg || "Signup failed");
-      if (data.user.email === email)
-        throw new Error("Email already registered");
       // Set the user and token received from the server
       dispatch({ type: "REGISTER", payload: data.user });
       setToken(data.token);
