@@ -60,7 +60,7 @@ export default function SkillsSettings() {
         <button
           id="addSkillBtn"
           onClick={addSkill}
-          className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition"
+          className="px-4 py-1 bg-black text-white rounded hover:bg-gray-800 transition font-medium"
         >
           Add
         </button>

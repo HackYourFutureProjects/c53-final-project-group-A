@@ -16,7 +16,8 @@ export default function Profile() {
   const [showSavePopup, setShowSavePopup] = useState(false);
   const firstNameInputRef = useRef(null);
   const lastNameInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
+  const currentPasswordInputRef = useRef(null);
+  const newPasswordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
   const streetInputRef = useRef(null);
   const houseInputRef = useRef(null);
@@ -42,7 +43,8 @@ export default function Profile() {
   ) {
     let firstName = firstNameInputRef.current;
     let lastName = lastNameInputRef.current;
-    let password = passwordInputRef.current;
+    let currentPassword = currentPasswordInputRef.current;
+    let newPassword = newPasswordInputRef.current;
     let confirmPassword = confirmPasswordInputRef.current;
     let street = streetInputRef.current;
     let house = houseInputRef.current;
@@ -57,11 +59,15 @@ export default function Profile() {
       lastName = cleanUpText(lastName.value || "");
       console.log("Saving settings for:", firstName, lastName);
       // Passwords
-      password = password.value || "";
+      newPassword = newPassword.value || "";
       confirmPassword = confirmPassword.value || "";
-      if (password || confirmPassword) {
-        console.log("password, confirmPassword", password, confirmPassword);
-        if (password === confirmPassword) {
+      if (currentPassword || newPassword || confirmPassword) {
+        console.log(
+          "newPassword, confirmPassword",
+          newPassword,
+          confirmPassword,
+        );
+        if (newPassword === confirmPassword) {
           console.log("Password updated.");
         } else {
           setAlert({ type: "error", message: "Passwords do not match." });
@@ -128,73 +134,95 @@ export default function Profile() {
         Profile
       </h1>
       {/* <!-- Profile Section with Avatar and Name --> */}
-      <div className="mb-8">
-        <div className="flex items-start space-x-4">
-          {/* <!-- Avatar with the editing/updating button --> */}
-          <div className="relative">
-            <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
-              <img
-                src={user.avatar}
-                alt={user.name}
-                className="w-20 h-20 object-cover"
+      <div className="flex items-start space-x-4">
+        {/* <!-- Avatar with the editing/updating button --> */}
+        <div className="relative">
+          <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
+            <img
+              src={user.avatar}
+              alt={user.name}
+              className="w-20 h-20 object-cover"
+            />
+          </div>
+          <button className="absolute bottom-0 right-0 w-6 h-6 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50">
+            <svg
+              className="w-3 h-3 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div className="flex-grow">
+          {/* <!-- First and Last Name --> */}
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            Name
+          </label>
+          <div className="grid grid-cols-2 gap-4 mb-3">
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">
+                First Name
+              </label>
+              <input
+                ref={firstNameInputRef}
+                type="text"
+                defaultValue={user.firstName}
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onKeyDown={pressEnterKey}
+                onChange={handleClearAlert}
               />
             </div>
-            <button className="absolute bottom-0 right-0 w-6 h-6 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50">
-              <svg
-                className="w-3 h-3 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          <div className="flex-grow">
-            {/* <!-- First and Last Name --> */}
-            <label className="block text-sm font-medium text-gray-900 mb-2">
-              Name
-            </label>
-            <div className="grid grid-cols-2 gap-4 mb-3">
-              <div>
-                <label className="block text-xs text-gray-600 mb-1">
-                  First Name
-                </label>
-                <input
-                  ref={firstNameInputRef}
-                  type="text"
-                  defaultValue={user.firstName}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onKeyDown={pressEnterKey}
-                  onChange={handleClearAlert}
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-gray-600 mb-1">
-                  Last Name
-                </label>
-                <input
-                  ref={lastNameInputRef}
-                  type="text"
-                  defaultValue={user.lastName}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onKeyDown={pressEnterKey}
-                  onChange={handleClearAlert}
-                />
-              </div>
+            <div>
+              <label className="block text-xs text-gray-600 mb-1">
+                Last Name
+              </label>
+              <input
+                ref={lastNameInputRef}
+                type="text"
+                defaultValue={user.lastName}
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onKeyDown={pressEnterKey}
+                onChange={handleClearAlert}
+              />
             </div>
           </div>
         </div>
       </div>
-
+      <AddressSettings
+        handleSaveClick={handleSaveClick}
+        streetInputRef={streetInputRef}
+        houseInputRef={houseInputRef}
+        cityInputRef={cityInputRef}
+        countryInputRef={countryInputRef}
+        clearAlert={handleClearAlert}
+      />
+      <SkillsSettings />
       <label className="block text-sm font-medium text-gray-900 mb-3">
-        Password
+        Change Password
       </label>
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        <div>
+          <label className="block text-xs text-gray-600 mb-1">
+            Type Your Current Password
+          </label>
+          <input
+            id="currentPasswordInput"
+            ref={currentPasswordInputRef}
+            type="password"
+            placeholder="Type 8 characters or more"
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={pressEnterKey}
+            onChange={handleClearAlert}
+          />
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
           <label className="block text-xs text-gray-600 mb-1">
@@ -202,7 +230,7 @@ export default function Profile() {
           </label>
           <input
             id="newPasswordInput"
-            ref={passwordInputRef}
+            ref={newPasswordInputRef}
             type="password"
             placeholder="Type 8 characters or more"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -225,19 +253,6 @@ export default function Profile() {
           />
         </div>
       </div>
-
-      <hr className="border-gray-300 mb-8" />
-      {/* Settings Section */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">Settings</h2>
-      <AddressSettings
-        handleSaveClick={handleSaveClick}
-        streetInputRef={streetInputRef}
-        houseInputRef={houseInputRef}
-        cityInputRef={cityInputRef}
-        countryInputRef={countryInputRef}
-        clearAlert={handleClearAlert}
-      />
-      <SkillsSettings />
       {/* <!-- Save Button --> */}
       <div className="flex items-center justify-end mb-8 space-x-4">
         {alert.message && (
@@ -256,7 +271,7 @@ export default function Profile() {
                 countryInputRef,
               )
             }
-            className="px-8 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
+            className="bg-blue-500 text-white text-2xl px-6 py-3 rounded hover:bg-blue-600 transition font-medium"
           >
             Save
           </button>
@@ -270,10 +285,7 @@ export default function Profile() {
         </div>
       </div>
       <hr className="border-gray-300 mb-8" />
-      {/* <!-- Profile Management Section --> */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">
-        Profile management
-      </h2>
+      {/* <!-- Profile Deletion Section --> */}
       <div className="flex items-start justify-between">
         <div>
           <h3 className="font-medium text-gray-900 mb-1">Delete Profile</h3>
@@ -281,7 +293,7 @@ export default function Profile() {
             Permanently delete your account and data.
           </p>
         </div>
-        <button className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition font-medium">
+        <button className="px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium">
           Delete Profile
         </button>
       </div>
