@@ -53,50 +53,101 @@ function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [token, setToken] = useState(null);
+  const [message, setMessage] = useState(null);
+  const API_URL = "http://localhost:3000/api/users";
 
+  // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
-
-  const login = async (email, _password) => {
-    void _password;
+  const clearMessage = () => setMessage(null);
+  // -------------------- LOGIN --------------------
+  async function login(email, password) {
     setLoading(true);
     clearError();
+    clearMessage();
+    if (email === defaultUser.email) throw new Error("Invalid credentials");
     try {
-      await new Promise((res) => setTimeout(res, 100)); // simulate API call
-      //Simulate success or failure
-      if (email === defaultUser.email || email === "fail@example.com")
-        throw new Error("Invalid credentials");
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(
+          errorData.msg || `Signup failed with status ${res.status}`,
+        );
+      }
+      const data = await res.json();
+      if (!data.success) throw new Error(data.msg || "Login failed");
+      // Set the user and token received from the server
       dispatch({
         type: "LOGIN",
-        payload: { firstName: "userlogged", lastName: "User", email },
+        payload: data.user,
       });
+      setToken(data.token);
+      return data.user;
     } catch (err) {
       setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
-  };
-
-  const signup = async (firstName, lastName, email, _password) => {
-    void _password;
+  }
+  // -------------------- SIGNUP --------------------
+  async function signup(firstName, lastName, email, password) {
+    if (email === defaultUser.email)
+      throw new Error("Email already registered");
     setLoading(true);
     clearError();
+    clearMessage();
     try {
-      await new Promise((res) => setTimeout(res, 100));
-      if (email === defaultUser.email || email === "yahya@yahoo.com")
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: { firstName, lastName, email, password },
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.msg || "Signup failed");
+      if (data.user.email === email)
         throw new Error("Email already registered");
-      dispatch({ type: "REGISTER", payload: { firstName, lastName, email } });
+      // Set the user and token received from the server
+      dispatch({ type: "REGISTER", payload: data.user });
+      setToken(data.token);
+      return data.user;
     } catch (err) {
       setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
-  };
-
-  const logout = () => dispatch({ type: "LOGOUT", payload: defaultUser });
-
-  const toggleFavorite = (jobId) => {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: jobId });
-  };
+  }
+  // -------------------- LOGOUT --------------------
+  async function logout() {
+    try {
+      if (token) {
+        // Attempt to log out on the server side
+        await fetch(`${API_URL}/logout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+      setMessage("Logged out successfully!");
+    } catch (err) {
+      console.error("Error logging out:", err);
+      // We clear the user and token state even if the server request fails
+      setMessage("Failed to log out from server, but local state cleared.");
+    } finally {
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+      setToken(null);
+      clearError();
+    }
+  }
 
   return (
     <UserContext.Provider
@@ -109,7 +160,10 @@ function UserContextProvider({ children }) {
         signup,
         logout,
         clearError,
-        toggleFavorite,
+        token,
+        message,
+        setMessage,
+        clearMessage,
       }}
     >
       {children}

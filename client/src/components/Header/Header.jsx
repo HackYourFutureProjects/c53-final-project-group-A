@@ -39,9 +39,7 @@ function UserMenu() {
           className="user-avatar"
         />
         <span className="divider"></span>
-        <span className="user-name">
-          {user ? user.first_name || user?.firstName : "Guest"}
-        </span>
+        <span className="user-name">{user && user.firstName}</span>
 
         <img
           src={icons.arrow}
@@ -103,7 +101,7 @@ function UserMenu() {
 }
 
 export default function Header() {
-  const { message, clearMessage } = UseAuth();
+  const { message, clearMessage } = UseUser();
 
   useEffect(() => {
     if (message) {
