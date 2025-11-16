@@ -12,15 +12,17 @@ export const verifyToken = (req, res, next) => {
 
     if (!token) {
       return res.status(401).json({ success: false, msg: "No token provided" });
-    } // Check if the token has been revoked/blacklisted
+    }
 
+    // Verify the token's signature and expiration time
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    // Check if the token has been revoked/blacklisted
     if (blacklistedTokens.includes(token)) {
       return res
         .status(401)
         .json({ success: false, msg: "Token expired or logged out" });
-    } // Verify the token's signature and expiration time
-
-    const decoded = jwt.verify(token, JWT_SECRET);
+    }
     req.user = decoded;
     next(); // Token is valid, continue to the next middleware/handler
   } catch (err) {
