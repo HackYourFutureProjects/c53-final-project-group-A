@@ -119,7 +119,7 @@ export const loginUser = async (req, res) => {
 
     if (errors.length > 0) {
       // Using validationErrorMessage for 400 response
-      if (endConnection) await endConnection();
+      // Connection will be closed in finally block
       return res
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errors) });
