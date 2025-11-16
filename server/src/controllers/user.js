@@ -129,15 +129,14 @@ export const loginUser = async (req, res) => {
       [email],
     );
 
-    if (result.rows.length === 0)
-      return res.status(401).json({ success: false, msg: "User not found" });
+    if (
+      result.rows.length === 0 ||
+      !await bcrypt.compare(password, result.rows[0]?.password)
+    ) {
+      return res.status(401).json({ success: false, msg: "Invalid credentials" });
+    }
 
-    const user = result.rows[0]; // Compare provided password with the stored bcrypt hash
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(401).json({ success: false, msg: "Invalid password" }); // Generate JWT
-
+    const user = result.rows[0];
     const token = jwt.sign(
       { id: user.user_id, email: user.email },
       JWT_SECRET,
