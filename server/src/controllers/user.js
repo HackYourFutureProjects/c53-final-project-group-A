@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import validationErrorMessage from "../util/validationErrorMessage.js";
 import { logError } from "../util/logging.js";
 import validateAllowedFields from "../util/validateAllowedFields.js";
+import validateEmail from "../util/validateEmail.js";
+import validatePassword from "../util/validatePassword.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
 
 // JWT Configuration
@@ -52,7 +54,24 @@ export const createUser = async (req, res) => {
         .json({ success: false, msg: validationErrorMessage(errors) });
     }
 
-    // 3. Check if email already exists
+    // 3. Validate email format
+    if (!validateEmail(user.email)) {
+      return res.status(400).json({
+        success: false,
+        msg: validationErrorMessage(["Invalid email format"]),
+      });
+    }
+
+    // 4. Validate password requirements
+    const passwordError = validatePassword(user.password);
+    if (passwordError) {
+      return res.status(400).json({
+        success: false,
+        msg: validationErrorMessage([passwordError]),
+      });
+    }
+
+    // 5. Check if email already exists
     const checkEmail = await client.query(
       "SELECT user_id FROM users WHERE email = $1",
       [user.email],
@@ -108,12 +127,26 @@ export const loginUser = async (req, res) => {
   const { connectedClient: client, endConnection } = await connectNeonDB();
 
   try {
-    const { email = "", password = "" } = req.body || {};
+    const loginData = req.body || {};
     const errors = [];
 
-    // Note: You may want to implement validateAllowedFields here too,
-    // but the current request body is destructured directly.
+    // 1. Check for disallowed fields (Sanitization/Security)
+    const disallowedFieldsError = validateAllowedFields(loginData, [
+      "email",
+      "password",
+    ]);
 
+    if (disallowedFieldsError) {
+      if (endConnection) await endConnection();
+      return res.status(400).json({
+        success: false,
+        msg: validationErrorMessage([disallowedFieldsError]),
+      });
+    }
+
+    const { email = "", password = "" } = loginData;
+
+    // 2. Validate required fields
     if (!email) errors.push("Email is required");
     if (!password) errors.push("Password is required");
 
@@ -123,6 +156,25 @@ export const loginUser = async (req, res) => {
       return res
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errors) });
+    }
+
+    // 3. Validate email format
+    if (!validateEmail(email)) {
+      if (endConnection) await endConnection();
+      return res.status(400).json({
+        success: false,
+        msg: validationErrorMessage(["Invalid email format"]),
+      });
+    }
+
+    // 4. Validate password requirements
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      if (endConnection) await endConnection();
+      return res.status(400).json({
+        success: false,
+        msg: validationErrorMessage([passwordError]),
+      });
     }
 
     const result = await client.query(
