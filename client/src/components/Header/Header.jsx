@@ -39,7 +39,7 @@ function UserMenu() {
           className="user-avatar"
         />
         <span className="divider"></span>
-        <span className="user-name">{user && user.firstName}</span>
+        <span className="user-name">{user && user.firstname}</span>
 
         <img
           src={icons.arrow}

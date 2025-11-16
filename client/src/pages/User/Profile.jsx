@@ -14,8 +14,8 @@ export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [showSavePopup, setShowSavePopup] = useState(false);
-  const firstNameInputRef = useRef(null);
-  const lastNameInputRef = useRef(null);
+  const firstnameInputRef = useRef(null);
+  const lastnameInputRef = useRef(null);
   const currentPasswordInputRef = useRef(null);
   const newPasswordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
@@ -41,8 +41,8 @@ export default function Profile() {
     cityInputRef,
     countryInputRef,
   ) {
-    let firstName = firstNameInputRef.current;
-    let lastName = lastNameInputRef.current;
+    let firstname = firstnameInputRef.current;
+    let lastname = lastnameInputRef.current;
     let currentPassword = currentPasswordInputRef.current;
     let newPassword = newPasswordInputRef.current;
     let confirmPassword = confirmPasswordInputRef.current;
@@ -50,14 +50,14 @@ export default function Profile() {
     let house = houseInputRef.current;
     let city = cityInputRef.current;
     let country = countryInputRef.current;
-    if (!firstName || !lastName || !street || !house || !city || !country) {
+    if (!firstname || !lastname || !street || !house || !city || !country) {
       return;
     }
     if (user && user.email !== defaultUser.email) {
       // First and Last Name
-      firstName = cleanUpText(firstName.value || "");
-      lastName = cleanUpText(lastName.value || "");
-      console.log("Saving settings for:", firstName, lastName);
+      firstname = cleanUpText(firstname.value || "");
+      lastname = cleanUpText(lastname.value || "");
+      console.log("Saving settings for:", firstname, lastname);
       // Passwords
       newPassword = newPassword.value || "";
       confirmPassword = confirmPassword.value || "";
@@ -108,8 +108,8 @@ export default function Profile() {
       dispatch({
         type: "UPDATE_USER",
         payload: {
-          firstName,
-          lastName,
+          firstname,
+          lastname,
           address: { street, houseNumber: house, city, country },
         },
       });
@@ -171,9 +171,9 @@ export default function Profile() {
                 First Name
               </label>
               <input
-                ref={firstNameInputRef}
+                ref={firstnameInputRef}
                 type="text"
-                defaultValue={user.firstName}
+                defaultValue={user.firstname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -184,9 +184,9 @@ export default function Profile() {
                 Last Name
               </label>
               <input
-                ref={lastNameInputRef}
+                ref={lastnameInputRef}
                 type="text"
-                defaultValue={user.lastName}
+                defaultValue={user.lastname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}

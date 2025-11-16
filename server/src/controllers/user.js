@@ -25,8 +25,8 @@ export const createUser = async (req, res) => {
 
     // 1. Check for disallowed fields (Sanitization/Security)
     const disallowedFieldsError = validateAllowedFields(user, [
-      "firstName",
-      "lastName",
+      "firstname",
+      "lastname",
       "email",
       "password",
     ]);
@@ -40,8 +40,8 @@ export const createUser = async (req, res) => {
     }
 
     // 2. Validate required fields
-    if (!user.firstName) errors.push("First name is required");
-    if (!user.lastName) errors.push("Last name is required");
+    if (!user.firstname) errors.push("First name is required");
+    if (!user.lastname) errors.push("Last name is required");
     if (!user.email) errors.push("Email is required");
     if (!user.password) errors.push("Password is required");
 
@@ -70,10 +70,10 @@ export const createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(user.password, 12); // Insert user into DB using parameterized query for SQL injection prevention
 
     const result = await client.query(
-      `INSERT INTO users (user_id, "firstName", "lastName", email, password)
+      `INSERT INTO users (user_id, "firstname", "lastname", email, password)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING user_id, "firstName", "lastName", email`, // Do not return the password hash
-      [newUserId, user.firstName, user.lastName, user.email, hashedPassword],
+      RETURNING user_id, "firstname", "lastname", email`, // Do not return the password hash
+      [newUserId, user.firstname, user.lastname, user.email, hashedPassword],
     );
 
     const newUser = result.rows[0]; // Generate JWT (Access Token)
@@ -125,7 +125,7 @@ export const loginUser = async (req, res) => {
     }
 
     const result = await client.query(
-      "SELECT user_id, email, password, 'firstName', 'lastName' FROM users WHERE email = $1",
+      "SELECT user_id, email, password, firstname, lastname FROM users WHERE email = $1",
       [email],
     );
 

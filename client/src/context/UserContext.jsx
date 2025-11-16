@@ -95,7 +95,7 @@ function UserContextProvider({ children }) {
     }
   }
   // -------------------- SIGNUP --------------------
-  async function signup(firstName, lastName, email, password) {
+  async function signup(firstname, lastname, email, password) {
     if (email === defaultUser.email)
       throw new Error("Email already registered");
     setLoading(true);
@@ -106,7 +106,7 @@ function UserContextProvider({ children }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user: { firstName, lastName, email, password },
+          user: { firstname, lastname, email, password },
         }),
       });
       const data = await res.json();
