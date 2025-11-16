@@ -92,7 +92,10 @@ export const createUser = async (req, res) => {
   } catch (err) {
     // Using logError for 500 response
     logError(err);
-    res.status(500).json({ success: false, msg: "Unable to create user" });
+    res.status(500).json({
+      success: false,
+      msg: "Sorry, there's an error with the DB. Unable to create user",
+    });
   } finally {
     // 💡 Crucial: Ensure the connection is closed regardless of success or failure.
     if (endConnection) await endConnection();
@@ -151,7 +154,10 @@ export const loginUser = async (req, res) => {
   } catch (err) {
     // Using logError for 500 response
     logError(err);
-    res.status(500).json({ success: false, msg: "Server error" });
+    res.status(500).json({
+      success: false,
+      msg: "Sorry, there's an error with the DB. Unable to login user",
+    });
   } finally {
     // 💡 Crucial: Ensure the connection is closed regardless of success or failure.
     if (endConnection) await endConnection();
