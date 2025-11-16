@@ -4,9 +4,7 @@ import jobsRouter from "./routes/job.js";
 
 import cors from "cors";
 
-
 // Create an express server
-const app = express();
 const app = express();
 app.use(cors());
 
