@@ -1,4 +1,10 @@
-import { createContext, useReducer, useState, useContext } from "react";
+import {
+  createContext,
+  useReducer,
+  useState,
+  useContext,
+  useEffect,
+} from "react";
 import { defaultUser } from "../data/defaultUser";
 
 const UserContext = createContext();
@@ -53,9 +59,29 @@ function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() => {
+    // Initialize token from localStorage on mount
+    return localStorage.getItem("authToken") || null;
+  });
   const [message, setMessage] = useState(null);
   const API_URL = "http://localhost:3000/api/users";
+
+  // Initialize user from localStorage on mount if token exists
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken");
+    const storedUser = localStorage.getItem("authUser");
+    if (storedToken && storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        dispatch({ type: "LOGIN", payload: parsedUser });
+      } catch (err) {
+        console.error("Error parsing stored user:", err);
+        // Clear invalid data
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("authUser");
+      }
+    }
+  }, []);
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
@@ -86,6 +112,9 @@ function UserContextProvider({ children }) {
         payload: data.user,
       });
       setToken(data.token);
+      // Persist token and user in localStorage
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authUser", JSON.stringify(data.user));
       return data.user;
     } catch (err) {
       setError(err.message);
@@ -116,6 +145,9 @@ function UserContextProvider({ children }) {
       // Set the user and token received from the server
       dispatch({ type: "REGISTER", payload: data.user });
       setToken(data.token);
+      // Persist token and user in localStorage
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authUser", JSON.stringify(data.user));
       return data.user;
     } catch (err) {
       setError(err.message);
@@ -145,6 +177,9 @@ function UserContextProvider({ children }) {
     } finally {
       dispatch({ type: "LOGOUT", payload: defaultUser });
       setToken(null);
+      // Clear token and user from localStorage
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
       clearError();
     }
   }
