@@ -2,13 +2,13 @@ import express from "express";
 import userRouter from "./routes/user.js";
 import jobsRouter from "./routes/job.js";
 
-// import cors from "cors";
+import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
 // Create an express server
 const app = express();
-// app.use(cors());
+app.use(cors());
 
 // Tell express to use the json middleware
 app.use(express.json());
