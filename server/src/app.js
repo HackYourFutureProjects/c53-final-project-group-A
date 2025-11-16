@@ -3,10 +3,10 @@ import userRouter from "./routes/user.js";
 import jobsRouter from "./routes/job.js";
 
 import cors from "cors";
-import dotenv from "dotenv";
 
-dotenv.config();
+
 // Create an express server
+const app = express();
 const app = express();
 app.use(cors());
 
