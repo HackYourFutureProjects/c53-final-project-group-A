@@ -45,8 +45,6 @@ export default function OpenPositions() {
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  // JobCard reads toggleFavorite from UserContext directly now
-
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
 

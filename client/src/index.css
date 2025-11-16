@@ -188,6 +188,9 @@ footer {
 .space-x-4 > * + * {
   margin-left: 1rem;
 }
+.overflow-hidden {
+  overflow: hidden;
+}
 
 /* ---------- Gap & Spacing ---------- */
 .gap-2 {
@@ -237,6 +240,14 @@ footer {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 /* ---------- Sizing ---------- */
@@ -418,4 +429,11 @@ footer {
 }
 .justify-between {
   justify-content: space-between;
+}
+
+/* Responsive helpers (small set used by components) */
+@media (min-width: 768px) {
+  .md\:w-auto {
+    width: auto;
+  }
 }

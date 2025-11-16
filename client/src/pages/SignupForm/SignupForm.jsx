@@ -15,8 +15,8 @@ const SignupForm = ({
   switchToLogin,
 }) => {
   const [signupData, setSignupData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -59,19 +59,19 @@ const SignupForm = ({
 
     setErrorMessage("");
     await signup(
-      signupData.firstName,
-      signupData.lastName,
+      signupData.firstname,
+      signupData.lastname,
       signupData.email,
       signupData.password,
     );
 
     if (!error) {
-      const fullName = `${signupData.firstName} ${signupData.lastName}`;
+      const fullName = `${signupData.firstname} ${signupData.lastname}`;
       setSignedUpUser(fullName);
       setSuccessPopup(true);
       setSignupData({
-        firstName: "",
-        lastName: "",
+        firstname: "",
+        lastname: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -105,9 +105,9 @@ const SignupForm = ({
             </label>
             <input
               type="text"
-              name="firstName" // added name for handleChange
+              name="firstname" // added name for handleChange
               placeholder="First name"
-              value={signupData.firstName}
+              value={signupData.firstname}
               onChange={handleChange}
               required
             />
@@ -119,9 +119,9 @@ const SignupForm = ({
             </label>
             <input
               type="text"
-              name="lastName" //added name
+              name="lastname" //added name
               placeholder="Last name"
-              value={signupData.lastName}
+              value={signupData.lastname}
               onChange={handleChange}
               required
             />

@@ -34,8 +34,8 @@ const defaultSkillNames = [
 ];
 
 export const defaultUser = {
-  firstName: "Guest",
-  lastName: "User",
+  firstname: "Guest",
+  lastname: "User",
   avatar: images.defaultAvatar,
   email: "guest@example.com",
   JWT: "",
