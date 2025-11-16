@@ -39,7 +39,9 @@ function UserMenu() {
           className="user-avatar"
         />
         <span className="divider"></span>
-        <span className="user-name">{user ? user.firstName : "Guest"}</span>
+        <span className="user-name">
+          {user ? user.first_name || user?.firstName : "Guest"}
+        </span>
 
         <img
           src={icons.arrow}
@@ -101,8 +103,24 @@ function UserMenu() {
 }
 
 export default function Header() {
+  const { message, clearMessage } = UseAuth();
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        clearMessage();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message, clearMessage]);
   return (
     <header className="app-header">
+      {message && (
+        <div className="alert-message" onClick={clearMessage} role="alert">
+          <p>{message}</p>
+        </div>
+      )}
       <nav className="header-nav">
         <Link to="/" className="brand">
           <img src={images.logo} alt="logo" className="logo-image-header" />
