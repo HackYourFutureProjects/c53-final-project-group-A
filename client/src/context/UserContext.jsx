@@ -1,4 +1,10 @@
-import { createContext, useReducer, useState, useContext } from "react";
+import {
+  createContext,
+  useReducer,
+  useState,
+  useContext,
+  useEffect,
+} from "react";
 import { defaultUser } from "../data/defaultUser";
 
 const UserContext = createContext();
@@ -56,6 +62,30 @@ function UserContextProvider({ children }) {
   const [token, setToken] = useState(null);
   const [message, setMessage] = useState(null);
   const API_URL = "http://localhost:3000/api/users";
+
+  // Initialize token from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("token");
+      if (saved) setToken(saved);
+    } catch (err) {
+      // don't block app if localStorage is unavailable
+      console.error("Failed to read token from localStorage", err);
+    }
+  }, []);
+
+  // Persist token changes to localStorage
+  useEffect(() => {
+    try {
+      if (token) {
+        localStorage.setItem("token", token);
+      } else {
+        localStorage.removeItem("token");
+      }
+    } catch (err) {
+      console.error("Failed to persist token to localStorage", err);
+    }
+  }, [token]);
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
