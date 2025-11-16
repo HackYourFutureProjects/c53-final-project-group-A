@@ -105,7 +105,7 @@ function UserContextProvider({ children }) {
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(
-          errorData.msg || `Signup failed with status ${res.status}`,
+          errorData.msg || `Login failed with status ${res.status}`,
         );
       }
       const data = await res.json();
