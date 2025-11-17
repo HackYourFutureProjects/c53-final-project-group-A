@@ -47,10 +47,17 @@ export default function Profile() {
     let newPassword = newPasswordInputRef.current;
     let confirmPassword = confirmPasswordInputRef.current;
     let street = streetInputRef.current;
-    let house = houseInputRef.current;
+    let housenumber = houseInputRef.current;
     let city = cityInputRef.current;
     let country = countryInputRef.current;
-    if (!firstname || !lastname || !street || !house || !city || !country) {
+    if (
+      !firstname ||
+      !lastname ||
+      !street ||
+      !housenumber ||
+      !city ||
+      !country
+    ) {
       return;
     }
     if (user && user.email !== defaultUser.email) {
@@ -76,7 +83,7 @@ export default function Profile() {
       }
       // Address
       street = cleanUpText(street.value || "");
-      house = cleanUpText(house.value || "");
+      housenumber = cleanUpText(housenumber.value || "");
       city = cleanUpText(city.value || "");
       country = cleanUpText(country.value || "");
       const streetValidationError = validateAddressTextInputs({
@@ -90,7 +97,7 @@ export default function Profile() {
         text: country,
         type: "country",
       });
-      const houseValidationError = validateHouseNoInput({ text: house });
+      const houseValidationError = validateHouseNoInput({ text: housenumber });
       if (
         streetValidationError ||
         cityValidationError ||
@@ -110,7 +117,7 @@ export default function Profile() {
         payload: {
           firstname,
           lastname,
-          address: { street, houseNumber: house, city, country },
+          address: { street, housenumber, city, country },
         },
       });
     } else {
