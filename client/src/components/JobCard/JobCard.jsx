@@ -7,6 +7,7 @@ import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
+import { Bus, Briefcase, UserCheck, Monitor, MapPin } from "lucide-react";
 
 export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
@@ -81,13 +82,58 @@ export default function JobCard({ job, onApplyClick }) {
             </div>
 
             <div className="job-tags">
-              {[job.seniority, job.employment_type, workMode, location].map(
-                (tag, idx) =>
-                  tag && (
-                    <span key={idx} className="job-tag-item">
-                      {tag}
-                    </span>
-                  ),
+              {/* seniority tag */}
+              {job.seniority && (
+                <div className="job-commute-info">
+                  <UserCheck className="bus-icon" />
+                  <span className="job-commute">{job.seniority}</span>
+                </div>
+              )}
+
+              {/* employment type tag */}
+              {job.employment_type && (
+                <div className="job-commute-info">
+                  <span className="job-tag-separator">|</span>
+                  <Briefcase className="bus-icon" />
+                  <span className="job-commute">{job.employment_type}</span>
+                </div>
+              )}
+
+              {/* work mode tag */}
+              {workMode && (
+                <div className="job-commute-info">
+                  <span className="job-tag-separator">|</span>
+                  <Monitor className="bus-icon" />
+                  <span className="job-commute">{workMode}</span>
+                </div>
+              )}
+
+              {/* location tag */}
+              {location && (
+                <div className="job-commute-info">
+                  <span className="job-tag-separator">|</span>
+                  <MapPin className="bus-icon" />
+                  <span className="job-commute">{location}</span>
+                </div>
+              )}
+
+              {/* commute info block */}
+              {job.travelInfo && job.travelInfo.success && (
+                <div className="job-commute-info">
+                  <span className="job-tag-separator">|</span>
+                  <Bus className="bus-icon" />
+
+                  <span className="job-commute">
+                    {job.travelInfo.averageTravelTimeMinutes} min,{" "}
+                    {job.travelInfo.leastTransfers} transfer
+                    {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {job.travelInfo && !job.travelInfo.success && (
+                <div className="job-commute-info error">
+                  Commute info unavailable
+                </div>
               )}
             </div>
 
