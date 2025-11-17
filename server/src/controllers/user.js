@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import validationErrorMessage from "../util/validationErrorMessage.js";
 import { logError } from "../util/logging.js";
-// import validateAllowedFields from "../util/validateAllowedFields.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
 import validatinCreactUser from "../util/validatinCreactUser.js";
 
@@ -32,7 +31,7 @@ export const createUser = async (req, res) => {
 
     // 3. Check if email already exists
     const checkEmail = await client.query(
-      "SELECT user_id FROM users WHERE email = $1",
+      "SELECT userid FROM users WHERE email = $1",
       [user.email],
     );
 
@@ -49,19 +48,26 @@ export const createUser = async (req, res) => {
 
     // Do not return the password hash
     const result = await client.query(
-      `INSERT INTO users (user_id, "firstname", "lastname", email, password)
+      `INSERT INTO users (userid, "firstname", "lastname", email, password)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING user_id, "firstname", "lastname", email`,
+      RETURNING userid, "firstname", "lastname", email`,
       [newUserId, user.firstname, user.lastname, user.email, hashedPassword],
     );
 
     const newUser = result.rows[0]; // Generate JWT (Access Token)
 
     const token = jwt.sign(
-      { id: newUser.user_id, email: newUser.email },
+      { id: newUser.userid, email: newUser.email },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN },
     ); // Respond with user and token
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "Lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       success: true,
@@ -105,7 +111,7 @@ export const loginUser = async (req, res) => {
     }
 
     const result = await client.query(
-      "SELECT user_id, email, password, firstname, lastname FROM users WHERE email = $1",
+      "SELECT userid, email, password, firstname, lastname FROM users WHERE email = $1",
       [email],
     );
 
@@ -119,13 +125,18 @@ export const loginUser = async (req, res) => {
     }
 
     const user = result.rows[0];
-    const token = jwt.sign(
-      { id: user.user_id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN },
-    ); // Remove the hash before sending the user object in the response
+    const token = jwt.sign({ id: user.userid, email: user.email }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    }); // Remove the hash before sending the user object in the response
 
     delete user.password;
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "Lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,
@@ -150,14 +161,38 @@ export const loginUser = async (req, res) => {
 export const logoutUser = async (req, res) => {
   try {
     // Extract token from "Bearer <token>" header
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies?.token;
     if (!token)
       return res.status(400).json({ success: false, msg: "No token provided" }); // Add the token to the in-memory blacklist
 
     blacklistedTokens.push(token);
+    res.clearCookie("token");
 
     res.json({ success: true, msg: "Logged out successfully" });
   } catch (err) {
     res.status(500).json({ success: false, msg: "Logout error" });
+  }
+};
+
+export const getMe = async (req, res) => {
+  const token = req.cookies?.token;
+  if (!token) return res.json({ success: false });
+
+  const { connectedClient: client, endConnection } = await connectNeonDB();
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const result = await client.query(
+      "SELECT userid, email, firstname, lastname FROM users WHERE userid = $1",
+      [decoded.id],
+    );
+
+    if (result.rows.length === 0) return res.json({ success: false });
+
+    res.json({ success: true, user: result.rows[0] });
+  } catch (err) {
+    res.json({ success: false });
+  } finally {
+    if (endConnection) await endConnection();
   }
 };

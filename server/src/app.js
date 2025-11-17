@@ -1,15 +1,23 @@
 import express from "express";
 import userRouter from "./routes/user.js";
 import jobsRouter from "./routes/job.js";
+import cookieParser from "cookie-parser";
 
 import cors from "cors";
 
 // Create an express server
 const app = express();
-app.use(cors());
+
+app.use(
+  cors({
+    origin: "http://localhost:5174",
+    credentials: true,
+  }),
+);
 
 // Tell express to use the json middleware
 app.use(express.json());
+app.use(cookieParser());
 
 /****** Attach routes ******/
 /**

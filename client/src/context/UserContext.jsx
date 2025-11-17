@@ -59,37 +59,40 @@ function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [token, setToken] = useState(null);
   const [message, setMessage] = useState(null);
   const API_URL = import.meta.env.VITE_BACKEND_URL + "/api/users";
-
-  // Initialize token from localStorage on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("token");
-      if (saved) setToken(saved);
-    } catch (err) {
-      // don't block app if localStorage is unavailable
-      console.error("Failed to read token from localStorage", err);
-    }
-  }, []);
-
-  // Persist token changes to localStorage
-  useEffect(() => {
-    try {
-      if (token) {
-        localStorage.setItem("token", token);
-      } else {
-        localStorage.removeItem("token");
-      }
-    } catch (err) {
-      console.error("Failed to persist token to localStorage", err);
-    }
-  }, [token]);
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
   const clearMessage = () => setMessage(null);
+
+  // -------------------- GET CURRENT USER --------------------
+
+  async function getCurrentUser() {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/me`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (data.success && data.user) {
+        dispatch({ type: "LOGIN", payload: data.user });
+      } else {
+        dispatch({ type: "LOGOUT", payload: defaultUser });
+      }
+    } catch (err) {
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+      console.error("Error fetching current user:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   // -------------------- LOGIN --------------------
   async function login(email, password) {
     setLoading(true);
@@ -101,6 +104,7 @@ function UserContextProvider({ children }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
       if (!res.ok) {
         const errorData = await res.json();
@@ -115,7 +119,6 @@ function UserContextProvider({ children }) {
         type: "LOGIN",
         payload: data.user,
       });
-      setToken(data.token);
       return data.user;
     } catch (err) {
       setError(err.message);
@@ -138,12 +141,12 @@ function UserContextProvider({ children }) {
         body: JSON.stringify({
           user: { firstname, lastname, email, password },
         }),
+        credentials: "include",
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.msg || "Signup failed");
       // Set the user and token received from the server
       dispatch({ type: "REGISTER", payload: data.user });
-      setToken(data.token);
       return data.user;
     } catch (err) {
       setError(err.message);
@@ -155,16 +158,15 @@ function UserContextProvider({ children }) {
   // -------------------- LOGOUT --------------------
   async function logout() {
     try {
-      if (token) {
-        // Attempt to log out on the server side
-        await fetch(`${API_URL}/logout`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
+      // Attempt to log out on the server side
+      await fetch(`${API_URL}/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
       setMessage("Logged out successfully!");
     } catch (err) {
       console.error("Error logging out:", err);
@@ -172,7 +174,6 @@ function UserContextProvider({ children }) {
       setMessage("Failed to log out from server, but local state cleared.");
     } finally {
       dispatch({ type: "LOGOUT", payload: defaultUser });
-      setToken(null);
       clearError();
     }
   }
@@ -188,10 +189,10 @@ function UserContextProvider({ children }) {
         signup,
         logout,
         clearError,
-        token,
         message,
         setMessage,
         clearMessage,
+        getCurrentUser,
       }}
     >
       {children}
