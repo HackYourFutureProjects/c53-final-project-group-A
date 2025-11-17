@@ -82,7 +82,7 @@ export default function SkillsSettings() {
         <div></div>
         <div className="flex gap-3 mb-3">
           <button
-            id="revoveAllSkillsBtn"
+            id="removeAllSkillsBtn"
             onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
             className="px-4 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-800 transition font-medium"
           >
