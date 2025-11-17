@@ -7,7 +7,10 @@ import { formatAddress } from "../../data/defaultUser.js";
 import { UseUser } from "../../context/UserContext.jsx";
 
 export default function JobSearch() {
-  const displayedSkills = defaultUser.skills.slice(0, 3).join(", ");
+  const displayedSkills = defaultUser.skills
+    .map((s) => s.skill)
+    .slice(0, 3)
+    .join(", ");
   const { user } = UseUser();
 
   return (
@@ -15,8 +18,8 @@ export default function JobSearch() {
       <div className="mission-section">
         <h1>Master navigating the sea of irrelevant jobs with JobCompass</h1>
         <p className="subtitle">
-          Drop your anchor. Tell us your role, location, and commute time, we’ll
-          steer you to the right job.
+          Tell us your skills, role, location, and we’ll steer you to the right
+          job with the least commute time.
         </p>
       </div>
       <SearchInput />

@@ -28,6 +28,13 @@
   flex-shrink: 0;
 }
 
+.company-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0.25rem;
+}
+
 .logo-text {
   color: #6b7280;
 }
@@ -80,10 +87,45 @@
   color: #374151;
 }
 
+.job-commute-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.job-tag-separator {
+  color: #d1d5db;
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+
+.job-commute {
+  color: #374151;
+}
+
+.bus-icon {
+  width: 1rem;
+  height: 1rem;
+  color: #374151;
+}
+
+.job-commute-info.error {
+  color: #b91c1c; /* red-ish */
+  font-style: italic;
+}
+
+.job-item {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
 .job-description {
   color: #374151;
   margin-bottom: 1rem;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .job-card-footer {
@@ -117,4 +159,29 @@
 
 .more-apply-btn:hover {
   background-color: #374151;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .job-card-content {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .company-logo-container {
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-right: 0;
+  }
+
+  .job-card-header {
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .job-card-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
 }

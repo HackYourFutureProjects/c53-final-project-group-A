@@ -165,39 +165,34 @@ export default function OpenPositions() {
         </div>
       </div>
 
-      <div className="main-content">
-        <div className="results-summary">
-          <h1 className="results-title">Search results</h1>
-          <p className="results-count">
-            Showing **{filteredJobs.length}** results{" "}
+      {filteredJobs.length === 0 ? (
+        <p className="text-center text-lg py-4 px-4">
+          No jobs are shown. Go to <strong>Job Search</strong> or{" "}
+          <strong>Clear Filters</strong> to see more results.
+        </p>
+      ) : (
+        <>
+          <p className="text-center text-lg py-4 px-4">
+            Showing {filteredJobs.length} jobs in total{" "}
             {searchTerm && `for "${searchTerm}"`}
           </p>
-        </div>
+          <ul className="jobs-list">
+            {currentJobs.map((job, idx) => (
+              <JobCard
+                key={job.id || idx}
+                job={job}
+                onApplyClick={(url) => window.open(url, "_blank")}
+              />
+            ))}
+          </ul>
 
-        {filteredJobs.length === 0 ? (
-          <p className="no-jobs-message">
-            No jobs found. Try clearing filters or a different search.
-          </p>
-        ) : (
-          <>
-            <ul className="jobs-list">
-              {currentJobs.map((job, idx) => (
-                <JobCard
-                  key={job.id || idx}
-                  job={job}
-                  onApplyClick={(url) => window.open(url, "_blank")}
-                />
-              ))}
-            </ul>
-
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
-          </>
-        )}
-      </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
     </div>
   );
 }

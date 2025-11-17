@@ -2,7 +2,7 @@ import { images } from "../assets";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
 export const formatAddress = (address) => {
-  return `${address.street} ${address.houseNumber}, ${address.city}, ${address.country}`;
+  return `${address.street} ${address.housenumber}, ${address.city}, ${address.country}`;
 };
 
 // list of default skill display names
@@ -42,13 +42,12 @@ export const defaultUser = {
 
   address: {
     street: "Keizersgracht",
-    houseNumber: 123,
+    housenumber: 123,
     city: "Amsterdam",
     country: "Netherlands",
   },
-  skills: defaultSkillNames.map((name) => {
-    const { skillRegex, normalizedSkill } = regexEndNormalizeSkill(name);
-    return { skill: name, normalizedSkill, skillRegex };
-  }),
+  skills: defaultSkillNames
+    .map((skill) => regexEndNormalizeSkill(skill))
+    .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill)),
   favorites: [],
 };

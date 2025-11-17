@@ -54,7 +54,7 @@ export const createUser = async (req, res) => {
 
     // 3. Check if email already exists
     const checkEmail = await client.query(
-      "SELECT user_id FROM users WHERE email = $1",
+      "SELECT userid FROM users WHERE email = $1",
       [user.email],
     );
 
@@ -71,16 +71,16 @@ export const createUser = async (req, res) => {
 
     // Do not return the password hash
     const result = await client.query(
-      `INSERT INTO users (user_id, "firstname", "lastname", email, password)
+      `INSERT INTO users (userid, "firstname", "lastname", email, password)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING user_id, "firstname", "lastname", email`,
+      RETURNING userid, "firstname", "lastname", email`,
       [newUserId, user.firstname, user.lastname, user.email, hashedPassword],
     );
 
     const newUser = result.rows[0]; // Generate JWT (Access Token)
 
     const token = jwt.sign(
-      { id: newUser.user_id, email: newUser.email },
+      { id: newUser.userid, email: newUser.email },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN },
     ); // Respond with user and token
@@ -127,7 +127,7 @@ export const loginUser = async (req, res) => {
     }
 
     const result = await client.query(
-      "SELECT user_id, email, password, firstname, lastname FROM users WHERE email = $1",
+      "SELECT userid, email, password, firstname, lastname FROM users WHERE email = $1",
       [email],
     );
 
@@ -141,11 +141,9 @@ export const loginUser = async (req, res) => {
     }
 
     const user = result.rows[0];
-    const token = jwt.sign(
-      { id: user.user_id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN },
-    ); // Remove the hash before sending the user object in the response
+    const token = jwt.sign({ id: user.userid, email: user.email }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    }); // Remove the hash before sending the user object in the response
 
     delete user.password;
 

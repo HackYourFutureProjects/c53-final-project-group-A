@@ -38,6 +38,10 @@ function userReducer(state, action) {
       );
       return { ...state, skills: filtered };
     }
+    case "REMOVE_ALL_SKILLS": {
+      // Remove all skills from the user while preserving other fields
+      return { ...state, skills: [] };
+    }
     case "TOGGLE_FAVORITE": {
       const jobId = action.payload;
       const prevFavorites = Array.isArray(state?.favorites)

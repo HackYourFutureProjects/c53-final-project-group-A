@@ -44,7 +44,7 @@ export default function AddressSettings({
             id="houseInput"
             ref={houseInputRef}
             type="text"
-            defaultValue={user.address?.houseNumber ?? ""}
+            defaultValue={user.address?.housenumber ?? ""}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
