@@ -46,9 +46,8 @@ export const defaultUser = {
     city: "Amsterdam",
     country: "Netherlands",
   },
-  skills: defaultSkillNames.map((name) => {
-    const { skillRegex, normalizedSkill } = regexEndNormalizeSkill(name);
-    return { skill: name, normalizedSkill, skillRegex };
-  }),
+  skills: defaultSkillNames
+    .map((skill) => regexEndNormalizeSkill(skill))
+    .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill)),
   favorites: [],
 };
