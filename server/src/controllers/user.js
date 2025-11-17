@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import validationErrorMessage from "../util/validationErrorMessage.js";
 import { logError } from "../util/logging.js";
-import validateAllowedFields from "../util/validateAllowedFields.js";
+// import validateAllowedFields from "../util/validateAllowedFields.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
+import validatinCreactUser from "../util/validatinCreactUser.js";
 
 // JWT Configuration
 
@@ -21,32 +22,9 @@ export const createUser = async (req, res) => {
 
   try {
     const user = req.body?.user || {};
-    const errors = [];
+    const { valid, errors } = validatinCreactUser(user);
 
-    // 1. Check for disallowed fields (Sanitization/Security)
-    const disallowedFieldsError = validateAllowedFields(user, [
-      "firstname",
-      "lastname",
-      "email",
-      "password",
-    ]);
-
-    if (disallowedFieldsError) {
-      // Use validationErrorMessage, wrapping the string in an array
-      return res.status(400).json({
-        success: false,
-        msg: validationErrorMessage([disallowedFieldsError]),
-      });
-    }
-
-    // 2. Validate required fields
-    if (!user.firstname) errors.push("First name is required");
-    if (!user.lastname) errors.push("Last name is required");
-    if (!user.email) errors.push("Email is required");
-    if (!user.password) errors.push("Password is required");
-
-    if (errors.length > 0) {
-      // Using validationErrorMessage for 400 response
+    if (!valid) {
       return res
         .status(400)
         .json({ success: false, msg: validationErrorMessage(errors) });
