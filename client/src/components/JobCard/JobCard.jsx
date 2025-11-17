@@ -88,37 +88,38 @@ export default function JobCard({ job, onApplyClick }) {
 
             <div className="job-tags">
               {/* seniority tag */}
-              {job.seniority && (
+              {job.seniority && job.seniority !== "Niet van toepassing" && (
                 <div className="job-commute-info">
                   <GraduationCap className="bus-icon" />
                   <span className="job-commute">{job.seniority}</span>
+                  <span className="job-tag-separator">|</span>
                 </div>
               )}
 
               {/* employment type tag */}
               {job.employment_type && (
                 <div className="job-commute-info">
-                  <span className="job-tag-separator">|</span>
                   <Briefcase className="bus-icon" />
                   <span className="job-commute">{job.employment_type}</span>
+                  <span className="job-tag-separator">|</span>
                 </div>
               )}
 
               {/* work mode tag */}
               {job.workMode && (
                 <div className="job-commute-info">
-                  <span className="job-tag-separator">|</span>
                   <Monitor className="bus-icon" />
                   <span className="job-commute">{job.workMode}</span>
+                  <span className="job-tag-separator">|</span>
                 </div>
               )}
 
               {/* location tag */}
               {job.displayLocation && (
                 <div className="job-commute-info">
-                  <span className="job-tag-separator">|</span>
                   <MapPin className="bus-icon" />
                   <span className="job-commute">{job.displayLocation}</span>
+                  <span className="job-tag-separator">|</span>
                 </div>
               )}
 
@@ -147,9 +148,9 @@ export default function JobCard({ job, onApplyClick }) {
                   const formatted = `${dd} ${mm} ${yyyy}`;
                   return (
                     <div className="job-commute-info">
-                      <span className="job-tag-separator">|</span>
                       <Clock className="bus-icon" />
                       <span className="job-commute">{formatted}</span>
+                      <span className="job-tag-separator">|</span>
                     </div>
                   );
                 })()}
@@ -157,9 +158,7 @@ export default function JobCard({ job, onApplyClick }) {
               {/* commute info block */}
               {job.travelInfo && job.travelInfo.success && (
                 <div className="job-commute-info">
-                  <span className="job-tag-separator">|</span>
                   <Bus className="bus-icon" />
-
                   <span className="job-commute">
                     {job.travelInfo.averageTravelTimeMinutes} min,{" "}
                     {job.travelInfo.leastTransfers} transfer
