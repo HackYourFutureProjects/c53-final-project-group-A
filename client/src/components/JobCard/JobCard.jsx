@@ -54,8 +54,6 @@ export default function JobCard({ job, onApplyClick }) {
     }
   };
 
-  const workMode = job.workMode || "On-site";
-  const location = job.displayLocation || null;
   const isFavorited = favorites[job.id] ?? job.isFavorite;
 
   return (
@@ -107,20 +105,20 @@ export default function JobCard({ job, onApplyClick }) {
               )}
 
               {/* work mode tag */}
-              {workMode && (
+              {job.workMode && (
                 <div className="job-commute-info">
                   <span className="job-tag-separator">|</span>
                   <Monitor className="bus-icon" />
-                  <span className="job-commute">{workMode}</span>
+                  <span className="job-commute">{job.workMode}</span>
                 </div>
               )}
 
               {/* location tag */}
-              {location && (
+              {job.displayLocation && (
                 <div className="job-commute-info">
                   <span className="job-tag-separator">|</span>
                   <MapPin className="bus-icon" />
-                  <span className="job-commute">{location}</span>
+                  <span className="job-commute">{job.displayLocation}</span>
                 </div>
               )}
 
