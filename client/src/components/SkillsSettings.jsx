@@ -77,25 +77,36 @@ export default function SkillsSettings() {
         </div>
       </div>
       {/* Skills management */}
-      <div className="flex gap-3 mb-3">
-        <input
-          id="skillInput"
-          ref={skillInputRef}
-          type="text"
-          placeholder="e.g. React, TypeScript, Docker"
-          className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") addSkill();
-          }}
-          onChange={handleClearAlert}
-        />
-        <button
-          id="addSkillBtn"
-          onClick={addSkill}
-          className="px-4 py-1 bg-black text-white rounded hover:bg-gray-800 transition font-medium"
-        >
-          Add
-        </button>
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        {/* <div className="flex gap-3 mb-3"> */}
+        <div></div>
+        <div className="flex gap-3 mb-3">
+          <button
+            id="revoveAllSkillsBtn"
+            onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
+            className="px-4 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-800 transition font-medium"
+          >
+            Remove All
+          </button>
+          <input
+            id="skillInput"
+            ref={skillInputRef}
+            type="text"
+            placeholder="e.g. React, TypeScript, Docker"
+            className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") addSkill();
+            }}
+            onChange={handleClearAlert}
+          />
+          <button
+            id="addSkillBtn"
+            onClick={addSkill}
+            className="px-4 py-1 bg-black text-white rounded hover:bg-gray-800 transition font-medium"
+          >
+            Add Skill
+          </button>
+        </div>
       </div>
       {alert.message && (
         <AlertMessage type={alert.type} message={alert.message} />
