@@ -41,10 +41,42 @@ export default function SkillsSettings() {
   }
 
   return (
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-900 mb-2">
-        Skills
-      </label>
+    <div className="mt-4">
+      <div className="mb-3">
+        <label className="block text-sm font-medium text-gray-900 mb-2">
+          Change Skill Set
+        </label>
+        {/* Skills List */}
+        <div id="skillsList">
+          {(skills || []).map((s, idx) => (
+            <div
+              key={`${s.skill}-${idx}`}
+              className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
+            >
+              <span className="text-gray-800 mr-2">{s.skill}</span>
+              <button
+                className="text-gray-500 hover:text-red-600 transition"
+                onClick={() => removeSkill(s)}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Skills management */}
       <div className="flex gap-3 mb-3">
         <input
           id="skillInput"
@@ -68,35 +100,6 @@ export default function SkillsSettings() {
       {alert.message && (
         <AlertMessage type={alert.type} message={alert.message} />
       )}
-      {/* Skills List */}
-      <div id="skillsList">
-        {(skills || []).map((s, idx) => (
-          <div
-            key={`${s.skill}-${idx}`}
-            className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
-          >
-            <span className="text-gray-800 mr-2">{s.skill}</span>
-            <button
-              className="text-gray-500 hover:text-red-600 transition"
-              onClick={() => removeSkill(s)}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
