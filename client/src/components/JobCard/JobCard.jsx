@@ -7,7 +7,14 @@ import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
-import { Bus, Briefcase, UserCheck, Monitor, MapPin } from "lucide-react";
+import {
+  Bus,
+  Briefcase,
+  Clock,
+  GraduationCap,
+  MapPin,
+  Monitor,
+} from "lucide-react";
 
 export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
@@ -85,7 +92,7 @@ export default function JobCard({ job, onApplyClick }) {
               {/* seniority tag */}
               {job.seniority && (
                 <div className="job-commute-info">
-                  <UserCheck className="bus-icon" />
+                  <GraduationCap className="bus-icon" />
                   <span className="job-commute">{job.seniority}</span>
                 </div>
               )}
@@ -116,6 +123,38 @@ export default function JobCard({ job, onApplyClick }) {
                   <span className="job-commute">{location}</span>
                 </div>
               )}
+
+              {/* posting date tag */}
+              {job.date_posted &&
+                (() => {
+                  const d = new Date(job.date_posted);
+                  if (isNaN(d)) return null;
+                  const dd = String(d.getDate()).padStart(2, "0");
+                  const monthNames = [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                  ];
+                  const mm = monthNames[d.getMonth()];
+                  const yyyy = d.getFullYear();
+                  const formatted = `${dd} ${mm} ${yyyy}`;
+                  return (
+                    <div className="job-commute-info">
+                      <span className="job-tag-separator">|</span>
+                      <Clock className="bus-icon" />
+                      <span className="job-commute">{formatted}</span>
+                    </div>
+                  );
+                })()}
 
               {/* commute info block */}
               {job.travelInfo && job.travelInfo.success && (
