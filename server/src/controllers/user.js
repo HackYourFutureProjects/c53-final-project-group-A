@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import validationErrorMessage from "../util/validationErrorMessage.js";
 import { logError } from "../util/logging.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
-import validatinCreactUser from "../util/validatinCreactUser.js";
+import validateCreactUser from "../util/validateCreactUser.js";
 
 // JWT Configuration
 
@@ -17,11 +17,21 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
 export const createUser = async (req, res) => {
   // Get a new database client and the connection closing function
-  const { connectedClient: client, endConnection } = await connectNeonDB();
+  const {
+    connectedClient: client,
+    endConnection,
+    error,
+  } = await connectNeonDB();
+  if (error) {
+    return res.status(503).json({
+      success: false,
+      msg: "Service unavailable. Could not connect to the database.",
+    });
+  }
 
   try {
     const user = req.body?.user || {};
-    const { valid, errors } = validatinCreactUser(user);
+    const { valid, errors } = validateCreactUser(user);
 
     if (!valid) {
       return res
@@ -90,7 +100,18 @@ export const createUser = async (req, res) => {
 // LOGIN - Authenticate user
 
 export const loginUser = async (req, res) => {
-  const { connectedClient: client, endConnection } = await connectNeonDB();
+  const {
+    connectedClient: client,
+    endConnection,
+    error,
+  } = await connectNeonDB();
+
+  if (error) {
+    return res.status(503).json({
+      success: false,
+      msg: "Service unavailable. Could not connect to the database.",
+    });
+  }
 
   try {
     const { email = "", password = "" } = req.body || {};
@@ -178,7 +199,17 @@ export const getMe = async (req, res) => {
   const token = req.cookies?.token;
   if (!token) return res.json({ success: false });
 
-  const { connectedClient: client, endConnection } = await connectNeonDB();
+  const {
+    connectedClient: client,
+    endConnection,
+    error,
+  } = await connectNeonDB();
+  if (error) {
+    return res.status(503).json({
+      success: false,
+      msg: "Service unavailable. Could not connect to the database.",
+    });
+  }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);

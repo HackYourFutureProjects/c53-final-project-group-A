@@ -4,7 +4,7 @@ import { validatePassword } from "./validatePassword.js";
 // Basic email format check
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function validatinCreactUser(user) {
+export default function validateCreactUser(user) {
   const errors = [];
 
   if (!user || typeof user !== "object") {
