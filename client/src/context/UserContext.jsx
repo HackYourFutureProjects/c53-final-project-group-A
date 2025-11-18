@@ -60,7 +60,7 @@ function UserContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const API_URL = import.meta.env.VITE_BACKEND_URL + "/api/users";
+  const API_URL = "/api/users";
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);

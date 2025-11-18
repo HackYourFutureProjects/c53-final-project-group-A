@@ -8,12 +8,7 @@ import cors from "cors";
 // Create an express server
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:5174",
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 // Tell express to use the json middleware
 app.use(express.json());
