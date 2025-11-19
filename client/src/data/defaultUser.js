@@ -2,7 +2,12 @@ import { images } from "../assets";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
 export const formatAddress = (address) => {
-  return `${address.street} ${address.houseNumber}, ${address.city}, ${address.country}`;
+  const parts = [];
+  if (address?.street) parts.push(address.street);
+  if (address?.houseNumber) parts.push(address.houseNumber);
+  if (address?.city) parts.push(address.city);
+  if (address?.country) parts.push(address.country);
+  return parts.join(", ");
 };
 
 // list of default skill display names

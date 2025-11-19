@@ -80,10 +80,36 @@
   color: #374151;
 }
 
+.job-tag-separator {
+  margin: 0 6px;
+  color: #888;
+}
+
+.job-commute-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .job-description {
   color: #374151;
   margin-bottom: 1rem;
   font-size: 1.2rem;
+}
+
+.job-commute-info {
+  margin: 8px 0 12px 0;
+  font-size: 14px;
+  color: #007bff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bus-icon {
+  width: 20px;
+  height: 20px;
+  stroke: #333;
 }
 
 .job-card-footer {

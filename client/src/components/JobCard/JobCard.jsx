@@ -7,6 +7,14 @@ import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
+import { Bus } from "lucide-react";
+
+function formatTravelTime(minutes) {
+  if (minutes < 60) return `${minutes} min`;
+  const h = Math.floor(minutes / 60);
+  const m = Math.round(minutes % 60);
+  return m === 0 ? `${h} h` : `${h} h ${m} min`;
+}
 
 export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
@@ -88,6 +96,25 @@ export default function JobCard({ job, onApplyClick }) {
                       {tag}
                     </span>
                   ),
+              )}
+
+              {/* commute info block*/}
+              {job.travelInfo && job.travelInfo.success && (
+                <div className="job-commute-info">
+                  <span className="job-tag-separator">|</span>
+                  <Bus className="bus-icon" />
+
+                  <span className="job-commute">
+                    {formatTravelTime(job.travelInfo.averageTravelTimeMinutes)},{" "}
+                    {job.travelInfo.leastTransfers} transfer
+                    {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {job.travelInfo && !job.travelInfo.success && (
+                <div className="job-commute-info error">
+                  Commute info unavailable
+                </div>
               )}
             </div>
 
