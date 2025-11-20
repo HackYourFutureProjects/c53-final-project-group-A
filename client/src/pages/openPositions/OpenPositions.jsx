@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
+import { defaultUser, formatAddress } from "../../data/defaultUser";
 // removed UseUser import; JobCard now uses favorites from context directly
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
@@ -12,6 +12,8 @@ import Pagination from "../../components/Pagination/Pagination";
 import { UseJobs } from "../../context/JobsContext";
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
+import { useEffect } from "react";
+import useTravelData from "../../hooks/useTravelData";
 
 //preprocessing
 const preprocessJobs = (jobs) => {
@@ -74,6 +76,10 @@ export default function OpenPositions() {
     "Fewest transfers",
   ];
 
+  const [jobsWithTravel, setJobsWithTravel] = useState([]);
+  const [homeAddress] = useState(formatAddress(defaultUser.address));
+  const { calculateBatchTravel, error: travelError } = useTravelData();
+
   //preprocess jobs wit useMemo - avoid recalculating
   const processedJobsWithMemo = useMemo(() => {
     return preprocessJobs(allJobs);
@@ -113,10 +119,40 @@ export default function OpenPositions() {
   //   return sortAndFilterJobs(processedJobsWithMemo, activeFilters, sortBy, searchTerm);
   // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm, showResults]);
 
-  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+  //pagination
+  const totalPages = Math.ceil(jobsWithTravel.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = jobsWithTravel.slice(indexOfFirstJob, indexOfLastJob);
+
+  //useEffect for travelInfo
+  useEffect(() => {
+    async function fetchTravelInfo() {
+      if (!filteredJobs.length) {
+        setJobsWithTravel([]);
+        return;
+      }
+      const workCities = filteredJobs.map(
+        (job) => job.city || job.displayLocation,
+      );
+      try {
+        const travelResult = await calculateBatchTravel(
+          homeAddress,
+          workCities,
+        );
+        const jobsWithTravelInfo = filteredJobs.map((job, idx) => ({
+          ...job,
+          travelInfo: travelResult.travelDetails[idx],
+        }));
+        setJobsWithTravel(jobsWithTravelInfo);
+      } catch {
+        setJobsWithTravel(filteredJobs);
+      }
+    }
+    fetchTravelInfo();
+
+    // eslint-disable-next-line
+  }, [filteredJobs, homeAddress]);
 
   return (
     <div className="open-positions content-container">
@@ -165,15 +201,21 @@ export default function OpenPositions() {
         </div>
       </div>
 
-      {filteredJobs.length === 0 ? (
-        <p className="text-center text-lg py-4 px-4">
+      {travelError && (
+        <div className="error-message">
+          Error loading commute info: {travelError}
+        </div>
+      )}
+
+      {jobsWithTravel.length === 0 ? (
+        <p className="job-message">
           No jobs are shown. Go to <strong>Job Search</strong> or{" "}
           <strong>Clear Filters</strong> to see more results.
         </p>
       ) : (
         <>
-          <p className="text-center text-lg py-4 px-4">
-            Showing {filteredJobs.length} jobs in total{" "}
+          <p className="job-message">
+            Showing {jobsWithTravel.length} jobs in total{" "}
             {searchTerm && `for "${searchTerm}"`}
           </p>
           <ul className="jobs-list">
@@ -185,7 +227,6 @@ export default function OpenPositions() {
               />
             ))}
           </ul>
-
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

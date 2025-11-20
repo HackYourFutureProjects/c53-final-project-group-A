@@ -16,6 +16,13 @@ import {
   Monitor,
 } from "lucide-react";
 
+function formatTravelTime(minutes) {
+  if (minutes < 60) return `${minutes} min`;
+  const h = Math.floor(minutes / 60);
+  const m = Math.round(minutes % 60);
+  return m === 0 ? `${h} h` : `${h} h ${m} min`;
+}
+
 export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
   const { user, dispatch } = UseUser();
@@ -90,39 +97,35 @@ export default function JobCard({ job, onApplyClick }) {
               {/* seniority tag */}
               {job.seniority && job.seniority !== "Niet van toepassing" && (
                 <div className="job-commute-info">
-                  <GraduationCap className="bus-icon" />
+                  <GraduationCap className="job-icon" />
                   <span className="job-commute">{job.seniority}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
-
               {/* employment type tag */}
               {job.employment_type && (
                 <div className="job-commute-info">
-                  <Briefcase className="bus-icon" />
+                  <Briefcase className="job-icon" />
                   <span className="job-commute">{job.employment_type}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
-
               {/* work mode tag */}
               {job.workMode && (
                 <div className="job-commute-info">
-                  <Monitor className="bus-icon" />
+                  <Monitor className="job-icon" />
                   <span className="job-commute">{job.workMode}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
-
               {/* location tag */}
               {job.displayLocation && (
                 <div className="job-commute-info">
-                  <MapPin className="bus-icon" />
+                  <MapPin className="job-icon" />
                   <span className="job-commute">{job.displayLocation}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
-
               {/* posting date tag */}
               {job.date_posted &&
                 (() => {
@@ -148,19 +151,20 @@ export default function JobCard({ job, onApplyClick }) {
                   const formatted = `${dd} ${mm} ${yyyy}`;
                   return (
                     <div className="job-commute-info">
-                      <Clock className="bus-icon" />
+                      <Clock className="job-icon" />
                       <span className="job-commute">{formatted}</span>
                       <span className="job-tag-separator">|</span>
                     </div>
                   );
                 })()}
 
-              {/* commute info block */}
+              {/* commute info block*/}
               {job.travelInfo && job.travelInfo.success && (
                 <div className="job-commute-info">
-                  <Bus className="bus-icon" />
+                  {/* <span className="job-tag-separator">|</span> */}
+                  <Bus className="job-icon" />
                   <span className="job-commute">
-                    {job.travelInfo.averageTravelTimeMinutes} min,{" "}
+                    {formatTravelTime(job.travelInfo.averageTravelTimeMinutes)},{" "}
                     {job.travelInfo.leastTransfers} transfer
                     {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
                   </span>
@@ -193,12 +197,14 @@ export default function JobCard({ job, onApplyClick }) {
           </div>
         </div>
       </div>
+
       {showApplyPopup && (
         <PopupForMoreAndApply
           handleLoginRedirect={handleLoginRedirect}
           setShowPopup={setShowApplyPopup}
         />
       )}
+
       {showFavoritesPopup && (
         <PopupForFavorites
           handleLoginRedirect={handleLoginRedirect}

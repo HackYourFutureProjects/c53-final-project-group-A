@@ -1,10 +1,10 @@
 import express from "express";
-import { searchJobs } from "../controllers/jobData.js";
+import { calculateTravelTime } from "../controllers/travelController.js";
 import calculateBatchTravelTime from "../controllers/travelController.js";
 
 const router = express.Router();
 
-router.post("/search", searchJobs);
+router.post("/", calculateTravelTime);
 
 router.post("/batch", calculateBatchTravelTime);
 

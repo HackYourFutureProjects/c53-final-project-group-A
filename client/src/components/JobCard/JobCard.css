@@ -79,14 +79,6 @@
   margin-bottom: 0.75rem;
 }
 
-.job-tag-item {
-  padding: 0.25rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
-  color: #374151;
-}
-
 .job-commute-info {
   display: inline-flex;
   align-items: center;
@@ -96,18 +88,11 @@
 }
 
 .job-tag-separator {
-  color: #d1d5db;
-  font-weight: 600;
-  margin-right: 0.25rem;
+  margin: 0 6px;
+  color: #888;
 }
 
 .job-commute {
-  color: #374151;
-}
-
-.bus-icon {
-  width: 1rem;
-  height: 1rem;
   color: #374151;
 }
 
@@ -126,6 +111,21 @@
   margin-bottom: 1rem;
   font-size: 0.95rem;
   line-height: 1.4;
+}
+
+.job-commute-info {
+  margin: 8px 0 12px 0;
+  font-size: 14px;
+  color: #007bff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.job-icon {
+  width: 20px;
+  height: 20px;
+  stroke: #333;
 }
 
 .job-card-footer {

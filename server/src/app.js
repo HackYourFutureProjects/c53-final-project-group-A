@@ -1,6 +1,7 @@
 import express from "express";
 import userRouter from "./routes/user.js";
 import jobsRouter from "./routes/job.js";
+import travelRoutes from "./routes/travel.js";
 import cookieParser from "cookie-parser";
 
 import cors from "cors";
@@ -22,5 +23,7 @@ app.use(cookieParser());
 app.use("/api/users", userRouter);
 
 app.use("/api/jobs", jobsRouter);
+
+app.use("/api/travel", travelRoutes);
 
 export default app;
