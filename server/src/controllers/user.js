@@ -7,6 +7,7 @@ import validationErrorMessage from "../util/validationErrorMessage.js";
 import { logError } from "../util/logging.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
 import validateCreactUser from "../util/validateCreactUser.js";
+import { updateUserProfile } from "./profile.js";
 
 // JWT Configuration
 
@@ -225,5 +226,20 @@ export const getMe = async (req, res) => {
     res.json({ success: false });
   } finally {
     if (endConnection) await endConnection();
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  const userId = req.user.id;
+  const fields = req.body;
+
+  try {
+    const updatedUser = await updateUserProfile(userId, fields);
+    res.json({ success: true, user: updatedUser });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      msg: err instanceof Error ? err.message : "Update error",
+    });
   }
 };
