@@ -17,9 +17,15 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 // The query has been corrected to include all user information, including address,  and skills
 const USER_FULL_INFO_QUERY = `
     SELECT
-        userid, email, password, firstname, lastname, avatar,
-        street, housenumber, city, country, skills
-    FROM users
+        u.userid, u.email, u.password, u.firstname, u.lastname, u.avatar,
+        u.street, u.housenumber, u.city, u.country, u.skills,
+        
+        -- Select ALL columns from the 'favorites' table
+        f.* FROM users u
+    -- 1. Link users to the bridge table
+    LEFT JOIN user_favorites uf ON u.userid = uf.user_id
+    -- 2. Link the bridge table to the job/favorite details table
+    LEFT JOIN favorites f ON uf.favorite_id = f.id
 `;
 
 // SIGNUP - Create a new user
@@ -74,7 +80,7 @@ export const createUser = async (req, res) => {
     );
 
     const newUser = result.rows[0]; // Generate JWT (Access Token)
-
+    newUser.favorites = [];
     const token = jwt.sign(
       { id: newUser.userid, email: newUser.email },
       JWT_SECRET,
@@ -141,7 +147,7 @@ export const loginUser = async (req, res) => {
     }
 
     const result = await client.query(
-      `${USER_FULL_INFO_QUERY} WHERE email = $1`,
+      `${USER_FULL_INFO_QUERY} WHERE u.email = $1`,
       [email],
     );
 
@@ -154,12 +160,50 @@ export const loginUser = async (req, res) => {
         .json({ success: false, msg: "Invalid credentials" });
     }
 
-    const user = result.rows[0];
+    const rows = result.rows;
+    const userDataRow = rows[0];
+
+    const user = {
+      userid: userDataRow.userid,
+      email: userDataRow.email,
+      firstname: userDataRow.firstname,
+      lastname: userDataRow.lastname,
+      avatar: userDataRow.avatar,
+      street: userDataRow.street,
+      housenumber: userDataRow.housenumber,
+      city: userDataRow.city,
+      country: userDataRow.country,
+      skills: userDataRow.skills,
+      favorites: [],
+    };
+
+    rows.forEach((row) => {
+      if (row.id) {
+        const jobFavorite = {
+          id: row.id,
+          date_posted: row.date_posted,
+          title: row.title,
+          organization: row.organization,
+          organization_url: row.organization_url,
+          employment_type: row.employment_type,
+          url: row.url,
+          organization_logo: row.organization_logo,
+          display_location: row.display_location,
+          work_mode: row.work_mode,
+          linkedin_org_url: row.linkedin_org_url,
+          seniority: row.seniority,
+          description_text: row.description_text,
+          travel_time: row.travel_time,
+          least_transfers: row.least_transfers,
+          normalized_description: row.normalized_description,
+        };
+        user.favorites.push(jobFavorite);
+      }
+    });
+
     const token = jwt.sign({ id: user.userid, email: user.email }, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     }); // Remove the hash before sending the user object in the response
-
-    delete user.password;
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -222,15 +266,54 @@ export const getMe = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const queryWithoutPassword = USER_FULL_INFO_QUERY.replace(", password", "");
     const result = await client.query(
-      `${queryWithoutPassword} WHERE userid = $1`,
+      `${USER_FULL_INFO_QUERY} WHERE u.userid = $1`,
       [decoded.id],
     );
 
     if (result.rows.length === 0) return res.json({ success: false });
+    const rows = result.rows;
+    const userDataRow = rows[0];
 
-    res.json({ success: true, user: result.rows[0] });
+    const user = {
+      userid: userDataRow.userid,
+      email: userDataRow.email,
+      firstname: userDataRow.firstname,
+      lastname: userDataRow.lastname,
+      avatar: userDataRow.avatar,
+      street: userDataRow.street,
+      housenumber: userDataRow.housenumber,
+      city: userDataRow.city,
+      country: userDataRow.country,
+      skills: userDataRow.skills,
+      favorites: [],
+    };
+
+    rows.forEach((row) => {
+      if (row.id) {
+        const jobFavorite = {
+          id: row.id,
+          date_posted: row.date_posted,
+          title: row.title,
+          organization: row.organization,
+          organization_url: row.organization_url,
+          employment_type: row.employment_type,
+          url: row.url,
+          organization_logo: row.organization_logo,
+          display_location: row.display_location,
+          work_mode: row.work_mode,
+          linkedin_org_url: row.linkedin_org_url,
+          seniority: row.seniority,
+          description_text: row.description_text,
+          travel_time: row.travel_time,
+          least_transfers: row.least_transfers,
+          normalized_description: row.normalized_description,
+        };
+        user.favorites.push(jobFavorite);
+      }
+    });
+
+    res.json({ success: true, user: user });
   } catch (err) {
     res.json({ success: false });
   } finally {
