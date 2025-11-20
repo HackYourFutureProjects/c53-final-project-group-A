@@ -201,44 +201,39 @@ export default function OpenPositions() {
         </div>
       </div>
 
-      <div className="main-content">
-        <div className="results-summary">
-          <h1 className="results-title">Search results</h1>
-          <p className="results-count">
-            Showing <b>{jobsWithTravel.length}</b> results{" "}
+      {travelError && (
+        <div className="error-message">
+          Error loading commute info: {travelError}
+        </div>
+      )}
+
+      {jobsWithTravel.length === 0 ? (
+        <p className="job-message">
+          No jobs are shown. Go to <strong>Job Search</strong> or{" "}
+          <strong>Clear Filters</strong> to see more results.
+        </p>
+      ) : (
+        <>
+          <p className="job-message">
+            Showing {jobsWithTravel.length} jobs in total{" "}
             {searchTerm && `for "${searchTerm}"`}
           </p>
-        </div>
-        {travelError && (
-          <div className="error-message">
-            Error loading commute info: {travelError}
-          </div>
-        )}
-
-        {jobsWithTravel.length === 0 ? (
-          <p className="no-jobs-message">
-            No jobs found. Try clearing filters or a different search.
-          </p>
-        ) : (
-          <>
-            <ul className="jobs-list">
-              {currentJobs.map((job, idx) => (
-                <JobCard
-                  key={job.id || idx}
-                  job={job}
-                  onApplyClick={(url) => window.open(url, "_blank")}
-                />
-              ))}
-            </ul>
-
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
-          </>
-        )}
-      </div>
+          <ul className="jobs-list">
+            {currentJobs.map((job, idx) => (
+              <JobCard
+                key={job.id || idx}
+                job={job}
+                onApplyClick={(url) => window.open(url, "_blank")}
+              />
+            ))}
+          </ul>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
     </div>
   );
 }

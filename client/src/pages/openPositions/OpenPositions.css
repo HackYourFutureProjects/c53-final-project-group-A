@@ -6,24 +6,6 @@
 }
 
 /* --- Global Layout for Main Content --- */
-.main-content {
-  padding-top: 2rem;
-}
-
-.results-summary {
-  margin-bottom: 1.5rem;
-}
-
-.results-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
-}
-
-.results-count {
-  color: #9ca3af;
-}
-
 .jobs-list {
   list-style: none;
   padding: 0;
@@ -71,4 +53,20 @@
 
 .clear-filters-btn:hover {
   background-color: #2563eb; /* Darker blue */
+}
+
+.job-message {
+  text-align: center;
+  font-size: 1.125rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.error-message {
+  text-align: center;
+  color: #dc2626;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
