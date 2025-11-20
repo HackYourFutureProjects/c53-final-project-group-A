@@ -13,6 +13,14 @@ import { updateUserProfile } from "./profile.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
+// The unified query variable
+// The query has been corrected to include all user information, including address,  and skills
+const USER_FULL_INFO_QUERY = `
+    SELECT
+        userid, email, password, firstname, lastname, avatar,
+        street, housenumber, city, country, skills
+    FROM users
+`;
 
 // SIGNUP - Create a new user
 
@@ -133,7 +141,7 @@ export const loginUser = async (req, res) => {
     }
 
     const result = await client.query(
-      "SELECT userid, email, password, firstname, lastname FROM users WHERE email = $1",
+      `${USER_FULL_INFO_QUERY} WHERE email = $1`,
       [email],
     );
 
@@ -214,8 +222,9 @@ export const getMe = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    const queryWithoutPassword = USER_FULL_INFO_QUERY.replace(", password", "");
     const result = await client.query(
-      "SELECT userid, email, firstname, lastname FROM users WHERE userid = $1",
+      `${queryWithoutPassword} WHERE userid = $1`,
       [decoded.id],
     );
 
