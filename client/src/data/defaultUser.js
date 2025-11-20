@@ -39,21 +39,20 @@ const defaultSkillNames = [
 ];
 
 export const defaultUser = {
-  firstName: "Guest",
-  lastName: "User",
+  firstname: "Guest",
+  lastname: "User",
   avatar: images.defaultAvatar,
   email: "guest@example.com",
   JWT: "",
 
   address: {
     street: "Keizersgracht",
-    houseNumber: 123,
+    housenumber: 123,
     city: "Amsterdam",
     country: "Netherlands",
   },
-  skills: defaultSkillNames.map((name) => {
-    const { skillRegex, normalizedSkill } = regexEndNormalizeSkill(name);
-    return { skill: name, normalizedSkill, skillRegex };
-  }),
+  skills: defaultSkillNames
+    .map((skill) => regexEndNormalizeSkill(skill))
+    .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill)),
   favorites: [],
 };

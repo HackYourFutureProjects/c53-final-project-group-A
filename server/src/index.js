@@ -1,11 +1,10 @@
-// Load our .env variables
-import dotenv from "dotenv";
+// Load our .env variables as early as possible so other modules that read
+// process.env at module-evaluation time receive the values.
+import "dotenv/config";
 import express from "express";
-dotenv.config();
 
 import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
-import connectDB from "./db/connectDB.js";
 import testRouter from "./testRouter.js";
 
 // The environment should set the port
@@ -18,7 +17,6 @@ if (port == null) {
 
 const startServer = async () => {
   try {
-    await connectDB();
     app.listen(port, () => {
       logInfo(`Server started on port ${port}`);
     });

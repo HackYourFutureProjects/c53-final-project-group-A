@@ -41,62 +41,76 @@ export default function SkillsSettings() {
   }
 
   return (
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-900 mb-2">
-        Skills
-      </label>
-      <div className="flex gap-3 mb-3">
-        <input
-          id="skillInput"
-          ref={skillInputRef}
-          type="text"
-          placeholder="e.g. React, TypeScript, Docker"
-          className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") addSkill();
-          }}
-          onChange={handleClearAlert}
-        />
-        <button
-          id="addSkillBtn"
-          onClick={addSkill}
-          className="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition"
-        >
-          Add
-        </button>
+    <div className="mt-4">
+      <div className="mb-3">
+        <label className="block text-sm font-medium text-gray-900 mb-2">
+          Change Skill Set
+        </label>
+        {/* Skills List */}
+        <div id="skillsList">
+          {(skills || []).map((s, idx) => (
+            <div
+              key={`${s.skill}-${idx}`}
+              className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
+            >
+              <span className="text-gray-800 mr-2">{s.skill}</span>
+              <button
+                className="text-gray-500 hover:text-red-600 transition"
+                onClick={() => removeSkill(s)}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Skills management */}
+      <div className="grid grid-cols-2 gap-4 mb-3">
+        {/* <div className="flex gap-3 mb-3"> */}
+        <div></div>
+        <div className="flex gap-3 mb-3">
+          <button
+            id="removeAllSkillsBtn"
+            onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
+            className="px-4 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
+          >
+            Remove All
+          </button>
+          <input
+            id="skillInput"
+            ref={skillInputRef}
+            type="text"
+            placeholder="e.g. React, TypeScript, Docker"
+            className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") addSkill();
+            }}
+            onChange={handleClearAlert}
+          />
+          <button
+            id="addSkillBtn"
+            onClick={addSkill}
+            className="px-4 py-1 bg-black text-white rounded hover:bg-gray-800 transition font-medium"
+          >
+            Add Skill
+          </button>
+        </div>
       </div>
       {alert.message && (
         <AlertMessage type={alert.type} message={alert.message} />
       )}
-      {/* Skills List */}
-      <div id="skillsList">
-        {(skills || []).map((s, idx) => (
-          <div
-            key={`${s.skill}-${idx}`}
-            className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
-          >
-            <span className="text-gray-800 mr-2">{s.skill}</span>
-            <button
-              className="text-gray-500 hover:text-red-600 transition"
-              onClick={() => removeSkill(s)}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

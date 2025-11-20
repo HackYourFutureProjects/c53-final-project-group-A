@@ -7,7 +7,14 @@ import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
 import { icons } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
-import { Bus } from "lucide-react";
+import {
+  Bus,
+  Briefcase,
+  Clock,
+  GraduationCap,
+  MapPin,
+  Monitor,
+} from "lucide-react";
 
 function formatTravelTime(minutes) {
   if (minutes < 60) return `${minutes} min`;
@@ -54,8 +61,6 @@ export default function JobCard({ job, onApplyClick }) {
     }
   };
 
-  const workMode = job.workMode || "On-site";
-  const location = job.displayLocation || null;
   const isFavorited = favorites[job.id] ?? job.isFavorite;
 
   return (
@@ -89,21 +94,75 @@ export default function JobCard({ job, onApplyClick }) {
             </div>
 
             <div className="job-tags">
-              {[job.seniority, job.employment_type, workMode, location].map(
-                (tag, idx) =>
-                  tag && (
-                    <span key={idx} className="job-tag-item">
-                      {tag}
-                    </span>
-                  ),
+              {/* seniority tag */}
+              {job.seniority && job.seniority !== "Niet van toepassing" && (
+                <div className="job-commute-info">
+                  <GraduationCap className="bus-icon" />
+                  <span className="job-commute">{job.seniority}</span>
+                  <span className="job-tag-separator">|</span>
+                </div>
               )}
+              {/* employment type tag */}
+              {job.employment_type && (
+                <div className="job-commute-info">
+                  <Briefcase className="bus-icon" />
+                  <span className="job-commute">{job.employment_type}</span>
+                  <span className="job-tag-separator">|</span>
+                </div>
+              )}
+              {/* work mode tag */}
+              {job.workMode && (
+                <div className="job-commute-info">
+                  <Monitor className="bus-icon" />
+                  <span className="job-commute">{job.workMode}</span>
+                  <span className="job-tag-separator">|</span>
+                </div>
+              )}
+              {/* location tag */}
+              {job.displayLocation && (
+                <div className="job-commute-info">
+                  <MapPin className="bus-icon" />
+                  <span className="job-commute">{job.displayLocation}</span>
+                  <span className="job-tag-separator">|</span>
+                </div>
+              )}
+              {/* posting date tag */}
+              {job.date_posted &&
+                (() => {
+                  const d = new Date(job.date_posted);
+                  if (isNaN(d)) return null;
+                  const dd = String(d.getDate()).padStart(2, "0");
+                  const monthNames = [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                  ];
+                  const mm = monthNames[d.getMonth()];
+                  const yyyy = d.getFullYear();
+                  const formatted = `${dd} ${mm} ${yyyy}`;
+                  return (
+                    <div className="job-commute-info">
+                      <Clock className="bus-icon" />
+                      <span className="job-commute">{formatted}</span>
+                      <span className="job-tag-separator">|</span>
+                    </div>
+                  );
+                })()}
 
               {/* commute info block*/}
               {job.travelInfo && job.travelInfo.success && (
                 <div className="job-commute-info">
                   <span className="job-tag-separator">|</span>
                   <Bus className="bus-icon" />
-
                   <span className="job-commute">
                     {formatTravelTime(job.travelInfo.averageTravelTimeMinutes)},{" "}
                     {job.travelInfo.leastTransfers} transfer

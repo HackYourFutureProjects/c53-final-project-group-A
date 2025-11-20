@@ -47,8 +47,6 @@ export default function OpenPositions() {
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
 
-  // JobCard reads toggleFavorite from UserContext directly now
-
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
 
@@ -202,17 +200,6 @@ export default function OpenPositions() {
           </button>
         </div>
       </div>
-      {/* 
-      <div className="home-address-field">
-        <label>
-          Home address:{" "}
-          <input
-            type="text"
-            value={homeAddress}
-            onChange={(e) => setHomeAddress(e.target.value)}
-          />
-        </label>
-      </div> */}
 
       <div className="main-content">
         <div className="results-summary">

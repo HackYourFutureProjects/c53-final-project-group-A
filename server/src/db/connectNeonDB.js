@@ -1,8 +1,8 @@
+import { Client } from "pg";
 import { logError, logInfo } from "../util/logging.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
-import { neon } from "@neondatabase/serverless";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,20 +27,36 @@ const connectNeonDB = async () => {
     };
   }
 
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
+
   const endConnection = async () => {
     if (connectedClient) {
-      if (connectedClient) {
-        logInfo("Neon serverless connection - managed automatically");
+      try {
+        await connectedClient.end();
+        logInfo("Database connection closed");
+      } catch (err) {
+        logError("Error closing database connection:", err.message);
       }
     }
   };
 
   try {
-    connectedClient = neon(process.env.DATABASE_URL);
+    await client.connect();
+    connectedClient = client;
     logInfo("Connected to Neon database successfully!");
   } catch (err) {
     error = err;
     logError("Database connection error:", err.message);
+    await client
+      .end()
+      .catch((e) =>
+        logError("Error during failed connection cleanup:", e.message),
+      );
   }
 
   return { error, connectedClient, endConnection };

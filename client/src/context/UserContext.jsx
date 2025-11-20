@@ -1,4 +1,10 @@
-import { createContext, useReducer, useState, useContext } from "react";
+import {
+  createContext,
+  useReducer,
+  useState,
+  useContext,
+  useEffect,
+} from "react";
 import { defaultUser } from "../data/defaultUser";
 
 const UserContext = createContext();
@@ -32,6 +38,10 @@ function userReducer(state, action) {
       );
       return { ...state, skills: filtered };
     }
+    case "REMOVE_ALL_SKILLS": {
+      // Remove all skills from the user while preserving other fields
+      return { ...state, skills: [] };
+    }
     case "TOGGLE_FAVORITE": {
       const jobId = action.payload;
       const prevFavorites = Array.isArray(state?.favorites)
@@ -53,50 +63,124 @@ function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, defaultUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
+  const API_URL = "/api/users";
 
+  // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
+  const clearMessage = () => setMessage(null);
 
-  const login = async (email, _password) => {
-    void _password;
+  // -------------------- GET CURRENT USER --------------------
+
+  async function getCurrentUser() {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/me`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (data.success && data.user) {
+        dispatch({ type: "LOGIN", payload: data.user });
+      } else {
+        dispatch({ type: "LOGOUT", payload: defaultUser });
+      }
+    } catch (err) {
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+      console.error("Error fetching current user:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  // -------------------- LOGIN --------------------
+  async function login(email, password) {
     setLoading(true);
     clearError();
+    clearMessage();
+    if (email === defaultUser.email) throw new Error("Invalid credentials");
     try {
-      await new Promise((res) => setTimeout(res, 100)); // simulate API call
-      //Simulate success or failure
-      if (email === defaultUser.email || email === "fail@example.com")
-        throw new Error("Invalid credentials");
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(
+          errorData.msg || `Login failed with status ${res.status}`,
+        );
+      }
+      const data = await res.json();
+      if (!data.success) throw new Error(data.msg || "Login failed");
+      // Set the user and token received from the server
       dispatch({
         type: "LOGIN",
-        payload: { firstName: "userlogged", lastName: "User", email },
+        payload: data.user,
       });
+      return data.user;
     } catch (err) {
       setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
-  };
-
-  const signup = async (firstName, lastName, email, _password) => {
-    void _password;
+  }
+  // -------------------- SIGNUP --------------------
+  async function signup(firstname, lastname, email, password) {
+    if (email === defaultUser.email)
+      throw new Error("Email already registered");
     setLoading(true);
     clearError();
+    clearMessage();
     try {
-      await new Promise((res) => setTimeout(res, 100));
-      if (email === defaultUser.email || email === "yahya@yahoo.com")
-        throw new Error("Email already registered");
-      dispatch({ type: "REGISTER", payload: { firstName, lastName, email } });
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: { firstname, lastname, email, password },
+        }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.msg || "Signup failed");
+      // Set the user and token received from the server
+      dispatch({ type: "REGISTER", payload: data.user });
+      return data.user;
     } catch (err) {
       setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
-  };
+  }
+  // -------------------- LOGOUT --------------------
+  async function logout() {
+    try {
+      // Attempt to log out on the server side
+      await fetch(`${API_URL}/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
-  const logout = () => dispatch({ type: "LOGOUT", payload: defaultUser });
-
-  const toggleFavorite = (jobId) => {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: jobId });
-  };
+      setMessage("Logged out successfully!");
+    } catch (err) {
+      console.error("Error logging out:", err);
+      // We clear the user and token state even if the server request fails
+      setMessage("Failed to log out from server, but local state cleared.");
+    } finally {
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+      clearError();
+    }
+  }
 
   return (
     <UserContext.Provider
@@ -109,7 +193,10 @@ function UserContextProvider({ children }) {
         signup,
         logout,
         clearError,
-        toggleFavorite,
+        message,
+        setMessage,
+        clearMessage,
+        getCurrentUser,
       }}
     >
       {children}

@@ -14,6 +14,7 @@ export async function getTransitRouteSummary({ origin, destination, apiKey }) {
     (r) =>
       r.legs[0].steps.filter((s) => s.travel_mode === "TRANSIT").length - 1,
   );
+
   return {
     averageTravelTimeMinutes:
       durations.reduce((a, b) => a + b, 0) / durations.length,
