@@ -64,23 +64,54 @@ function UserContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const API_URL = "/api/users";
+  const API_URL = "/users";
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
   const clearMessage = () => setMessage(null);
 
+  async function authFetch(route, options = {}) {
+    setLoading(true);
+    clearError();
+    clearMessage();
+
+    const url = `/api${API_URL}${route}`;
+
+    const baseOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    };
+
+    try {
+      const res = await fetch(url, { ...baseOptions, ...options });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          data.msg || `Server responded with status ${res.status} for ${url}`,
+        );
+      }
+
+      if (!data.success) {
+        throw new Error(data.msg || "Operation failed due to API policy.");
+      }
+
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   // -------------------- GET CURRENT USER --------------------
 
   async function getCurrentUser() {
-    setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/me`, {
-        method: "GET",
-        credentials: "include",
-      });
-      const data = await res.json();
-      if (data.success && data.user) {
+      const data = await authFetch("/me", { method: "GET" });
+      if (data.user) {
         dispatch({ type: "LOGIN", payload: data.user });
       } else {
         dispatch({ type: "LOGOUT", payload: defaultUser });
@@ -88,8 +119,6 @@ function UserContextProvider({ children }) {
     } catch (err) {
       dispatch({ type: "LOGOUT", payload: defaultUser });
       console.error("Error fetching current user:", err);
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -99,78 +128,48 @@ function UserContextProvider({ children }) {
 
   // -------------------- LOGIN --------------------
   async function login(email, password) {
-    setLoading(true);
-    clearError();
-    clearMessage();
     if (email === defaultUser.email) throw new Error("Invalid credentials");
+    // eslint-disable-next-line no-useless-catch
     try {
-      const res = await fetch(`${API_URL}/login`, {
+      const data = await authFetch("/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include",
       });
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData.msg || `Login failed with status ${res.status}`,
-        );
-      }
-      const data = await res.json();
-      if (!data.success) throw new Error(data.msg || "Login failed");
-      // Set the user and token received from the server
       dispatch({
         type: "LOGIN",
         payload: data.user,
       });
       return data.user;
     } catch (err) {
-      setError(err.message);
       throw err;
-    } finally {
-      setLoading(false);
     }
   }
   // -------------------- SIGNUP --------------------
   async function signup(firstname, lastname, email, password) {
     if (email === defaultUser.email)
       throw new Error("Email already registered");
-    setLoading(true);
-    clearError();
-    clearMessage();
+    // eslint-disable-next-line no-useless-catch
     try {
-      const res = await fetch(API_URL, {
+      const data = await authFetch("", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user: { firstname, lastname, email, password },
         }),
-        credentials: "include",
       });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.msg || "Signup failed");
       // Set the user and token received from the server
       dispatch({ type: "REGISTER", payload: data.user });
       return data.user;
     } catch (err) {
-      setError(err.message);
       throw err;
-    } finally {
-      setLoading(false);
     }
   }
   // -------------------- LOGOUT --------------------
   async function logout() {
     try {
       // Attempt to log out on the server side
-      await fetch(`${API_URL}/logout`, {
+      await authFetch("/logout", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
       });
-
       setMessage("Logged out successfully!");
     } catch (err) {
       console.error("Error logging out:", err);
@@ -179,6 +178,21 @@ function UserContextProvider({ children }) {
     } finally {
       dispatch({ type: "LOGOUT", payload: defaultUser });
       clearError();
+    }
+  }
+  async function updateProfile(updatedFields) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const data = await authFetch("/profile", {
+        // matches backend route
+        method: "PUT",
+        body: JSON.stringify(updatedFields),
+      });
+      dispatch({ type: "UPDATE_USER", payload: data.user });
+      setMessage("Profile updated successfully!");
+      return data.user;
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -197,6 +211,7 @@ function UserContextProvider({ children }) {
         setMessage,
         clearMessage,
         getCurrentUser,
+        updateProfile,
       }}
     >
       {children}
