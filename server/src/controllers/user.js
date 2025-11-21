@@ -173,7 +173,9 @@ export const loginUser = async (req, res) => {
       housenumber: userDataRow.housenumber,
       city: userDataRow.city,
       country: userDataRow.country,
-      skills: userDataRow.skills,
+      sskills: userDataRow.skills
+        ? userDataRow.skills.split(",").map((skill) => skill.trim())
+        : [],
       favorites: [],
     };
 
@@ -285,7 +287,9 @@ export const getMe = async (req, res) => {
       housenumber: userDataRow.housenumber,
       city: userDataRow.city,
       country: userDataRow.country,
-      skills: userDataRow.skills,
+      skills: userDataRow.skills
+        ? userDataRow.skills.split(",").map((skill) => skill.trim())
+        : [],
       favorites: [],
     };
 
