@@ -79,10 +79,23 @@ function UserContextProvider({ children }) {
         method: "GET",
         credentials: "include",
       });
-      const data = await res.json();
-      if (data.success && data.user) {
-        dispatch({ type: "LOGIN", payload: data.user });
+      // Guard: only attempt to parse JSON when the response has a JSON content-type
+      const contentType = res.headers.get("content-type") || "";
+      if (!res.ok) {
+        // Non-OK (500/401/403 etc.) — ensure we don't try to parse an empty body
+        dispatch({ type: "LOGOUT", payload: defaultUser });
+        return;
+      }
+
+      if (contentType.includes("application/json")) {
+        const data = await res.json();
+        if (data?.success && data.user) {
+          dispatch({ type: "LOGIN", payload: data.user });
+        } else {
+          dispatch({ type: "LOGOUT", payload: defaultUser });
+        }
       } else {
+        // No JSON returned — treat as not authenticated
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }
     } catch (err) {
