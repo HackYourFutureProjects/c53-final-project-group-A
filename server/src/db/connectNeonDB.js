@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
@@ -38,7 +38,6 @@ const connectNeonDB = async () => {
     if (connectedClient) {
       try {
         await connectedClient.end();
-        logInfo("Database connection closed");
       } catch (err) {
         logError("Error closing database connection:", err.message);
       }
@@ -48,7 +47,6 @@ const connectNeonDB = async () => {
   try {
     await client.connect();
     connectedClient = client;
-    logInfo("Connected to Neon database successfully!");
   } catch (err) {
     error = err;
     logError("Database connection error:", err.message);
