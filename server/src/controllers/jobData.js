@@ -16,8 +16,9 @@ export const searchJobs = async (req, res) => {
       });
     }
 
-    const searchWords = search_terms.split(new RegExp("[\\s\\-.'/]+"));
-
+    const searchWords = search_terms
+      .split(new RegExp("[\\s\\-.'/]+"))
+      .filter(Boolean);
     for (const jobWord of searchWords) {
       const fetchedJobs = isSearchReal
         ? await realJobSearch({ jobWord })
