@@ -111,7 +111,8 @@ export default function OpenPositions() {
         );
         const jobsWithTravelInfo = filteredJobs.map((job, idx) => ({
           ...job,
-          travelInfo: travelResult.travelDetails[idx],
+          travel_time: travelResult.travelDetails[idx].travel_time,
+          least_transfers: travelResult.travelDetails[idx].least_transfers,
         }));
         setJobsWithTravel(jobsWithTravelInfo);
       } catch {
