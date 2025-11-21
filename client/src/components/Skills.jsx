@@ -5,12 +5,12 @@ function normalizeDescription(str) {
 }
 
 function getSkillsInDescription(text, skills = []) {
-  const textSpaced = normalizeDescription(text);
+  const normalized_description = normalizeDescription(text);
   return skills
     .filter((s) => {
       let re = null;
       if (s.skillRegex instanceof RegExp) re = s.skillRegex;
-      return re ? re.test(textSpaced) : false;
+      return re ? re.test(normalized_description) : false;
     })
     .map((s) => s.skill);
 }
