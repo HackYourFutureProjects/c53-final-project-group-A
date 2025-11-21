@@ -5,7 +5,6 @@ import express from "express";
 
 import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
-import testRouter from "./testRouter.js";
 
 // The environment should set the port
 const port = process.env.PORT;
@@ -42,10 +41,7 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-/****** For cypress we want to provide an endpoint to seed our data ******/
-if (process.env.NODE_ENV !== "production") {
-  app.use("/api/test", testRouter);
-}
+/****** Removed test router import and mounting. The `testRouter.js` file was deleted and is no longer used. ******/
 
 // Start the server
 startServer();
