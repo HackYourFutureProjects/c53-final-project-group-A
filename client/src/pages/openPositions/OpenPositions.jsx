@@ -3,7 +3,6 @@ import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { defaultUser, formatAddress } from "../../data/defaultUser";
-// removed UseUser import; JobCard now uses favorites from context directly
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
@@ -14,31 +13,6 @@ import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 import { useEffect } from "react";
 import useTravelData from "../../hooks/useTravelData";
-
-//preprocessing
-// const preprocessJobs = (jobs) => {
-//   return jobs.map((job) => {
-//     // handle work_mode logic - checking all the edge cases
-//     let work_mode = "On-site"; //default - covers all falsy values
-//     if (job.remote_derived === true || job.remote_derived === "Remote") {
-//       work_mode = "Remote";
-//     } else if (job.remote_derived === "Hybrid") {
-//       work_mode = "Hybrid";
-//     }
-
-//     // handle location logic
-//     const display_location =
-//       job.locations_derived && job.locations_derived.length > 0
-//         ? job.locations_derived[0]
-//         : null;
-
-//     return {
-//       ...job,
-//       work_mode,
-//       display_location,
-//     };
-//   });
-// };
 
 export default function OpenPositions() {
   // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
@@ -80,11 +54,6 @@ export default function OpenPositions() {
   const [homeAddress] = useState(formatAddress(defaultUser.address));
   const { calculateBatchTravel, error: travelError } = useTravelData();
 
-  //preprocess jobs wit useMemo - avoid recalculating
-  // const processedJobsWithMemo = useMemo(() => {
-  //   return preprocessJobs(allJobs);
-  // }, [allJobs]);
-
   const handleFilterChange = (filterKey, value, isChecked) => {
     setActiveFilters((prev) => {
       const newSet = new Set(prev[filterKey]);
@@ -110,7 +79,6 @@ export default function OpenPositions() {
   };
 
   // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
-  // const filteredJobs = processedJobsWithMemo;
   const filteredJobs = allJobs;
 
   // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
