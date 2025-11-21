@@ -1,3 +1,7 @@
+function normalizeDescription(str) {
+  return " " + str.replace(/[^A-Za-z0-9+#]/g, " ").replace(/ +/g, " ") + " ";
+}
+
 export default function processJobPost(job) {
   const {
     id,
@@ -9,7 +13,6 @@ export default function processJobPost(job) {
     locations_derived,
     seniority,
     description_text,
-    normalized_description,
     organization,
     organization_url,
     organization_logo,
@@ -18,6 +21,8 @@ export default function processJobPost(job) {
   const work_mode = remote_derived === true ? "Remote" : "On-site";
   const display_location =
     locations_derived.length > 0 ? locations_derived[0] : null;
+  const normalized_description =
+    normalizeDescription(title) + normalizeDescription(description_text);
   const travel_time = "";
   const least_transfers = "";
 
