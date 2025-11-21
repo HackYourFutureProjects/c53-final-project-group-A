@@ -119,10 +119,10 @@ export default function JobCard({ job, onApplyClick }) {
                 </div>
               )}
               {/* location tag */}
-              {job.displayLocation && (
+              {job.display_location && (
                 <div className="job-commute-info">
                   <MapPin className="job-icon" />
-                  <span className="job-commute">{job.displayLocation}</span>
+                  <span className="job-commute">{job.display_location}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}

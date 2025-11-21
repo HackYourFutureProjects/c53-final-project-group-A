@@ -27,7 +27,7 @@ const preprocessJobs = (jobs) => {
     }
 
     // handle location logic
-    const displayLocation =
+    const display_location =
       job.locations_derived && job.locations_derived.length > 0
         ? job.locations_derived[0]
         : null;
@@ -35,7 +35,7 @@ const preprocessJobs = (jobs) => {
     return {
       ...job,
       workMode,
-      displayLocation,
+      display_location,
     };
   });
 };
@@ -133,7 +133,7 @@ export default function OpenPositions() {
         return;
       }
       const workCities = filteredJobs.map(
-        (job) => job.city || job.displayLocation,
+        (job) => job.city || job.display_location,
       );
       try {
         const travelResult = await calculateBatchTravel(
@@ -150,8 +150,6 @@ export default function OpenPositions() {
       }
     }
     fetchTravelInfo();
-
-    // eslint-disable-next-line
   }, [filteredJobs, homeAddress]);
 
   return (
