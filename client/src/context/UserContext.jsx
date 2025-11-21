@@ -6,6 +6,7 @@ import {
   useEffect,
 } from "react";
 import { defaultUser } from "../data/defaultUser";
+import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
 const UserContext = createContext();
 
@@ -19,6 +20,7 @@ function userReducer(state, action) {
       const next = { ...state, ...payload };
       return next;
     }
+
     case "LOGOUT":
       return action.payload || defaultUser;
     case "ADD_SKILL": {
@@ -47,6 +49,7 @@ function userReducer(state, action) {
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
+
       const exists = prevFavorites.includes(jobId);
       const newFavorites = exists
         ? prevFavorites.filter((id) => id !== jobId)
@@ -85,7 +88,13 @@ function UserContextProvider({ children }) {
 
     try {
       const res = await fetch(url, { ...baseOptions, ...options });
-      const data = await res.json();
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text || "{}");
+      } catch {
+        throw new Error("Server returned invalid JSON or is down");
+      }
 
       if (!res.ok) {
         throw new Error(
@@ -111,14 +120,38 @@ function UserContextProvider({ children }) {
   async function getCurrentUser() {
     try {
       const data = await authFetch("/me", { method: "GET" });
+
       if (data.user) {
-        dispatch({ type: "LOGIN", payload: data.user });
+        //  FIX SKILLS HERE
+        const skills = Array.isArray(data.user.skills) ? data.user.skills : [];
+
+        const normalizedSkills = skills
+          .map((skill) => regexEndNormalizeSkill(skill))
+          .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill));
+
+        //  SEND THE FIXED USER TO THE STATE
+        dispatch({
+          type: "LOGIN",
+          payload: { ...data.user, skills: normalizedSkills },
+        });
       } else {
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }
+
+      clearMessage();
     } catch (err) {
-      dispatch({ type: "LOGOUT", payload: defaultUser });
+      if (
+        err.message.includes("token") ||
+        err.message.includes("Token") ||
+        err.message.includes("not provided")
+      ) {
+        dispatch({ type: "LOGOUT", payload: defaultUser });
+        clearError(); // removes red error message on reload
+        return;
+      }
+
       console.error("Error fetching current user:", err);
+      dispatch({ type: "LOGOUT", payload: defaultUser });
     }
   }
 
@@ -135,9 +168,16 @@ function UserContextProvider({ children }) {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
+
+      const skills = Array.isArray(data.user.skills) ? data.user.skills : [];
+
+      const normalizedSkills = skills
+        .map((skill) => regexEndNormalizeSkill(skill))
+        .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill));
+
       dispatch({
         type: "LOGIN",
-        payload: data.user,
+        payload: { ...data.user, skills: normalizedSkills },
       });
       return data.user;
     } catch (err) {
