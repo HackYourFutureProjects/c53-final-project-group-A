@@ -14,11 +14,11 @@ export const searchJobs = async (req, res) => {
         msg: "You need to provide 'search_terms' in the request body.",
       });
     }
-    const jobTitle = search_terms;
+    const jobWord = search_terms;
 
     const fetchedJobs = isSearchReal
-      ? await realJobSearch({ jobTitle })
-      : fakeJobSearch({ jobTitle });
+      ? await realJobSearch({ jobWord })
+      : fakeJobSearch({ jobWord });
 
     res.status(200).json({ success: true, result: fetchedJobs });
   } catch (error) {
