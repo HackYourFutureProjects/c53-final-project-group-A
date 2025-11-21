@@ -1,6 +1,7 @@
 import { logError } from "../util/logging.js";
 import { realJobSearch } from "./realJobSearch.js";
 import { fakeJobSearch } from "./fakeJobSearch.js";
+import processJobPost from "../util/processJobPost.js";
 
 const isSearchReal = false; // Set to true to enable real job search
 
@@ -25,7 +26,7 @@ export const searchJobs = async (req, res) => {
         : fakeJobSearch({ jobWord });
       for (const job of fetchedJobs) {
         if (job.id && !aggregatedJobsIdsSet.has(job.id)) {
-          aggregatedJobs.push(job);
+          aggregatedJobs.push(processJobPost(job));
           aggregatedJobsIdsSet.add(job.id);
         }
       }
