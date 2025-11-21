@@ -7,8 +7,8 @@ const isSearchReal = false; // Set to true to enable real job search
 export const searchJobs = async (req, res) => {
   try {
     const { search_terms } = req.body;
+    const aggregatedJobsIdsSet = new Set();
     let aggregatedJobs = [];
-    let aggregatedJobsIds;
     if (!search_terms || !search_terms.trim()) {
       return res.status(400).json({
         success: false,
@@ -16,22 +16,19 @@ export const searchJobs = async (req, res) => {
       });
     }
 
-    const searchWords = search_terms.split(/[\s\-.'/]+/);
-    searchWords.forEach(async (jobWord) => {
-      aggregatedJobsIds = aggregatedJobs
-        .map((job) => {
-          job.id;
-        })
-        .filter(Boolean);
+    const searchWords = search_terms.split(new RegExp("[\\s\\-.'/]+"));
+
+    for (const jobWord of searchWords) {
       const fetchedJobs = isSearchReal
         ? await realJobSearch({ jobWord })
         : fakeJobSearch({ jobWord });
-      fetchedJobs.forEach((job) => {
-        if (job.id && !aggregatedJobsIds.includes(job.id)) {
+      for (const job of fetchedJobs) {
+        if (job.id && !aggregatedJobsIdsSet.has(job.id)) {
           aggregatedJobs.push(job);
+          aggregatedJobsIdsSet.add(job.id);
         }
-      });
-    });
+      }
+    }
 
     res.status(200).json({ success: true, result: aggregatedJobs });
   } catch (error) {
