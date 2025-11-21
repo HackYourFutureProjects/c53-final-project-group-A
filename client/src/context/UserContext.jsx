@@ -6,7 +6,8 @@ import {
   useEffect,
 } from "react";
 import { defaultUser } from "../data/defaultUser";
-import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
+import { fixUserData } from "../util/fixUserData";
+import { fixUserSkills } from "../util/fixUserSkills";
 
 const UserContext = createContext();
 
@@ -123,16 +124,14 @@ function UserContextProvider({ children }) {
 
       if (data.user) {
         //  FIX SKILLS HERE
-        const skills = Array.isArray(data.user.skills) ? data.user.skills : [];
+        const fixedUser = fixUserData(data.user);
 
-        const normalizedSkills = skills
-          .map((skill) => regexEndNormalizeSkill(skill))
-          .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill));
+        const normalizedSkills = fixUserSkills(fixedUser.skills);
 
         //  SEND THE FIXED USER TO THE STATE
         dispatch({
           type: "LOGIN",
-          payload: { ...data.user, skills: normalizedSkills },
+          payload: { ...fixedUser, skills: normalizedSkills },
         });
       } else {
         dispatch({ type: "LOGOUT", payload: defaultUser });
@@ -169,15 +168,13 @@ function UserContextProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
 
-      const skills = Array.isArray(data.user.skills) ? data.user.skills : [];
+      const fixedUser = fixUserData(data.user);
 
-      const normalizedSkills = skills
-        .map((skill) => regexEndNormalizeSkill(skill))
-        .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill));
+      const normalizedSkills = fixUserSkills(fixedUser.skills);
 
       dispatch({
         type: "LOGIN",
-        payload: { ...data.user, skills: normalizedSkills },
+        payload: { ...fixedUser, skills: normalizedSkills },
       });
       return data.user;
     } catch (err) {
@@ -196,9 +193,10 @@ function UserContextProvider({ children }) {
           user: { firstname, lastname, email, password },
         }),
       });
+      const fixedUser = fixUserData(data.user);
       // Set the user and token received from the server
-      dispatch({ type: "REGISTER", payload: data.user });
-      return data.user;
+      dispatch({ type: "REGISTER", payload: fixedUser });
+      return fixedUser;
     } catch (err) {
       throw err;
     }
@@ -228,9 +226,10 @@ function UserContextProvider({ children }) {
         method: "PUT",
         body: JSON.stringify(updatedFields),
       });
-      dispatch({ type: "UPDATE_USER", payload: data.user });
+      const fixedUser = fixUserData(data.user);
+      dispatch({ type: "UPDATE_USER", payload: fixedUser });
       setMessage("Profile updated successfully!");
-      return data.user;
+      return fixedUser;
     } catch (err) {
       throw err;
     }
