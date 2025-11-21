@@ -95,7 +95,7 @@ export default function JobCard({ job, onApplyClick }) {
 
             <div className="job-tags">
               {/* seniority tag */}
-              {job.seniority && job.seniority !== "Niet van toepassing" && (
+              {job.seniority && (
                 <div className="job-commute-info">
                   <GraduationCap className="job-icon" />
                   <span className="job-commute">{job.seniority}</span>
