@@ -1,4 +1,4 @@
-import { logError, logInfo } from "../util/logging.js";
+import { logError } from "../util/logging.js";
 import { realJobSearch } from "./realJobSearch.js";
 import { fakeJobSearch } from "./fakeJobSearch.js";
 
@@ -7,21 +7,23 @@ const isSearchReal = false; // Set to true to enable real job search
 export const searchJobs = async (req, res) => {
   try {
     const { search_terms } = req.body;
-
+    let aggregatedJobs = [];
     if (!search_terms || !search_terms.trim()) {
       return res.status(400).json({
         success: false,
         msg: "You need to provide 'search_terms' in the request body.",
       });
     }
-    const jobWord = search_terms;
 
-    const fetchedJobs = isSearchReal
-      ? await realJobSearch({ jobWord })
-      : fakeJobSearch({ jobWord });
-    logInfo(fetchedJobs);
+    const searchWords = search_terms.split(/[\s\-.'/]+/);
+    searchWords.forEach(async (jobWord) => {
+      const fetchedJobs = isSearchReal
+        ? await realJobSearch({ jobWord })
+        : fakeJobSearch({ jobWord });
+      aggregatedJobs = [...aggregatedJobs, ...fetchedJobs];
+    });
 
-    res.status(200).json({ success: true, result: fetchedJobs });
+    res.status(200).json({ success: true, result: aggregatedJobs });
   } catch (error) {
     logError("searchJobs error:", error);
     res.status(500).json({

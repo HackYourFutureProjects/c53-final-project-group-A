@@ -7,8 +7,8 @@ const __dirname = path.dirname(__filename);
 const jobsPath = path.join(__dirname, "..", "data", "JobsDataset.json");
 const jobs = JSON.parse(fs.readFileSync(jobsPath, "utf-8"));
 
-export function fakeJobSearch({ jobTitle }) {
-  const searchQuery = jobTitle?.toLowerCase() || "";
+export function fakeJobSearch({ jobWord }) {
+  const searchQuery = jobWord?.toLowerCase();
   let filteredJobs = jobs;
 
   if (searchQuery) {
