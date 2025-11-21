@@ -1,4 +1,4 @@
-import { logError } from "../util/logging.js";
+import { logError, logInfo } from "../util/logging.js";
 import { realJobSearch } from "./realJobSearch.js";
 import { fakeJobSearch } from "./fakeJobSearch.js";
 
@@ -19,7 +19,7 @@ export const searchJobs = async (req, res) => {
     const fetchedJobs = isSearchReal
       ? await realJobSearch({ jobWord })
       : fakeJobSearch({ jobWord });
-    console.log(fetchedJobs);
+    logInfo(fetchedJobs);
 
     res.status(200).json({ success: true, result: fetchedJobs });
   } catch (error) {
