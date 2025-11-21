@@ -19,6 +19,7 @@ export const searchJobs = async (req, res) => {
     const fetchedJobs = isSearchReal
       ? await realJobSearch({ jobWord })
       : fakeJobSearch({ jobWord });
+    console.log(fetchedJobs);
 
     res.status(200).json({ success: true, result: fetchedJobs });
   } catch (error) {
