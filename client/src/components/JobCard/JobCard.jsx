@@ -159,7 +159,7 @@ export default function JobCard({ job, onApplyClick }) {
                 })()}
 
               {/* commute info block*/}
-              {job.travelInfo && job.travelInfo.success && (
+              {job.travelInfo && (
                 <div className="job-commute-info">
                   {/* <span className="job-tag-separator">|</span> */}
                   <Bus className="job-icon" />
@@ -168,11 +168,6 @@ export default function JobCard({ job, onApplyClick }) {
                     {job.travelInfo.least_transfers} transfer
                     {job.travelInfo.least_transfers !== 1 ? "s" : ""}
                   </span>
-                </div>
-              )}
-              {job.travelInfo && !job.travelInfo.success && (
-                <div className="job-commute-info error">
-                  Commute info unavailable
                 </div>
               )}
             </div>
