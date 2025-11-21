@@ -8,6 +8,7 @@ export const searchJobs = async (req, res) => {
   try {
     const { search_terms } = req.body;
     let aggregatedJobs = [];
+    let aggregatedJobsIds;
     if (!search_terms || !search_terms.trim()) {
       return res.status(400).json({
         success: false,
@@ -17,10 +18,19 @@ export const searchJobs = async (req, res) => {
 
     const searchWords = search_terms.split(/[\s\-.'/]+/);
     searchWords.forEach(async (jobWord) => {
+      aggregatedJobsIds = aggregatedJobs
+        .map((job) => {
+          job.id;
+        })
+        .filter(Boolean);
       const fetchedJobs = isSearchReal
         ? await realJobSearch({ jobWord })
         : fakeJobSearch({ jobWord });
-      aggregatedJobs = [...aggregatedJobs, ...fetchedJobs];
+      fetchedJobs.forEach((job) => {
+        if (job.id && !aggregatedJobsIds.includes(job.id)) {
+          aggregatedJobs.push(job);
+        }
+      });
     });
 
     res.status(200).json({ success: true, result: aggregatedJobs });
