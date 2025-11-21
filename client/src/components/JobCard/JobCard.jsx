@@ -164,7 +164,7 @@ export default function JobCard({ job, onApplyClick }) {
                   {/* <span className="job-tag-separator">|</span> */}
                   <Bus className="job-icon" />
                   <span className="job-commute">
-                    {formatTravelTime(job.travelInfo.averageTravelTimeMinutes)},{" "}
+                    {formatTravelTime(job.travelInfo.travel_time)},{" "}
                     {job.travelInfo.leastTransfers} transfer
                     {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
                   </span>

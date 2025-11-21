@@ -23,9 +23,7 @@ export async function calculateTravelTime(req, res) {
       result: {
         homeAddress,
         workCity,
-        averageTravelTimeMinutes: Math.round(
-          travelData.averageTravelTimeMinutes,
-        ),
+        travel_time: Math.round(travelData.travel_time),
         leastTransfers: travelData.leastTransfers,
         routesCount: travelData.routesCount,
       },
@@ -60,7 +58,7 @@ export default async function calculateBatchTravelTime(req, res) {
       ) {
         results.push({
           workCity,
-          averageTravelTimeMinutes: 0,
+          travel_time: 0,
           leastTransfers: 0,
           success: true,
         });
@@ -75,9 +73,7 @@ export default async function calculateBatchTravelTime(req, res) {
 
         results.push({
           workCity,
-          averageTravelTimeMinutes: Math.round(
-            travelData.averageTravelTimeMinutes,
-          ),
+          travel_time: Math.round(travelData.travel_time),
           leastTransfers: travelData.leastTransfers,
           routesCount: travelData.routesCount,
           success: true,
