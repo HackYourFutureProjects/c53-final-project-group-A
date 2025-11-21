@@ -6,9 +6,7 @@ import express from "express";
 import app from "./app.js";
 import { logInfo, logError } from "./util/logging.js";
 
-// The environment should set the port
 const port = process.env.PORT;
-
 if (port == null) {
   logError(new Error("Cannot find a PORT number, did you create a .env file?"));
 }
