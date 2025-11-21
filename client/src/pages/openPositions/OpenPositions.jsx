@@ -18,12 +18,12 @@ import useTravelData from "../../hooks/useTravelData";
 //preprocessing
 const preprocessJobs = (jobs) => {
   return jobs.map((job) => {
-    // handle workMode logic - checking all the edge cases
-    let workMode = "On-site"; //default - covers all falsy values
+    // handle work_mode logic - checking all the edge cases
+    let work_mode = "On-site"; //default - covers all falsy values
     if (job.remote_derived === true || job.remote_derived === "Remote") {
-      workMode = "Remote";
+      work_mode = "Remote";
     } else if (job.remote_derived === "Hybrid") {
-      workMode = "Hybrid";
+      work_mode = "Hybrid";
     }
 
     // handle location logic
@@ -34,7 +34,7 @@ const preprocessJobs = (jobs) => {
 
     return {
       ...job,
-      workMode,
+      work_mode,
       display_location,
     };
   });
@@ -53,7 +53,7 @@ export default function OpenPositions() {
   const [activeFilters, setActiveFilters] = useState({
     seniorityLevel: new Set(),
     employmentType: new Set(),
-    workMode: new Set(),
+    work_mode: new Set(),
   });
   const [sortBy, setSortBy] = useState("Skill match");
 
@@ -67,7 +67,7 @@ export default function OpenPositions() {
     "Not Applicable",
   ];
   const jobTypeOptions = ["Full-time", "Contract", "Part-time", "Volunteer"];
-  const workModeOptions = ["On-site", "Hybrid", "Remote"];
+  const work_modeOptions = ["On-site", "Hybrid", "Remote"];
   const sortOptions = [
     "Skill match",
     "Newest First",
@@ -103,7 +103,7 @@ export default function OpenPositions() {
     setActiveFilters({
       seniorityLevel: new Set(),
       employmentType: new Set(),
-      workMode: new Set(),
+      work_mode: new Set(),
     });
     setSortBy("Skill match");
     setCurrentPage(1);
@@ -177,9 +177,9 @@ export default function OpenPositions() {
             <DropdownFilter
               buttonText="Work mode"
               title="Work mode"
-              options={workModeOptions}
-              filterKey="workMode"
-              activeValues={activeFilters.workMode}
+              options={work_modeOptions}
+              filterKey="work_mode"
+              activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
             <DropdownFilter

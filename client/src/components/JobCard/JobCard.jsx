@@ -111,10 +111,10 @@ export default function JobCard({ job, onApplyClick }) {
                 </div>
               )}
               {/* work mode tag */}
-              {job.workMode && (
+              {job.work_mode && (
                 <div className="job-commute-info">
                   <Monitor className="job-icon" />
-                  <span className="job-commute">{job.workMode}</span>
+                  <span className="job-commute">{job.work_mode}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
