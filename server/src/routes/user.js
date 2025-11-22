@@ -4,6 +4,7 @@ import {
   loginUser,
   logoutUser,
   getMe,
+  updateProfile,
 } from "../controllers/user.js";
 import { verifyToken } from "../middleware/authVerify.js";
 import { createAuthLimiter } from "../middleware/rateLimiter.js";
@@ -17,5 +18,6 @@ userRouter.post("/", authLimiter, createUser);
 userRouter.post("/login", authLimiter, loginUser); // LOGIN
 userRouter.post("/logout", verifyToken, logoutUser); // LOGOUT
 userRouter.get("/me", verifyToken, getMe);
+userRouter.put("/profile", verifyToken, updateProfile);
 
 export default userRouter;

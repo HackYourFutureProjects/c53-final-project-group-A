@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SkillsSettings from "../../components/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
@@ -23,7 +23,19 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, dispatch } = UseUser();
+  const { user, updateProfile } = UseUser();
+
+  useEffect(() => {
+    if (user) {
+      if (streetInputRef.current)
+        streetInputRef.current.value = user.street || "";
+      if (houseInputRef.current)
+        houseInputRef.current.value = user.houseNumber || "";
+      if (cityInputRef.current) cityInputRef.current.value = user.city || "";
+      if (countryInputRef.current)
+        countryInputRef.current.value = user.country || "";
+    }
+  }, [user]);
 
   function handleClearAlert() {
     if (!alert.message) return;
@@ -35,60 +47,85 @@ export default function Profile() {
     navigate("/login", {});
   };
 
-  function handleSaveClick(
-    streetInputRef,
-    houseInputRef,
-    cityInputRef,
-    countryInputRef,
-  ) {
-    let firstname = firstnameInputRef.current;
-    let lastname = lastnameInputRef.current;
-    let currentPassword = currentPasswordInputRef.current;
-    let newPassword = newPasswordInputRef.current;
-    let confirmPassword = confirmPasswordInputRef.current;
-    let street = streetInputRef.current;
-    let housenumber = houseInputRef.current;
-    let city = cityInputRef.current;
-    let country = countryInputRef.current;
+  async function handleSaveClick() {
+    handleClearAlert();
+
+    const firstnameEl = firstnameInputRef.current;
+    const lastnameEl = lastnameInputRef.current;
+    const currentPasswordEl = currentPasswordInputRef.current;
+    const newPasswordEl = newPasswordInputRef.current;
+    const confirmPasswordEl = confirmPasswordInputRef.current;
+    const streetEl = streetInputRef.current;
+    const housenumberEl = houseInputRef.current;
+    const cityEl = cityInputRef.current;
+    const countryEl = countryInputRef.current;
+
     if (
-      !firstname ||
-      !lastname ||
-      !street ||
-      !housenumber ||
-      !city ||
-      !country
+      !firstnameEl ||
+      !lastnameEl ||
+      !streetEl ||
+      !housenumberEl ||
+      !cityEl ||
+      !countryEl
     ) {
+      setAlert({
+        type: "error",
+        message: "Error: Input fields references are missing.",
+      });
       return;
     }
+
     if (user && user.email !== defaultUser.email) {
-      // First and Last Name
-      firstname = cleanUpText(firstname.value || "");
-      lastname = cleanUpText(lastname.value || "");
-      console.log("Saving settings for:", firstname, lastname);
-      // Passwords
-      newPassword = newPassword.value || "";
-      confirmPassword = confirmPassword.value || "";
-      if (currentPassword || newPassword || confirmPassword) {
-        console.log(
-          "newPassword, confirmPassword",
-          newPassword,
-          confirmPassword,
-        );
-        if (newPassword === confirmPassword) {
-          console.log("Password updated.");
-        } else {
-          setAlert({ type: "error", message: "Passwords do not match." });
+      const updatedFields = {};
+
+      const firstname = cleanUpText(firstnameEl.value || "");
+      const lastname = cleanUpText(lastnameEl.value || "");
+
+      // FIX: Use String() for comparison to ensure changes are detected even if the value is null or undefined
+      const currentFirstName = String(user.firstName || "");
+      const currentLastName = String(user.lastName || "");
+
+      if (String(firstname) !== currentFirstName)
+        updatedFields.firstname = firstname;
+      if (String(lastname) !== currentLastName)
+        updatedFields.lastname = lastname;
+
+      const newPassword = newPasswordEl.value || "";
+      const confirmPassword = confirmPasswordEl.value || "";
+      const currentPassword = currentPasswordEl.value || "";
+
+      if (newPassword || confirmPassword || currentPassword) {
+        if (!currentPassword) {
+          setAlert({
+            type: "error",
+            message: "Current password is required to change password.",
+          });
           return;
         }
+        if (newPassword !== confirmPassword) {
+          setAlert({ type: "error", message: "New passwords do not match." });
+          return;
+        }
+        if (newPassword && newPassword.length < 8) {
+          setAlert({
+            type: "error",
+            message: "New password must be 8 characters or more.",
+          });
+          return;
+        }
+
+        if (newPassword) {
+          updatedFields.password = newPassword;
+          updatedFields.currentPassword = currentPassword;
+        }
       }
-      // Address
-      street = cleanUpText(street.value || "");
-      housenumber = cleanUpText(housenumber.value || "");
-      city = cleanUpText(city.value || "");
-      country = cleanUpText(country.value || "");
-      const streetValidationError = validateAddressTextInputs({
-        text: street,
-      });
+
+      const street = cleanUpText(streetEl.value || "");
+      const housenumber = cleanUpText(housenumberEl.value || "");
+      const city = cleanUpText(cityEl.value || "");
+      const country = cleanUpText(countryEl.value || "");
+
+      const streetValidationError = validateAddressTextInputs({ text: street });
       const cityValidationError = validateAddressTextInputs({
         text: city,
         type: "city",
@@ -98,6 +135,7 @@ export default function Profile() {
         type: "country",
       });
       const houseValidationError = validateHouseNoInput({ text: housenumber });
+
       if (
         streetValidationError ||
         cityValidationError ||
@@ -112,27 +150,47 @@ export default function Profile() {
         );
         return;
       }
-      dispatch({
-        type: "UPDATE_USER",
-        payload: {
-          firstname,
-          lastname,
-          address: { street, housenumber, city, country },
-        },
-      });
+
+      const currentStreet = String(user.street || "");
+      const currentCity = String(user.city || "");
+      const currentCountry = String(user.country || "");
+      // FIX: Use String() for comparison to ensure the house number updates correctly
+      const currentHouseNo = String(user.houseNumber || "");
+
+      if (String(street) !== currentStreet) updatedFields.street = street;
+      if (String(city) !== currentCity) updatedFields.city = city;
+      if (String(country) !== currentCountry) updatedFields.country = country;
+
+      if (String(housenumber) !== currentHouseNo)
+        updatedFields.housenumber = housenumber;
+
+      if (Object.keys(updatedFields).length === 0) {
+        setAlert({ type: "info", message: "No changes detected." });
+        return;
+      }
+
+      try {
+        await updateProfile(updatedFields);
+        setAlert({ type: "success", message: "Profile updated successfully!" });
+
+        if (newPassword) {
+          currentPasswordEl.value = "";
+          newPasswordEl.value = "";
+          confirmPasswordInputRef.current.value = "";
+        }
+      } catch (error) {
+        setAlert({
+          type: "error",
+          message: error.message || "Failed to save profile. Check connection.",
+        });
+      }
     } else {
       setShowSavePopup(true);
     }
   }
 
   function pressEnterKey(e) {
-    if (e.key === "Enter")
-      handleSaveClick(
-        streetInputRef,
-        houseInputRef,
-        cityInputRef,
-        countryInputRef,
-      );
+    if (e.key === "Enter") handleSaveClick();
   }
   return (
     <div className="content-container">
@@ -180,7 +238,7 @@ export default function Profile() {
               <input
                 ref={firstnameInputRef}
                 type="text"
-                defaultValue={user.firstname}
+                defaultValue={user.firstName}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -193,7 +251,7 @@ export default function Profile() {
               <input
                 ref={lastnameInputRef}
                 type="text"
-                defaultValue={user.lastname}
+                defaultValue={user.lastName}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -203,7 +261,6 @@ export default function Profile() {
         </div>
       </div>
       <AddressSettings
-        handleSaveClick={handleSaveClick}
         streetInputRef={streetInputRef}
         houseInputRef={houseInputRef}
         cityInputRef={cityInputRef}
@@ -270,14 +327,7 @@ export default function Profile() {
         <div>
           <button
             id="saveBtn"
-            onClick={() =>
-              handleSaveClick(
-                streetInputRef,
-                houseInputRef,
-                cityInputRef,
-                countryInputRef,
-              )
-            }
+            onClick={handleSaveClick}
             className="bg-blue-500 text-white text-2xl px-6 py-3 rounded hover:bg-blue-600 transition font-medium"
           >
             Save
