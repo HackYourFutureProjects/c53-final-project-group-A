@@ -30,12 +30,9 @@ export default function SearchInput() {
     setError(null);
     setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
 
-    const searchWords = searchTerm.trim().split(/[\s\-.'/]+/);
-    searchWords.forEach((word) => {
-      performFetch({
-        method: "POST",
-        body: JSON.stringify({ search_terms: word.trim() }),
-      });
+    performFetch({
+      method: "POST",
+      body: JSON.stringify({ search_terms: searchTerm }),
     });
 
     setShowResults(true);

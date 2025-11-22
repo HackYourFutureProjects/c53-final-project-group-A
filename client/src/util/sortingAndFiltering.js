@@ -50,7 +50,7 @@ function checkSeniority(jobSeniority, activeFilters) {
 }
 
 // work mode
-function deriveWorkMode(job) {
+function derivework_mode(job) {
   if (job.remote_derived === true) return "REMOTE";
 
   if (job.location_type) {
@@ -80,7 +80,7 @@ export function sortAndFilterJobs(
   sortBy,
   searchTerm = "",
 ) {
-  const { seniorityLevel, employmentType, workMode } = activeFilters;
+  const { seniorityLevel, employmentType, work_mode } = activeFilters;
   const searchLower = searchTerm.toLowerCase().trim();
 
   let filtered = allJobs.filter((job) => {
@@ -93,9 +93,9 @@ export function sortAndFilterJobs(
       employmentType.size === 0 || employmentType.has(normalizedJobType);
 
     //work mode check
-    const derivedMode = deriveWorkMode(job);
-    // const jobWorkMode = job.remote_derived ? "Remote" : "On-site";
-    const matchesWorkMode = workMode.size === 0 || workMode.has(derivedMode);
+    const derivedMode = derivework_mode(job);
+    // const jobwork_mode = job.remote_derived ? "Remote" : "On-site";
+    const matcheswork_mode = work_mode.size === 0 || work_mode.has(derivedMode);
 
     //search term check
     const jobLocation = job.locations_derived?.[0] || "";
@@ -111,7 +111,7 @@ export function sortAndFilterJobs(
       jobDesc.toLowerCase().includes(searchLower);
 
     return (
-      matchesSeniority && matchesJobType && matchesWorkMode && matchesSearch
+      matchesSeniority && matchesJobType && matcheswork_mode && matchesSearch
     );
   });
 

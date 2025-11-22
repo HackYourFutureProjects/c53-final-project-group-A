@@ -1,9 +1,8 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { defaultUser, formatAddress } from "../../data/defaultUser";
-// removed UseUser import; JobCard now uses favorites from context directly
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
@@ -14,31 +13,6 @@ import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 import { useEffect } from "react";
 import useTravelData from "../../hooks/useTravelData";
-
-//preprocessing
-const preprocessJobs = (jobs) => {
-  return jobs.map((job) => {
-    // handle workMode logic - checking all the edge cases
-    let workMode = "On-site"; //default - covers all falsy values
-    if (job.remote_derived === true || job.remote_derived === "Remote") {
-      workMode = "Remote";
-    } else if (job.remote_derived === "Hybrid") {
-      workMode = "Hybrid";
-    }
-
-    // handle location logic
-    const displayLocation =
-      job.locations_derived && job.locations_derived.length > 0
-        ? job.locations_derived[0]
-        : null;
-
-    return {
-      ...job,
-      workMode,
-      displayLocation,
-    };
-  });
-};
 
 export default function OpenPositions() {
   // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
@@ -53,7 +27,7 @@ export default function OpenPositions() {
   const [activeFilters, setActiveFilters] = useState({
     seniorityLevel: new Set(),
     employmentType: new Set(),
-    workMode: new Set(),
+    work_mode: new Set(),
   });
   const [sortBy, setSortBy] = useState("Skill match");
 
@@ -67,7 +41,7 @@ export default function OpenPositions() {
     "Not Applicable",
   ];
   const jobTypeOptions = ["Full-time", "Contract", "Part-time", "Volunteer"];
-  const workModeOptions = ["On-site", "Hybrid", "Remote"];
+  const work_modeOptions = ["On-site", "Hybrid", "Remote"];
   const sortOptions = [
     "Skill match",
     "Newest First",
@@ -79,11 +53,6 @@ export default function OpenPositions() {
   const [jobsWithTravel, setJobsWithTravel] = useState([]);
   const [homeAddress] = useState(formatAddress(defaultUser.address));
   const { calculateBatchTravel, error: travelError } = useTravelData();
-
-  //preprocess jobs wit useMemo - avoid recalculating
-  const processedJobsWithMemo = useMemo(() => {
-    return preprocessJobs(allJobs);
-  }, [allJobs]);
 
   const handleFilterChange = (filterKey, value, isChecked) => {
     setActiveFilters((prev) => {
@@ -103,14 +72,14 @@ export default function OpenPositions() {
     setActiveFilters({
       seniorityLevel: new Set(),
       employmentType: new Set(),
-      workMode: new Set(),
+      work_mode: new Set(),
     });
     setSortBy("Skill match");
     setCurrentPage(1);
   };
 
   // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
-  const filteredJobs = processedJobsWithMemo;
+  const filteredJobs = allJobs;
 
   // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
   // const filteredJobs = useMemo(() => {
@@ -133,7 +102,7 @@ export default function OpenPositions() {
         return;
       }
       const workCities = filteredJobs.map(
-        (job) => job.city || job.displayLocation,
+        (job) => job.city || job.display_location,
       );
       try {
         const travelResult = await calculateBatchTravel(
@@ -142,7 +111,8 @@ export default function OpenPositions() {
         );
         const jobsWithTravelInfo = filteredJobs.map((job, idx) => ({
           ...job,
-          travelInfo: travelResult.travelDetails[idx],
+          travel_time: travelResult.travelDetails[idx].travel_time,
+          least_transfers: travelResult.travelDetails[idx].least_transfers,
         }));
         setJobsWithTravel(jobsWithTravelInfo);
       } catch {
@@ -150,8 +120,6 @@ export default function OpenPositions() {
       }
     }
     fetchTravelInfo();
-
-    // eslint-disable-next-line
   }, [filteredJobs, homeAddress]);
 
   return (
@@ -179,9 +147,9 @@ export default function OpenPositions() {
             <DropdownFilter
               buttonText="Work mode"
               title="Work mode"
-              options={workModeOptions}
-              filterKey="workMode"
-              activeValues={activeFilters.workMode}
+              options={work_modeOptions}
+              filterKey="work_mode"
+              activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
             <DropdownFilter

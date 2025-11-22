@@ -1,16 +1,11 @@
 import { UseUser } from "../context/UserContext";
 
-function normalizeDescription(str) {
-  return " " + str.replace(/[^A-Za-z0-9+#]/g, " ").replace(/ +/g, " ") + " ";
-}
-
-function getSkillsInDescription(text, skills = []) {
-  const textSpaced = normalizeDescription(text);
+function getSkillsInDescription(normalized_description, skills = []) {
   return skills
     .filter((s) => {
       let re = null;
       if (s.skillRegex instanceof RegExp) re = s.skillRegex;
-      return re ? re.test(textSpaced) : false;
+      return re ? re.test(normalized_description) : false;
     })
     .map((s) => s.skill);
 }
@@ -21,7 +16,7 @@ export default function Skills({ item }) {
   const skills = user?.skills || [];
 
   const skillsInDescription = getSkillsInDescription(
-    item.description_text || "",
+    item.normalized_description || "",
     skills,
   );
 

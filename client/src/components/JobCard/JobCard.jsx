@@ -95,7 +95,7 @@ export default function JobCard({ job, onApplyClick }) {
 
             <div className="job-tags">
               {/* seniority tag */}
-              {job.seniority && job.seniority !== "Niet van toepassing" && (
+              {job.seniority && (
                 <div className="job-commute-info">
                   <GraduationCap className="job-icon" />
                   <span className="job-commute">{job.seniority}</span>
@@ -111,18 +111,18 @@ export default function JobCard({ job, onApplyClick }) {
                 </div>
               )}
               {/* work mode tag */}
-              {job.workMode && (
+              {job.work_mode && (
                 <div className="job-commute-info">
                   <Monitor className="job-icon" />
-                  <span className="job-commute">{job.workMode}</span>
+                  <span className="job-commute">{job.work_mode}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
               {/* location tag */}
-              {job.displayLocation && (
+              {job.display_location && (
                 <div className="job-commute-info">
                   <MapPin className="job-icon" />
-                  <span className="job-commute">{job.displayLocation}</span>
+                  <span className="job-commute">{job.display_location}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
@@ -159,20 +159,15 @@ export default function JobCard({ job, onApplyClick }) {
                 })()}
 
               {/* commute info block*/}
-              {job.travelInfo && job.travelInfo.success && (
+              {job.travel_time && (
                 <div className="job-commute-info">
                   {/* <span className="job-tag-separator">|</span> */}
                   <Bus className="job-icon" />
                   <span className="job-commute">
-                    {formatTravelTime(job.travelInfo.averageTravelTimeMinutes)},{" "}
-                    {job.travelInfo.leastTransfers} transfer
-                    {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
+                    {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
+                    transfer
+                    {job.least_transfers !== 1 ? "s" : ""}
                   </span>
-                </div>
-              )}
-              {job.travelInfo && !job.travelInfo.success && (
-                <div className="job-commute-info error">
-                  Commute info unavailable
                 </div>
               )}
             </div>

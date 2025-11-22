@@ -134,6 +134,7 @@ function UserContextProvider({ children }) {
           payload: { ...fixedUser, skills: normalizedSkills },
         });
       } else {
+        // No JSON returned — treat as not authenticated
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }
 
