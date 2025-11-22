@@ -32,25 +32,27 @@
 // }
 
 //check seniority with synonyms
-function checkSeniority(jobSeniority, activeFilters) {
-  if (activeFilters.size === 0) return true;
+// function checkSeniority(jobSeniority, activeFilters) {
+//   if (activeFilters.size === 0) return true;
+//old code
+// const lowerJobSeniority = (jobSeniority || "").toLowerCase();
 
-  // const lowerJobSeniority = (jobSeniority || "").toLowerCase();
+// for (const filter of activeFilters) {
 
-  for (const filter of activeFilters) {
-    // const synonymKey = filter.replace(/_/g, " ").toLowerCase();
-    // const synonyms = senioritySynonyms[synonymKey] || [synonymKey];
+// const synonymKey = filter.replace(/_/g, " ").toLowerCase();
+// const synonyms = senioritySynonyms[synonymKey] || [synonymKey];
 
-    // if (synonyms.some((synonym) => lowerJobSeniority.includes(synonym))) {
-    //   return true;
-    // }
-    if (filter === jobSeniority) {
-      return true;
-    }
-  }
+// if (synonyms.some((synonym) => lowerJobSeniority.includes(synonym))) {
+//   return true;
+// }
 
-  return false;
-}
+//     if (filter === jobSeniority) {
+//       return true;
+//     }
+//   }
+
+//   return false;
+// }
 
 // work mode
 // function derivework_mode(job) {
