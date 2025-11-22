@@ -59,7 +59,7 @@ export default function processJobPost(job) {
       normalizedSeniority = "Executive";
       break;
     case "Niet van toepassing":
-      normalizedSeniority = "n/a";
+      normalizedSeniority = "Not applicable";
       break;
     default:
       normalizedSeniority = seniority;
