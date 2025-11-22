@@ -101,9 +101,7 @@ export default function OpenPositions() {
         setJobsWithTravel([]);
         return;
       }
-      const workCities = filteredJobs.map(
-        (job) => job.city || job.display_location,
-      );
+      const workCities = filteredJobs.map((job) => job.display_location);
       try {
         const travelResult = await calculateBatchTravel(
           homeAddress,
