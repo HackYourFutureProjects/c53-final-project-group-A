@@ -6,7 +6,7 @@ import { defaultUser, formatAddress } from "../../data/defaultUser";
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-// import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 
 import { UseJobs } from "../../context/JobsContext";
 import "./OpenPositions.css";
