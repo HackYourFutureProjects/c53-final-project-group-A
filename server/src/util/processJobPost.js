@@ -69,7 +69,7 @@ export default function processJobPost(job) {
     url,
     title,
     date_posted,
-    employment_type,
+    employment_type: employment_type.length > 0 ? employment_type[0] : null,
     work_mode: remote_derived === true ? "Remote" : "On-site",
     display_location:
       locations_derived.length > 0 ? locations_derived[0] : null,

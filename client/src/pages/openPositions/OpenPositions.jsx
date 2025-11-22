@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
@@ -6,13 +6,14 @@ import { defaultUser, formatAddress } from "../../data/defaultUser";
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-// import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 
 import { UseJobs } from "../../context/JobsContext";
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 import { useEffect } from "react";
 import useTravelData from "../../hooks/useTravelData";
+// import { all } from "axios";
 
 export default function OpenPositions() {
   // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
@@ -29,26 +30,35 @@ export default function OpenPositions() {
     employmentType: new Set(),
     work_mode: new Set(),
   });
-  const [sortBy, setSortBy] = useState("Skill match");
+  // const [sortBy, setSortBy] = useState("Skill match");
 
-  const experienceOptions = [
-    "Internship",
-    "Entry level",
-    "Associate",
-    "Mid-Senior level",
-    "Director",
-    "Executive",
-    "Not Applicable",
-  ];
-  const jobTypeOptions = ["Full-time", "Contract", "Part-time", "Volunteer"];
-  const work_modeOptions = ["On-site", "Hybrid", "Remote"];
-  const sortOptions = [
-    "Skill match",
-    "Newest First",
-    "Nearest First",
-    "Fewest applicants",
-    "Fewest transfers",
-  ];
+  let experienceOptions = new Set(allJobs.map((job) => job.seniority));
+  experienceOptions.delete(null);
+  experienceOptions = Array.from(experienceOptions);
+  // const experienceOptions = [
+  //   "Internship",
+  //   "Entry level",
+  //   "Associate",
+  //   "Mid-Senior level",
+  //   "Director",
+  //   "Executive",
+  //   "Not Applicable",
+  // ];
+  let jobTypeOptions = new Set(allJobs.map((job) => job.employment_type));
+  jobTypeOptions.delete(null);
+  jobTypeOptions = Array.from(jobTypeOptions);
+  // const jobTypeOptions = ["Full-time", "Contract", "Part-time", "Volunteer"];
+  let work_modeOptions = new Set(allJobs.map((job) => job.work_mode));
+  work_modeOptions.delete(null);
+  work_modeOptions = Array.from(work_modeOptions);
+  // const work_modeOptions = ["On-site", "Hybrid", "Remote"];
+  // const sortOptions = [
+  //   "Skill match",
+  //   "Newest First",
+  //   "Nearest First",
+  //   "Fewest applicants",
+  //   "Fewest transfers",
+  // ];
 
   const [jobsWithTravel, setJobsWithTravel] = useState([]);
   const [homeAddress] = useState(formatAddress(defaultUser.address));
@@ -63,10 +73,10 @@ export default function OpenPositions() {
     });
   };
 
-  const handleSortChange = (_, value) => {
-    setSortBy(value);
-    setCurrentPage(1);
-  };
+  // const handleSortChange = (_, value) => {
+  // setSortBy(value);
+  //   setCurrentPage(1);
+  // };
 
   const handleClearFilters = () => {
     setActiveFilters({
@@ -74,19 +84,24 @@ export default function OpenPositions() {
       employmentType: new Set(),
       work_mode: new Set(),
     });
-    setSortBy("Skill match");
+    // setSortBy("Skill match");
     setCurrentPage(1);
   };
 
   // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
-  const filteredJobs = allJobs;
+  // const filteredJobs = allJobs;
 
   // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
-  // const filteredJobs = useMemo(() => {
-  //   // ✅ only compute filtered jobs if showResults is true
-  //   if (!showResults || !searchTerm.trim()) return [];
-  //   return sortAndFilterJobs(processedJobsWithMemo, activeFilters, sortBy, searchTerm);
-  // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm, showResults]);
+  const filteredJobs = useMemo(() => {
+    // ✅ only compute filtered jobs if showResults is true
+    // if (!showResults || !searchTerm.trim()) return [];
+    return sortAndFilterJobs(allJobs, activeFilters);
+  }, [
+    // processedJobsWithMemo,
+    allJobs,
+    activeFilters,
+    // , sortBy, searchTerm, showResults
+  ]);
 
   //pagination
   const totalPages = Math.ceil(jobsWithTravel.length / jobsPerPage);
@@ -150,7 +165,7 @@ export default function OpenPositions() {
               activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
-            <DropdownFilter
+            {/* <DropdownFilter
               buttonText="Sort by"
               title="Sort by"
               options={sortOptions}
@@ -159,7 +174,7 @@ export default function OpenPositions() {
               onFilterChange={(filterKey, value) =>
                 handleSortChange(filterKey, value)
               }
-            />
+            /> */}
           </div>
           <button onClick={handleClearFilters} className="clear-filters-btn">
             Clear filters
@@ -173,7 +188,7 @@ export default function OpenPositions() {
         </div>
       )}
 
-      {jobsWithTravel.length === 0 ? (
+      {allJobs.length === 0 || !searchTerm ? (
         <p className="job-message">
           No jobs are shown. Go to <strong>Job Search</strong> or{" "}
           <strong>Clear Filters</strong> to see more results.
@@ -181,8 +196,10 @@ export default function OpenPositions() {
       ) : (
         <>
           <p className="job-message">
-            Showing {jobsWithTravel.length} jobs in total{" "}
-            {searchTerm && `for "${searchTerm}"`}
+            Found {allJobs.length} jobs in total for {searchTerm}.
+            {!Object.values(activeFilters).every(
+              (filterSet) => filterSet.size === 0,
+            ) && ` Filtered ${filteredJobs.length} jobs`}
           </p>
           <ul className="jobs-list">
             {currentJobs.map((job, idx) => (

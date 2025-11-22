@@ -77,18 +77,17 @@ function checkSeniority(jobSeniority, activeFilters) {
 //   return job.locations_derived?.length > 0 ? "ON_SITE" : "REMOTE";
 // }
 
-export function sortAndFilterJobs(
-  allJobs,
-  activeFilters,
-  sortBy,
-  searchTerm = "",
-) {
-  const { seniorityLevel, employmentType, work_mode } = activeFilters;
-  const searchLower = searchTerm.toLowerCase().trim();
+export function sortAndFilterJobs(allJobs, activeFilters) {
+  const {
+    // seniorityLevel,
+    employmentType,
+    work_mode,
+  } = activeFilters;
+  // const searchLower = searchTerm.toLowerCase().trim();
 
   let filtered = allJobs.filter((job) => {
     // seniority check
-    const matchesSeniority = checkSeniority(job.seniority, seniorityLevel);
+    // const matchesSeniority = checkSeniority(job.seniority, seniorityLevel);
 
     //job type check
     // const normalizedJobType = normalizeEmploymentType(job.employment_type);
@@ -107,53 +106,53 @@ export function sortAndFilterJobs(
 
     //search term check
     // const jobLocation = job.locations_derived?.[0] || "";
-    const jobLocation = job?.display_location || "";
-    const jobTitle = job.title || "";
-    const jobOrg = job.organization || "";
-    const jobDesc = job.description_text || "";
+    // const jobLocation = job?.display_location || "";
+    // const jobTitle = job.title || "";
+    // const jobOrg = job.organization || "";
+    // const jobDesc = job.description_text || "";
 
-    const matchesSearch =
-      !searchLower ||
-      jobTitle.toLowerCase().includes(searchLower) ||
-      jobOrg.toLowerCase().includes(searchLower) ||
-      jobLocation.toLowerCase().includes(searchLower) ||
-      jobDesc.toLowerCase().includes(searchLower);
-
+    // const matchesSearch =
+    //   // !searchLower ||
+    //   jobTitle.toLowerCase().includes(searchLower) ||
+    //   jobOrg.toLowerCase().includes(searchLower) ||
+    //   jobLocation.toLowerCase().includes(searchLower);
+    // || jobDesc.toLowerCase().includes(searchLower);
     return (
-      matchesSeniority && matchesJobType && matcheswork_mode && matchesSearch
+      // matchesSeniority &&
+      matchesJobType && matcheswork_mode
     );
   });
 
   //sorting
-  let sorted = [...filtered];
-  sorted.sort((a, b) => {
-    switch (sortBy) {
-      case "Newest First":
-        return b.date_posted.localeCompare(a.date_posted);
+  // let sorted = [...filtered];
+  // sorted.sort((a, b) => {
+  //   switch (sortBy) {
+  //     case "Newest First":
+  //       return b.date_posted.localeCompare(a.date_posted);
 
-      // JUST FOR SOME CASE - OTHER APPROACH FOR DATE SORTING
-      // (
-      //   (new Date(b.datePosted).getTime() || 0) -
-      //   (new Date(a.datePosted).getTime() || 0)
-      // );
+  //     // JUST FOR SOME CASE - OTHER APPROACH FOR DATE SORTING
+  //     // (
+  //     //   (new Date(b.datePosted).getTime() || 0) -
+  //     //   (new Date(a.datePosted).getTime() || 0)
+  //     // );
 
-      case "Skill match":
-        return (
-          (parseFloat(b.skillMatch) || 0) - (parseFloat(a.skillMatch) || 0)
-        );
+  //     case "Skill match":
+  //       return (
+  //         (parseFloat(b.skillMatch) || 0) - (parseFloat(a.skillMatch) || 0)
+  //       );
 
-      case "Fewest applicants":
-        return (
-          (a.applicantsCount || Infinity) - (b.applicantsCount || Infinity)
-        );
-      case "Nearest First":
-        return (a.distance || Infinity) - (b.distance || Infinity);
-      case "Fewest transfers":
-        return (a.transfersCount || Infinity) - (b.transfersCount || Infinity);
-      default:
-        return 0;
-    }
-  });
+  //     case "Fewest applicants":
+  //       return (
+  //         (a.applicantsCount || Infinity) - (b.applicantsCount || Infinity)
+  //       );
+  //     case "Nearest First":
+  //       return (a.distance || Infinity) - (b.distance || Infinity);
+  //     case "Fewest transfers":
+  //       return (a.transfersCount || Infinity) - (b.transfersCount || Infinity);
+  //     default:
+  //       return 0;
+  //   }
+  // });
 
-  return sorted;
+  return filtered;
 }
