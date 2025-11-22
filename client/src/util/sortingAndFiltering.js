@@ -1,47 +1,50 @@
 // synonyms seniority (EN + NL)
-const senioritySynonyms = {
-  "entry level": [
-    "entry level",
-    "entry-level",
-    "junior",
-    "instapniveau",
-    "starter",
-  ],
-  associate: ["associate", "medewerker"],
-  "mid-senior level": [
-    "mid-senior",
-    "mid senior",
-    "medior",
-    "senior",
-    "ervaren",
-  ],
-  internship: ["internship", "intern", "stage", "stagiair"],
-  director: ["director", "directeur", "hoofd"],
-  executive: ["executive", "bestuurder", "c-level"],
-  "not applicable": ["not applicable", "niet van toepassing", "n/a", "na"],
-};
+// const senioritySynonyms = {
+//   "entry level": [
+//     "entry level",
+//     "entry-level",
+//     "junior",
+//     "instapniveau",
+//     "starter",
+//   ],
+//   associate: ["associate", "medewerker"],
+//   "mid-senior level": [
+//     "mid-senior",
+//     "mid senior",
+//     "medior",
+//     "senior",
+//     "ervaren",
+//   ],
+//   internship: ["internship", "intern", "stage", "stagiair"],
+//   director: ["director", "directeur", "hoofd"],
+//   executive: ["executive", "bestuurder", "c-level"],
+//   "not applicable": ["not applicable", "niet van toepassing", "n/a", "na"],
+// };
 
-function normalizeEmploymentType(employmentType) {
-  if (!employmentType) return "UNKNOWN";
+// function normalizeEmploymentType(employmentType) {
+//   if (!employmentType) return "UNKNOWN";
 
-  const type = Array.isArray(employmentType)
-    ? employmentType[0]
-    : employmentType;
+//   const type = Array.isArray(employmentType)
+//     ? employmentType[0]
+//     : employmentType;
 
-  return type.toString().toUpperCase().replace(/[\s-]/g, "_").trim();
-}
+//   return type.toString().toUpperCase().replace(/[\s-]/g, "_").trim();
+// }
 
 //check seniority with synonyms
 function checkSeniority(jobSeniority, activeFilters) {
   if (activeFilters.size === 0) return true;
 
-  const lowerJobSeniority = (jobSeniority || "").toLowerCase();
+  // const lowerJobSeniority = (jobSeniority || "").toLowerCase();
 
   for (const filter of activeFilters) {
-    const synonymKey = filter.replace(/_/g, " ").toLowerCase();
-    const synonyms = senioritySynonyms[synonymKey] || [synonymKey];
+    // const synonymKey = filter.replace(/_/g, " ").toLowerCase();
+    // const synonyms = senioritySynonyms[synonymKey] || [synonymKey];
 
-    if (synonyms.some((synonym) => lowerJobSeniority.includes(synonym))) {
+    // if (synonyms.some((synonym) => lowerJobSeniority.includes(synonym))) {
+    //   return true;
+    // }
+    if (filter === jobSeniority) {
       return true;
     }
   }
@@ -50,29 +53,29 @@ function checkSeniority(jobSeniority, activeFilters) {
 }
 
 // work mode
-function derivework_mode(job) {
-  if (job.remote_derived === true) return "REMOTE";
+// function derivework_mode(job) {
+//   if (job.remote_derived === true) return "REMOTE";
 
-  if (job.location_type) {
-    const locType = job.location_type.toLowerCase();
-    if (locType.includes("remote")) return "REMOTE";
-    if (locType.includes("hybrid")) return "HYBRID";
-    if (locType.includes("on-site") || locType.includes("onsite"))
-      return "ON_SITE";
-  }
+//   if (job.location_type) {
+//     const locType = job.location_type.toLowerCase();
+//     if (locType.includes("remote")) return "REMOTE";
+//     if (locType.includes("hybrid")) return "HYBRID";
+//     if (locType.includes("on-site") || locType.includes("onsite"))
+//       return "ON_SITE";
+//   }
 
-  // if there is no specific address, we consider remote
-  if (job.locations_raw && job.locations_raw.length > 0) {
-    const location = job.locations_raw[0];
-    if (
-      !location.address?.addressLocality &&
-      !location.address?.streetAddress
-    ) {
-      return "REMOTE";
-    }
-  }
-  return job.locations_derived?.length > 0 ? "ON_SITE" : "REMOTE";
-}
+//   // if there is no specific address, we consider remote
+//   if (job.locations_raw && job.locations_raw.length > 0) {
+//     const location = job.locations_raw[0];
+//     if (
+//       !location.address?.addressLocality &&
+//       !location.address?.streetAddress
+//     ) {
+//       return "REMOTE";
+//     }
+//   }
+//   return job.locations_derived?.length > 0 ? "ON_SITE" : "REMOTE";
+// }
 
 export function sortAndFilterJobs(
   allJobs,
@@ -88,20 +91,26 @@ export function sortAndFilterJobs(
     const matchesSeniority = checkSeniority(job.seniority, seniorityLevel);
 
     //job type check
-    const normalizedJobType = normalizeEmploymentType(job.employment_type);
+    // const normalizedJobType = normalizeEmploymentType(job.employment_type);
+    // const matchesJobType = employmentType.size === 0 || employmentType.has(normalizedJobType)
     const matchesJobType =
-      employmentType.size === 0 || employmentType.has(normalizedJobType);
+      employmentType.size === 0 || employmentType.has(job.employment_type);
 
     //work mode check
-    const derivedMode = derivework_mode(job);
+    // const derivedMode = derivework_mode(job);
     // const jobwork_mode = job.remote_derived ? "Remote" : "On-site";
-    const matcheswork_mode = work_mode.size === 0 || work_mode.has(derivedMode);
+    // const matcheswork_mode = work_mode.size === 0 || work_mode.has(derivedMode);
+
+    // const jobwork_mode = job.remote_derived ? "Remote" : "On-site";
+    const matcheswork_mode =
+      work_mode.size === 0 || work_mode.has(job.work_mode);
 
     //search term check
-    const jobLocation = job.locations_derived?.[0] || "";
+    // const jobLocation = job.locations_derived?.[0] || "";
+    const jobLocation = job?.display_location || "";
     const jobTitle = job.title || "";
     const jobOrg = job.organization || "";
-    const jobDesc = job.linkedin_org_description || "";
+    const jobDesc = job.description_text || "";
 
     const matchesSearch =
       !searchLower ||
