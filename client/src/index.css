@@ -148,8 +148,6 @@ footer {
    Interaction (hover/focus/transition), Component helpers
    ============================================ */
 
-/* ---------- Utilities (consolidated & de-duplicated) ---------- */
-
 /* Layout & Flexbox */
 .flex {
   display: flex;
