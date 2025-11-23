@@ -148,9 +148,14 @@ footer {
    Interaction (hover/focus/transition), Component helpers
    ============================================ */
 
-/* ---------- Layout & Flexbox ---------- */
+/* ---------- Utilities (consolidated & de-duplicated) ---------- */
+
+/* Layout & Flexbox */
 .flex {
   display: flex;
+}
+.inline-flex {
+  display: inline-flex;
 }
 .flex-wrap {
   flex-wrap: wrap;
@@ -170,14 +175,34 @@ footer {
 .justify-center {
   justify-content: center;
 }
+.justify-between {
+  justify-content: space-between;
+}
 .justify-end {
   justify-content: flex-end;
 }
+.block {
+  display: block;
+}
+.grid {
+  display: grid;
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Positioning helpers */
 .relative {
   position: relative;
 }
 .absolute {
   position: absolute;
+}
+.top-full {
+  top: 100%;
 }
 .bottom-0 {
   bottom: 0;
@@ -185,14 +210,16 @@ footer {
 .right-0 {
   right: 0;
 }
-.space-x-4 > * + * {
-  margin-left: 1rem;
+
+/* Visibility / layering */
+.hidden {
+  display: none !important;
 }
-.overflow-hidden {
-  overflow: hidden;
+.z-50 {
+  z-index: 50;
 }
 
-/* ---------- Gap & Spacing ---------- */
+/* Spacing: gap, margin, padding */
 .gap-2 {
   gap: 0.5rem;
 }
@@ -202,11 +229,20 @@ footer {
 .gap-4 {
   gap: 1rem;
 }
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+.space-x-4 > * + * {
+  margin-left: 1rem;
+}
 .mr-2 {
   margin-right: 0.5rem;
 }
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 .mb-3 {
   margin-bottom: 0.75rem;
@@ -217,20 +253,44 @@ footer {
 .mb-8 {
   margin-bottom: 2rem;
 }
+.m-1 {
+  margin: 0.25rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+.p-4 {
+  padding: 1rem;
+}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.p-4 {
-  padding: 1rem;
-}
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 .px-8 {
   padding-left: 2rem;
@@ -239,6 +299,10 @@ footer {
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+.py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
 }
 .py-2 {
   padding-top: 0.5rem;
@@ -253,7 +317,10 @@ footer {
   padding-bottom: 1rem;
 }
 
-/* ---------- Sizing ---------- */
+/* Sizing */
+.w-80 {
+  width: 20rem;
+}
 .w-20 {
   width: 5rem;
 }
@@ -266,14 +333,26 @@ footer {
 .h-6 {
   height: 1.5rem;
 }
+.w-4 {
+  width: 1rem;
+}
+.h-4 {
+  height: 1rem;
+}
 .w-3 {
   width: 0.75rem;
 }
 .h-3 {
   height: 0.75rem;
 }
+.w-full {
+  width: 100%;
+}
+.min-h-16 {
+  min-height: 4rem;
+}
 
-/* ---------- Typography ---------- */
+/* Typography */
 .text-2xl {
   font-size: 1.5rem;
   line-height: 1.2;
@@ -296,7 +375,9 @@ footer {
 .font-semibold {
   font-weight: 600;
 }
-
+.text-white {
+  color: #ffffff;
+}
 .text-gray-900 {
   color: #111827;
 }
@@ -312,11 +393,11 @@ footer {
 .text-gray-500 {
   color: #6b7280;
 }
-.text-white {
-  color: #ffffff;
+.text-gray-400 {
+  color: #9ca3af;
 }
 
-/* ---------- Color & Backgrounds ---------- */
+/* Colors & Backgrounds */
 .bg-white {
   background-color: #ffffff;
 }
@@ -332,6 +413,9 @@ footer {
 .bg-gray-300 {
   background-color: #d1d5db;
 }
+.bg-blue-50 {
+  background-color: #eff6ff;
+}
 .bg-blue-500 {
   background-color: #3b82f6;
 }
@@ -341,13 +425,25 @@ footer {
 .hover\:bg-gray-50:hover {
   background-color: #f9fafb;
 }
+.hover\:bg-gray-400:hover {
+  background-color: #9ca3af;
+}
 .hover\:bg-gray-800:hover {
   background-color: #1f2937;
 }
 
-/* ---------- Borders & Radius ---------- */
+/* Borders & Radius */
 .border {
   border: 1px solid #d1d5db;
+}
+.border-2 {
+  border-width: 2px;
+}
+.border-dashed {
+  border-style: dashed;
+}
+.border-gray-200 {
+  border-color: #e5e7eb;
 }
 .border-gray-300 {
   border-color: #d1d5db;
@@ -359,12 +455,17 @@ footer {
   border-radius: 9999px;
 }
 
-/* Small shadow utility (matches Tailwind's shadow-sm) */
+/* Shadows */
 .shadow-sm {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
+.shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
-/* ---------- Interaction & State ---------- */
+/* Interaction & State */
 .transition {
   transition:
     background-color 150ms ease,
@@ -380,8 +481,24 @@ footer {
 .focus\:ring-blue-500:focus {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
+.hover\:text-gray-700:hover {
+  color: #374151;
+}
+.hover\:text-red-600:hover {
+  color: #dc2626;
+}
 
-/* ---------- Component helpers & Custom utilities ---------- */
+/* Misc utilities */
+.cursor-move {
+  cursor: move;
+}
+.sort-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Component helpers */
 #skillsList {
   min-height: 60px; /* mirrors min-h-[60px] */
   display: flex;
@@ -393,66 +510,15 @@ footer {
   background-color: #f9fafb;
 }
 
-.inline-flex {
-  display: inline-flex;
-}
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-.py-1\.5 {
-  padding-top: 0.375rem;
-  padding-bottom: 0.375rem;
-}
-.w-4 {
-  width: 1rem;
-}
-.h-4 {
-  height: 1rem;
-}
-.hover\:text-red-600:hover {
-  color: #dc2626;
-}
-.block {
-  display: block;
-}
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-.w-full {
-  width: 100%;
-}
-.grid {
-  display: grid;
-}
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-.hover\:bg-gray-400:hover {
-  background-color: #9ca3af;
-}
-.justify-between {
-  justify-content: space-between;
+/* Small utilities used by items */
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-/* Responsive helpers (small set used by components) */
+/* Responsive helpers */
 @media (min-width: 768px) {
   .md\:w-auto {
     width: auto;
   }
-}
-
-/* Utility: margin-top small (matches Tailwind mt-2 => 0.5rem) */
-.mt-2 {
-  margin-top: 0.5rem;
-}
-.mt-4 {
-  margin-top: 1rem;
-}
-.mt-6 {
-  margin-top: 1.5rem;
 }
