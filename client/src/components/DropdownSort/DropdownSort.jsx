@@ -7,6 +7,7 @@ export default function DropdownSort() {
 
   const [isOpen, setIsOpen] = useState(false);
   useOutsideClick(dropdownRef, () => setIsOpen(false));
+
   const [selected, setSelected] = useState([
     "Most skill matches",
     "Fewest transport transfers",
@@ -17,6 +18,7 @@ export default function DropdownSort() {
 
   function onDragStart(e, criterion, from) {
     dragged.current = { criterion, from };
+    // Firefox historically requires dataTransfer.setData be called in dragstart for the drag operation to behave correctly. It may not be necessary in all browsers. The selected-disabled state logic should support dragging without this line.
     e.dataTransfer.setData("text/plain", criterion);
     e.dataTransfer.effectAllowed = "move";
   }
