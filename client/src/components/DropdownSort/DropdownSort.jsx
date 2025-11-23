@@ -15,7 +15,6 @@ export default function DropdownSort() {
   const [available, setAvailable] = useState([]);
 
   const dragged = useRef(null);
-  const [hovered, setHovered] = useState(null); // 'selected' | 'available' | null
 
   function onDragStart(e, text, from, index) {
     dragged.current = { text, from, index };
@@ -31,7 +30,6 @@ export default function DropdownSort() {
   function onDragEnd(e) {
     e.currentTarget.style.opacity = "1";
     dragged.current = null;
-    setHovered(null);
   }
 
   function handleDrop(container) {
@@ -65,7 +63,6 @@ export default function DropdownSort() {
     }
 
     dragged.current = null;
-    setHovered(null);
   }
 
   function handleRemoveFromSelected(index) {
@@ -120,18 +117,13 @@ export default function DropdownSort() {
             <p className="text-xs text-gray-500 mb-2">Selected Properties:</p>
             <div
               id="selectedSort"
-              className={`min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50 ${
-                hovered === "selected" ? "bg-blue-50" : ""
-              }`}
+              className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50 hover:bg-gray-50"
               onDragOver={(e) => {
                 e.preventDefault();
-                setHovered("selected");
               }}
               onDragEnter={(e) => {
                 e.preventDefault();
-                setHovered("selected");
               }}
-              onDragLeave={() => setHovered(null)}
               onDrop={(e) => {
                 e.preventDefault();
                 handleDrop("selected");
@@ -143,7 +135,7 @@ export default function DropdownSort() {
                 selected.map((text, idx) => (
                   <div
                     key={text + idx}
-                    className="sort-item inline-flex items-center space-x-2 m-1 bg-white border border-gray-200 rounded px-3 py-2"
+                    className="sort-item inline-flex items-center space-x-2 m-1 bg-white border border-gray-200 rounded px-3 py-2 hover:bg-blue-50"
                     draggable
                     onDragStart={(e) => onDragStart(e, text, "selected", idx)}
                     onDragEnd={onDragEnd}
@@ -166,18 +158,13 @@ export default function DropdownSort() {
             <p className="text-xs text-gray-500 mb-2">Disabled Properties:</p>
             <div
               id="availableProps"
-              className={`min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50 ${
-                hovered === "available" ? "bg-blue-50" : ""
-              }`}
+              className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50"
               onDragOver={(e) => {
                 e.preventDefault();
-                setHovered("available");
               }}
               onDragEnter={(e) => {
                 e.preventDefault();
-                setHovered("available");
               }}
-              onDragLeave={() => setHovered(null)}
               onDrop={(e) => {
                 e.preventDefault();
                 handleDrop("available");
@@ -189,7 +176,7 @@ export default function DropdownSort() {
                 available.map((text, idx) => (
                   <div
                     key={text + idx}
-                    className="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-gray-50 m-1"
+                    className="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-blue-50 m-1"
                     draggable
                     onDragStart={(e) => onDragStart(e, text, "available", idx)}
                     onDragEnd={onDragEnd}
