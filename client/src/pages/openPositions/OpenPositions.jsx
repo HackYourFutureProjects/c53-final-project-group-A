@@ -1,19 +1,19 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { gif } from "../../assets/index.js";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { defaultUser, formatAddress } from "../../data/defaultUser";
+import { UseUser } from "../../context/UserContext";
+// import { defaultUser, formatAddress } from "../../data/defaultUser";
 // removed UseUser import; JobCard now uses favorites from context directly
 
 // WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
 // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
 // import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
 
-import { UseJobs } from "../../context/JobsContext";
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
-import { useEffect } from "react";
-import useTravelData from "../../hooks/useTravelData";
+import { UseJobs } from "../../context/JobsContext.jsx";
 
 //preprocessing
 const preprocessJobs = (jobs) => {
@@ -41,8 +41,18 @@ const preprocessJobs = (jobs) => {
 };
 
 export default function OpenPositions() {
-  // PLEASE REMOVE NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-  const { allJobs, searchTerm } = UseJobs();
+  const { user, dispatch } = UseUser();
+
+  const {
+    allJobs,
+    searchTerm,
+    isJobsLoading,
+    isTravelLoading,
+    error,
+    fetchBatchTravelDetails,
+  } = UseJobs();
+
+  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
   // const { allJobs, searchTerm, showResults } = UseJobs();
@@ -55,6 +65,7 @@ export default function OpenPositions() {
     employmentType: new Set(),
     workMode: new Set(),
   });
+
   const [sortBy, setSortBy] = useState("Skill match");
 
   const experienceOptions = [
@@ -75,10 +86,6 @@ export default function OpenPositions() {
     "Fewest applicants",
     "Fewest transfers",
   ];
-
-  const [jobsWithTravel, setJobsWithTravel] = useState([]);
-  const [homeAddress] = useState(formatAddress(defaultUser.address));
-  const { calculateBatchTravel, error: travelError } = useTravelData();
 
   //preprocess jobs wit useMemo - avoid recalculating
   const processedJobsWithMemo = useMemo(() => {
@@ -110,7 +117,12 @@ export default function OpenPositions() {
   };
 
   // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
-  const filteredJobs = processedJobsWithMemo;
+  // const filteredJobs = processedJobsWithMemo;
+
+  // after sorting add
+  //   const filteredJobs = useMemo(() => {
+  //   return processedJobsWithMemo;
+  // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm]);
 
   // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
   // const filteredJobs = useMemo(() => {
@@ -120,120 +132,114 @@ export default function OpenPositions() {
   // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm, showResults]);
 
   //pagination
-  const totalPages = Math.ceil(jobsWithTravel.length / jobsPerPage);
+  const totalPages = Math.ceil(processedJobsWithMemo.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobsWithTravel.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = processedJobsWithMemo.slice(
+    indexOfFirstJob,
+    indexOfLastJob,
+  );
 
-  //useEffect for travelInfo
   useEffect(() => {
-    async function fetchTravelInfo() {
-      if (!filteredJobs.length) {
-        setJobsWithTravel([]);
-        return;
-      }
-      const workCities = filteredJobs.map(
-        (job) => job.city || job.displayLocation,
-      );
-      try {
-        const travelResult = await calculateBatchTravel(
-          homeAddress,
-          workCities,
-        );
-        const jobsWithTravelInfo = filteredJobs.map((job, idx) => ({
-          ...job,
-          travelInfo: travelResult.travelDetails[idx],
-        }));
-        setJobsWithTravel(jobsWithTravelInfo);
-      } catch {
-        setJobsWithTravel(filteredJobs);
-      }
+    if (currentJobs.length > 0) {
+      fetchBatchTravelDetails(currentJobs);
     }
-    fetchTravelInfo();
-
-    // eslint-disable-next-line
-  }, [filteredJobs, homeAddress]);
+  }, [currentPage, activeFilters]);
 
   return (
     <div className="open-positions content-container">
-      <SkillsSettings />
-      <div className="job-filters-bar">
-        <div className="filters-container">
-          <div className="filter-dropdowns">
-            <DropdownFilter
-              buttonText="Experience level"
-              title="Experience level"
-              options={experienceOptions}
-              filterKey="seniorityLevel"
-              activeValues={activeFilters.seniorityLevel}
-              onFilterChange={handleFilterChange}
-            />
-            <DropdownFilter
-              buttonText="Job type"
-              title="Job type"
-              options={jobTypeOptions}
-              filterKey="employmentType"
-              activeValues={activeFilters.employmentType}
-              onFilterChange={handleFilterChange}
-            />
-            <DropdownFilter
-              buttonText="Work mode"
-              title="Work mode"
-              options={workModeOptions}
-              filterKey="workMode"
-              activeValues={activeFilters.workMode}
-              onFilterChange={handleFilterChange}
-            />
-            <DropdownFilter
-              buttonText="Sort by"
-              title="Sort by"
-              options={sortOptions}
-              filterKey="sort"
-              activeValues={sortBy}
-              onFilterChange={(filterKey, value) =>
-                handleSortChange(filterKey, value)
-              }
-            />
-          </div>
-          <button onClick={handleClearFilters} className="clear-filters-btn">
-            Clear filters
-          </button>
-        </div>
-      </div>
-
-      {travelError && (
-        <div className="error-message">
-          Error loading commute info: {travelError}
+      {isJobsLoading && (
+        <div className="loader-overlay">
+          <img src={gif.boat} alt="Loading..." className="loader-gif" />
         </div>
       )}
 
-      {jobsWithTravel.length === 0 ? (
-        <p className="job-message">
-          No jobs are shown. Go to <strong>Job Search</strong> or{" "}
-          <strong>Clear Filters</strong> to see more results.
-        </p>
-      ) : (
-        <>
-          <p className="job-message">
-            Showing {jobsWithTravel.length} jobs in total{" "}
-            {searchTerm && `for "${searchTerm}"`}
-          </p>
-          <ul className="jobs-list">
-            {currentJobs.map((job, idx) => (
-              <JobCard
-                key={job.id || idx}
-                job={job}
-                onApplyClick={(url) => window.open(url, "_blank")}
+      <div className="open-positions">
+        <SkillsSettings />
+        <div className="job-filters-bar">
+          <div className="filters-container">
+            <div className="filter-dropdowns">
+              <DropdownFilter
+                buttonText="Experience level"
+                title="Experience level"
+                options={experienceOptions}
+                filterKey="seniorityLevel"
+                activeValues={activeFilters.seniorityLevel}
+                onFilterChange={handleFilterChange}
               />
-            ))}
-          </ul>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </>
-      )}
+              <DropdownFilter
+                buttonText="Job type"
+                title="Job type"
+                options={jobTypeOptions}
+                filterKey="employmentType"
+                activeValues={activeFilters.employmentType}
+                onFilterChange={handleFilterChange}
+              />
+              <DropdownFilter
+                buttonText="Work mode"
+                title="Work mode"
+                options={workModeOptions}
+                filterKey="workMode"
+                activeValues={activeFilters.workMode}
+                onFilterChange={handleFilterChange}
+              />
+              <DropdownFilter
+                buttonText="Sort by"
+                title="Sort by"
+                options={sortOptions}
+                filterKey="sort"
+                activeValues={sortBy}
+                onFilterChange={(filterKey, value) =>
+                  handleSortChange(filterKey, value)
+                }
+              />
+            </div>
+            <button onClick={handleClearFilters} className="clear-filters-btn">
+              Clear filters
+            </button>
+          </div>
+        </div>
+
+        {error && (
+          <div className="error-message">
+            Error loading commute info: {error}
+          </div>
+        )}
+
+        {!isJobsLoading && processedJobsWithMemo.length === 0 && (
+          <p className="job-message">
+            No jobs are shown. Go to <strong>Job Search</strong> or{" "}
+            <strong>Clear Filters</strong> to see more results.
+          </p>
+        )}
+
+        {!isJobsLoading && processedJobsWithMemo.length > 0 && (
+          <>
+            <p className="job-message">
+              Showing {processedJobsWithMemo.length} jobs in total{" "}
+              {searchTerm && `for "${searchTerm}"`}
+            </p>
+            <ul className="jobs-list">
+              {currentJobs.map((job, idx) => (
+                <JobCard
+                  key={job.id || idx}
+                  job={job}
+                  isTravelLoading={isTravelLoading}
+                  favorites={favorites}
+                  dispatch={dispatch}
+                  user={user}
+                  onApplyClick={(url) => window.open(url, "_blank")}
+                />
+              ))}
+            </ul>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

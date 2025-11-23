@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
 import { UseJobs } from "../context/JobsContext";
 import AlertMessage from "../components/AlertMessage";
 import { validateJobInput } from "../util/searchValidation";
@@ -8,16 +7,17 @@ import "./SearchInput.css";
 import { cleanUpText } from "../util/cleanUpText";
 
 export default function SearchInput() {
-  const { searchTerm, setSearchTerm, setShowResults, setAllJobs, setError } =
-    UseJobs();
+  const {
+    searchTerm,
+    setSearchTerm,
+    setShowResults,
+    setAllJobs,
+    setError,
+    fetchJobWordsBySearchWords,
+  } = UseJobs();
 
   const [alert, setAlert] = useState({ type: "", message: "" });
   const navigate = useNavigate();
-
-  //post route
-  const { performFetch } = useFetch("/jobs/search", (data) => {
-    setAllJobs(data.result);
-  });
 
   const handleSearch = async () => {
     const validationError = validateJobInput({ text: cleanUpText(searchTerm) });
@@ -31,12 +31,8 @@ export default function SearchInput() {
     setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
 
     const searchWords = searchTerm.trim().split(/[\s\-.'/]+/);
-    searchWords.forEach((word) => {
-      performFetch({
-        method: "POST",
-        body: JSON.stringify({ search_terms: word.trim() }),
-      });
-    });
+
+    fetchJobWordsBySearchWords(searchWords);
 
     setShowResults(true);
     navigate("/jobs");

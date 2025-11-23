@@ -1,11 +1,11 @@
 import Skills from "../Skills";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { UseUser } from "../../context/UserContext";
+
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
-import { icons } from "../../assets";
+import { icons, gif } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
 import {
   Bus,
@@ -23,10 +23,17 @@ function formatTravelTime(minutes) {
   return m === 0 ? `${h} h` : `${h} h ${m} min`;
 }
 
-export default function JobCard({ job, onApplyClick }) {
+export default function JobCard({
+  job,
+  onApplyClick,
+  isTravelLoading,
+  favorites,
+  dispatch,
+  user,
+}) {
   const navigate = useNavigate();
-  const { user, dispatch } = UseUser();
-  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
+
+  const isFavorited = favorites.includes(job.id) || job.isFavorite;
 
   //  New state for showing popup
   const [showApplyPopup, setShowApplyPopup] = useState(false);
@@ -61,8 +68,6 @@ export default function JobCard({ job, onApplyClick }) {
     }
   };
 
-  const isFavorited = favorites[job.id] ?? job.isFavorite;
-
   return (
     <li key={job.id} className="job-item">
       <div className="job-card">
@@ -89,7 +94,7 @@ export default function JobCard({ job, onApplyClick }) {
                   isFavorited ? "Remove from favourites" : "Save to favourites"
                 }
               >
-                {favorites.includes(job.id) || job.isFavorite ? "♥" : "♡"}
+                {favorites ? "♥" : "♡"}
               </button>
             </div>
 
@@ -102,6 +107,7 @@ export default function JobCard({ job, onApplyClick }) {
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
+
               {/* employment type tag */}
               {job.employment_type && (
                 <div className="job-commute-info">
@@ -159,22 +165,31 @@ export default function JobCard({ job, onApplyClick }) {
                 })()}
 
               {/* commute info block*/}
-              {job.travelInfo && job.travelInfo.success && (
-                <div className="job-commute-info">
-                  {/* <span className="job-tag-separator">|</span> */}
-                  <Bus className="job-icon" />
-                  <span className="job-commute">
-                    {formatTravelTime(job.travelInfo.averageTravelTimeMinutes)},{" "}
-                    {job.travelInfo.leastTransfers} transfer
-                    {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
+              <div className="job-commute-info">
+                {isTravelLoading && !job.travelInfo ? (
+                  <img
+                    src={gif.spinner}
+                    alt="Loading..."
+                    className="travel-spinner"
+                  />
+                ) : job.travelInfo?.success ? (
+                  <>
+                    <Bus className="bus-icon" />
+                    <span className="job-commute">
+                      {formatTravelTime(
+                        job.travelInfo.averageTravelTimeMinutes,
+                      )}
+                      {", "}
+                      {job.travelInfo.leastTransfers} transfer
+                      {job.travelInfo.leastTransfers !== 1 ? "s" : ""}
+                    </span>
+                  </>
+                ) : (
+                  <span className="job-commute error">
+                    Commute info unavailable
                   </span>
-                </div>
-              )}
-              {job.travelInfo && !job.travelInfo.success && (
-                <div className="job-commute-info error">
-                  Commute info unavailable
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             <p className="job-description">

@@ -116,10 +116,16 @@
 .job-commute-info {
   margin: 8px 0 12px 0;
   font-size: 14px;
-  color: #007bff;
+  /* color: #007bff; */
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.travel-spinner {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .job-icon {

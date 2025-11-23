@@ -55,7 +55,9 @@ export default async function calculateBatchTravelTime(req, res) {
 
     for (const workCity of workCities) {
       if (
-        homeAddress.toLowerCase().includes(workCity.toLowerCase()) ||
+        (typeof homeAddress === "string" &&
+          typeof workCity === "string" &&
+          homeAddress.toLowerCase().includes(workCity.toLowerCase())) ||
         workCity.toLowerCase().includes(homeAddress.toLowerCase())
       ) {
         results.push({
