@@ -35,13 +35,7 @@ export default function DropdownSort() {
         setAvailable((prev) => prev.filter((_, i) => i !== index));
         setSelected((prev) => [...prev, text]);
       } else {
-        // from selected -> move within selected (remove at old index and append)
-        setSelected((prev) => {
-          const next = [...prev];
-          next.splice(index, 1);
-          next.push(text);
-          return next;
-        });
+        // from selected -> keep in selected
       }
     } else {
       // dropping into available
@@ -102,8 +96,8 @@ export default function DropdownSort() {
       >
         <div className="p-4">
           <p className="text-sm font-medium mb-2">
-            Drag properties between areas to change their priority or disable
-            them.
+            Drag and drop the sorting criteria between areas to change their
+            priority or disable them.
           </p>
           <div className="mb-4">
             <p className="text-xs text-gray-500 mb-2">Selected Properties:</p>
