@@ -126,16 +126,7 @@ export default function OpenPositions() {
               activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
-            {
-              <DropdownSort
-                options={filterOptions.workModeOptions}
-                activeValues={activeFilters.work_mode}
-                onFilterChange={handleFilterChange}
-                // onFilterChange={(filterKey, value) =>
-                //   handleSortChange(filterKey, value)
-                // }
-              />
-            }
+            <DropdownSort />
           </div>
           <button onClick={handleClearFilters} className="clear-filters-btn">
             Clear filters
