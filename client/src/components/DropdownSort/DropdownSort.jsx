@@ -18,17 +18,11 @@ export default function DropdownSort() {
 
   function onDragStart(e, text, from, index) {
     dragged.current = { text, from, index };
-    try {
-      e.dataTransfer.setData("text/plain", text);
-      e.dataTransfer.effectAllowed = "move";
-    } catch {
-      // some browsers may throw when using setData in React synthetic event wrapper
-    }
-    e.currentTarget.style.opacity = "0.5";
+    e.dataTransfer.setData("text/plain", text);
+    e.dataTransfer.effectAllowed = "move";
   }
 
   function onDragEnd(e) {
-    e.currentTarget.style.opacity = "1";
     dragged.current = null;
   }
 
