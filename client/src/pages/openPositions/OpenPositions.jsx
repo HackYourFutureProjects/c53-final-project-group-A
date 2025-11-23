@@ -136,7 +136,7 @@ export default function OpenPositions() {
         </div>
       )}
 
-      {allJobs.length === 0 || !searchTerm ? (
+      {allJobs.length === 0 ? (
         <p className="job-message">
           No jobs are shown. Go to <strong>Job Search</strong> or{" "}
           <strong>Clear Filters</strong> to see more results.
