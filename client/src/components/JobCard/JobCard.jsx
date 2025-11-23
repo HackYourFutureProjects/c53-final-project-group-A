@@ -181,7 +181,7 @@ export default function JobCard({ job, onApplyClick }) {
             <div className="job-card-footer">
               <div className="skill-match-container">
                 <span className="skill-match-text">
-                  <Skills item={job} />
+                  <Skills job={job} />
                 </span>
               </div>
 

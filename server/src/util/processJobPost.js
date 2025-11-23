@@ -1,5 +1,12 @@
 function normalizeDescription(str) {
-  return " " + str.replace(/[^A-Za-z0-9+#]/g, " ").replace(/ +/g, " ") + " ";
+  return (
+    " " +
+    str
+      .replace(/[^A-Za-z0-9+#]/g, " ")
+      .replace(/ +/g, " ")
+      .toLowerCase() +
+    " "
+  );
 }
 // const senioritySynonyms = {
 //   "entry level": [

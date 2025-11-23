@@ -4,6 +4,7 @@ import "./OpenPositions.css";
 
 import { defaultUser, formatAddress } from "../../data/defaultUser";
 import { UseJobs } from "../../context/JobsContext";
+import { UseUser } from "../../context/UserContext";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
 import useTravelData from "../../hooks/useTravelData";
 
@@ -12,8 +13,21 @@ import Pagination from "../../components/Pagination/Pagination";
 import JobCard from "../../components/JobCard/JobCard";
 import SkillsSettings from "../../components/SkillsSettings";
 
+function getSkillsInDescription(normalized_description, skills = []) {
+  return skills
+    .filter((s) => {
+      let re = null;
+      if (s.skillRegex instanceof RegExp) re = s.skillRegex;
+      return re ? re.test(normalized_description) : false;
+    })
+    .map((s) => s.skill);
+}
+
 export default function OpenPositions() {
   const { allJobs, searchTerm } = UseJobs();
+  const { user } = UseUser();
+  const skills = user?.skills || [];
+  console.log("skills in OpenPositions:", skills);
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
   const [activeFilters, setActiveFilters] = useState({
@@ -24,6 +38,23 @@ export default function OpenPositions() {
   const [jobsWithTravel, setJobsWithTravel] = useState([]);
   const [homeAddress] = useState(formatAddress(defaultUser.address));
   const { calculateBatchTravel, error: travelError } = useTravelData();
+
+  const jobsWithSkills = useMemo(() => {
+    return jobsWithTravel.map((job) => {
+      console.log("job in jobsWithSkills:", job.normalized_description);
+      const skillsInDescription = getSkillsInDescription(
+        job.normalized_description || "",
+        skills,
+      );
+      console.log("skills:", skills);
+      console.log("skillsInDescription:", skillsInDescription);
+      return {
+        ...job,
+        skillsInDescription,
+        skillsMatch: skillsInDescription.length,
+      };
+    });
+  }, [jobsWithTravel, skills]);
 
   const filterOptions = useMemo(() => {
     return findFilterOptions(allJobs);
@@ -52,10 +83,10 @@ export default function OpenPositions() {
   }, [allJobs, activeFilters]);
 
   //pagination
-  const totalPages = Math.ceil(jobsWithTravel.length / jobsPerPage);
+  const totalPages = Math.ceil(jobsWithSkills.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobsWithTravel.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = jobsWithSkills.slice(indexOfFirstJob, indexOfLastJob);
 
   //useEffect for travelInfo
   useEffect(() => {
