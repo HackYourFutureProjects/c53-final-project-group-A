@@ -22,7 +22,7 @@ export default function DropdownSort() {
     e.dataTransfer.effectAllowed = "move";
   }
 
-  function onDragEnd(e) {
+  function onDragEnd() {
     dragged.current = null;
   }
 
