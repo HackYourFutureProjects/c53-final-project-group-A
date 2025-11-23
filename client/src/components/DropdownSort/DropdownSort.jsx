@@ -33,7 +33,7 @@ export default function DropdownSort() {
     const { text, from, index } = d;
 
     if (container === "selected") {
-      if (from === "available") {
+      if (from === "disabled") {
         setAvailable((prev) => prev.filter((_, i) => i !== index));
         setSelected((prev) => [...prev, text]);
       } else {
@@ -161,7 +161,7 @@ export default function DropdownSort() {
               }}
               onDrop={(e) => {
                 e.preventDefault();
-                handleDrop("available");
+                handleDrop("disabled");
               }}
             >
               {available.length === 0 ? (
@@ -172,7 +172,7 @@ export default function DropdownSort() {
                     key={text + idx}
                     className="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-blue-50 m-1"
                     draggable
-                    onDragStart={(e) => onDragStart(e, text, "available", idx)}
+                    onDragStart={(e) => onDragStart(e, text, "disabled", idx)}
                     onDragEnd={onDragEnd}
                   >
                     {text}
