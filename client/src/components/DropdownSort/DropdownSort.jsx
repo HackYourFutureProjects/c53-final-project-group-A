@@ -27,10 +27,8 @@ export default function DropdownSort() {
   }
 
   function handleDrop(container) {
-    const d = dragged.current;
-    if (!d) return;
-
-    const { text, from, index } = d;
+    if (!dragged.current) return;
+    const { text, from, index } = dragged.current;
 
     if (container === "selected") {
       if (from === "disabled") {
