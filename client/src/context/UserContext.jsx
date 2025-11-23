@@ -45,16 +45,18 @@ function userReducer(state, action) {
       // Remove all skills from the user while preserving other fields
       return { ...state, skills: [] };
     }
+
     case "TOGGLE_FAVORITE": {
       const jobId = action.payload;
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
 
-      const exists = prevFavorites.includes(jobId);
+      const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
-        ? prevFavorites.filter((id) => id !== jobId)
-        : [...prevFavorites, jobId];
+        ? prevFavorites.filter((fav) => fav.id !== jobId)
+        : [...prevFavorites, action.jobData];
+
       return { ...state, favorites: newFavorites };
     }
 
@@ -128,8 +130,24 @@ function UserContextProvider({ children }) {
 
         const normalizedSkills = fixUserSkills(fixedUser.skills);
 
-        const favoriteIDs = Array.isArray(fixedUser.favorites)
-          ? fixedUser.favorites.map((job) => job.id).filter((id) => id != null)
+        const favoriteJobs = Array.isArray(fixedUser.favorites)
+          ? fixedUser.favorites.map((job) => ({
+              id: job.id,
+              title: job.title,
+              organization: job.organization,
+              organization_url: job.organization_url,
+              employment_type: job.employment_type,
+              url: job.url,
+              organization_logo: job.organization_logo,
+              displayLocation: job.display_location,
+              workMode: job.work_mode,
+              seniority: job.seniority,
+              description_text: job.description_text,
+              date_posted: job.date_posted,
+              travelTime: job.travel_time,
+              leastTransfers: job.least_transfers,
+              normalizedDescription: job.normalized_description,
+            }))
           : [];
 
         //  SEND THE FIXED USER TO THE STATE
@@ -138,7 +156,7 @@ function UserContextProvider({ children }) {
           payload: {
             ...fixedUser,
             skills: normalizedSkills,
-            favorites: favoriteIDs,
+            favorites: favoriteJobs,
           },
         });
       } else {
@@ -180,8 +198,24 @@ function UserContextProvider({ children }) {
 
       const normalizedSkills = fixUserSkills(fixedUser.skills);
 
-      const favoriteIDs = Array.isArray(fixedUser.favorites)
-        ? fixedUser.favorites.map((job) => job.id).filter((id) => id != null)
+      const favoriteJobs = Array.isArray(fixedUser.favorites)
+        ? fixedUser.favorites.map((job) => ({
+            id: job.id,
+            title: job.title,
+            organization: job.organization,
+            organization_url: job.organization_url,
+            employment_type: job.employment_type,
+            url: job.url,
+            organization_logo: job.organization_logo,
+            displayLocation: job.display_location,
+            workMode: job.work_mode,
+            seniority: job.seniority,
+            description_text: job.description_text,
+            date_posted: job.date_posted,
+            travelTime: job.travel_time,
+            leastTransfers: job.least_transfers,
+            normalizedDescription: job.normalized_description,
+          }))
         : [];
 
       dispatch({
@@ -189,7 +223,7 @@ function UserContextProvider({ children }) {
         payload: {
           ...fixedUser,
           skills: normalizedSkills,
-          favorites: favoriteIDs,
+          favorites: favoriteJobs,
         },
       });
       return data.user;
@@ -253,13 +287,12 @@ function UserContextProvider({ children }) {
 
   async function toggleFavorite(job) {
     try {
-      const jobId = job.id;
       const data = await authFetch("/favorites/toggle", {
         method: "POST",
-        body: JSON.stringify({ jobId, jobData: job }),
+        body: JSON.stringify({ jobId: job.id, jobData: job }),
       });
 
-      dispatch({ type: "TOGGLE_FAVORITE", payload: jobId });
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id, jobData: job });
 
       setMessage(
         data.action === "added"
@@ -270,6 +303,7 @@ function UserContextProvider({ children }) {
       console.error("toggleFavorite error:", err);
     }
   }
+
   return (
     <UserContext.Provider
       value={{

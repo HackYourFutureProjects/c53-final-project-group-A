@@ -32,7 +32,8 @@ export default function JobCard({ job, onApplyClick }) {
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
-  const isFavorited = favorites.includes(job.id);
+  // const isFavorited = favorites.includes(job.id);
+  const isFavorited = favorites.some((fav) => fav.id === job.id);
 
   const handleApplyClick = (e) => {
     e.stopPropagation();
@@ -85,7 +86,7 @@ export default function JobCard({ job, onApplyClick }) {
                   isFavorited ? "Remove from favourites" : "Save to favourites"
                 }
               >
-                {favorites.includes(job.id) || job.isFavorite ? "♥" : "♡"}
+                {isFavorited ? "♥" : "♡"}
               </button>
             </div>
 
