@@ -251,11 +251,12 @@ function UserContextProvider({ children }) {
     }
   }
 
-  async function toggleFavorite(jobId, jobData) {
+  async function toggleFavorite(job) {
     try {
+      const jobId = job.id;
       const data = await authFetch("/favorites/toggle", {
         method: "POST",
-        body: JSON.stringify({ jobId, jobData }),
+        body: JSON.stringify({ jobId, jobData: job }),
       });
 
       dispatch({ type: "TOGGLE_FAVORITE", payload: jobId });

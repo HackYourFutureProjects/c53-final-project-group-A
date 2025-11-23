@@ -57,7 +57,7 @@ export default function JobCard({ job, onApplyClick }) {
     e.stopPropagation();
 
     if (user && user.email !== defaultUser.email) {
-      toggleFavorite(job.id, job);
+      toggleFavorite(job);
     } else {
       setShowFavoritesPopup(true);
     }
