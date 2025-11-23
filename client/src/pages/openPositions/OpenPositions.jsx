@@ -7,9 +7,10 @@ import { UseJobs } from "../../context/JobsContext";
 import { UseUser } from "../../context/UserContext";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
 import useTravelData from "../../hooks/useTravelData";
-import { getSkillsInDescription } from "../../util/getSkillsInDescription";
+import getSkillsInDescription from "../../util/getSkillsInDescription";
 
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
+import DropdownSort from "../../components/DropdownSort/DropdownSort";
 import Pagination from "../../components/Pagination/Pagination";
 import JobCard from "../../components/JobCard/JobCard";
 import SkillsSettings from "../../components/SkillsSettings";
@@ -108,34 +109,26 @@ export default function OpenPositions() {
         <div className="filters-container">
           <div className="filter-dropdowns">
             <DropdownFilter
-              buttonText="Experience level"
-              title="Experience level"
+              filterkey="Experience level"
               options={filterOptions.experienceOptions}
-              filterKey="seniorityLevel"
               activeValues={activeFilters.seniorityLevel}
               onFilterChange={handleFilterChange}
             />
             <DropdownFilter
-              buttonText="Job type"
-              title="Job type"
+              filterkey="Job type"
               options={filterOptions.jobTypeOptions}
-              filterKey="employmentType"
               activeValues={activeFilters.employmentType}
               onFilterChange={handleFilterChange}
             />
             <DropdownFilter
-              buttonText="Work mode"
-              title="Work mode"
+              filterkey="Work mode"
               options={filterOptions.workModeOptions}
-              filterKey="work_mode"
               activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
             {/* <DropdownFilter
-              buttonText="Sort by"
-              title="Sort by"
+              filterkey="Sort by"
               options={sortOptions}
-              filterKey="sort"
               activeValues={sortBy}
               onFilterChange={(filterKey, value) =>
                 handleSortChange(filterKey, value)

@@ -3,10 +3,8 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import "./DropdownFilter.css";
 
 export default function DropdownFilter({
-  buttonText,
-  title,
+  filterkey,
   options,
-  filterKey,
   activeValues,
   onFilterChange,
 }) {
@@ -22,7 +20,7 @@ export default function DropdownFilter({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <span>{buttonText}</span>
+        <span>{filterkey}</span>
         <svg
           className="dropdown-arrow"
           fill="none"
@@ -41,7 +39,7 @@ export default function DropdownFilter({
       {isOpen && (
         <div className="dropdown-content">
           <div className="dropdown-header">
-            <span className="dropdown-title">{title}</span>
+            <span className="dropdown-title">{filterkey}</span>
             <button onClick={() => setIsOpen(false)} className="dropdown-close">
               ×
             </button>
@@ -57,10 +55,10 @@ export default function DropdownFilter({
                 <input
                   type="checkbox"
                   className="form-checkbox"
-                  name={filterKey}
+                  name={filterkey}
                   checked={checked}
                   onChange={(e) =>
-                    onFilterChange(filterKey, option, e.target.checked)
+                    onFilterChange(filterkey, option, e.target.checked)
                   }
                 />
                 <span className="option-text">{option}</span>
