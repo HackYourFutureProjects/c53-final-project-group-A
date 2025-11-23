@@ -38,7 +38,7 @@ export default function processJobPost(job) {
     organization_logo,
   } = job;
   // normalize seniority values coming from the job source
-  let normalizedSeniority = seniority;
+  let normalizedSeniority;
   switch (seniority) {
     case "Stagiair":
       normalizedSeniority = "Internship";
