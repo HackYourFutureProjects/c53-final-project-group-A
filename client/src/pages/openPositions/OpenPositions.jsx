@@ -10,7 +10,7 @@ import useTravelData from "../../hooks/useTravelData";
 import getSkillsInDescription from "../../util/getSkillsInDescription";
 
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
-// import DropdownSort from "../../components/DropdownSort/DropdownSort";
+import DropdownSort from "../../components/DropdownSort/DropdownSort";
 import Pagination from "../../components/Pagination/Pagination";
 import JobCard from "../../components/JobCard/JobCard";
 import SkillsSettings from "../../components/SkillsSettings";
@@ -126,14 +126,16 @@ export default function OpenPositions() {
               activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
-            {/* <DropdownFilter
-              filterkey="Sort by"
-              options={sortOptions}
-              activeValues={sortBy}
-              onFilterChange={(filterKey, value) =>
-                handleSortChange(filterKey, value)
-              }
-            /> */}
+            {
+              <DropdownSort
+                options={filterOptions.workModeOptions}
+                activeValues={activeFilters.work_mode}
+                onFilterChange={handleFilterChange}
+                // onFilterChange={(filterKey, value) =>
+                //   handleSortChange(filterKey, value)
+                // }
+              />
+            }
           </div>
           <button onClick={handleClearFilters} className="clear-filters-btn">
             Clear filters
