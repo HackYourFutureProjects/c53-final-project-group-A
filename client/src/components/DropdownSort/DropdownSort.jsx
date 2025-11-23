@@ -2,10 +2,11 @@ import { useState, useRef } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
 export default function DropdownSort() {
-  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  useOutsideClick(dropdownRef, () => setIsOpen(false));
+  const dragged = useRef(null);
 
+  const [isOpen, setIsOpen] = useState(false);
+  useOutsideClick(dropdownRef, () => setIsOpen(false));
   const [selected, setSelected] = useState([
     "Most skill matches",
     "Fewest transport transfers",
@@ -13,8 +14,6 @@ export default function DropdownSort() {
     "Newest first",
   ]);
   const [disabled, setDisabled] = useState([]);
-
-  const dragged = useRef(null);
 
   function onDragStart(e, criterion, from) {
     dragged.current = { criterion, from };
@@ -30,30 +29,19 @@ export default function DropdownSort() {
     if (!dragged.current) return;
     const { criterion, from } = dragged.current;
 
-    if (container === "selected") {
-      console.log("dropping into selected", dragged.current);
-      if (from === "disabled") {
-        setDisabled((prev) => prev.filter((t) => t !== criterion));
-        setSelected((prev) => [...prev, criterion]);
-      } else {
-        // from selected -> keep in selected
-      }
-    } else {
-      // dropping into disabled
-      if (from === "selected") {
-        setSelected((prev) => prev.filter((t) => t !== criterion));
-        setDisabled((prev) => [...prev, criterion]);
-      } else {
-        // from disabled -> keep in disabled (or append)
-        // ensure we don't duplicate: if it already came from disabled and we dropped into disabled, do nothing
-      }
+    if (container === "selected" && from === "disabled") {
+      setDisabled((prev) => prev.filter((el) => el !== criterion));
+      setSelected((prev) => [...prev, criterion]);
     }
-
+    if (container === "disabled" && from === "selected") {
+      setSelected((prev) => prev.filter((el) => el !== criterion));
+      setDisabled((prev) => [...prev, criterion]);
+    }
     dragged.current = null;
   }
 
   function handleRemoveFromSelected(criterion) {
-    setSelected((prev) => prev.filter((t) => t !== criterion));
+    setSelected((prev) => prev.filter((el) => el !== criterion));
     setDisabled((prev) => [...prev, criterion]);
   }
 
@@ -64,7 +52,7 @@ export default function DropdownSort() {
         className="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2"
         onClick={(e) => {
           e.stopPropagation();
-          setIsOpen((v) => !v);
+          setIsOpen((open) => !open);
         }}
         aria-haspopup="true"
         aria-expanded={isOpen}
@@ -100,7 +88,9 @@ export default function DropdownSort() {
             priority or disable them.
           </p>
           <div className="mb-4">
-            <p className="text-xs text-gray-500 mb-2">Selected Properties:</p>
+            <p className="text-xs text-gray-500 mb-2">
+              Selected Criteria & Priorities:
+            </p>
             <div
               id="selectedSort"
               className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50 hover:bg-gray-50"
@@ -141,7 +131,7 @@ export default function DropdownSort() {
             </div>
           </div>
           <div className="mb-3">
-            <p className="text-xs text-gray-500 mb-2">Disabled Properties:</p>
+            <p className="text-xs text-gray-500 mb-2">Disabled Criteria:</p>
             <div
               id="disabledProps"
               className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50"
