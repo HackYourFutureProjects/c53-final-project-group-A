@@ -6,7 +6,6 @@ export default function DropdownSort() {
   const dropdownRef = useRef(null);
   useOutsideClick(dropdownRef, () => setIsOpen(false));
 
-  // Initial items: all properties moved to Selected by default
   const [selected, setSelected] = useState([
     "Most skill matches",
     "Fewest transport transfers",
@@ -114,8 +113,8 @@ export default function DropdownSort() {
       >
         <div className="p-4">
           <p className="text-sm font-medium mb-2">
-            Drag properties to change their priority or remove them from the
-            Selected Properties area.
+            Drag properties between areas to change their priority or disable
+            them.
           </p>
           <div className="mb-4">
             <p className="text-xs text-gray-500 mb-2">Selected Properties:</p>
