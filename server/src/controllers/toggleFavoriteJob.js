@@ -47,9 +47,9 @@ export const toggleFavoriteJob = async (req, res) => {
         `INSERT INTO favorites 
           (id, title, organization, organization_url, employment_type, url, 
            organization_logo, display_location, work_mode, seniority, description_text,
-           date_posted)
+           date_posted, travel_time, least_transfers, normalized_description)
          VALUES
-          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`,
         [
           jobId,
           jobData.title || null, //  Using null fallback is good to avoid errors
@@ -63,6 +63,9 @@ export const toggleFavoriteJob = async (req, res) => {
           jobData.seniority || null,
           jobData.description_text || null,
           jobData.date_posted || null,
+          jobData.travel_time || null,
+          jobData.least_transfers || null,
+          jobData.normalized_description || null,
         ],
       );
     }
