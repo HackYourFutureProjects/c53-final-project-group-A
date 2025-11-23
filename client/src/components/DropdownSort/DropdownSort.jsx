@@ -8,13 +8,13 @@ export default function DropdownSort() {
   const [isOpen, setIsOpen] = useState(false);
   useOutsideClick(dropdownRef, () => setIsOpen(false));
 
-  const [selected, setSelected] = useState([
+  const [selectedSort, setSelectedSort] = useState([
     "Most skill matches",
     "Fewest transport transfers",
     "Nearest first",
     "Newest first",
   ]);
-  const [disabled, setDisabled] = useState([]);
+  const [disabledSort, setDisabledSort] = useState([]);
 
   function onDragStart(e, criterion, from) {
     dragged.current = { criterion, from };
@@ -32,19 +32,19 @@ export default function DropdownSort() {
     const { criterion, from } = dragged.current;
 
     if (container === "selected" && from === "disabled") {
-      setDisabled((prev) => prev.filter((el) => el !== criterion));
-      setSelected((prev) => [...prev, criterion]);
+      setDisabledSort((prev) => prev.filter((el) => el !== criterion));
+      setSelectedSort((prev) => [...prev, criterion]);
     }
     if (container === "disabled" && from === "selected") {
-      setSelected((prev) => prev.filter((el) => el !== criterion));
-      setDisabled((prev) => [...prev, criterion]);
+      setSelectedSort((prev) => prev.filter((el) => el !== criterion));
+      setDisabledSort((prev) => [...prev, criterion]);
     }
     dragged.current = null;
   }
 
   function handleRemoveFromSelected(criterion) {
-    setSelected((prev) => prev.filter((el) => el !== criterion));
-    setDisabled((prev) => [...prev, criterion]);
+    setSelectedSort((prev) => prev.filter((el) => el !== criterion));
+    setDisabledSort((prev) => [...prev, criterion]);
   }
 
   return (
@@ -94,7 +94,7 @@ export default function DropdownSort() {
               Selected Criteria & Priorities:
             </p>
             <div
-              id="selectedSort"
+              id="selected"
               className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50 hover:bg-gray-50"
               onDragOver={(e) => {
                 e.preventDefault();
@@ -107,10 +107,10 @@ export default function DropdownSort() {
                 handleDrop("selected");
               }}
             >
-              {selected.length === 0 ? (
+              {selectedSort.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center">Drop here</p>
               ) : (
-                selected.map((criterion) => (
+                selectedSort.map((criterion) => (
                   <div
                     key={criterion}
                     className="sort-item inline-flex items-center space-x-2 m-1 bg-white border border-gray-200 rounded px-3 py-2 hover:bg-blue-50"
@@ -135,7 +135,7 @@ export default function DropdownSort() {
           <div className="mb-3">
             <p className="text-xs text-gray-500 mb-2">Disabled Criteria:</p>
             <div
-              id="disabledProps"
+              id="disabled"
               className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50"
               onDragOver={(e) => {
                 e.preventDefault();
@@ -148,10 +148,10 @@ export default function DropdownSort() {
                 handleDrop("disabled");
               }}
             >
-              {disabled.length === 0 ? (
+              {disabledSort.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center">Drop here</p>
               ) : (
-                disabled.map((criterion) => (
+                disabledSort.map((criterion) => (
                   <div
                     key={criterion}
                     className="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-blue-50 m-1"
