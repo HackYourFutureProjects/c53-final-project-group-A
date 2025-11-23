@@ -128,10 +128,18 @@ function UserContextProvider({ children }) {
 
         const normalizedSkills = fixUserSkills(fixedUser.skills);
 
+        const favoriteIDs = Array.isArray(fixedUser.favorites)
+          ? fixedUser.favorites.map((job) => job.id).filter((id) => id != null)
+          : [];
+
         //  SEND THE FIXED USER TO THE STATE
         dispatch({
           type: "LOGIN",
-          payload: { ...fixedUser, skills: normalizedSkills },
+          payload: {
+            ...fixedUser,
+            skills: normalizedSkills,
+            favorites: favoriteIDs,
+          },
         });
       } else {
         dispatch({ type: "LOGOUT", payload: defaultUser });
@@ -172,9 +180,17 @@ function UserContextProvider({ children }) {
 
       const normalizedSkills = fixUserSkills(fixedUser.skills);
 
+      const favoriteIDs = Array.isArray(fixedUser.favorites)
+        ? fixedUser.favorites.map((job) => job.id).filter((id) => id != null)
+        : [];
+
       dispatch({
         type: "LOGIN",
-        payload: { ...fixedUser, skills: normalizedSkills },
+        payload: {
+          ...fixedUser,
+          skills: normalizedSkills,
+          favorites: favoriteIDs,
+        },
       });
       return data.user;
     } catch (err) {
@@ -235,6 +251,24 @@ function UserContextProvider({ children }) {
     }
   }
 
+  async function toggleFavorite(jobId, jobData) {
+    try {
+      const data = await authFetch("/favorites/toggle", {
+        method: "POST",
+        body: JSON.stringify({ jobId, jobData }),
+      });
+
+      dispatch({ type: "TOGGLE_FAVORITE", payload: jobId });
+
+      setMessage(
+        data.action === "added"
+          ? "Job added to favorites!"
+          : "Job removed from favorites!",
+      );
+    } catch (err) {
+      console.error("toggleFavorite error:", err);
+    }
+  }
   return (
     <UserContext.Provider
       value={{
@@ -251,6 +285,7 @@ function UserContextProvider({ children }) {
         clearMessage,
         getCurrentUser,
         updateProfile,
+        toggleFavorite,
       }}
     >
       {children}

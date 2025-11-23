@@ -39,7 +39,7 @@ export default function MyFavorites() {
         ) : (
           favoriteJobs.map((job, idx) => (
             <JobCard
-              key={job.id || idx}
+              key={job.id ? job.id : `favorite-${idx}`}
               job={job}
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")
