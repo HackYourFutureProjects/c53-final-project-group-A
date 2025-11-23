@@ -10,7 +10,7 @@ import useTravelData from "../../hooks/useTravelData";
 import getSkillsInDescription from "../../util/getSkillsInDescription";
 
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
-import DropdownSort from "../../components/DropdownSort/DropdownSort";
+// import DropdownSort from "../../components/DropdownSort/DropdownSort";
 import Pagination from "../../components/Pagination/Pagination";
 import JobCard from "../../components/JobCard/JobCard";
 import SkillsSettings from "../../components/SkillsSettings";
