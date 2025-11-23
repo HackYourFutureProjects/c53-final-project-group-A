@@ -12,13 +12,13 @@ export default function DropdownSort() {
     "Nearest first",
     "Newest first",
   ]);
-  const [available, setAvailable] = useState([]);
+  const [disabled, setDisabled] = useState([]);
 
   const dragged = useRef(null);
 
-  function onDragStart(e, text, from, index) {
-    dragged.current = { text, from, index };
-    e.dataTransfer.setData("text/plain", text);
+  function onDragStart(e, criterion, from) {
+    dragged.current = { criterion, from };
+    e.dataTransfer.setData("text/plain", criterion);
     e.dataTransfer.effectAllowed = "move";
   }
 
@@ -28,33 +28,33 @@ export default function DropdownSort() {
 
   function handleDrop(container) {
     if (!dragged.current) return;
-    const { text, from, index } = dragged.current;
+    const { criterion, from } = dragged.current;
 
     if (container === "selected") {
+      console.log("dropping into selected", dragged.current);
       if (from === "disabled") {
-        setAvailable((prev) => prev.filter((_, i) => i !== index));
-        setSelected((prev) => [...prev, text]);
+        setDisabled((prev) => prev.filter((t) => t !== criterion));
+        setSelected((prev) => [...prev, criterion]);
       } else {
         // from selected -> keep in selected
       }
     } else {
-      // dropping into available
+      // dropping into disabled
       if (from === "selected") {
-        setSelected((prev) => prev.filter((_, i) => i !== index));
-        setAvailable((prev) => [...prev, text]);
+        setSelected((prev) => prev.filter((t) => t !== criterion));
+        setDisabled((prev) => [...prev, criterion]);
       } else {
-        // from available -> keep in available (or append)
-        // ensure we don't duplicate: if it already came from available and we dropped into available, do nothing
+        // from disabled -> keep in disabled (or append)
+        // ensure we don't duplicate: if it already came from disabled and we dropped into disabled, do nothing
       }
     }
 
     dragged.current = null;
   }
 
-  function handleRemoveFromSelected(index) {
-    const text = selected[index];
-    setSelected((prev) => prev.filter((_, i) => i !== index));
-    setAvailable((prev) => [...prev, text]);
+  function handleRemoveFromSelected(criterion) {
+    setSelected((prev) => prev.filter((t) => t !== criterion));
+    setDisabled((prev) => [...prev, criterion]);
   }
 
   return (
@@ -118,20 +118,20 @@ export default function DropdownSort() {
               {selected.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center">Drop here</p>
               ) : (
-                selected.map((text, idx) => (
+                selected.map((criterion) => (
                   <div
-                    key={text + idx}
+                    key={criterion}
                     className="sort-item inline-flex items-center space-x-2 m-1 bg-white border border-gray-200 rounded px-3 py-2 hover:bg-blue-50"
                     draggable
-                    onDragStart={(e) => onDragStart(e, text, "selected", idx)}
+                    onDragStart={(e) => onDragStart(e, criterion, "selected")}
                     onDragEnd={onDragEnd}
                   >
-                    <span>{text}</span>
+                    <span>{criterion}</span>
                     <button
                       className="text-gray-500 hover:text-gray-700"
                       type="button"
-                      onClick={() => handleRemoveFromSelected(idx)}
-                      aria-label={`Remove ${text}`}
+                      onClick={() => handleRemoveFromSelected(criterion)}
+                      aria-label={`Remove ${criterion}`}
                     >
                       ×
                     </button>
@@ -143,7 +143,7 @@ export default function DropdownSort() {
           <div className="mb-3">
             <p className="text-xs text-gray-500 mb-2">Disabled Properties:</p>
             <div
-              id="availableProps"
+              id="disabledProps"
               className="min-h-16 border-2 border-dashed border-gray-300 rounded p-2 bg-gray-50"
               onDragOver={(e) => {
                 e.preventDefault();
@@ -156,18 +156,18 @@ export default function DropdownSort() {
                 handleDrop("disabled");
               }}
             >
-              {available.length === 0 ? (
+              {disabled.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center">Drop here</p>
               ) : (
-                available.map((text, idx) => (
+                disabled.map((criterion) => (
                   <div
-                    key={text + idx}
+                    key={criterion}
                     className="sort-item px-3 py-2 bg-white border border-gray-200 rounded cursor-move hover:bg-blue-50 m-1"
                     draggable
-                    onDragStart={(e) => onDragStart(e, text, "disabled", idx)}
+                    onDragStart={(e) => onDragStart(e, criterion, "disabled")}
                     onDragEnd={onDragEnd}
                   >
-                    {text}
+                    {criterion}
                   </div>
                 ))
               )}
