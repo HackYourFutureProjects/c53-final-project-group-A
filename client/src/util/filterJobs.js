@@ -1,22 +1,22 @@
 export function findFilterOptions(allJobs) {
-  const experienceOptions = [];
-  const jobTypeOptions = [];
-  const workModeOptions = [];
+  const experienceSet = new Set();
+  const jobTypeSet = new Set();
+  const workModeSet = new Set();
   for (const job of allJobs) {
-    if (job.seniority && !experienceOptions.includes(job.seniority)) {
-      experienceOptions.push(job.seniority);
+    if (job.seniority) {
+      experienceSet.add(job.seniority);
     }
-    if (job.employment_type && !jobTypeOptions.includes(job.employment_type)) {
-      jobTypeOptions.push(job.employment_type);
+    if (job.employment_type) {
+      jobTypeSet.add(job.employment_type);
     }
-    if (job.work_mode && !workModeOptions.includes(job.work_mode)) {
-      workModeOptions.push(job.work_mode);
+    if (job.work_mode) {
+      workModeSet.add(job.work_mode);
     }
   }
   return {
-    experienceOptions,
-    jobTypeOptions,
-    workModeOptions,
+    experienceOptions: Array.from(experienceSet),
+    jobTypeOptions: Array.from(jobTypeSet),
+    workModeOptions: Array.from(workModeSet),
   };
 }
 
