@@ -25,12 +25,15 @@ function formatTravelTime(minutes) {
 
 export default function JobCard({ job, onApplyClick }) {
   const navigate = useNavigate();
-  const { user, dispatch } = UseUser();
+  const { user, toggleFavorite } = UseUser();
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
+
+  // const isFavorited = favorites.includes(job.id);
+  const isFavorited = favorites.some((fav) => fav.id === job.id);
 
   const handleApplyClick = (e) => {
     e.stopPropagation();
@@ -55,16 +58,14 @@ export default function JobCard({ job, onApplyClick }) {
     e.stopPropagation();
 
     if (user && user.email !== defaultUser.email) {
-      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id });
+      toggleFavorite(job);
     } else {
       setShowFavoritesPopup(true);
     }
   };
 
-  const isFavorited = favorites[job.id] ?? job.isFavorite;
-
   return (
-    <li key={job.id} className="job-item">
+    <li className="job-item">
       <div className="job-card">
         <div className="job-card-content">
           <div className="company-logo-container">
@@ -79,17 +80,13 @@ export default function JobCard({ job, onApplyClick }) {
             <div className="job-card-header">
               <h3 className="job-title">{job.title}</h3>
               <button
-                className={`favorite-btn ${
-                  favorites.includes(job.id) || job.isFavorite
-                    ? "favorited"
-                    : ""
-                }`}
+                className={`favorite-btn ${isFavorited ? "favorited" : ""}`}
                 onClick={handleFavoriteClick}
                 title={
                   isFavorited ? "Remove from favourites" : "Save to favourites"
                 }
               >
-                {favorites.includes(job.id) || job.isFavorite ? "♥" : "♡"}
+                {isFavorited ? "♥" : "♡"}
               </button>
             </div>
 
