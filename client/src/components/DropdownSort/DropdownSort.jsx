@@ -27,15 +27,15 @@ export default function DropdownSort() {
     dragged.current = null;
   }
 
-  function handleDrop(container) {
+  function handleDrop(dropContainer) {
     if (!dragged.current) return;
     const { criterion, from } = dragged.current;
 
-    if (container === "selected" && from === "disabled") {
+    if (dropContainer === "selected" && from === "disabled") {
       setDisabledSort((prev) => prev.filter((el) => el !== criterion));
       setSelectedSort((prev) => [...prev, criterion]);
     }
-    if (container === "disabled" && from === "selected") {
+    if (dropContainer === "disabled" && from === "selected") {
       setSelectedSort((prev) => prev.filter((el) => el !== criterion));
       setDisabledSort((prev) => [...prev, criterion]);
     }
