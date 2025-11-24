@@ -1,14 +1,24 @@
 export default function createSortComparator(selectedSort) {
+  const renaming = {
+    "Most skill matches": "skillsMatch",
+    "Fewest transport transfers": "least_transfers",
+    "Nearest first": "travel_time",
+    "Newest first": "date_posted",
+  };
+  selectedSort = (selectedSort || []).map((criterion) => renaming[criterion]);
+  if (selectedSort.length === 0) {
+    return () => 0;
+  }
   return function compareObjects(jobA, jobB) {
     let i = 0;
     while (
-      i < selectedSort.length - 1 &&
+      i < selectedSort.length &&
       jobA[selectedSort[i]] === jobB[selectedSort[i]]
     ) {
       i++;
     }
     if (i >= selectedSort.length) {
-      i = selectedSort.length - 1;
+      return 0;
     }
     const key = selectedSort[i];
     const a = jobA[key];

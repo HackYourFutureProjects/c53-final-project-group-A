@@ -14,6 +14,7 @@ import DropdownSort from "../../components/DropdownSort/DropdownSort";
 import Pagination from "../../components/Pagination/Pagination";
 import JobCard from "../../components/JobCard/JobCard";
 import SkillsSettings from "../../components/SkillsSettings";
+import createSortComparator from "../../util/createSortComparator";
 
 export default function OpenPositions() {
   const { allJobs, searchTerm } = UseJobs();
@@ -79,8 +80,7 @@ export default function OpenPositions() {
 
   const sortedJobs = useMemo(() => {
     if (selectedSort.length === 0) return jobsWithSkills;
-    return [...jobsWithSkills].sort();
-    // createSortComparator(selectedSort)
+    return [...jobsWithSkills].sort(createSortComparator(selectedSort));
   }, [jobsWithSkills, selectedSort]);
 
   //pagination

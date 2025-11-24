@@ -7,7 +7,7 @@ export default function Skills({ job }) {
   return (
     <div className="flex gap-2">
       <span className="text-sm font-medium mr-2">
-        Skills Match ({job?.skillsMatch}/{skills.length}):
+        Skills Match ({Number(job?.skillsMatch)}/{skills.length}):
       </span>
       {job?.skillsInDescription?.map((skill) => (
         <span key={skill} className="text-xs bg-gray-100 px-2 py-1 rounded">
