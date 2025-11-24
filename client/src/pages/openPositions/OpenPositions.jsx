@@ -46,7 +46,7 @@ export default function OpenPositions() {
       return {
         ...job,
         skillsInDescription,
-        skillsMatch: skillsInDescription.length,
+        skillsMatch: String(skillsInDescription.length).padStart(2, "0"),
       };
     });
   }, [jobsWithTravel, skills]);
