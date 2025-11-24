@@ -26,13 +26,13 @@ export default function OpenPositions() {
     employmentType: new Set(),
     work_mode: new Set(),
   });
-    const [selectedSort, setSelectedSort] = useState([
+  const [selectedSort, setSelectedSort] = useState([
     "Most skill matches",
     "Fewest transport transfers",
     "Nearest first",
     "Newest first",
   ]);
-    console.log("OpenPositions: selectedSort (parent state)", selectedSort);
+  console.log("OpenPositions: selectedSort (parent state)", selectedSort);
   const [jobsWithTravel, setJobsWithTravel] = useState([]);
   const [homeAddress] = useState(formatAddress(defaultUser.address));
   const { calculateBatchTravel, error: travelError } = useTravelData();
@@ -133,7 +133,10 @@ export default function OpenPositions() {
               activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
-            <DropdownSort selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+            <DropdownSort
+              selectedSort={selectedSort}
+              setSelectedSort={setSelectedSort}
+            />
           </div>
           <button onClick={handleClearFilters} className="clear-filters-btn">
             Clear filters
