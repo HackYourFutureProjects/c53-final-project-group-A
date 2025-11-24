@@ -11,7 +11,7 @@ export default function DropdownSort({ selectedSort, setSelectedSort }) {
 
   function onDragStart(e, criterion, from) {
     dragged.current = { criterion, from };
-    // Firefox historically requires dataTransfer.setData be called in dragstart for the drag operation to behave correctly. It may not be necessary in all browsers. The selected-disabled state logic should support dragging without this line.
+    // Calling dataTransfer.setData is required by all modern browsers for drag-and-drop to work correctly.
     e.dataTransfer.setData("text/plain", criterion);
     e.dataTransfer.effectAllowed = "move";
   }
