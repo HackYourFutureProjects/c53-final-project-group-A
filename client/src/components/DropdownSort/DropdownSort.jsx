@@ -1,19 +1,12 @@
 import { useState, useRef } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
-export default function DropdownSort() {
+export default function DropdownSort({ selectedSort, setSelectedSort }) {
   const dropdownRef = useRef(null);
   const dragged = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
   useOutsideClick(dropdownRef, () => setIsOpen(false));
-
-  const [selectedSort, setSelectedSort] = useState([
-    "Most skill matches",
-    "Fewest transport transfers",
-    "Nearest first",
-    "Newest first",
-  ]);
   const [disabledSort, setDisabledSort] = useState([]);
 
   function onDragStart(e, criterion, from) {
@@ -107,7 +100,7 @@ export default function DropdownSort() {
                 handleDrop("selected");
               }}
             >
-              {selectedSort.length === 0 ? (
+              {!selectedSort || selectedSort.length === 0 ? (
                 <p className="text-xs text-gray-400 text-center">Drop here</p>
               ) : (
                 selectedSort.map((criterion) => (
