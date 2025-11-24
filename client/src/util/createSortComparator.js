@@ -1,16 +1,16 @@
 export default function createSortComparator(sortCriteria) {
   return function compareObjects(aa, bb) {
-    let k = 0;
+    let i = 0;
     while (
-      k < sortCriteria.length - 1 &&
-      aa[sortCriteria[k]] === bb[sortCriteria[k]]
+      i < sortCriteria.length - 1 &&
+      aa[sortCriteria[i]] === bb[sortCriteria[i]]
     ) {
-      k++;
+      i++;
     }
-    if (k >= sortCriteria.length) {
-      k = sortCriteria.length - 1;
+    if (i >= sortCriteria.length) {
+      i = sortCriteria.length - 1;
     }
-    const key = sortCriteria[k];
+    const key = sortCriteria[i];
     const a = aa[key];
     const b = bb[key];
     if (typeof a === "number" && typeof b === "number") {
