@@ -32,7 +32,7 @@ export default function OpenPositions() {
     "Nearest first",
     "Newest first",
   ]);
-  console.log("OpenPositions: selectedSort (parent state)", selectedSort);
+
   const [jobsWithTravel, setJobsWithTravel] = useState([]);
   const [homeAddress] = useState(formatAddress(defaultUser.address));
   const { calculateBatchTravel, error: travelError } = useTravelData();
@@ -77,11 +77,17 @@ export default function OpenPositions() {
     return filterJobs(allJobs, activeFilters);
   }, [allJobs, activeFilters]);
 
+  const sortedJobs = useMemo(() => {
+    if (selectedSort.length === 0) return jobsWithSkills;
+    return [...jobsWithSkills].sort();
+    // createSortComparator(selectedSort)
+  }, [jobsWithSkills, selectedSort]);
+
   //pagination
-  const totalPages = Math.ceil(jobsWithSkills.length / jobsPerPage);
+  const totalPages = Math.ceil(sortedJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobsWithSkills.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   //useEffect for travelInfo
   useEffect(() => {
