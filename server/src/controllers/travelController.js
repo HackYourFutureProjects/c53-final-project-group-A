@@ -25,7 +25,6 @@ export async function calculateTravelTime(req, res) {
         workCity,
         travel_time: Math.round(travelData.travel_time),
         least_transfers: travelData.least_transfers,
-        routesCount: travelData.routesCount,
       },
     });
   } catch (error) {
@@ -77,7 +76,7 @@ export default async function calculateBatchTravelTime(req, res) {
           workCity,
           travel_time: Math.round(travelData.travel_time),
           least_transfers: travelData.least_transfers,
-          routesCount: travelData.routesCount,
+          // routesCount: travelData.routesCount,
           success: true,
         });
       } catch (error) {

@@ -38,9 +38,7 @@ const JobsProvider = ({ children }) => {
       ...new Set(
         jobsArray
           .map((job) => {
-            const workCity =
-              // job.cities_derived?.[0] || job.locations_derived?.[0];
-              job.display_location;
+            const workCity = job.display_location;
 
             return typeof workCity === "string" && workCity.trim() !== ""
               ? workCity
@@ -53,6 +51,8 @@ const JobsProvider = ({ children }) => {
     return uniqueCities.filter(
       (city) => !Object.prototype.hasOwnProperty.call(travelDetails, city),
     );
+
+    // return uniqueCities
   }
 
   async function fetchBatchTravelDetails(jobsArray) {
@@ -64,7 +64,10 @@ const JobsProvider = ({ children }) => {
       ? formatAddress(user.address)
       : formatAddress(defaultUser.address);
 
-    if (!homeAddress || !citiesToFetch.length) {
+    console.log("homeAddress", homeAddress);
+    console.log("citiesToFetch.length", citiesToFetch.length);
+
+    if (!homeAddress || citiesToFetch.length === 0) {
       setError(
         "The address or cities for route calculation are not specified.",
       );
@@ -80,11 +83,15 @@ const JobsProvider = ({ children }) => {
       });
       const data = await res.json();
 
+      console.log("Travel details:", data.result.travelDetails);
+
       const detailsMap = { ...travelDetails };
       if (data.result && Array.isArray(data.result.travelDetails)) {
-        data.result.travelDetails.forEach((item) => {
-          detailsMap[item.workCity] = item;
-        });
+        data.result.travelDetails.forEach(
+          ({ workCity, travel_time, least_transfers }) => {
+            detailsMap[workCity] = { travel_time, least_transfers };
+          },
+        );
       }
       setTravelDetails(detailsMap);
     } catch (error) {
