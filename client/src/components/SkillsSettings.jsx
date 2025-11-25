@@ -8,7 +8,7 @@ import { UseUser } from "../context/UserContext";
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const { user, dispatch } = UseUser();
+  const { user, dispatch, authFetch } = UseUser();
   const { skills } = user;
 
   function handleClearAlert() {
@@ -28,10 +28,10 @@ export default function SkillsSettings() {
     }
 
     try {
-      // const data = await authFetch("/favorites/toggle", {
-      //   method: "POST",
-      //   body: JSON.stringify({ jobId: job.id, jobData: job }),
-      // });
+      authFetch("/favorites/toggle", {
+        method: "POST",
+        body: JSON.stringify({ skill: newSkill }),
+      });
 
       dispatch({
         type: "ADD_SKILL",

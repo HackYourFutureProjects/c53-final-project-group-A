@@ -2,7 +2,7 @@ import connectNeonDB from "../db/connectNeonDB.js";
 
 export const addSkill = async (req, res) => {
   const userId = req.user?.id;
-  const { jobId, jobData } = req.body;
+  const { skill } = req.body;
 
   //  Check if user is authenticated
   if (!userId)

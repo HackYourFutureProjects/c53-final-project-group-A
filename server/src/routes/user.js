@@ -9,7 +9,7 @@ import {
 import { verifyToken } from "../middleware/authVerify.js";
 import { createAuthLimiter } from "../middleware/rateLimiter.js";
 import { toggleFavoriteJob } from "../controllers/toggleFavoriteJob.js";
-import { addSkill } from "../controllers/changeSkills.js";
+// import { addSkill } from "../controllers/changeSkills.js";
 
 const userRouter = express.Router();
 
@@ -22,6 +22,6 @@ userRouter.post("/logout", verifyToken, logoutUser); // LOGOUT
 userRouter.get("/me", verifyToken, getMe);
 userRouter.put("/profile", verifyToken, updateProfile);
 userRouter.post("/favorites/toggle", verifyToken, toggleFavoriteJob);
-userRouter.post("/skills/add", verifyToken, addSkill);
+// userRouter.post("/skills/add", verifyToken, addSkill);
 
 export default userRouter;
