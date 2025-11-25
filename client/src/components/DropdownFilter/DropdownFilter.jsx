@@ -4,6 +4,7 @@ import "./DropdownFilter.css";
 
 export default function DropdownFilter({
   filterkey,
+  label,
   options,
   activeValues,
   onFilterChange,
@@ -20,7 +21,7 @@ export default function DropdownFilter({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <span>{filterkey}</span>
+        <span>{label}</span>
         <svg
           className="dropdown-arrow"
           fill="none"
@@ -39,7 +40,7 @@ export default function DropdownFilter({
       {isOpen && (
         <div className="dropdown-content">
           <div className="dropdown-header">
-            <span className="dropdown-title">{filterkey}</span>
+            <span className="dropdown-title">{label}</span>
             <button onClick={() => setIsOpen(false)} className="dropdown-close">
               ×
             </button>
