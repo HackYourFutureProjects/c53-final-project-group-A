@@ -1,11 +1,12 @@
 import Skills from "../Skills";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { UseUser } from "../../context/UserContext";
+
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
-import { icons } from "../../assets";
+import { icons, gif } from "../../assets";
+
 import { defaultUser } from "../../data/defaultUser";
 import {
   Bus,
@@ -23,17 +24,22 @@ function formatTravelTime(minutes) {
   return m === 0 ? `${h} h` : `${h} h ${m} min`;
 }
 
-export default function JobCard({ job, onApplyClick }) {
+export default function JobCard({
+  job,
+  onApplyClick,
+  isTravelLoading,
+  user,
+  toggleFavorite,
+  isInFavorites,
+}) {
   const navigate = useNavigate();
-  const { user, toggleFavorite } = UseUser();
-  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
 
   //  New state for showing popup
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
   // const isFavorited = favorites.includes(job.id);
-  const isFavorited = favorites.some((fav) => fav.id === job.id);
+  // const isFavorited = favorites.some((fav) => fav.id === job.id);
 
   const handleApplyClick = (e) => {
     e.stopPropagation();
@@ -80,13 +86,15 @@ export default function JobCard({ job, onApplyClick }) {
             <div className="job-card-header">
               <h3 className="job-title">{job.title}</h3>
               <button
-                className={`favorite-btn ${isFavorited ? "favorited" : ""}`}
+                className={`favorite-btn ${isInFavorites ? "favorited" : ""}`}
                 onClick={handleFavoriteClick}
                 title={
-                  isFavorited ? "Remove from favourites" : "Save to favourites"
+                  isInFavorites
+                    ? "Remove from favourites"
+                    : "Save to favourites"
                 }
               >
-                {isFavorited ? "♥" : "♡"}
+                {isInFavorites ? "♥" : "♡"}
               </button>
             </div>
 
@@ -99,6 +107,7 @@ export default function JobCard({ job, onApplyClick }) {
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
+
               {/* employment type tag */}
               {job.employment_type && (
                 <div className="job-commute-info">
@@ -156,17 +165,27 @@ export default function JobCard({ job, onApplyClick }) {
                 })()}
 
               {/* commute info block*/}
-              {job.travel_time && (
-                <div className="job-commute-info">
-                  {/* <span className="job-tag-separator">|</span> */}
-                  <Bus className="job-icon" />
-                  <span className="job-commute">
-                    {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
-                    transfer
-                    {job.least_transfers !== 1 ? "s" : ""}
-                  </span>
-                </div>
-              )}
+              <div className="job-commute-info">
+                {isTravelLoading && !job.travelInfo ? (
+                  <img
+                    src={gif.spinner}
+                    alt="Loading..."
+                    className="travel-spinner"
+                  />
+                ) : (
+                  job.travel_time && (
+                    <>
+                      {/* <span className="job-tag-separator">|</span> */}
+                      <Bus className="job-icon" />
+                      <span className="job-commute">
+                        {formatTravelTime(job.travel_time)},{" "}
+                        {job.least_transfers} transfer
+                        {job.least_transfers !== 1 ? "s" : ""}
+                      </span>
+                    </>
+                  )
+                )}
+              </div>
             </div>
 
             <p className="job-description">

@@ -1,8 +1,6 @@
 import JobCard from "../../components/JobCard/JobCard";
 import { UseUser } from "../../context/UserContext";
 
-console.log("User favorites:", UseUser.favorites);
-
 export default function MyFavorites() {
   const { user } = UseUser();
   const favoriteJobs = Array.isArray(user?.favorites) ? user.favorites : [];

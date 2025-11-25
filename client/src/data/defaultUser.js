@@ -4,7 +4,7 @@ import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 export const formatAddress = (address) => {
   const parts = [];
   if (address?.street) parts.push(address.street);
-  if (address?.houseNumber) parts.push(address.houseNumber);
+  if (address?.housenumber) parts.push(address.housenumber);
   if (address?.city) parts.push(address.city);
   if (address?.country) parts.push(address.country);
   return parts.join(", ");

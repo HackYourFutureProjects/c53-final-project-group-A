@@ -33,6 +33,5 @@ export async function getTransitRouteSummary({ origin, destination, apiKey }) {
   return {
     travel_time: durations.reduce((a, b) => a + b, 0) / durations.length,
     least_transfers: Math.min(...transfers),
-    routesCount: routes.length,
   };
 }
