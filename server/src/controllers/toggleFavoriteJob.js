@@ -1,4 +1,5 @@
 import connectNeonDB from "../db/connectNeonDB.js";
+import { logError } from "../util/logging.js";
 
 export const toggleFavoriteJob = async (req, res) => {
   const userId = req.user?.id;
@@ -94,7 +95,7 @@ export const toggleFavoriteJob = async (req, res) => {
 
     return res.json({ success: true, action: "added", jobId });
   } catch (err) {
-    console.error("Toggle favorite error:", err);
+    logError("Toggle favorite error: " + err);
     return res
       .status(500)
       .json({ success: false, msg: "Failed to toggle favorite" });
