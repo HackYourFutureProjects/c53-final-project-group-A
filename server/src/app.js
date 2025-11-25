@@ -14,7 +14,6 @@ app.use(cookieParser());
  */
 app.use("/api/users", userRouter);
 app.use("/api/jobs", jobsRouter);
-
 app.use("/api/travel", travelRoutes);
 
 export default app;
