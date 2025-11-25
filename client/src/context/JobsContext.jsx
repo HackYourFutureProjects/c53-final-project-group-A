@@ -64,13 +64,13 @@ const JobsProvider = ({ children }) => {
       ? formatAddress(user.address)
       : formatAddress(defaultUser.address);
 
-    console.log("homeAddress", homeAddress);
-    console.log("citiesToFetch.length", citiesToFetch.length);
+    if (!homeAddress) {
+      setError("The address for route calculation is not specified.");
+      setIsTravelLoading(false);
+      return;
+    }
 
-    if (!homeAddress || citiesToFetch.length === 0) {
-      setError(
-        "The address or cities for route calculation are not specified.",
-      );
+    if (citiesToFetch.length === 0) {
       setIsTravelLoading(false);
       return;
     }
@@ -82,8 +82,6 @@ const JobsProvider = ({ children }) => {
         body: JSON.stringify({ homeAddress, workCities: citiesToFetch }),
       });
       const data = await res.json();
-
-      console.log("Travel details:", data.result.travelDetails);
 
       const detailsMap = { ...travelDetails };
       if (data.result && Array.isArray(data.result.travelDetails)) {
