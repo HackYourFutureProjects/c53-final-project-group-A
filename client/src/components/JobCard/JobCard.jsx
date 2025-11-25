@@ -5,7 +5,11 @@ import { useState } from "react";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
-import { icons, gif } from "../../assets";
+import {
+  icons,
+  // gif
+} from "../../assets";
+
 import { defaultUser } from "../../data/defaultUser";
 import {
   Bus,
@@ -26,7 +30,7 @@ function formatTravelTime(minutes) {
 export default function JobCard({
   job,
   onApplyClick,
-  isTravelLoading,
+  // isTravelLoading,
   user,
   toggleFavorite,
   isInFavorites,
