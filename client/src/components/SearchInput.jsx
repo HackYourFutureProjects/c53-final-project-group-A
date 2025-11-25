@@ -30,9 +30,7 @@ export default function SearchInput() {
     setError(null);
     setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
 
-    const searchWords = searchTerm.trim().split(/[\s\-.'/]+/);
-
-    fetchJobWordsBySearchWords(searchWords);
+    fetchJobWordsBySearchWords(searchTerm);
 
     setShowResults(true);
     navigate("/jobs");

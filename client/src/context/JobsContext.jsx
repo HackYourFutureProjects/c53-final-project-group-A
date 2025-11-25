@@ -29,7 +29,7 @@ const JobsProvider = ({ children }) => {
 
     performFetch({
       method: "POST",
-      body: JSON.stringify({ search_terms: searchWords.join(" ") }),
+      body: JSON.stringify({ search_terms: searchWords }),
     });
   }
 
