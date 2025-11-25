@@ -10,10 +10,10 @@ export const searchJobs = async (req, res) => {
     const { search_terms } = req.body;
     const aggregatedJobsIdsSet = new Set();
     let aggregatedJobs = [];
-    if (!search_terms || !search_terms.trim()) {
+    if (typeof search_terms !== "string" || !search_terms.trim()) {
       return res.status(400).json({
         success: false,
-        msg: "You need to provide 'search_terms' in the request body.",
+        msg: "You need to provide 'search_terms' (non-empty string) in the request body.",
       });
     }
 

@@ -45,16 +45,18 @@ function userReducer(state, action) {
       // Remove all skills from the user while preserving other fields
       return { ...state, skills: [] };
     }
+
     case "TOGGLE_FAVORITE": {
       const jobId = action.payload;
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
 
-      const exists = prevFavorites.includes(jobId);
+      const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
-        ? prevFavorites.filter((id) => id !== jobId)
-        : [...prevFavorites, jobId];
+        ? prevFavorites.filter((fav) => fav.id !== jobId)
+        : [...prevFavorites, action.jobData];
+
       return { ...state, favorites: newFavorites };
     }
 
@@ -128,10 +130,34 @@ function UserContextProvider({ children }) {
 
         const normalizedSkills = fixUserSkills(fixedUser.skills);
 
+        const favoriteJobs = Array.isArray(fixedUser.favorites)
+          ? fixedUser.favorites.map((job) => ({
+              id: job.id,
+              title: job.title,
+              organization: job.organization,
+              organization_url: job.organization_url,
+              employment_type: job.employment_type,
+              url: job.url,
+              organization_logo: job.organization_logo,
+              displayLocation: job.display_location,
+              workMode: job.work_mode,
+              seniority: job.seniority,
+              description_text: job.description_text,
+              date_posted: job.date_posted,
+              travelTime: job.travel_time,
+              leastTransfers: job.least_transfers,
+              normalizedDescription: job.normalized_description,
+            }))
+          : [];
+
         //  SEND THE FIXED USER TO THE STATE
         dispatch({
           type: "LOGIN",
-          payload: { ...fixedUser, skills: normalizedSkills },
+          payload: {
+            ...fixedUser,
+            skills: normalizedSkills,
+            favorites: favoriteJobs,
+          },
         });
       } else {
         // No JSON returned — treat as not authenticated
@@ -173,9 +199,33 @@ function UserContextProvider({ children }) {
 
       const normalizedSkills = fixUserSkills(fixedUser.skills);
 
+      const favoriteJobs = Array.isArray(fixedUser.favorites)
+        ? fixedUser.favorites.map((job) => ({
+            id: job.id,
+            title: job.title,
+            organization: job.organization,
+            organization_url: job.organization_url,
+            employment_type: job.employment_type,
+            url: job.url,
+            organization_logo: job.organization_logo,
+            displayLocation: job.display_location,
+            workMode: job.work_mode,
+            seniority: job.seniority,
+            description_text: job.description_text,
+            date_posted: job.date_posted,
+            travelTime: job.travel_time,
+            leastTransfers: job.least_transfers,
+            normalizedDescription: job.normalized_description,
+          }))
+        : [];
+
       dispatch({
         type: "LOGIN",
-        payload: { ...fixedUser, skills: normalizedSkills },
+        payload: {
+          ...fixedUser,
+          skills: normalizedSkills,
+          favorites: favoriteJobs,
+        },
       });
       return data.user;
     } catch (err) {
@@ -236,6 +286,25 @@ function UserContextProvider({ children }) {
     }
   }
 
+  async function toggleFavorite(job) {
+    try {
+      const data = await authFetch("/favorites/toggle", {
+        method: "POST",
+        body: JSON.stringify({ jobId: job.id, jobData: job }),
+      });
+
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id, jobData: job });
+
+      setMessage(
+        data.action === "added"
+          ? "Job added to favorites!"
+          : "Job removed from favorites!",
+      );
+    } catch (err) {
+      console.error("toggleFavorite error:", err);
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -252,6 +321,7 @@ function UserContextProvider({ children }) {
         clearMessage,
         getCurrentUser,
         updateProfile,
+        toggleFavorite,
       }}
     >
       {children}
