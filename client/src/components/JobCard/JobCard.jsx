@@ -72,7 +72,6 @@ export default function JobCard({
       setShowFavoritesPopup(true);
     }
   };
-  console.log(isInFavorites);
 
   return (
     <li className="job-item">
