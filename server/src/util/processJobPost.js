@@ -8,7 +8,6 @@ export default function processJobPost(job) {
     id,
     url,
     title,
-    // cities_derived,
     date_posted,
     employment_type = [],
     remote_derived = false,
@@ -50,7 +49,6 @@ export default function processJobPost(job) {
     id,
     url,
     title,
-    // cities_derived,
     date_posted,
     employment_type:
       Array.isArray(employment_type) && employment_type.length > 0
