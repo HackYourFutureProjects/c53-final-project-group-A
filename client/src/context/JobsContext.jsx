@@ -34,9 +34,6 @@ const JobsProvider = ({ children }) => {
   }
 
   function getCitiesToFetch(jobsArray, travelDetails) {
-    console.log(jobsArray);
-    console.log(travelDetails);
-
     const uniqueCities = [
       ...new Set(
         jobsArray
@@ -53,15 +50,12 @@ const JobsProvider = ({ children }) => {
       ),
     ];
 
-    console.log(uniqueCities);
-
     return uniqueCities.filter(
       (city) => !Object.prototype.hasOwnProperty.call(travelDetails, city),
     );
   }
 
   async function fetchBatchTravelDetails(jobsArray) {
-    console.log("jobsArray:", jobsArray);
     setIsTravelLoading(true);
 
     const citiesToFetch = getCitiesToFetch(jobsArray, travelDetails);
@@ -69,9 +63,6 @@ const JobsProvider = ({ children }) => {
     const homeAddress = user?.address
       ? formatAddress(user.address)
       : formatAddress(defaultUser.address);
-
-    console.log("homeAddress", homeAddress);
-    console.log("citiesToFetch", citiesToFetch);
 
     if (!homeAddress || !citiesToFetch.length) {
       setError(

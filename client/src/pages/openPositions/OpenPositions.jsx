@@ -80,8 +80,6 @@ export default function OpenPositions() {
     }
   }, [currentPage, activeFilters]);
 
-  console.log(favorites);
-
   return (
     <div className="open-positions content-container">
       {isJobsLoading && (
