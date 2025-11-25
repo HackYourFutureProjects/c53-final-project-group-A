@@ -16,7 +16,7 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
-  function addSkill() {
+  async function addSkill() {
     const skillInput = skillInputRef.current;
     if (!skillInput) return;
     const newSkill = cleanUpText(skillInput.value || "");
@@ -27,8 +27,24 @@ export default function SkillsSettings() {
       return;
     }
 
-    // dispatch normalized skill to reducer which will add & sort
-    dispatch({ type: "ADD_SKILL", payload: regexEndNormalizeSkill(newSkill) });
+    try {
+      // const data = await authFetch("/favorites/toggle", {
+      //   method: "POST",
+      //   body: JSON.stringify({ jobId: job.id, jobData: job }),
+      // });
+
+      dispatch({
+        type: "ADD_SKILL",
+        payload: regexEndNormalizeSkill(newSkill),
+      });
+
+      setAlert({
+        type: "success",
+        message: "The skill has been added to the user's profile!",
+      });
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
+    }
 
     if (skillInput) {
       skillInput.value = "";
