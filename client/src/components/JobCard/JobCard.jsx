@@ -194,7 +194,7 @@ export default function JobCard({
                 )}
               </div>
             </div> */}
-
+              {console.log(job)}
               {job.travel_time && (
                 <div className="job-commute-info">
                   {/* <span className="job-tag-separator">|</span> */}

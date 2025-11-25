@@ -97,12 +97,12 @@ const JobsProvider = ({ children }) => {
 
   function getJobsWithTravel() {
     return allJobs.map((job) => {
-      // const city = job.cities_derived?.[0];
       const city = job.display_location;
 
       return {
         ...job,
-        travelInfo: travelDetails[city],
+        travel_time: travelDetails[city]?.travel_time,
+        least_transfers: travelDetails[city]?.least_transfers,
       };
     });
   }
