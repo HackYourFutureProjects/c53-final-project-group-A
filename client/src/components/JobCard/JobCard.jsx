@@ -165,26 +165,27 @@ export default function JobCard({
                 })()}
 
               {/* commute info block*/}
-              <div className="job-commute-info"></div>
-              {isTravelLoading && !job.travelInfo ? (
-                <img
-                  src={gif.spinner}
-                  alt="Loading..."
-                  className="travel-spinner"
-                />
-              ) : (
-                job.travel_time && (
-                  <div className="job-commute-info">
-                    {/* <span className="job-tag-separator">|</span> */}
-                    <Bus className="job-icon" />
-                    <span className="job-commute">
-                      {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
-                      transfer
-                      {job.least_transfers !== 1 ? "s" : ""}
-                    </span>
-                  </div>
-                )
-              )}
+              <div className="job-commute-info">
+                {isTravelLoading && !job.travelInfo ? (
+                  <img
+                    src={gif.spinner}
+                    alt="Loading..."
+                    className="travel-spinner"
+                  />
+                ) : (
+                  job.travel_time && (
+                    <>
+                      {/* <span className="job-tag-separator">|</span> */}
+                      <Bus className="job-icon" />
+                      <span className="job-commute">
+                        {formatTravelTime(job.travel_time)},{" "}
+                        {job.least_transfers} transfer
+                        {job.least_transfers !== 1 ? "s" : ""}
+                      </span>
+                    </>
+                  )
+                )}
+              </div>
             </div>
 
             <p className="job-description">
