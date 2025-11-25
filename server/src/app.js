@@ -3,7 +3,6 @@ import userRouter from "./routes/user.js";
 import jobsRouter from "./routes/job.js";
 import travelRoutes from "./routes/travel.js";
 import cookieParser from "cookie-parser";
-import debugRouter from "./db/debugRouter.js";
 
 const app = express();
 app.use(express.json());
