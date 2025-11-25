@@ -1,7 +1,7 @@
 import { logError } from "../util/logging.js";
 
 export const realJobSearch = async ({
-  jobTitle,
+  jobWord,
   location = "Netherlands",
   limit = 10,
   maxIterations = 2,
@@ -12,7 +12,7 @@ export const realJobSearch = async ({
 
   for (let i = 0; i < maxIterations; i++) {
     const url = `https://linkedin-job-search-api.p.rapidapi.com/active-jb-7d?limit=${limit}&offset=${offset}&title_filter=${encodeURIComponent(
-      jobTitle,
+      jobWord,
     )}&location_filter=${encodeURIComponent(location)}&description_type=text`;
 
     const options = {

@@ -27,17 +27,18 @@ export default function JobCard({
   job,
   onApplyClick,
   isTravelLoading,
-  favorites,
-  dispatch,
   user,
+  toggleFavorite,
+  isInFavorites,
 }) {
   const navigate = useNavigate();
-
-  const isFavorited = favorites.includes(job.id) || job.isFavorite;
 
   //  New state for showing popup
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
+
+  // const isFavorited = favorites.includes(job.id);
+  // const isFavorited = favorites.some((fav) => fav.id === job.id);
 
   const handleApplyClick = (e) => {
     e.stopPropagation();
@@ -62,14 +63,15 @@ export default function JobCard({
     e.stopPropagation();
 
     if (user && user.email !== defaultUser.email) {
-      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id });
+      toggleFavorite(job);
     } else {
       setShowFavoritesPopup(true);
     }
   };
+  console.log(isInFavorites);
 
   return (
-    <li key={job.id} className="job-item">
+    <li className="job-item">
       <div className="job-card">
         <div className="job-card-content">
           <div className="company-logo-container">
@@ -84,23 +86,21 @@ export default function JobCard({
             <div className="job-card-header">
               <h3 className="job-title">{job.title}</h3>
               <button
-                className={`favorite-btn ${
-                  favorites.includes(job.id) || job.isFavorite
-                    ? "favorited"
-                    : ""
-                }`}
+                className={`favorite-btn ${isInFavorites ? "favorited" : ""}`}
                 onClick={handleFavoriteClick}
                 title={
-                  isFavorited ? "Remove from favourites" : "Save to favourites"
+                  isInFavorites
+                    ? "Remove from favourites"
+                    : "Save to favourites"
                 }
               >
-                {favorites ? "♥" : "♡"}
+                {isInFavorites ? "♥" : "♡"}
               </button>
             </div>
 
             <div className="job-tags">
               {/* seniority tag */}
-              {job.seniority && job.seniority !== "Niet van toepassing" && (
+              {job.seniority && (
                 <div className="job-commute-info">
                   <GraduationCap className="job-icon" />
                   <span className="job-commute">{job.seniority}</span>
@@ -117,18 +117,18 @@ export default function JobCard({
                 </div>
               )}
               {/* work mode tag */}
-              {job.workMode && (
+              {job.work_mode && (
                 <div className="job-commute-info">
                   <Monitor className="job-icon" />
-                  <span className="job-commute">{job.workMode}</span>
+                  <span className="job-commute">{job.work_mode}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
               {/* location tag */}
-              {job.displayLocation && (
+              {job.display_location && (
                 <div className="job-commute-info">
                   <MapPin className="job-icon" />
-                  <span className="job-commute">{job.displayLocation}</span>
+                  <span className="job-commute">{job.display_location}</span>
                   <span className="job-tag-separator">|</span>
                 </div>
               )}
@@ -165,7 +165,7 @@ export default function JobCard({
                 })()}
 
               {/* commute info block*/}
-              <div className="job-commute-info">
+              {/* <div className="job-commute-info">
                 {isTravelLoading && !job.travelInfo ? (
                   <img
                     src={gif.spinner}
@@ -190,6 +190,19 @@ export default function JobCard({
                   </span>
                 )}
               </div>
+            </div> */}
+
+              {job.travel_time && (
+                <div className="job-commute-info">
+                  {/* <span className="job-tag-separator">|</span> */}
+                  <Bus className="job-icon" />
+                  <span className="job-commute">
+                    {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
+                    transfer
+                    {job.least_transfers !== 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
             </div>
 
             <p className="job-description">

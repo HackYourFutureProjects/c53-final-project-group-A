@@ -2,7 +2,6 @@ import { UseUser } from "./UserContext";
 import { createContext, useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { defaultUser, formatAddress } from "../data/defaultUser";
-import { getCitiesToFetch } from "../../../server/src/util/getCitiesToFetch";
 
 const JobsContext = createContext();
 
@@ -34,7 +33,35 @@ const JobsProvider = ({ children }) => {
     });
   }
 
+  function getCitiesToFetch(jobsArray, travelDetails) {
+    console.log(jobsArray);
+    console.log(travelDetails);
+
+    const uniqueCities = [
+      ...new Set(
+        jobsArray
+          .map((job) => {
+            const workCity =
+              // job.cities_derived?.[0] || job.locations_derived?.[0];
+              job.display_location;
+
+            return typeof workCity === "string" && workCity.trim() !== ""
+              ? workCity
+              : null;
+          })
+          .filter(Boolean),
+      ),
+    ];
+
+    console.log(uniqueCities);
+
+    return uniqueCities.filter(
+      (city) => !Object.prototype.hasOwnProperty.call(travelDetails, city),
+    );
+  }
+
   async function fetchBatchTravelDetails(jobsArray) {
+    console.log("jobsArray:", jobsArray);
     setIsTravelLoading(true);
 
     const citiesToFetch = getCitiesToFetch(jobsArray, travelDetails);
@@ -42,6 +69,9 @@ const JobsProvider = ({ children }) => {
     const homeAddress = user?.address
       ? formatAddress(user.address)
       : formatAddress(defaultUser.address);
+
+    console.log("homeAddress", homeAddress);
+    console.log("citiesToFetch", citiesToFetch);
 
     if (!homeAddress || !citiesToFetch.length) {
       setError(
@@ -76,7 +106,8 @@ const JobsProvider = ({ children }) => {
 
   function getJobsWithTravel() {
     return allJobs.map((job) => {
-      const city = job.cities_derived?.[0];
+      // const city = job.cities_derived?.[0];
+      const city = job.display_location;
 
       return {
         ...job,

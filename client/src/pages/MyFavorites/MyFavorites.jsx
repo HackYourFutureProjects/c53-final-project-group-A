@@ -1,13 +1,11 @@
-import { UseJobs } from "../../context/JobsContext";
 import JobCard from "../../components/JobCard/JobCard";
 import { UseUser } from "../../context/UserContext";
 
-export default function MyFavorites() {
-  const { allJobs } = UseJobs();
-  const { user } = UseUser();
-  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
+console.log("User favorites:", UseUser.favorites);
 
-  const favoriteJobs = allJobs.filter((job) => favorites.includes(job.id));
+export default function MyFavorites() {
+  const { user } = UseUser();
+  const favoriteJobs = Array.isArray(user?.favorites) ? user.favorites : [];
 
   if (favoriteJobs.length === 0) {
     return (
@@ -39,7 +37,7 @@ export default function MyFavorites() {
         ) : (
           favoriteJobs.map((job, idx) => (
             <JobCard
-              key={job.id || idx}
+              key={job.id ? job.id : `favorite-${idx}`}
               job={job}
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")

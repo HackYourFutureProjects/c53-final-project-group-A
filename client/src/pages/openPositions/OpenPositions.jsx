@@ -4,6 +4,8 @@ import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { UseUser } from "../../context/UserContext";
+import "./OpenPositions.css";
+import { findFilterOptions, filterJobs } from "../../util/filterJobs";
 // import { defaultUser, formatAddress } from "../../data/defaultUser";
 // removed UseUser import; JobCard now uses favorites from context directly
 
@@ -15,33 +17,8 @@ import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 import { UseJobs } from "../../context/JobsContext.jsx";
 
-//preprocessing
-const preprocessJobs = (jobs) => {
-  return jobs.map((job) => {
-    // handle workMode logic - checking all the edge cases
-    let workMode = "On-site"; //default - covers all falsy values
-    if (job.remote_derived === true || job.remote_derived === "Remote") {
-      workMode = "Remote";
-    } else if (job.remote_derived === "Hybrid") {
-      workMode = "Hybrid";
-    }
-
-    // handle location logic
-    const displayLocation =
-      job.locations_derived && job.locations_derived.length > 0
-        ? job.locations_derived[0]
-        : null;
-
-    return {
-      ...job,
-      workMode,
-      displayLocation,
-    };
-  });
-};
-
 export default function OpenPositions() {
-  const { user, dispatch } = UseUser();
+  const { user, dispatch, toggleFavorite } = UseUser();
 
   const {
     allJobs,
@@ -59,37 +36,14 @@ export default function OpenPositions() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
-
   const [activeFilters, setActiveFilters] = useState({
     seniorityLevel: new Set(),
     employmentType: new Set(),
-    workMode: new Set(),
+    work_mode: new Set(),
   });
 
-  const [sortBy, setSortBy] = useState("Skill match");
-
-  const experienceOptions = [
-    "Internship",
-    "Entry level",
-    "Associate",
-    "Mid-Senior level",
-    "Director",
-    "Executive",
-    "Not Applicable",
-  ];
-  const jobTypeOptions = ["Full-time", "Contract", "Part-time", "Volunteer"];
-  const workModeOptions = ["On-site", "Hybrid", "Remote"];
-  const sortOptions = [
-    "Skill match",
-    "Newest First",
-    "Nearest First",
-    "Fewest applicants",
-    "Fewest transfers",
-  ];
-
-  //preprocess jobs wit useMemo - avoid recalculating
-  const processedJobsWithMemo = useMemo(() => {
-    return preprocessJobs(allJobs);
+  const filterOptions = useMemo(() => {
+    return findFilterOptions(allJobs);
   }, [allJobs]);
 
   const handleFilterChange = (filterKey, value, isChecked) => {
@@ -101,50 +55,32 @@ export default function OpenPositions() {
     });
   };
 
-  const handleSortChange = (_, value) => {
-    setSortBy(value);
-    setCurrentPage(1);
-  };
-
   const handleClearFilters = () => {
     setActiveFilters({
       seniorityLevel: new Set(),
       employmentType: new Set(),
-      workMode: new Set(),
+      work_mode: new Set(),
     });
-    setSortBy("Skill match");
     setCurrentPage(1);
   };
 
-  // FOR DEBUGGING, PLEASE REMOVE THE NEXT 1 LINE WHEN YOU IMPLEMENT FILTERING AND SORTING
-  // const filteredJobs = processedJobsWithMemo;
-
-  // after sorting add
-  //   const filteredJobs = useMemo(() => {
-  //   return processedJobsWithMemo;
-  // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm]);
-
-  // PLEASE UNCOMMENT FUNCTION filteredJobs WHEN YOU IMPLEMENT FILTERING AND SORTING, BECAUSE I TEMPORARY UNLINKED sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
-  // const filteredJobs = useMemo(() => {
-  //   // ✅ only compute filtered jobs if showResults is true
-  //   if (!showResults || !searchTerm.trim()) return [];
-  //   return sortAndFilterJobs(processedJobsWithMemo, activeFilters, sortBy, searchTerm);
-  // }, [processedJobsWithMemo, activeFilters, sortBy, searchTerm, showResults]);
+  const filteredJobs = useMemo(() => {
+    return filterJobs(allJobs, activeFilters);
+  }, [allJobs, activeFilters]);
 
   //pagination
-  const totalPages = Math.ceil(processedJobsWithMemo.length / jobsPerPage);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = processedJobsWithMemo.slice(
-    indexOfFirstJob,
-    indexOfLastJob,
-  );
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   useEffect(() => {
     if (currentJobs.length > 0) {
       fetchBatchTravelDetails(currentJobs);
     }
   }, [currentPage, activeFilters]);
+
+  console.log(favorites);
 
   return (
     <div className="open-positions content-container">
@@ -162,7 +98,7 @@ export default function OpenPositions() {
               <DropdownFilter
                 buttonText="Experience level"
                 title="Experience level"
-                options={experienceOptions}
+                options={filterOptions.experienceOptions}
                 filterKey="seniorityLevel"
                 activeValues={activeFilters.seniorityLevel}
                 onFilterChange={handleFilterChange}
@@ -170,7 +106,7 @@ export default function OpenPositions() {
               <DropdownFilter
                 buttonText="Job type"
                 title="Job type"
-                options={jobTypeOptions}
+                options={filterOptions.jobTypeOptions}
                 filterKey="employmentType"
                 activeValues={activeFilters.employmentType}
                 onFilterChange={handleFilterChange}
@@ -178,12 +114,12 @@ export default function OpenPositions() {
               <DropdownFilter
                 buttonText="Work mode"
                 title="Work mode"
-                options={workModeOptions}
-                filterKey="workMode"
-                activeValues={activeFilters.workMode}
+                options={filterOptions.workModeOptions}
+                filterKey="work_mode"
+                activeValues={activeFilters.work_mode}
                 onFilterChange={handleFilterChange}
               />
-              <DropdownFilter
+              {/* <DropdownFilter
                 buttonText="Sort by"
                 title="Sort by"
                 options={sortOptions}
@@ -192,7 +128,7 @@ export default function OpenPositions() {
                 onFilterChange={(filterKey, value) =>
                   handleSortChange(filterKey, value)
                 }
-              />
+              /> */}
             </div>
             <button onClick={handleClearFilters} className="clear-filters-btn">
               Clear filters
@@ -206,17 +142,17 @@ export default function OpenPositions() {
           </div>
         )}
 
-        {!isJobsLoading && processedJobsWithMemo.length === 0 && (
+        {!isJobsLoading && filteredJobs.length === 0 && (
           <p className="job-message">
             No jobs are shown. Go to <strong>Job Search</strong> or{" "}
             <strong>Clear Filters</strong> to see more results.
           </p>
         )}
 
-        {!isJobsLoading && processedJobsWithMemo.length > 0 && (
+        {!isJobsLoading && filteredJobs.length > 0 && (
           <>
             <p className="job-message">
-              Showing {processedJobsWithMemo.length} jobs in total{" "}
+              Showing {filteredJobs.length} jobs in total{" "}
               {searchTerm && `for "${searchTerm}"`}
             </p>
             <ul className="jobs-list">
@@ -225,8 +161,9 @@ export default function OpenPositions() {
                   key={job.id || idx}
                   job={job}
                   isTravelLoading={isTravelLoading}
-                  favorites={favorites}
+                  isInFavorites={favorites.some((fav) => fav.id === job.id)}
                   dispatch={dispatch}
+                  toggleFavorite={toggleFavorite}
                   user={user}
                   onApplyClick={(url) => window.open(url, "_blank")}
                 />

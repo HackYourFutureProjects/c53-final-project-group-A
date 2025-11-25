@@ -6,6 +6,8 @@ import {
   useEffect,
 } from "react";
 import { defaultUser } from "../data/defaultUser";
+import { fixUserData } from "../util/fixUserData";
+import { fixUserSkills } from "../util/fixUserSkills";
 
 const UserContext = createContext();
 
@@ -19,6 +21,7 @@ function userReducer(state, action) {
       const next = { ...state, ...payload };
       return next;
     }
+
     case "LOGOUT":
       return action.payload || defaultUser;
     case "ADD_SKILL": {
@@ -42,15 +45,18 @@ function userReducer(state, action) {
       // Remove all skills from the user while preserving other fields
       return { ...state, skills: [] };
     }
+
     case "TOGGLE_FAVORITE": {
       const jobId = action.payload;
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
-      const exists = prevFavorites.includes(jobId);
+
+      const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
-        ? prevFavorites.filter((id) => id !== jobId)
-        : [...prevFavorites, jobId];
+        ? prevFavorites.filter((fav) => fav.id !== jobId)
+        : [...prevFavorites, action.jobData];
+
       return { ...state, favorites: newFavorites };
     }
 
@@ -64,32 +70,114 @@ function UserContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const API_URL = "/api/users";
+  const API_URL = "/users";
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
   const clearMessage = () => setMessage(null);
 
+  async function authFetch(route, options = {}) {
+    setLoading(true);
+    clearError();
+    clearMessage();
+
+    const url = `/api${API_URL}${route}`;
+
+    const baseOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    };
+
+    try {
+      const res = await fetch(url, { ...baseOptions, ...options });
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text || "{}");
+      } catch {
+        throw new Error("Server returned invalid JSON or is down");
+      }
+
+      if (!res.ok) {
+        throw new Error(
+          data.msg || `Server responded with status ${res.status} for ${url}`,
+        );
+      }
+
+      if (!data.success) {
+        throw new Error(data.msg || "Operation failed due to API policy.");
+      }
+
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   // -------------------- GET CURRENT USER --------------------
 
   async function getCurrentUser() {
-    setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/me`, {
-        method: "GET",
-        credentials: "include",
-      });
-      const data = await res.json();
-      if (data.success && data.user) {
-        dispatch({ type: "LOGIN", payload: data.user });
+      const data = await authFetch("/me", { method: "GET" });
+
+      if (data.user) {
+        //  FIX SKILLS HERE
+        const fixedUser = fixUserData(data.user);
+
+        const normalizedSkills = fixUserSkills(fixedUser.skills);
+
+        const favoriteJobs = Array.isArray(fixedUser.favorites)
+          ? fixedUser.favorites.map((job) => ({
+              id: job.id,
+              title: job.title,
+              organization: job.organization,
+              organization_url: job.organization_url,
+              employment_type: job.employment_type,
+              url: job.url,
+              organization_logo: job.organization_logo,
+              displayLocation: job.display_location,
+              workMode: job.work_mode,
+              seniority: job.seniority,
+              description_text: job.description_text,
+              date_posted: job.date_posted,
+              travelTime: job.travel_time,
+              leastTransfers: job.least_transfers,
+              normalizedDescription: job.normalized_description,
+            }))
+          : [];
+
+        //  SEND THE FIXED USER TO THE STATE
+        dispatch({
+          type: "LOGIN",
+          payload: {
+            ...fixedUser,
+            skills: normalizedSkills,
+            favorites: favoriteJobs,
+          },
+        });
       } else {
+        // No JSON returned — treat as not authenticated
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }
+
+      clearMessage();
     } catch (err) {
-      dispatch({ type: "LOGOUT", payload: defaultUser });
+      if (
+        err.message.includes("token") ||
+        err.message.includes("Token") ||
+        err.message.includes("not provided")
+      ) {
+        dispatch({ type: "LOGOUT", payload: defaultUser });
+        clearError(); // removes red error message on reload
+        return;
+      }
+
       console.error("Error fetching current user:", err);
-    } finally {
-      setLoading(false);
+      dispatch({ type: "LOGOUT", payload: defaultUser });
     }
   }
 
@@ -99,78 +187,78 @@ function UserContextProvider({ children }) {
 
   // -------------------- LOGIN --------------------
   async function login(email, password) {
-    setLoading(true);
-    clearError();
-    clearMessage();
     if (email === defaultUser.email) throw new Error("Invalid credentials");
+    // eslint-disable-next-line no-useless-catch
     try {
-      const res = await fetch(`${API_URL}/login`, {
+      const data = await authFetch("/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include",
       });
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData.msg || `Login failed with status ${res.status}`,
-        );
-      }
-      const data = await res.json();
-      if (!data.success) throw new Error(data.msg || "Login failed");
-      // Set the user and token received from the server
+
+      const fixedUser = fixUserData(data.user);
+
+      const normalizedSkills = fixUserSkills(fixedUser.skills);
+
+      const favoriteJobs = Array.isArray(fixedUser.favorites)
+        ? fixedUser.favorites.map((job) => ({
+            id: job.id,
+            title: job.title,
+            organization: job.organization,
+            organization_url: job.organization_url,
+            employment_type: job.employment_type,
+            url: job.url,
+            organization_logo: job.organization_logo,
+            displayLocation: job.display_location,
+            workMode: job.work_mode,
+            seniority: job.seniority,
+            description_text: job.description_text,
+            date_posted: job.date_posted,
+            travelTime: job.travel_time,
+            leastTransfers: job.least_transfers,
+            normalizedDescription: job.normalized_description,
+          }))
+        : [];
+
       dispatch({
         type: "LOGIN",
-        payload: data.user,
+        payload: {
+          ...fixedUser,
+          skills: normalizedSkills,
+          favorites: favoriteJobs,
+        },
       });
       return data.user;
     } catch (err) {
-      setError(err.message);
       throw err;
-    } finally {
-      setLoading(false);
     }
   }
   // -------------------- SIGNUP --------------------
   async function signup(firstname, lastname, email, password) {
     if (email === defaultUser.email)
       throw new Error("Email already registered");
-    setLoading(true);
-    clearError();
-    clearMessage();
+    // eslint-disable-next-line no-useless-catch
     try {
-      const res = await fetch(API_URL, {
+      const data = await authFetch("", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user: { firstname, lastname, email, password },
         }),
-        credentials: "include",
       });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.msg || "Signup failed");
+      const fixedUser = fixUserData(data.user);
       // Set the user and token received from the server
-      dispatch({ type: "REGISTER", payload: data.user });
-      return data.user;
+      dispatch({ type: "REGISTER", payload: fixedUser });
+      return fixedUser;
     } catch (err) {
-      setError(err.message);
       throw err;
-    } finally {
-      setLoading(false);
     }
   }
   // -------------------- LOGOUT --------------------
   async function logout() {
     try {
       // Attempt to log out on the server side
-      await fetch(`${API_URL}/logout`, {
+      await authFetch("/logout", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
       });
-
       setMessage("Logged out successfully!");
     } catch (err) {
       console.error("Error logging out:", err);
@@ -179,6 +267,41 @@ function UserContextProvider({ children }) {
     } finally {
       dispatch({ type: "LOGOUT", payload: defaultUser });
       clearError();
+    }
+  }
+  async function updateProfile(updatedFields) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const data = await authFetch("/profile", {
+        // matches backend route
+        method: "PUT",
+        body: JSON.stringify(updatedFields),
+      });
+      const fixedUser = fixUserData(data.user);
+      dispatch({ type: "UPDATE_USER", payload: fixedUser });
+      setMessage("Profile updated successfully!");
+      return fixedUser;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function toggleFavorite(job) {
+    try {
+      const data = await authFetch("/favorites/toggle", {
+        method: "POST",
+        body: JSON.stringify({ jobId: job.id, jobData: job }),
+      });
+
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id, jobData: job });
+
+      setMessage(
+        data.action === "added"
+          ? "Job added to favorites!"
+          : "Job removed from favorites!",
+      );
+    } catch (err) {
+      console.error("toggleFavorite error:", err);
     }
   }
 
@@ -197,6 +320,8 @@ function UserContextProvider({ children }) {
         setMessage,
         clearMessage,
         getCurrentUser,
+        updateProfile,
+        toggleFavorite,
       }}
     >
       {children}
