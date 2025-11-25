@@ -5,10 +5,7 @@ import { useState } from "react";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
 import "./JobCard.css";
-import {
-  icons,
-  // gif
-} from "../../assets";
+import { icons, gif } from "../../assets";
 
 import { defaultUser } from "../../data/defaultUser";
 import {
@@ -30,7 +27,7 @@ function formatTravelTime(minutes) {
 export default function JobCard({
   job,
   onApplyClick,
-  // isTravelLoading,
+  isTravelLoading,
   user,
   toggleFavorite,
   isInFavorites,
@@ -168,8 +165,8 @@ export default function JobCard({
                 })()}
 
               {/* commute info block*/}
-              {/* <div className="job-commute-info">
-                {isTravelLoading && !job.travelInfo ? (
+              <div className="job-commute-info">
+                {/* {isTravelLoading && !job.travelInfo ? (
                   <img
                     src={gif.spinner}
                     alt="Loading..."
@@ -192,19 +189,27 @@ export default function JobCard({
                     Commute info unavailable
                   </span>
                 )}
+              </div> */}
               </div>
-            </div> */}
               {console.log(job)}
-              {job.travel_time && (
-                <div className="job-commute-info">
-                  {/* <span className="job-tag-separator">|</span> */}
-                  <Bus className="job-icon" />
-                  <span className="job-commute">
-                    {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
-                    transfer
-                    {job.least_transfers !== 1 ? "s" : ""}
-                  </span>
-                </div>
+              {isTravelLoading && !job.travelInfo ? (
+                <img
+                  src={gif.spinner}
+                  alt="Loading..."
+                  className="travel-spinner"
+                />
+              ) : (
+                job.travel_time && (
+                  <div className="job-commute-info">
+                    {/* <span className="job-tag-separator">|</span> */}
+                    <Bus className="job-icon" />
+                    <span className="job-commute">
+                      {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
+                      transfer
+                      {job.least_transfers !== 1 ? "s" : ""}
+                    </span>
+                  </div>
+                )
               )}
             </div>
 
