@@ -146,7 +146,7 @@ function UserContextProvider({ children }) {
               normalized_description: job.normalized_description,
             }))
           : [];
-        console.log("fetched current user:", data.user);
+
         //  SEND THE FIXED USER TO THE STATE
         dispatch({
           type: "LOGIN",

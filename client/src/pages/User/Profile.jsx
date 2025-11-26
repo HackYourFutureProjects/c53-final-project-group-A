@@ -120,9 +120,6 @@ export default function Profile() {
       if (String(lastname) !== currentLastName)
         updatedFields.lastname = lastname;
 
-      console.log("Comparing first names:", firstname, updatedFields.firstname);
-      console.log("Comparing last names:", lastname, updatedFields.lastname);
-
       const newPassword = newPasswordEl.value || "";
       const confirmPassword = confirmPasswordEl.value || "";
       const currentPassword = currentPasswordEl.value || "";
@@ -157,16 +154,7 @@ export default function Profile() {
       const housenumber = cleanUpText(housenumberEl.value || "");
       const city = cleanUpText(cityEl.value || "");
       const country = cleanUpText(countryEl.value || "");
-      console.log(
-        "street:",
-        street,
-        "city:",
-        city,
-        "country:",
-        country,
-        "housenumber:",
-        housenumber,
-      );
+
       const streetValidationError = validateAddressTextInputs({ text: street });
       const cityValidationError = validateAddressTextInputs({
         text: city,

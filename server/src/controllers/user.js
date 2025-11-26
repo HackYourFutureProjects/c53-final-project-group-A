@@ -296,7 +296,6 @@ export const getMe = async (req, res) => {
         : [],
       favorites: [],
     };
-    console.log(user);
     rows.forEach((row) => {
       if (row.id) {
         const jobFavorite = {
