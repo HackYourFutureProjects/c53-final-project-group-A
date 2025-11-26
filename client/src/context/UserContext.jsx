@@ -46,7 +46,8 @@ function userReducer(state, action) {
     }
 
     case "TOGGLE_FAVORITE": {
-      const jobId = action.payload;
+      const job = action.payload;
+      const jobId = job?.id;
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
@@ -54,7 +55,7 @@ function userReducer(state, action) {
       const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
         ? prevFavorites.filter((fav) => fav.id !== jobId)
-        : [...prevFavorites, action.jobData];
+        : [...prevFavorites, job];
 
       return { ...state, favorites: newFavorites };
     }
@@ -301,7 +302,7 @@ function UserContextProvider({ children }) {
         body: JSON.stringify({ jobId: job.id, jobData: job }),
       });
 
-      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id, jobData: job });
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job });
 
       setMessage(
         data.action === "added"
