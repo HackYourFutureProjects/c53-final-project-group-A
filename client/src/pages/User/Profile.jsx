@@ -59,7 +59,7 @@ export default function Profile() {
       if (streetInputRef.current)
         streetInputRef.current.value = user.street || "";
       if (houseInputRef.current)
-        houseInputRef.current.value = user.houseNumber || "";
+        houseInputRef.current.value = user.housenumber || "";
       if (cityInputRef.current) cityInputRef.current.value = user.city || "";
       if (countryInputRef.current)
         countryInputRef.current.value = user.country || "";
@@ -111,8 +111,8 @@ export default function Profile() {
       const lastname = cleanUpText(lastnameEl.value || "");
 
       // FIX: Use String() for comparison to ensure changes are detected even if the value is null or undefined
-      const currentFirstName = String(user.firstName || "");
-      const currentLastName = String(user.lastName || "");
+      const currentFirstName = String(user.firstname || "");
+      const currentLastName = String(user.lastname || "");
 
       if (String(firstname) !== currentFirstName)
         updatedFields.firstname = firstname;
@@ -184,7 +184,7 @@ export default function Profile() {
       const currentCity = String(user.city || "");
       const currentCountry = String(user.country || "");
       // FIX: Use String() for comparison to ensure the house number updates correctly
-      const currentHouseNo = String(user.houseNumber || "");
+      const currentHouseNo = String(user.housenumber || "");
 
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;
@@ -267,7 +267,7 @@ export default function Profile() {
               <input
                 ref={firstnameInputRef}
                 type="text"
-                defaultValue={user.firstName}
+                defaultValue={user.firstname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -280,7 +280,7 @@ export default function Profile() {
               <input
                 ref={lastnameInputRef}
                 type="text"
-                defaultValue={user.lastName}
+                defaultValue={user.lastname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}

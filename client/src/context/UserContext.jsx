@@ -6,7 +6,6 @@ import {
   useEffect,
 } from "react";
 import { defaultUser } from "../data/defaultUser";
-import { fixUserData } from "../util/fixUserData";
 import { fixUserSkills } from "../util/fixUserSkills";
 
 const UserContext = createContext();
@@ -126,12 +125,10 @@ function UserContextProvider({ children }) {
 
       if (data.user) {
         //  FIX SKILLS HERE
-        const fixedUser = fixUserData(data.user);
+        const normalizedSkills = fixUserSkills(data.user.skills);
 
-        const normalizedSkills = fixUserSkills(fixedUser.skills);
-
-        const favoriteJobs = Array.isArray(fixedUser.favorites)
-          ? fixedUser.favorites.map((job) => ({
+        const favoriteJobs = Array.isArray(data.user.favorites)
+          ? data.user.favorites.map((job) => ({
               id: job.id,
               title: job.title,
               organization: job.organization,
@@ -154,7 +151,7 @@ function UserContextProvider({ children }) {
         dispatch({
           type: "LOGIN",
           payload: {
-            ...fixedUser,
+            ...data.user,
             skills: normalizedSkills,
             favorites: favoriteJobs,
           },
@@ -195,12 +192,10 @@ function UserContextProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
 
-      const fixedUser = fixUserData(data.user);
+      const normalizedSkills = fixUserSkills(data.user.skills);
 
-      const normalizedSkills = fixUserSkills(fixedUser.skills);
-
-      const favoriteJobs = Array.isArray(fixedUser.favorites)
-        ? fixedUser.favorites.map((job) => ({
+      const favoriteJobs = Array.isArray(data.user.favorites)
+        ? data.user.favorites.map((job) => ({
             id: job.id,
             title: job.title,
             organization: job.organization,
@@ -222,7 +217,7 @@ function UserContextProvider({ children }) {
       dispatch({
         type: "LOGIN",
         payload: {
-          ...fixedUser,
+          ...data.user,
           skills: normalizedSkills,
           favorites: favoriteJobs,
         },
@@ -244,10 +239,9 @@ function UserContextProvider({ children }) {
           user: { firstname, lastname, email, password },
         }),
       });
-      const fixedUser = fixUserData(data.user);
       // Set the user and token received from the server
-      dispatch({ type: "REGISTER", payload: fixedUser });
-      return fixedUser;
+      dispatch({ type: "REGISTER", payload: data.user });
+      return data.user;
     } catch (err) {
       throw err;
     }
@@ -273,14 +267,12 @@ function UserContextProvider({ children }) {
     // eslint-disable-next-line no-useless-catch
     try {
       const data = await authFetch("/profile", {
-        // matches backend route
         method: "PUT",
         body: JSON.stringify(updatedFields),
       });
-      const fixedUser = fixUserData(data.user);
-      dispatch({ type: "UPDATE_USER", payload: fixedUser });
+      dispatch({ type: "UPDATE_USER", payload: data.user });
       setMessage("Profile updated successfully!");
-      return fixedUser;
+      return data.user;
     } catch (err) {
       throw err;
     }
