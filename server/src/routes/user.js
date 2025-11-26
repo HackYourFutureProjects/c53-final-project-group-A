@@ -10,6 +10,7 @@ import { verifyToken } from "../middleware/authVerify.js";
 import { createAuthLimiter } from "../middleware/rateLimiter.js";
 import { toggleFavoriteJob } from "../controllers/toggleFavoriteJob.js";
 import { deleteUser } from "../controllers/deleteUser.js";
+import { changePassword } from "../controllers/changePassword.js";
 
 const userRouter = express.Router();
 
@@ -23,5 +24,6 @@ userRouter.get("/me", verifyToken, getMe);
 userRouter.put("/profile", verifyToken, updateProfile);
 userRouter.post("/favorites/toggle", verifyToken, toggleFavoriteJob);
 userRouter.delete("/delete/:userid", verifyToken, deleteUser);
+userRouter.post("/change-password", verifyToken, changePassword);
 
 export default userRouter;
