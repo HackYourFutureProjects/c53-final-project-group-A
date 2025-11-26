@@ -32,11 +32,7 @@ const USER_FULL_INFO_QUERY = `
 
 export const createUser = async (req, res) => {
   // Get a new database client and the connection closing function
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
   if (error) {
     return res.status(503).json({
       success: false,
@@ -55,7 +51,7 @@ export const createUser = async (req, res) => {
     }
 
     // 3. Check if email already exists
-    const checkEmail = await client.query(
+    const checkEmail = await connectedClient.query(
       "SELECT userid FROM users WHERE email = $1",
       [user.email],
     );
@@ -72,7 +68,7 @@ export const createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(user.password, 12); // Insert user into DB using parameterized query for SQL injection prevention
 
     // Do not return the password hash
-    const result = await client.query(
+    const result = await connectedClient.query(
       `INSERT INTO users (userid, "firstname", "lastname", email, password)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING userid, "firstname", "lastname", email`,
@@ -115,11 +111,7 @@ export const createUser = async (req, res) => {
 // LOGIN - Authenticate user
 
 export const loginUser = async (req, res) => {
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
 
   if (error) {
     return res.status(503).json({
@@ -146,7 +138,7 @@ export const loginUser = async (req, res) => {
         .json({ success: false, msg: validationErrorMessage(errors) });
     }
 
-    const result = await client.query(
+    const result = await connectedClient.query(
       `${USER_FULL_INFO_QUERY} WHERE u.email = $1`,
       [email],
     );
@@ -256,11 +248,7 @@ export const getMe = async (req, res) => {
   const token = req.cookies?.token;
   if (!token) return res.json({ success: false });
 
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
   if (error) {
     return res.status(503).json({
       success: false,
@@ -270,7 +258,7 @@ export const getMe = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const result = await client.query(
+    const result = await connectedClient.query(
       `${USER_FULL_INFO_QUERY} WHERE u.userid = $1`,
       [decoded.id],
     );

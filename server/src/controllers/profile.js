@@ -40,18 +40,14 @@ export const updateUserProfile = async (userId, fieldsToUpdate) => {
     WHERE userid = $${updateUserIdIndex}
   `;
 
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
   if (error) throw new Error("DB connection error");
 
   try {
-    await client.query(updateQuery, values);
+    await connectedClient.query(updateQuery, values);
 
     const fetchQuery = `${USER_FULL_INFO_QUERY} WHERE u.userid = $1`;
-    const result = await client.query(fetchQuery, [userId]);
+    const result = await connectedClient.query(fetchQuery, [userId]);
 
     if (result.rows.length === 0) {
       throw new Error("User not found after update");

@@ -21,11 +21,7 @@ export const toggleFavoriteJob = async (req, res) => {
       .json({ success: false, msg: "Invalid jobData: title is required" });
   }
 
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
 
   //  Handle database connection error
   if (error)
@@ -35,7 +31,7 @@ export const toggleFavoriteJob = async (req, res) => {
 
   try {
     // Check if the job exists in the favorites table
-    const existingFavorite = await client.query(
+    const existingFavorite = await connectedClient.query(
       "SELECT id FROM favorites WHERE id = $1",
       [jobId],
     );
@@ -43,7 +39,7 @@ export const toggleFavoriteJob = async (req, res) => {
     // 2️ If it does not exist → insert it into the favorites table
     //  Best practice: Consider using transactions when inserting multiple tables
     if (existingFavorite.rows.length === 0) {
-      await client.query(
+      await connectedClient.query(
         `INSERT INTO favorites 
           (id, title, organization, organization_url, employment_type, url, 
            organization_logo, display_location, work_mode, seniority, description_text,
@@ -71,7 +67,7 @@ export const toggleFavoriteJob = async (req, res) => {
     }
 
     // 3️ Check if this favorite exists for this user
-    const exists = await client.query(
+    const exists = await connectedClient.query(
       "SELECT 1 FROM user_favorites WHERE user_id = $1 AND favorite_id = $2",
       [userId, jobId],
     );
@@ -79,7 +75,7 @@ export const toggleFavoriteJob = async (req, res) => {
     if (exists.rows.length > 0) {
       //  Remove favorite
       //  Best practice: Consider wrapping delete and insert operations in a transaction
-      await client.query(
+      await connectedClient.query(
         "DELETE FROM user_favorites WHERE user_id = $1 AND favorite_id = $2",
         [userId, jobId],
       );
@@ -87,7 +83,7 @@ export const toggleFavoriteJob = async (req, res) => {
     }
 
     //  Add favorite
-    await client.query(
+    await connectedClient.query(
       "INSERT INTO user_favorites (user_id, favorite_id) VALUES ($1, $2)",
       [userId, jobId],
     );
