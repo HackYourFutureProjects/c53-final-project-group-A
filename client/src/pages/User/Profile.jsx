@@ -9,6 +9,10 @@ import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
 import PopupForSave from "../../components/SuccessPopup/PopupForSave";
 import { defaultUser } from "../../data/defaultUser";
+import {
+  validatePassword,
+  validatePasswordMatch,
+} from "../../util/AuthValidation";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -25,7 +29,7 @@ export default function Profile() {
   const countryInputRef = useRef(null);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const { user, updateProfile, deleteUser } = UseUser();
+  const { user, updateProfile, deleteUser, changePassword } = UseUser();
 
   //  SHOW DELETE CONFIRM POPUP
   const handleDeleteClick = () => {
@@ -123,6 +127,7 @@ export default function Profile() {
       const confirmPassword = confirmPasswordEl.value || "";
       const currentPassword = currentPasswordEl.value || "";
 
+      // --- Password change handling ---
       if (newPassword || confirmPassword || currentPassword) {
         if (!currentPassword) {
           setAlert({
@@ -131,21 +136,44 @@ export default function Profile() {
           });
           return;
         }
-        if (newPassword !== confirmPassword) {
-          setAlert({ type: "error", message: "New passwords do not match." });
-          return;
-        }
-        if (newPassword && newPassword.length < 8) {
+
+        // Validate password strength
+        if (!validatePassword(newPassword)) {
           setAlert({
             type: "error",
-            message: "New password must be 8 characters or more.",
+            message:
+              "Password must be at least 8 characters and meet at least 2 complexity rules.",
           });
           return;
         }
 
-        if (newPassword) {
-          updatedFields.password = newPassword;
-          updatedFields.currentPassword = currentPassword;
+        // Validate password match
+        const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
+        if (!matchCheck.valid) {
+          setAlert({ type: "error", message: matchCheck.message });
+          return;
+        }
+
+        // Call API
+        try {
+          await changePassword(currentPassword, newPassword);
+
+          setAlert({
+            type: "success",
+            message: "Password updated successfully!",
+          });
+
+          // Clear input fields
+          currentPasswordEl.value = "";
+          newPasswordEl.value = "";
+          confirmPasswordInputRef.current.value = "";
+          return;
+        } catch (err) {
+          setAlert({
+            type: "error",
+            message: err.message || "Failed to change password.",
+          });
+          return;
         }
       }
 

@@ -319,6 +319,23 @@ function UserContextProvider({ children }) {
       throw err;
     }
   }
+  const changePassword = async (currentPassword, newPassword) => {
+    if (!currentPassword || !newPassword) {
+      throw new Error("Current password and new password are required.");
+    }
+
+    try {
+      const data = await authFetch("/change-password", {
+        method: "POST",
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      return data;
+    } catch (err) {
+      console.error("Change password error:", err);
+      throw err;
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -338,6 +355,7 @@ function UserContextProvider({ children }) {
         updateProfile,
         toggleFavorite,
         deleteUser,
+        changePassword,
       }}
     >
       {children}
