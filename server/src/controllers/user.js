@@ -169,10 +169,12 @@ export const loginUser = async (req, res) => {
       firstname: userDataRow.firstname,
       lastname: userDataRow.lastname,
       avatar: userDataRow.avatar,
-      street: userDataRow.street,
-      housenumber: userDataRow.housenumber,
-      city: userDataRow.city,
-      country: userDataRow.country,
+      address: {
+        street: userDataRow.street,
+        housenumber: userDataRow.housenumber,
+        city: userDataRow.city,
+        country: userDataRow.country,
+      },
       skills: userDataRow.skills
         ? userDataRow.skills.split(",").map((skill) => skill.trim())
         : [],
@@ -283,16 +285,18 @@ export const getMe = async (req, res) => {
       firstname: userDataRow.firstname,
       lastname: userDataRow.lastname,
       avatar: userDataRow.avatar,
-      street: userDataRow.street,
-      housenumber: userDataRow.housenumber,
-      city: userDataRow.city,
-      country: userDataRow.country,
+      address: {
+        street: userDataRow.street,
+        housenumber: userDataRow.housenumber,
+        city: userDataRow.city,
+        country: userDataRow.country,
+      },
       skills: userDataRow.skills
         ? userDataRow.skills.split(",").map((skill) => skill.trim())
         : [],
       favorites: [],
     };
-
+    console.log(user);
     rows.forEach((row) => {
       if (row.id) {
         const jobFavorite = {

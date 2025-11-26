@@ -66,10 +66,12 @@ export const updateUserProfile = async (userId, fieldsToUpdate) => {
       firstname: userDataRow.firstname,
       lastname: userDataRow.lastname,
       avatar: userDataRow.avatar,
-      street: userDataRow.street,
-      housenumber: userDataRow.housenumber,
-      city: userDataRow.city,
-      country: userDataRow.country,
+      address: {
+        street: userDataRow.street,
+        housenumber: userDataRow.housenumber,
+        city: userDataRow.city,
+        country: userDataRow.country,
+      },
       skills: userDataRow.skills
         ? userDataRow.skills.split(",").map((skill) => skill.trim())
         : [],

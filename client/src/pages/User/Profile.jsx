@@ -57,12 +57,13 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       if (streetInputRef.current)
-        streetInputRef.current.value = user.street || "";
+        streetInputRef.current.value = user?.address?.street || "";
       if (houseInputRef.current)
-        houseInputRef.current.value = user.housenumber || "";
-      if (cityInputRef.current) cityInputRef.current.value = user.city || "";
+        houseInputRef.current.value = user?.address?.housenumber || "";
+      if (cityInputRef.current)
+        cityInputRef.current.value = user?.address?.city || "";
       if (countryInputRef.current)
-        countryInputRef.current.value = user.country || "";
+        countryInputRef.current.value = user?.address?.country || "";
     }
   }, [user]);
 
@@ -156,7 +157,16 @@ export default function Profile() {
       const housenumber = cleanUpText(housenumberEl.value || "");
       const city = cleanUpText(cityEl.value || "");
       const country = cleanUpText(countryEl.value || "");
-
+      console.log(
+        "street:",
+        street,
+        "city:",
+        city,
+        "country:",
+        country,
+        "housenumber:",
+        housenumber,
+      );
       const streetValidationError = validateAddressTextInputs({ text: street });
       const cityValidationError = validateAddressTextInputs({
         text: city,
@@ -183,11 +193,11 @@ export default function Profile() {
         return;
       }
 
-      const currentStreet = String(user.street || "");
-      const currentCity = String(user.city || "");
-      const currentCountry = String(user.country || "");
-      // FIX: Use String() for comparison to ensure the house number updates correctly
-      const currentHouseNo = String(user.housenumber || "");
+      // Compare against the nested address fields (server/user may include top-level, but defaultUser uses .address)
+      const currentStreet = String(user?.address?.street);
+      const currentCity = String(user?.address?.city);
+      const currentCountry = String(user?.address?.country);
+      const currentHouseNo = String(user?.address?.housenumber);
 
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;
