@@ -31,7 +31,6 @@ const USER_FULL_INFO_QUERY = `
 // SIGNUP - Create a new user
 
 export const createUser = async (req, res) => {
-  // Get a new database client and the connection closing function
   const { connectedClient, endConnection, error } = await connectNeonDB();
   if (error) {
     return res.status(503).json({
@@ -50,26 +49,19 @@ export const createUser = async (req, res) => {
         .json({ success: false, msg: validationErrorMessage(errors) });
     }
 
-    // 3. Check if email already exists
     const checkEmail = await connectedClient.query(
       "SELECT userid FROM users WHERE email = $1",
       [user.email],
     );
-
     if (checkEmail.rows.length > 0) {
-      // Corrected use of validationErrorMessage by wrapping the string in an array
       return res.status(400).json({
         success: false,
         msg: validationErrorMessage(["Email already registered"]),
       });
-    } // Generate UUID and hash the password (Bcrypt is secure)
+    }
 
     const newUserId = uuidv4();
-    const hashedPassword = await bcrypt.hash(user.password, 12); // Insert user into DB using parameterized query for SQL injection prevention
-
-    // Do not return the password hash
-    // Insert user with all supported fields (avatar, address, skills).
-    // `skills` is stored as a comma-separated string in the DB.
+    const hashedPassword = await bcrypt.hash(user.password, 12);
     const skillsValue = Array.isArray(user.skills)
       ? user.skills.join(",")
       : user.skills || null;
@@ -96,14 +88,14 @@ export const createUser = async (req, res) => {
       ],
     );
 
-    const newUser = result.rows[0]; // Generate JWT (Access Token)
+    const newUser = result.rows[0];
     newUser.favorites = [];
+    // Generate JWT (Access Token)
     const token = jwt.sign(
       { id: newUser.userid, email: newUser.email },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN },
-    ); // Respond with user and token
-
+    );
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
@@ -117,14 +109,12 @@ export const createUser = async (req, res) => {
       token,
     });
   } catch (err) {
-    // Using logError for 500 response
     logError(err);
     res.status(500).json({
       success: false,
       msg: "Sorry, there's an error with the DB. Unable to create user",
     });
   } finally {
-    // 💡 Crucial: Ensure the connection is closed regardless of success or failure.
     if (endConnection) await endConnection();
   }
 };
