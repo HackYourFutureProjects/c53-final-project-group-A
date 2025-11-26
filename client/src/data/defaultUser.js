@@ -43,7 +43,6 @@ export const defaultUser = {
   lastname: "User",
   avatar: images.defaultAvatar,
   email: "guest@example.com",
-  JWT: "",
 
   address: {
     street: "Keizersgracht",

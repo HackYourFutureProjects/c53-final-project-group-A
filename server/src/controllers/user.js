@@ -68,11 +68,32 @@ export const createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(user.password, 12); // Insert user into DB using parameterized query for SQL injection prevention
 
     // Do not return the password hash
+    // Insert user with all supported fields (avatar, address, skills).
+    // `skills` is stored as a comma-separated string in the DB.
+    const skillsValue = Array.isArray(user.skills)
+      ? user.skills.join(",")
+      : user.skills || null;
+
     const result = await connectedClient.query(
-      `INSERT INTO users (userid, "firstname", "lastname", email, password)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING userid, "firstname", "lastname", email`,
-      [newUserId, user.firstname, user.lastname, user.email, hashedPassword],
+      `INSERT INTO users (
+        userid, firstname, lastname, email, password,
+        avatar, street, housenumber, city, country, skills
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      RETURNING userid, email, firstname, lastname, avatar, street, housenumber, city, country, skills`,
+      [
+        newUserId,
+        user.firstname,
+        user.lastname,
+        user.email,
+        hashedPassword,
+        user.avatar || null,
+        user.street || null,
+        user.housenumber || null,
+        user.city || null,
+        user.country || null,
+        skillsValue,
+      ],
     );
 
     const newUser = result.rows[0]; // Generate JWT (Access Token)
