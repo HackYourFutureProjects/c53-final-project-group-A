@@ -248,7 +248,15 @@ function UserContextProvider({ children }) {
         }),
       });
       // Set the user and token received from the server
-      dispatch({ type: "REGISTER", payload: data.user });
+      const normalizedSkills = fixUserSkills(data.user.skills);
+      dispatch({
+        type: "REGISTER",
+        payload: {
+          ...data.user,
+          skills: normalizedSkills,
+          favorites: [],
+        },
+      });
       return data.user;
     } catch (err) {
       throw err;
