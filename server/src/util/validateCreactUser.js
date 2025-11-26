@@ -23,7 +23,6 @@ export default function validateCreactUser(user) {
     "city",
     "country",
     "skills",
-    "favorites",
   ]);
 
   if (disallowed) errors.push(disallowed);
