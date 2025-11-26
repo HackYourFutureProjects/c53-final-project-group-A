@@ -287,7 +287,6 @@ export default function Profile() {
         countryInputRef={countryInputRef}
         clearAlert={handleClearAlert}
       />
-      <SkillsSettings />
       <label className="block text-sm font-medium text-gray-900 mb-3">
         Change Password
       </label>
@@ -354,6 +353,7 @@ export default function Profile() {
           </button>
         </div>
       </div>
+      <SkillsSettings />
       <hr className="border-gray-300 mb-8" />
       {/* <!-- Profile Deletion Section --> */}
       <div className="flex items-start justify-between">
