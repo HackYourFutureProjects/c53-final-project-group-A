@@ -7,13 +7,11 @@ import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
-import PopupForSave from "../../components/SuccessPopup/PopupForSave";
-import { defaultUser } from "../../data/defaultUser";
 
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const [showSavePopup, setShowSavePopup] = useState(false);
+
   const firstnameInputRef = useRef(null);
   const lastnameInputRef = useRef(null);
   const currentPasswordInputRef = useRef(null);
@@ -71,11 +69,6 @@ export default function Profile() {
     setAlert({ type: "", message: "" });
   }
 
-  const handleLoginRedirect = () => {
-    setShowSavePopup(false);
-    navigate("/login", {});
-  };
-
   async function handleSaveClick() {
     handleClearAlert();
 
@@ -104,7 +97,7 @@ export default function Profile() {
       return;
     }
 
-    if (user && user.email !== defaultUser.email) {
+    if (user) {
       const updatedFields = {};
 
       const firstname = cleanUpText(firstnameEl.value || "");
@@ -213,8 +206,6 @@ export default function Profile() {
           message: error.message || "Failed to save profile. Check connection.",
         });
       }
-    } else {
-      setShowSavePopup(true);
     }
   }
 
@@ -361,13 +352,6 @@ export default function Profile() {
           >
             Save
           </button>
-          {/* Popup for saving settings */}
-          {showSavePopup && (
-            <PopupForSave
-              handleLoginRedirect={handleLoginRedirect}
-              setShowSavePopup={setShowSavePopup}
-            />
-          )}
         </div>
       </div>
       <hr className="border-gray-300 mb-8" />
