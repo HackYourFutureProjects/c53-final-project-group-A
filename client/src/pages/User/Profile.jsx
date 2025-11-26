@@ -119,6 +119,9 @@ export default function Profile() {
       if (String(lastname) !== currentLastName)
         updatedFields.lastname = lastname;
 
+      console.log("Comparing first names:", firstname, updatedFields.firstname);
+      console.log("Comparing last names:", lastname, updatedFields.lastname);
+
       const newPassword = newPasswordEl.value || "";
       const confirmPassword = confirmPasswordEl.value || "";
       const currentPassword = currentPasswordEl.value || "";

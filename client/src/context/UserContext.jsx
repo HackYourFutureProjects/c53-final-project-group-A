@@ -136,17 +136,17 @@ function UserContextProvider({ children }) {
               employment_type: job.employment_type,
               url: job.url,
               organization_logo: job.organization_logo,
-              displayLocation: job.display_location,
-              workMode: job.work_mode,
+              display_location: job.display_location,
+              work_mode: job.work_mode,
               seniority: job.seniority,
               description_text: job.description_text,
               date_posted: job.date_posted,
-              travelTime: job.travel_time,
-              leastTransfers: job.least_transfers,
-              normalizedDescription: job.normalized_description,
+              travel_time: job.travel_time,
+              least_transfers: job.least_transfers,
+              normalized_description: job.normalized_description,
             }))
           : [];
-
+        console.log("fetched current user:", data.user);
         //  SEND THE FIXED USER TO THE STATE
         dispatch({
           type: "LOGIN",
@@ -157,6 +157,7 @@ function UserContextProvider({ children }) {
           },
         });
       } else {
+        console.log("logging out due to missing user data");
         // No JSON returned — treat as not authenticated
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }
@@ -203,14 +204,14 @@ function UserContextProvider({ children }) {
             employment_type: job.employment_type,
             url: job.url,
             organization_logo: job.organization_logo,
-            displayLocation: job.display_location,
-            workMode: job.work_mode,
+            display_location: job.display_location,
+            work_mode: job.work_mode,
             seniority: job.seniority,
             description_text: job.description_text,
             date_posted: job.date_posted,
-            travelTime: job.travel_time,
-            leastTransfers: job.least_transfers,
-            normalizedDescription: job.normalized_description,
+            travel_time: job.travel_time,
+            least_transfers: job.least_transfers,
+            normalized_description: job.normalized_description,
           }))
         : [];
 
