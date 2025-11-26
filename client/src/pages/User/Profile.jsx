@@ -177,7 +177,7 @@ export default function Profile() {
       const currentStreet = String(user?.street);
       const currentCity = String(user?.city);
       const currentCountry = String(user?.country);
-      const currentHouseNo = String(user?.housenumber);
+      const currentHouseNo = String(user?.housenumber || "");
 
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;
