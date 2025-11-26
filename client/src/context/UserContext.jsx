@@ -299,7 +299,7 @@ function UserContextProvider({ children }) {
     try {
       const data = await authFetch("/favorites/toggle", {
         method: "POST",
-        body: JSON.stringify({ jobId: job.id, jobData: job }),
+        body: JSON.stringify({ job }),
       });
 
       dispatch({ type: "TOGGLE_FAVORITE", payload: job });
