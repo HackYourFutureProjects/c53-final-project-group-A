@@ -29,7 +29,7 @@ export default function JobSearch() {
           <span>
             Guest mode is limited to default settings — general skills such as{" "}
             {displayedSkills.toLowerCase()}, and others, along with the guest’s
-            home address ({formatAddress(defaultUser.address)}).
+            home address ({formatAddress(defaultUser)}).
           </span>{" "}
           <Link to="/login" className="login-link">
             Log in

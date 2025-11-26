@@ -38,9 +38,6 @@ export default function JobCard({
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
-  // const isFavorited = favorites.includes(job.id);
-  // const isFavorited = favorites.some((fav) => fav.id === job.id);
-
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
