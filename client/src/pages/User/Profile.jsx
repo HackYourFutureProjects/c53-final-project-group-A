@@ -14,7 +14,6 @@ import {
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
-
   const firstnameInputRef = useRef(null);
   const lastnameInputRef = useRef(null);
   const currentPasswordInputRef = useRef(null);
