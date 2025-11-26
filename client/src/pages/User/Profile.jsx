@@ -57,13 +57,12 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       if (streetInputRef.current)
-        streetInputRef.current.value = user?.address?.street || "";
+        streetInputRef.current.value = user?.street || "";
       if (houseInputRef.current)
-        houseInputRef.current.value = user?.address?.housenumber || "";
-      if (cityInputRef.current)
-        cityInputRef.current.value = user?.address?.city || "";
+        houseInputRef.current.value = user?.housenumber || "";
+      if (cityInputRef.current) cityInputRef.current.value = user?.city || "";
       if (countryInputRef.current)
-        countryInputRef.current.value = user?.address?.country || "";
+        countryInputRef.current.value = user?.country || "";
     }
   }, [user]);
 
@@ -181,11 +180,11 @@ export default function Profile() {
         return;
       }
 
-      // Compare against the nested address fields (server/user may include top-level, but defaultUser uses .address)
-      const currentStreet = String(user?.address?.street);
-      const currentCity = String(user?.address?.city);
-      const currentCountry = String(user?.address?.country);
-      const currentHouseNo = String(user?.address?.housenumber);
+      // Compare against the top-level address fields
+      const currentStreet = String(user?.street);
+      const currentCity = String(user?.city);
+      const currentCountry = String(user?.country);
+      const currentHouseNo = String(user?.housenumber);
 
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;

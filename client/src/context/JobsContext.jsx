@@ -60,9 +60,7 @@ const JobsProvider = ({ children }) => {
 
     const citiesToFetch = getCitiesToFetch(jobsArray, travelDetails);
 
-    const homeAddress = user?.address
-      ? formatAddress(user.address)
-      : formatAddress(defaultUser.address);
+    const homeAddress = formatAddress(user);
 
     if (!homeAddress) {
       setError("The address for route calculation is not specified.");

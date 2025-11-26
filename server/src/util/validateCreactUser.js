@@ -18,7 +18,6 @@ export default function validateCreactUser(user) {
     "email",
     "password",
     "avatar",
-    "address",
     "street",
     "housenumber",
     "city",

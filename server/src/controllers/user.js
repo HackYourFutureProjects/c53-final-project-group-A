@@ -172,12 +172,11 @@ export const loginUser = async (req, res) => {
       firstname: userDataRow.firstname,
       lastname: userDataRow.lastname,
       avatar: userDataRow.avatar,
-      address: {
-        street: userDataRow.street,
-        housenumber: userDataRow.housenumber,
-        city: userDataRow.city,
-        country: userDataRow.country,
-      },
+      // Return address fields at top-level
+      street: userDataRow.street,
+      housenumber: userDataRow.housenumber,
+      city: userDataRow.city,
+      country: userDataRow.country,
       skills: userDataRow.skills
         ? userDataRow.skills.split(",").map((skill) => skill.trim())
         : [],
@@ -284,12 +283,10 @@ export const getMe = async (req, res) => {
       firstname: userDataRow.firstname,
       lastname: userDataRow.lastname,
       avatar: userDataRow.avatar,
-      address: {
-        street: userDataRow.street,
-        housenumber: userDataRow.housenumber,
-        city: userDataRow.city,
-        country: userDataRow.country,
-      },
+      street: userDataRow.street,
+      housenumber: userDataRow.housenumber,
+      city: userDataRow.city,
+      country: userDataRow.country,
       skills: userDataRow.skills
         ? userDataRow.skills.split(",").map((skill) => skill.trim())
         : [],
