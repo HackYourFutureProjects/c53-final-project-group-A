@@ -305,6 +305,21 @@ function UserContextProvider({ children }) {
     }
   }
 
+  async function deleteUser() {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const data = await authFetch(`/delete/${user.id}`, {
+        method: "DELETE",
+      });
+
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+
+      return data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -322,6 +337,7 @@ function UserContextProvider({ children }) {
         getCurrentUser,
         updateProfile,
         toggleFavorite,
+        deleteUser,
       }}
     >
       {children}

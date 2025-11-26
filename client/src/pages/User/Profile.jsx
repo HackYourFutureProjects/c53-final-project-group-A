@@ -23,7 +23,36 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, updateProfile } = UseUser();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const { user, updateProfile, deleteUser } = UseUser();
+
+  //  SHOW DELETE CONFIRM POPUP
+  const handleDeleteClick = () => {
+    setShowDeletePopup(true);
+  };
+
+  //  USER CONFIRMS DELETE
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteUser();
+      setDeleteSuccess(true);
+
+      // Redirect to login after 2 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete account. Please try again later.");
+      setShowDeletePopup(false);
+    }
+  };
+
+  //  CANCEL DELETE
+  const handleCancelDelete = () => {
+    setShowDeletePopup(false);
+  };
 
   useEffect(() => {
     if (user) {
@@ -350,10 +379,46 @@ export default function Profile() {
             Permanently delete your account and data.
           </p>
         </div>
-        <button className="px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium">
+        <button
+          onClick={handleDeleteClick}
+          className="px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
+        >
           Delete Profile
         </button>
       </div>
+      {/* DELETE CONFIRM POPUP */}
+      {showDeletePopup && (
+        <div className="popup-overlay">
+          <div className="popup-card">
+            {!deleteSuccess ? (
+              <>
+                <h2>Are you sure?</h2>
+                <p>This will permanently delete your account.</p>
+                <div className="popup-buttons">
+                  <button
+                    className="btn-secondary"
+                    onClick={handleCancelDelete}
+                  >
+                    Cancel
+                  </button>
+                  <button className="btn-primary" onClick={handleConfirmDelete}>
+                    OK
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>Account Deleted</h2>
+                <p>
+                  Your account has been deleted successfully.
+                  <br />
+                  Redirecting to login...
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
