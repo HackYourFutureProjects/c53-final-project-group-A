@@ -31,12 +31,7 @@ const USER_FULL_INFO_QUERY = `
 // SIGNUP - Create a new user
 
 export const createUser = async (req, res) => {
-  // Get a new database client and the connection closing function
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
   if (error) {
     return res.status(503).json({
       success: false,
@@ -54,39 +49,53 @@ export const createUser = async (req, res) => {
         .json({ success: false, msg: validationErrorMessage(errors) });
     }
 
-    // 3. Check if email already exists
-    const checkEmail = await client.query(
+    const checkEmail = await connectedClient.query(
       "SELECT userid FROM users WHERE email = $1",
       [user.email],
     );
-
     if (checkEmail.rows.length > 0) {
-      // Corrected use of validationErrorMessage by wrapping the string in an array
       return res.status(400).json({
         success: false,
         msg: validationErrorMessage(["Email already registered"]),
       });
-    } // Generate UUID and hash the password (Bcrypt is secure)
+    }
 
     const newUserId = uuidv4();
-    const hashedPassword = await bcrypt.hash(user.password, 12); // Insert user into DB using parameterized query for SQL injection prevention
+    const hashedPassword = await bcrypt.hash(user.password, 12);
+    const skillsValue = Array.isArray(user.skills)
+      ? user.skills.join(",")
+      : user.skills || null;
 
-    // Do not return the password hash
-    const result = await client.query(
-      `INSERT INTO users (userid, "firstname", "lastname", email, password)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING userid, "firstname", "lastname", email`,
-      [newUserId, user.firstname, user.lastname, user.email, hashedPassword],
+    const result = await connectedClient.query(
+      `INSERT INTO users (
+        userid, firstname, lastname, email, password,
+        avatar, street, housenumber, city, country, skills
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      RETURNING userid, email, firstname, lastname, avatar, street, housenumber, city, country, skills`,
+      [
+        newUserId,
+        user.firstname,
+        user.lastname,
+        user.email,
+        hashedPassword,
+        user.avatar || null,
+        user.street || null,
+        user.housenumber || null,
+        user.city || null,
+        user.country || null,
+        skillsValue,
+      ],
     );
 
-    const newUser = result.rows[0]; // Generate JWT (Access Token)
+    const newUser = result.rows[0];
     newUser.favorites = [];
+    // Generate JWT (Access Token)
     const token = jwt.sign(
       { id: newUser.userid, email: newUser.email },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN },
-    ); // Respond with user and token
-
+    );
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
@@ -100,14 +109,12 @@ export const createUser = async (req, res) => {
       token,
     });
   } catch (err) {
-    // Using logError for 500 response
     logError(err);
     res.status(500).json({
       success: false,
       msg: "Sorry, there's an error with the DB. Unable to create user",
     });
   } finally {
-    // 💡 Crucial: Ensure the connection is closed regardless of success or failure.
     if (endConnection) await endConnection();
   }
 };
@@ -115,11 +122,7 @@ export const createUser = async (req, res) => {
 // LOGIN - Authenticate user
 
 export const loginUser = async (req, res) => {
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
 
   if (error) {
     return res.status(503).json({
@@ -146,7 +149,7 @@ export const loginUser = async (req, res) => {
         .json({ success: false, msg: validationErrorMessage(errors) });
     }
 
-    const result = await client.query(
+    const result = await connectedClient.query(
       `${USER_FULL_INFO_QUERY} WHERE u.email = $1`,
       [email],
     );
@@ -169,6 +172,7 @@ export const loginUser = async (req, res) => {
       firstname: userDataRow.firstname,
       lastname: userDataRow.lastname,
       avatar: userDataRow.avatar,
+      // Return address fields at top-level
       street: userDataRow.street,
       housenumber: userDataRow.housenumber,
       city: userDataRow.city,
@@ -254,11 +258,7 @@ export const getMe = async (req, res) => {
   const token = req.cookies?.token;
   if (!token) return res.json({ success: false });
 
-  const {
-    connectedClient: client,
-    endConnection,
-    error,
-  } = await connectNeonDB();
+  const { connectedClient, endConnection, error } = await connectNeonDB();
   if (error) {
     return res.status(503).json({
       success: false,
@@ -268,7 +268,7 @@ export const getMe = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const result = await client.query(
+    const result = await connectedClient.query(
       `${USER_FULL_INFO_QUERY} WHERE u.userid = $1`,
       [decoded.id],
     );
@@ -292,7 +292,6 @@ export const getMe = async (req, res) => {
         : [],
       favorites: [],
     };
-
     rows.forEach((row) => {
       if (row.id) {
         const jobFavorite = {

@@ -32,7 +32,7 @@ export default function AddressSettings({
             id="streetInput"
             ref={streetInputRef}
             type="text"
-            defaultValue={user.address?.street ?? ""}
+            defaultValue={user?.street ?? ""}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
@@ -44,7 +44,7 @@ export default function AddressSettings({
             id="houseInput"
             ref={houseInputRef}
             type="text"
-            defaultValue={user.address?.housenumber ?? ""}
+            defaultValue={user?.housenumber ?? ""}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
@@ -58,7 +58,7 @@ export default function AddressSettings({
             id="cityInput"
             ref={cityInputRef}
             type="text"
-            defaultValue={user.address?.city ?? ""}
+            defaultValue={user?.city ?? ""}
             aria-required="true"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
@@ -71,7 +71,7 @@ export default function AddressSettings({
             id="countryInput"
             ref={countryInputRef}
             type="text"
-            defaultValue={user.address?.country ?? ""}
+            defaultValue={user?.country ?? ""}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}

@@ -7,17 +7,14 @@ import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
-import PopupForSave from "../../components/SuccessPopup/PopupForSave";
-import { defaultUser } from "../../data/defaultUser";
 import {
   validatePassword,
   validatePasswordMatch,
 } from "../../util/AuthValidation";
-
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const [showSavePopup, setShowSavePopup] = useState(false);
+
   const firstnameInputRef = useRef(null);
   const lastnameInputRef = useRef(null);
   const currentPasswordInputRef = useRef(null);
@@ -60,13 +57,17 @@ export default function Profile() {
 
   useEffect(() => {
     if (user) {
+      if (firstnameInputRef.current)
+        firstnameInputRef.current.value = user?.firstname || "";
+      if (lastnameInputRef.current)
+        lastnameInputRef.current.value = user?.lastname || "";
       if (streetInputRef.current)
-        streetInputRef.current.value = user.street || "";
+        streetInputRef.current.value = user?.street || "";
       if (houseInputRef.current)
-        houseInputRef.current.value = user.houseNumber || "";
-      if (cityInputRef.current) cityInputRef.current.value = user.city || "";
+        houseInputRef.current.value = user?.housenumber || "";
+      if (cityInputRef.current) cityInputRef.current.value = user?.city || "";
       if (countryInputRef.current)
-        countryInputRef.current.value = user.country || "";
+        countryInputRef.current.value = user?.country || "";
     }
   }, [user]);
 
@@ -74,11 +75,6 @@ export default function Profile() {
     if (!alert.message) return;
     setAlert({ type: "", message: "" });
   }
-
-  const handleLoginRedirect = () => {
-    setShowSavePopup(false);
-    navigate("/login", {});
-  };
 
   async function handleSaveClick() {
     handleClearAlert();
@@ -108,15 +104,15 @@ export default function Profile() {
       return;
     }
 
-    if (user && user.email !== defaultUser.email) {
+    if (user) {
       const updatedFields = {};
 
       const firstname = cleanUpText(firstnameEl.value || "");
       const lastname = cleanUpText(lastnameEl.value || "");
 
       // FIX: Use String() for comparison to ensure changes are detected even if the value is null or undefined
-      const currentFirstName = String(user.firstName || "");
-      const currentLastName = String(user.lastName || "");
+      const currentFirstName = String(user.firstname || "");
+      const currentLastName = String(user.lastname || "");
 
       if (String(firstname) !== currentFirstName)
         updatedFields.firstname = firstname;
@@ -208,11 +204,11 @@ export default function Profile() {
         return;
       }
 
-      const currentStreet = String(user.street || "");
-      const currentCity = String(user.city || "");
-      const currentCountry = String(user.country || "");
-      // FIX: Use String() for comparison to ensure the house number updates correctly
-      const currentHouseNo = String(user.houseNumber || "");
+      // Compare against the top-level address fields
+      const currentStreet = String(user?.street);
+      const currentCity = String(user?.city);
+      const currentCountry = String(user?.country);
+      const currentHouseNo = String(user?.housenumber || "");
 
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;
@@ -241,8 +237,6 @@ export default function Profile() {
           message: error.message || "Failed to save profile. Check connection.",
         });
       }
-    } else {
-      setShowSavePopup(true);
     }
   }
 
@@ -295,7 +289,7 @@ export default function Profile() {
               <input
                 ref={firstnameInputRef}
                 type="text"
-                defaultValue={user.firstName}
+                defaultValue={user.firstname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -308,7 +302,7 @@ export default function Profile() {
               <input
                 ref={lastnameInputRef}
                 type="text"
-                defaultValue={user.lastName}
+                defaultValue={user.lastname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -324,7 +318,6 @@ export default function Profile() {
         countryInputRef={countryInputRef}
         clearAlert={handleClearAlert}
       />
-      <SkillsSettings />
       <label className="block text-sm font-medium text-gray-900 mb-3">
         Change Password
       </label>
@@ -389,15 +382,9 @@ export default function Profile() {
           >
             Save
           </button>
-          {/* Popup for saving settings */}
-          {showSavePopup && (
-            <PopupForSave
-              handleLoginRedirect={handleLoginRedirect}
-              setShowSavePopup={setShowSavePopup}
-            />
-          )}
         </div>
       </div>
+      <SkillsSettings />
       <hr className="border-gray-300 mb-8" />
       {/* <!-- Profile Deletion Section --> */}
       <div className="flex items-start justify-between">
