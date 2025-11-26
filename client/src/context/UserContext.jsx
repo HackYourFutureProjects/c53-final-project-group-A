@@ -237,7 +237,14 @@ function UserContextProvider({ children }) {
       const data = await authFetch("", {
         method: "POST",
         body: JSON.stringify({
-          user: { ...defaultUser, firstname, lastname, email, password },
+          user: {
+            ...defaultUser,
+            skills: defaultUser.skills.map((s) => s.skill),
+            firstname,
+            lastname,
+            email,
+            password,
+          },
         }),
       });
       // Set the user and token received from the server
