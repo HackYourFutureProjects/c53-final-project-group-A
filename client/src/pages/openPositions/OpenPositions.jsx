@@ -7,14 +7,12 @@ import Pagination from "../../components/Pagination/Pagination";
 import { UseUser } from "../../context/UserContext";
 import "./OpenPositions.css";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
-// import { defaultUser, formatAddress } from "../../data/defaultUser.js";
 import { getSkillsInDescription } from "../../util/skillsUtils.js";
 
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 import { UseJobs } from "../../context/JobsContext.jsx";
 import createSortComparator from "../../util/createSortComparator";
-// import UseTravelData from "../../hooks/useTravelData.js";
 
 export default function OpenPositions() {
   const { user, dispatch, toggleFavorite } = UseUser();
@@ -46,14 +44,8 @@ export default function OpenPositions() {
     "Newest first",
   ]);
 
-  const [
-    jobsWithTravel,
-    // setJobsWithTravel
-  ] = useState([]);
-  // const [homeAddress] = useState(formatAddress(defaultUser.address));
-  // const { calculateBatchTravel, error: travelError } = UseTravelData();
   const jobsWithSkills = useMemo(() => {
-    return jobsWithTravel.map((job) => {
+    return allJobs.map((job) => {
       const skillsInDescription = getSkillsInDescription(
         job.normalized_description || "",
         skills,
@@ -64,7 +56,7 @@ export default function OpenPositions() {
         skillsMatch: String(skillsInDescription.length).padStart(2, "0"),
       };
     });
-  }, [jobsWithTravel, skills]);
+  }, [allJobs, skills]);
 
   const filterOptions = useMemo(() => {
     return findFilterOptions(allJobs);
