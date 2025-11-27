@@ -16,35 +16,45 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
+  async function changeSkillsHelper(newUserState, message) {
+    try {
+      const skillNames = newUserState.skills
+        .map((s) => (typeof s?.skill === "string" ? s.skill : null))
+        .filter(Boolean);
+
+      console.log("Skills to be sent to server:", skillNames);
+      const response = await authFetch("/skills/change", {
+        method: "POST",
+        body: JSON.stringify({ skills: skillNames }),
+      });
+      if (response.success) {
+        setAlert({
+          type: "success",
+          message,
+        });
+      }
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
+    }
+  }
+
+  // -------------------- ADD SKILL --------------------
   async function addSkill() {
     const skillInput = skillInputRef.current;
     if (!skillInput) return;
     const newSkill = cleanUpText(skillInput.value || "");
-
     const validationError = validateSkillInput({ text: newSkill, skills });
     if (validationError) {
       setAlert(validationError);
       return;
     }
 
-    try {
-      authFetch("/favorites/toggle", {
-        method: "POST",
-        body: JSON.stringify({ skill: newSkill }),
-      });
-
-      dispatch({
-        type: "ADD_SKILL",
-        payload: regexEndNormalizeSkill(newSkill),
-      });
-
-      setAlert({
-        type: "success",
-        message: "The skill has been added to the user's profile!",
-      });
-    } catch (err) {
-      setAlert({ type: "error", message: err.message });
-    }
+    dispatch({
+      type: "ADD_SKILL",
+      payload: regexEndNormalizeSkill(newSkill),
+    });
+    const message = "The skill has been added to the user's profile!";
+    await changeSkillsHelper(user, message);
 
     if (skillInput) {
       skillInput.value = "";
@@ -52,8 +62,17 @@ export default function SkillsSettings() {
     }
   }
 
-  function removeSkill(skill) {
+  // -------------------- REMOVE SKILL --------------------
+  async function removeSkill(skill) {
     dispatch({ type: "REMOVE_SKILL", payload: skill });
+    const message = "The skill has been removed from the user's profile!";
+    await changeSkillsHelper(user.skills, message);
+  }
+  // -------------------- REMOVE ALL SKILLS --------------------
+  async function removeAllSkills() {
+    dispatch({ type: "REMOVE_ALL_SKILLS" });
+    const message = "All skills have been removed from the user's profile!";
+    await changeSkillsHelper(user.skills, message);
   }
 
   return (
@@ -99,7 +118,7 @@ export default function SkillsSettings() {
         <div className="flex gap-3 mb-3">
           <button
             id="removeAllSkillsBtn"
-            onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
+            onClick={() => removeAllSkills()}
             className="px-4 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
           >
             Remove All
