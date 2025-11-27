@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Loader, X, LogIn } from "lucide-react";
+import { Loader, X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
 import { UseUser } from "../../context/UserContext";
 
 const LoginForm = ({ login, switchToSignup }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+
   const { loading, error, clearError } = UseUser();
 
   const handleChange = (e) => {
@@ -23,26 +25,45 @@ const LoginForm = ({ login, switchToSignup }) => {
         <label>
           Email <span style={{ color: "red", marginLeft: "2px" }}>*</span>
         </label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={loginData.email}
-          onChange={handleChange} // call handleChange
-          required
-        />
-
+        <div className="input-wrapper">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={loginData.email}
+            onChange={handleChange} // call handleChange
+            required
+            style={{ paddingRight: "35px" }}
+          />
+          <Mail size={18} className="input-icon-right" />
+        </div>
         <label>
           Password <span style={{ color: "red", marginLeft: "2px" }}>*</span>
         </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          value={loginData.password}
-          onChange={handleChange} //call handleChange
-          required
-        />
+        <div className="input-wrapper">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Enter your password"
+            value={loginData.password}
+            onChange={handleChange} //call handleChange
+            required
+            style={{ paddingRight: "35px" }}
+          />
+          {showPassword ? (
+            <EyeOff
+              size={18}
+              className="input-icon-right"
+              onClick={() => setShowPassword(false)}
+            />
+          ) : (
+            <Eye
+              size={18}
+              className="input-icon-right"
+              onClick={() => setShowPassword(true)}
+            />
+          )}
+        </div>
 
         {error && (
           <p className="error-text">
