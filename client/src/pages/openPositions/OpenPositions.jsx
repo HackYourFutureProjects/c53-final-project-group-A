@@ -171,6 +171,7 @@ export default function OpenPositions() {
                 <JobCard
                   key={job.id || idx}
                   job={job}
+                  allJobs={allJobs}
                   isTravelLoading={isTravelLoading}
                   isInFavorites={favorites.some((fav) => fav.id === job.id)}
                   dispatch={dispatch}
