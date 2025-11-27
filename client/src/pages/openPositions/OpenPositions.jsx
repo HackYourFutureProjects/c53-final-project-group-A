@@ -163,8 +163,10 @@ export default function OpenPositions() {
         {!isJobsLoading && filteredJobs.length > 0 && (
           <>
             <p className="job-message">
-              Found {allJobs.length} jobs in total{" "}
-              {searchTerm && `for ${searchTerm}`} Filtered {filteredJobs.length}
+              Found {allJobs.length} jobs in total for {searchTerm}.
+              {!Object.values(activeFilters).every(
+                (filterSet) => filterSet.size === 0,
+              ) && ` Filtered ${filteredJobs.length} jobs`}
             </p>
             <ul className="jobs-list">
               {currentJobs.map((job, idx) => (
