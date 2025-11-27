@@ -4,10 +4,13 @@ import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
 import { UseUser } from "../context/UserContext";
+import "./skillsSettings.css";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
+  const [showAll, setShowAll] = useState(false);
+  const maxVisible = 7;
   const { user, dispatch } = UseUser();
   const { skills } = user;
 
@@ -39,27 +42,64 @@ export default function SkillsSettings() {
   function removeSkill(skill) {
     dispatch({ type: "REMOVE_SKILL", payload: skill });
   }
+  const visibleSkills = showAll ? skills : skills.slice(0, maxVisible);
 
   return (
-    <div className="mt-4">
-      <div className="mb-3">
-        <label className="block text-sm font-medium text-gray-900 mb-2">
-          Change Skill Set
+    <div className="skills-container">
+      <div className="skills-section">
+        <h3 className="skills-heading">Skills</h3>
+        <label className="skills-label" htmlFor="skillInput">
+          Add skills
         </label>
-        {/* Skills List */}
-        <div id="skillsList">
-          {(skills || []).map((s, idx) => (
-            <div
-              key={`${s.skill}-${idx}`}
-              className="inline-flex items-center bg-white border border-gray-300 rounded px-3 py-1.5 text-sm"
+
+        {/* Skills management */}
+        <div className="skills-management">
+          <div className="skills-controls">
+            <input
+              id="skillInput"
+              ref={skillInputRef}
+              type="text"
+              placeholder="e.g. React, TypeScript, Docker"
+              className="skill-input"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") addSkill();
+              }}
+              onChange={handleClearAlert}
+            />
+
+            <button
+              id="addSkillBtn"
+              onClick={addSkill}
+              className="add-skill-btn"
+              type="button"
             >
-              <span className="text-gray-800 mr-2">{s.skill}</span>
+              Add
+            </button>
+
+            <button
+              id="removeAllSkillsBtn"
+              onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
+              className="remove-all-btn"
+              type="button"
+            >
+              Remove all
+            </button>
+          </div>
+        </div>
+
+        {/* Skills List */}
+        <div id="skillsList" className="skills-list">
+          {visibleSkills.map((s, idx) => (
+            <div key={`${s.skill}-${idx}`} className="skill-item">
+              <span className="skill-name">{s.skill}</span>
               <button
-                className="text-gray-500 hover:text-red-600 transition"
+                className="skill-remove-btn"
                 onClick={() => removeSkill(s)}
+                aria-label={`Remove ${s.skill}`}
+                type="button"
               >
                 <svg
-                  className="w-4 h-4"
+                  className="skill-remove-icon"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -69,45 +109,27 @@ export default function SkillsSettings() {
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M6 18L18 6M6 6l12 12"
-                  ></path>
+                  />
                 </svg>
               </button>
             </div>
           ))}
+
+          {skills.length > maxVisible && (
+            <button
+              className="show-all-btn"
+              onClick={() => setShowAll(!showAll)}
+              type="button"
+            >
+              {" "}
+              {showAll
+                ? "Show less"
+                : `+${skills.length - maxVisible} more`}{" "}
+            </button>
+          )}
         </div>
       </div>
-      {/* Skills management */}
-      <div className="grid grid-cols-2 gap-4 mb-3">
-        {/* <div className="flex gap-3 mb-3"> */}
-        <div></div>
-        <div className="flex gap-3 mb-3">
-          <button
-            id="removeAllSkillsBtn"
-            onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
-            className="px-4 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
-          >
-            Remove All
-          </button>
-          <input
-            id="skillInput"
-            ref={skillInputRef}
-            type="text"
-            placeholder="e.g. React, TypeScript, Docker"
-            className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") addSkill();
-            }}
-            onChange={handleClearAlert}
-          />
-          <button
-            id="addSkillBtn"
-            onClick={addSkill}
-            className="px-4 py-1 bg-black text-white rounded hover:bg-gray-800 transition font-medium"
-          >
-            Add Skill
-          </button>
-        </div>
-      </div>
+
       {alert.message && (
         <AlertMessage type={alert.type} message={alert.message} />
       )}

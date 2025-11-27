@@ -56,18 +56,15 @@
 }
 
 .clear-filters-btn {
-  padding: 0.5rem 1rem;
-  background-color: #3b82f6; /* Blue-500 */
-  color: white;
-  border: none;
+  padding: 0 1rem;
+  background: none;
+  border: 1px solid #d1d5db;
+  color: rgb(59, 130, 246);
   border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.2s;
   font-size: 1.1rem;
-}
-
-.clear-filters-btn:hover {
-  background-color: #2563eb; /* Darker blue */
+  height: 43px;
 }
 
 .job-message {

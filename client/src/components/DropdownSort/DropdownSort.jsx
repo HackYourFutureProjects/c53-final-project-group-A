@@ -44,6 +44,13 @@ export default function DropdownSort({ selectedSort, setSelectedSort }) {
     <div className="relative" ref={dropdownRef}>
       <button
         id="sortBtn"
+        style={{
+          border: "none",
+          borderBottomColor: "transparent",
+          outline: "none",
+          boxShadow: "none",
+          height: "43px",
+        }}
         className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded cursor-pointer transition-colors duration-200 text-lg my-2.5 flex items-center space-x-2"
         onClick={(e) => {
           e.stopPropagation();
@@ -53,7 +60,7 @@ export default function DropdownSort({ selectedSort, setSelectedSort }) {
         aria-expanded={isOpen}
         type="button"
       >
-        <span>Custom Sort</span>
+        <span>Custom sort</span>
         <svg
           className="w-4 h-4"
           fill="none"

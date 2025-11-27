@@ -4,8 +4,9 @@
 
 .filter-button {
   /* Consolidates the original .dropdown button and new .filter-button */
-  padding: 0.5rem 1rem;
   border: 1px solid #d1d5db;
+  height: 43px;
+  padding: 0 1rem;
   border-radius: 0.25rem;
   background-color: white;
   display: flex;
