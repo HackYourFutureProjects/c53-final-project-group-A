@@ -29,11 +29,8 @@ export default function OpenPositions() {
   } = UseJobs();
 
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
-
-  // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-  // const { allJobs, searchTerm, showResults } = UseJobs();
-
   const skills = user?.skills || [];
+
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
   const [activeFilters, setActiveFilters] = useState({
@@ -41,6 +38,7 @@ export default function OpenPositions() {
     employmentType: new Set(),
     work_mode: new Set(),
   });
+
   const [selectedSort, setSelectedSort] = useState([
     "Most skill matches",
     "Fewest transport transfers",
