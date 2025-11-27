@@ -78,20 +78,20 @@ export default function OpenPositions() {
     setCurrentPage(1);
   };
 
-  const filteredJobs = useMemo(() => {
-    return filterJobs(allJobs, activeFilters);
-  }, [allJobs, activeFilters]);
-
   const sortedJobs = useMemo(() => {
     if (selectedSort.length === 0) return jobsWithSkills;
     return [...jobsWithSkills].sort(createSortComparator(selectedSort));
   }, [jobsWithSkills, selectedSort]);
 
+  const filteredJobs = useMemo(() => {
+    return filterJobs(sortedJobs, activeFilters);
+  }, [sortedJobs, activeFilters]);
+
   //pagination
   const totalPages = Math.ceil(sortedJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   useEffect(() => {
     if (currentJobs.length > 0) {
@@ -163,8 +163,8 @@ export default function OpenPositions() {
         {!isJobsLoading && filteredJobs.length > 0 && (
           <>
             <p className="job-message">
-              Showing {filteredJobs.length} jobs in total{" "}
-              {searchTerm && `for "${searchTerm}"`}
+              Found {allJobs.length} jobs in total{" "}
+              {searchTerm && `for ${searchTerm}`} Filtered {filteredJobs.length}
             </p>
             <ul className="jobs-list">
               {currentJobs.map((job, idx) => (
