@@ -1,25 +1,32 @@
-import { useState, useMemo, useEffect } from "react";
-
-import "./OpenPositions.css";
-
-import { defaultUser, formatAddress } from "../../data/defaultUser";
-import { UseJobs } from "../../context/JobsContext";
-import { UseUser } from "../../context/UserContext";
-import { findFilterOptions, filterJobs } from "../../util/filterJobs";
-import useTravelData from "../../hooks/useTravelData";
-import getSkillsInDescription from "../../util/getSkillsInDescription";
-
+import { useEffect, useMemo, useState } from "react";
+import { gif } from "../../assets/index.js";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
+import JobCard from "../../components/JobCard/JobCard";
 import DropdownSort from "../../components/DropdownSort/DropdownSort";
 import Pagination from "../../components/Pagination/Pagination";
-import JobCard from "../../components/JobCard/JobCard";
+import { UseUser } from "../../context/UserContext";
+import "./OpenPositions.css";
+import { findFilterOptions, filterJobs } from "../../util/filterJobs";
+import getSkillsInDescription from "../../util/getSkillsInDescription";
 import SkillsSettings from "../../components/SkillsSettings";
+import { UseJobs } from "../../context/JobsContext.jsx";
 import createSortComparator from "../../util/createSortComparator";
 
 export default function OpenPositions() {
-  const { allJobs, searchTerm } = UseJobs();
-  const { user } = UseUser();
+  const { user, dispatch, toggleFavorite } = UseUser();
+
+  const {
+    allJobs,
+    searchTerm,
+    isJobsLoading,
+    isTravelLoading,
+    error,
+    fetchBatchTravelDetails,
+  } = UseJobs();
+
+  const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
   const skills = user?.skills || [];
+
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
   const [activeFilters, setActiveFilters] = useState({
@@ -27,6 +34,7 @@ export default function OpenPositions() {
     employmentType: new Set(),
     work_mode: new Set(),
   });
+
   const [selectedSort, setSelectedSort] = useState([
     "Most skill matches",
     "Fewest transport transfers",
@@ -34,12 +42,8 @@ export default function OpenPositions() {
     "Newest first",
   ]);
 
-  const [jobsWithTravel, setJobsWithTravel] = useState([]);
-  const [homeAddress] = useState(formatAddress(defaultUser.address));
-  const { calculateBatchTravel, error: travelError } = useTravelData();
-
   const jobsWithSkills = useMemo(() => {
-    return jobsWithTravel.map((job) => {
+    return allJobs.map((job) => {
       const skillsInDescription = getSkillsInDescription(
         job.normalized_description || "",
         skills,
@@ -50,7 +54,7 @@ export default function OpenPositions() {
         skillsMatch: String(skillsInDescription.length).padStart(2, "0"),
       };
     });
-  }, [jobsWithTravel, skills]);
+  }, [allJobs, skills]);
 
   const filterOptions = useMemo(() => {
     return findFilterOptions(allJobs);
@@ -74,117 +78,118 @@ export default function OpenPositions() {
     setCurrentPage(1);
   };
 
-  const filteredJobs = useMemo(() => {
-    return filterJobs(allJobs, activeFilters);
-  }, [allJobs, activeFilters]);
-
   const sortedJobs = useMemo(() => {
     if (selectedSort.length === 0) return jobsWithSkills;
     return [...jobsWithSkills].sort(createSortComparator(selectedSort));
   }, [jobsWithSkills, selectedSort]);
 
+  const filteredJobs = useMemo(() => {
+    return filterJobs(sortedJobs, activeFilters);
+  }, [sortedJobs, activeFilters]);
+
   //pagination
   const totalPages = Math.ceil(sortedJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
-  //useEffect for travelInfo
   useEffect(() => {
-    async function fetchTravelInfo() {
-      if (!filteredJobs.length) {
-        setJobsWithTravel([]);
-        return;
-      }
-      const workCities = filteredJobs.map((job) => job.display_location);
-      try {
-        const travelResult = await calculateBatchTravel(
-          homeAddress,
-          workCities,
-        );
-        const jobsWithTravelInfo = filteredJobs.map((job, idx) => ({
-          ...job,
-          travel_time: travelResult.travelDetails[idx].travel_time,
-          least_transfers: travelResult.travelDetails[idx].least_transfers,
-        }));
-        setJobsWithTravel(jobsWithTravelInfo);
-      } catch {
-        setJobsWithTravel(filteredJobs);
-      }
+    if (currentJobs.length > 0) {
+      fetchBatchTravelDetails(currentJobs);
     }
-    fetchTravelInfo();
-  }, [filteredJobs, homeAddress]);
+  }, [currentPage, activeFilters]);
 
   return (
     <div className="open-positions content-container">
-      <SkillsSettings />
-      <div className="job-filters-bar">
-        <div className="filters-container">
-          <div className="filter-dropdowns">
-            <DropdownFilter
-              filterkey="Experience level"
-              options={filterOptions.experienceOptions}
-              activeValues={activeFilters.seniorityLevel}
-              onFilterChange={handleFilterChange}
-            />
-            <DropdownFilter
-              filterkey="Job type"
-              options={filterOptions.jobTypeOptions}
-              activeValues={activeFilters.employmentType}
-              onFilterChange={handleFilterChange}
-            />
-            <DropdownFilter
-              filterkey="Work mode"
-              options={filterOptions.workModeOptions}
-              activeValues={activeFilters.work_mode}
-              onFilterChange={handleFilterChange}
-            />
+      {isJobsLoading && (
+        <div className="loader-overlay">
+          <img src={gif.boat} alt="Loading..." className="loader-gif" />
+        </div>
+      )}
+
+      <div className="open-positions">
+        <SkillsSettings />
+        <div className="job-filters-bar">
+          <div className="filters-container">
             <DropdownSort
               selectedSort={selectedSort}
               setSelectedSort={setSelectedSort}
             />
-          </div>
-          <button onClick={handleClearFilters} className="clear-filters-btn">
-            Clear filters
-          </button>
-        </div>
-      </div>
-
-      {travelError && (
-        <div className="error-message">
-          Error loading commute info: {travelError}
-        </div>
-      )}
-
-      {allJobs.length === 0 ? (
-        <p className="job-message">
-          No jobs are shown. Go to <strong>Job Search</strong> or{" "}
-          <strong>Clear Filters</strong> to see more results.
-        </p>
-      ) : (
-        <>
-          <p className="job-message">
-            Found {allJobs.length} jobs in total for {searchTerm}.
-            {!Object.values(activeFilters).every(
-              (filterSet) => filterSet.size === 0,
-            ) && ` Filtered ${filteredJobs.length} jobs`}
-          </p>
-          <ul className="jobs-list">
-            {currentJobs.map((job, idx) => (
-              <JobCard
-                key={job.id || idx}
-                job={job}
-                onApplyClick={(url) => window.open(url, "_blank")}
+            <div className="filter-dropdowns">
+              <DropdownFilter
+                filterKey="seniorityLevel"
+                label="Experience level"
+                options={filterOptions.experienceOptions}
+                activeValues={activeFilters.seniorityLevel}
+                onFilterChange={handleFilterChange}
               />
-            ))}
-          </ul>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </>
-      )}
+              <DropdownFilter
+                filterKey="employmentType"
+                label="Job type"
+                options={filterOptions.jobTypeOptions}
+                activeValues={activeFilters.employmentType}
+                onFilterChange={handleFilterChange}
+              />
+              <DropdownFilter
+                filterKey="work_mode"
+                label="Work mode"
+                options={filterOptions.workModeOptions}
+                activeValues={activeFilters.work_mode}
+                onFilterChange={handleFilterChange}
+              />
+              <button
+                onClick={handleClearFilters}
+                className="clear-filters-btn"
+              >
+                Clear filters
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {error && (
+          <div className="error-message">
+            Error loading commute info: {error}
+          </div>
+        )}
+
+        {!isJobsLoading && filteredJobs.length === 0 && (
+          <p className="job-message">
+            No jobs are shown. Go to <strong>Job Search</strong> or{" "}
+            <strong>Clear Filters</strong> to see more results.
+          </p>
+        )}
+
+        {!isJobsLoading && filteredJobs.length > 0 && (
+          <>
+            <p className="job-message">
+              Found {allJobs.length} jobs in total for {searchTerm}.
+              {!Object.values(activeFilters).every(
+                (filterSet) => filterSet.size === 0,
+              ) && ` Filtered ${filteredJobs.length} jobs`}
+            </p>
+            <ul className="jobs-list">
+              {currentJobs.map((job, idx) => (
+                <JobCard
+                  key={job.id || idx}
+                  job={job}
+                  isTravelLoading={isTravelLoading}
+                  isInFavorites={favorites.some((fav) => fav.id === job.id)}
+                  dispatch={dispatch}
+                  toggleFavorite={toggleFavorite}
+                  user={user}
+                  onApplyClick={(url) => window.open(url, "_blank")}
+                />
+              ))}
+            </ul>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

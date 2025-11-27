@@ -6,6 +6,7 @@ import Profile from "./pages/User/Profile";
 import "./index.css";
 import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import AuthForms from "./components/AuthForms/AuthForms";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -13,7 +14,15 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<JobSearch />} />
         <Route path="jobs" element={<OpenPositions />} />
-        <Route path="profile" element={<Profile />} />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route path="profile" element={<Profile />} /> */}
         <Route path="favorites" element={<MyFavorites />} />
         <Route path="login" element={<AuthForms />} />
         <Route path="*" element={<Navigate to="/" replace />} />

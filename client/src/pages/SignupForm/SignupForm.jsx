@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Loader, X, UserPlus, CheckCircle, XCircle } from "lucide-react";
+import {
+  Loader,
+  X,
+  UserPlus,
+  CheckCircle,
+  XCircle,
+  Mail,
+  Eye,
+  EyeOff,
+  User,
+} from "lucide-react";
 import { UseUser } from "../../context/UserContext";
 import {
   passwordRules,
@@ -23,6 +33,9 @@ const SignupForm = ({
   });
   const [errorMessage, setErrorMessage] = useState("");
   const { loading, error, clearError } = UseUser();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmationPassword, setShowConfirmationPassword] =
+    useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,67 +116,111 @@ const SignupForm = ({
               First Name{" "}
               <span style={{ color: "red", marginLeft: "2px" }}>*</span>
             </label>
-            <input
-              type="text"
-              name="firstname" // added name for handleChange
-              placeholder="First name"
-              value={signupData.firstname}
-              onChange={handleChange}
-              required
-            />
+            <div className="input-wrapper">
+              <input
+                type="text"
+                name="firstname" // added name for handleChange
+                placeholder="First name"
+                value={signupData.firstname}
+                onChange={handleChange}
+                required
+                style={{ paddingRight: "35px" }}
+              />
+              <User size={18} className="input-icon-right" />
+            </div>
           </div>
           <div style={{ flex: 1 }}>
             <label>
               Last Name{" "}
               <span style={{ color: "red", marginLeft: "2px" }}>*</span>
             </label>
-            <input
-              type="text"
-              name="lastname" //added name
-              placeholder="Last name"
-              value={signupData.lastname}
-              onChange={handleChange}
-              required
-            />
+            <div className="input-wrapper">
+              <input
+                type="text"
+                name="lastname" //added name
+                placeholder="Last name"
+                value={signupData.lastname}
+                onChange={handleChange}
+                required
+                style={{ paddingRight: "35px" }}
+              />
+              <User size={18} className="input-icon-right" />
+            </div>
           </div>
         </div>
 
         <label>
           Email <span style={{ color: "red", marginLeft: "2px" }}>*</span>
         </label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={signupData.email}
-          onChange={handleChange}
-          required
-        />
+        <div className="input-wrapper">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={signupData.email}
+            onChange={handleChange}
+            required
+            style={{ paddingRight: "35px" }}
+          />
+          <Mail size={18} className="input-icon-right" />
+        </div>
 
         <label>
           Password <span style={{ color: "red", marginLeft: "2px" }}>*</span>
         </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          value={signupData.password}
-          onChange={handleChange}
-          required
-        />
+        <div className="input-wrapper">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Enter your password"
+            value={signupData.password}
+            onChange={handleChange}
+            required
+            style={{ paddingRight: "35px" }}
+          />
+          {showPassword ? (
+            <EyeOff
+              size={18}
+              className="input-icon-right"
+              onClick={() => setShowPassword(false)}
+            />
+          ) : (
+            <Eye
+              size={18}
+              className="input-icon-right"
+              onClick={() => setShowPassword(true)}
+            />
+          )}
+        </div>
 
         <label>
           Confirm Password{" "}
           <span style={{ color: "red", marginLeft: "2px" }}>*</span>
         </label>
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm your password"
-          value={signupData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
+        <div className="input-wrapper">
+          <input
+            type={showConfirmationPassword ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            value={signupData.confirmPassword}
+            onChange={handleChange}
+            required
+            style={{ paddingRight: "35px" }}
+          />
+          {showConfirmationPassword ? (
+            <EyeOff
+              size={18}
+              className="input-icon-right"
+              onClick={() => setShowConfirmationPassword(false)}
+            />
+          ) : (
+            <Eye
+              size={18}
+              className="input-icon-right"
+              onClick={() => setShowConfirmationPassword(true)}
+            />
+          )}
+        </div>
 
         {/* Password Requirements - Now using the helper function and new class */}
         <p

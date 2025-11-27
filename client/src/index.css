@@ -254,6 +254,10 @@ footer {
 .m-1 {
   margin: 0.25rem;
 }
+.my-2\.5 {
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+}
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -306,6 +310,7 @@ footer {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -426,6 +431,12 @@ footer {
 .hover\:bg-gray-50:hover {
   background-color: #f9fafb;
 }
+.bg-green-500 {
+  background-color: #10b981;
+}
+.hover\:bg-green-600:hover {
+  background-color: #059669;
+}
 .hover\:bg-gray-400:hover {
   background-color: #9ca3af;
 }
@@ -479,6 +490,12 @@ footer {
     color 150ms ease,
     opacity 150ms ease;
 }
+.transition-colors {
+  transition-property: background-color, color, opacity;
+}
+.duration-200 {
+  transition-duration: 200ms;
+}
 .focus\:outline-none:focus {
   outline: none;
 }
@@ -499,6 +516,10 @@ footer {
   gap: 0.5rem;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /* Component helpers */
 #skillsList {
   min-height: 60px; /* mirrors min-h-[60px] */
@@ -512,10 +533,6 @@ footer {
 }
 
 /* Small utilities used by items */
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
 
 /* Responsive helpers */
 @media (min-width: 768px) {

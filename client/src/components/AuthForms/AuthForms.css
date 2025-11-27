@@ -164,3 +164,16 @@
 .password-rule-item.invalid {
   color: #ef4444;
 }
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon-right {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-100%);
+  color: #888;
+  cursor: pointer;
+}

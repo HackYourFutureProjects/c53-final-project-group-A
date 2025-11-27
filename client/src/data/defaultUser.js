@@ -1,12 +1,12 @@
 import { images } from "../assets";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
-export const formatAddress = (address) => {
+export const formatAddress = (user) => {
   const parts = [];
-  if (address?.street) parts.push(address.street);
-  if (address?.houseNumber) parts.push(address.houseNumber);
-  if (address?.city) parts.push(address.city);
-  if (address?.country) parts.push(address.country);
+  if (user?.street) parts.push(user.street);
+  if (user?.housenumber) parts.push(user.housenumber);
+  if (user?.city) parts.push(user.city);
+  if (user?.country) parts.push(user.country);
   return parts.join(", ");
 };
 
@@ -43,14 +43,11 @@ export const defaultUser = {
   lastname: "User",
   avatar: images.defaultAvatar,
   email: "guest@example.com",
-  JWT: "",
 
-  address: {
-    street: "Keizersgracht",
-    housenumber: 123,
-    city: "Amsterdam",
-    country: "Netherlands",
-  },
+  street: "Keizersgracht",
+  housenumber: 123,
+  city: "Amsterdam",
+  country: "Netherlands",
   skills: defaultSkillNames
     .map((skill) => regexEndNormalizeSkill(skill))
     .sort((a, b) => a.normalizedSkill.localeCompare(b.normalizedSkill)),

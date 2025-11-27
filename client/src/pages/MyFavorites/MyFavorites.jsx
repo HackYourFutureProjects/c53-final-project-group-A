@@ -1,10 +1,8 @@
 import JobCard from "../../components/JobCard/JobCard";
 import { UseUser } from "../../context/UserContext";
 
-console.log("User favorites:", UseUser.favorites);
-
 export default function MyFavorites() {
-  const { user } = UseUser();
+  const { user, toggleFavorite } = UseUser();
   const favoriteJobs = Array.isArray(user?.favorites) ? user.favorites : [];
 
   if (favoriteJobs.length === 0) {
@@ -42,6 +40,9 @@ export default function MyFavorites() {
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")
               }
+              user={user}
+              toggleFavorite={toggleFavorite}
+              isInFavorites={true}
             />
           ))
         )}
