@@ -35,7 +35,6 @@ export const toggleFavoriteJob = async (req, res) => {
       "SELECT id FROM favorites WHERE id = $1",
       [jobId],
     );
-    console.log("job", job);
     // 2️ If it does not exist → insert it into the favorites table
     //  Best practice: Consider using transactions when inserting multiple tables
     if (existingFavorite.rows.length === 0) {
