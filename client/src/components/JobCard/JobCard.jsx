@@ -26,7 +26,6 @@ function formatTravelTime(minutes) {
 
 export default function JobCard({
   job,
-  allJobs,
   onApplyClick,
   isTravelLoading,
   user,
@@ -194,7 +193,7 @@ export default function JobCard({
 
             <div className="job-card-footer">
               <div className="skill-match-container">
-                {allJobs?.length > 0 && (
+                {Array.isArray(job?.skillsInDescription) && (
                   <span className="skill-match-text">
                     <Skills job={job} />
                   </span>
