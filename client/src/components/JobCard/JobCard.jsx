@@ -72,11 +72,21 @@ export default function JobCard({
       <div className="job-card">
         <div className="job-card-content">
           <div className="company-logo-container">
-            <img
-              src={job.organization_logo || icons.defaultCompany}
-              alt={job.organization_name || "Company logo"}
-              className="company-logo"
-            />
+            <a
+              href={job.organization_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="company-link"
+            >
+              <img
+                src={job.organization_logo || icons.defaultCompany}
+                alt={job.organization_name || "Company logo"}
+                className="company-logo"
+              />
+              <span className="company-name">
+                {job.organization_name || job.organization}
+              </span>
+            </a>
           </div>
 
           <div className="job-info">
