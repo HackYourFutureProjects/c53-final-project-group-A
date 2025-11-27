@@ -7,17 +7,14 @@ import Pagination from "../../components/Pagination/Pagination";
 import { UseUser } from "../../context/UserContext";
 import "./OpenPositions.css";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
-// import { defaultUser, formatAddress } from "../../data/defaultUser";
-// removed UseUser import; JobCard now uses favorites from context directly
-
-// WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
-// PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-// import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
+// import { defaultUser, formatAddress } from "../../data/defaultUser.js";
+import { getSkillsInDescription } from "../../util/skillsUtils.js";
 
 import "./OpenPositions.css";
 import SkillsSettings from "../../components/SkillsSettings";
 import { UseJobs } from "../../context/JobsContext.jsx";
 import createSortComparator from "../../util/createSortComparator";
+// import UseTravelData from "../../hooks/useTravelData.js";
 
 export default function OpenPositions() {
   const { user, dispatch, toggleFavorite } = UseUser();
@@ -51,10 +48,12 @@ export default function OpenPositions() {
     "Newest first",
   ]);
 
-  const [jobsWithTravel, setJobsWithTravel] = useState([]);
-  const [homeAddress] = useState(formatAddress(defaultUser.address));
-  const { calculateBatchTravel, error: travelError } = useTravelData();
-
+  const [
+    jobsWithTravel,
+    // setJobsWithTravel
+  ] = useState([]);
+  // const [homeAddress] = useState(formatAddress(defaultUser.address));
+  // const { calculateBatchTravel, error: travelError } = UseTravelData();
   const jobsWithSkills = useMemo(() => {
     return jobsWithTravel.map((job) => {
       const skillsInDescription = getSkillsInDescription(
