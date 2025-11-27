@@ -117,21 +117,21 @@ export default function OpenPositions() {
             />
             <div className="filter-dropdowns">
               <DropdownFilter
-                filterkey="seniorityLevel"
+                filterKey="seniorityLevel"
                 label="Experience level"
                 options={filterOptions.experienceOptions}
                 activeValues={activeFilters.seniorityLevel}
                 onFilterChange={handleFilterChange}
               />
               <DropdownFilter
-                filterkey="employmentType"
+                filterKey="employmentType"
                 label="Job type"
                 options={filterOptions.jobTypeOptions}
                 activeValues={activeFilters.employmentType}
                 onFilterChange={handleFilterChange}
               />
               <DropdownFilter
-                filterkey="work_mode"
+                filterKey="work_mode"
                 label="Work mode"
                 options={filterOptions.workModeOptions}
                 activeValues={activeFilters.work_mode}

@@ -3,7 +3,7 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import "./DropdownFilter.css";
 
 export default function DropdownFilter({
-  filterkey,
+  filterKey,
   label,
   options,
   activeValues,
@@ -56,10 +56,10 @@ export default function DropdownFilter({
                 <input
                   type="checkbox"
                   className="form-checkbox"
-                  name={filterkey}
+                  name={filterKey}
                   checked={checked}
                   onChange={(e) =>
-                    onFilterChange(filterkey, option, e.target.checked)
+                    onFilterChange(filterKey, option, e.target.checked)
                   }
                 />
                 <span className="option-text">{option}</span>
