@@ -7,9 +7,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import { UseUser } from "../../context/UserContext";
 import "./OpenPositions.css";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
-import { getSkillsInDescription } from "../../util/skillsUtils.js";
-
-import "./OpenPositions.css";
+import getSkillsInDescription from "../../util/getSkillsInDescription";
 import SkillsSettings from "../../components/SkillsSettings";
 import { UseJobs } from "../../context/JobsContext.jsx";
 import createSortComparator from "../../util/createSortComparator";
