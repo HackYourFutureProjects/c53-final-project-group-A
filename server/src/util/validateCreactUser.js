@@ -17,6 +17,13 @@ export default function validateCreactUser(user) {
     "lastname",
     "email",
     "password",
+    "avatar",
+    "street",
+    "housenumber",
+    "city",
+    "country",
+    "skills",
+    "favorites",
   ]);
 
   if (disallowed) errors.push(disallowed);

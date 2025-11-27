@@ -6,7 +6,6 @@ import {
   useEffect,
 } from "react";
 import { defaultUser } from "../data/defaultUser";
-import { fixUserData } from "../util/fixUserData";
 import { fixUserSkills } from "../util/fixUserSkills";
 
 const UserContext = createContext();
@@ -47,7 +46,8 @@ function userReducer(state, action) {
     }
 
     case "TOGGLE_FAVORITE": {
-      const jobId = action.payload;
+      const job = action.payload;
+      const jobId = job?.id;
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
@@ -55,7 +55,7 @@ function userReducer(state, action) {
       const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
         ? prevFavorites.filter((fav) => fav.id !== jobId)
-        : [...prevFavorites, action.jobData];
+        : [...prevFavorites, job];
 
       return { ...state, favorites: newFavorites };
     }
@@ -126,12 +126,10 @@ function UserContextProvider({ children }) {
 
       if (data.user) {
         //  FIX SKILLS HERE
-        const fixedUser = fixUserData(data.user);
+        const normalizedSkills = fixUserSkills(data.user.skills);
 
-        const normalizedSkills = fixUserSkills(fixedUser.skills);
-
-        const favoriteJobs = Array.isArray(fixedUser.favorites)
-          ? fixedUser.favorites.map((job) => ({
+        const favoriteJobs = Array.isArray(data.user.favorites)
+          ? data.user.favorites.map((job) => ({
               id: job.id,
               title: job.title,
               organization: job.organization,
@@ -139,14 +137,14 @@ function UserContextProvider({ children }) {
               employment_type: job.employment_type,
               url: job.url,
               organization_logo: job.organization_logo,
-              displayLocation: job.display_location,
-              workMode: job.work_mode,
+              display_location: job.display_location,
+              work_mode: job.work_mode,
               seniority: job.seniority,
               description_text: job.description_text,
               date_posted: job.date_posted,
-              travelTime: job.travel_time,
-              leastTransfers: job.least_transfers,
-              normalizedDescription: job.normalized_description,
+              travel_time: job.travel_time,
+              least_transfers: job.least_transfers,
+              normalized_description: job.normalized_description,
             }))
           : [];
 
@@ -154,12 +152,13 @@ function UserContextProvider({ children }) {
         dispatch({
           type: "LOGIN",
           payload: {
-            ...fixedUser,
+            ...data.user,
             skills: normalizedSkills,
             favorites: favoriteJobs,
           },
         });
       } else {
+        console.log("logging out due to missing user data");
         // No JSON returned — treat as not authenticated
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }
@@ -195,12 +194,10 @@ function UserContextProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
 
-      const fixedUser = fixUserData(data.user);
+      const normalizedSkills = fixUserSkills(data.user.skills);
 
-      const normalizedSkills = fixUserSkills(fixedUser.skills);
-
-      const favoriteJobs = Array.isArray(fixedUser.favorites)
-        ? fixedUser.favorites.map((job) => ({
+      const favoriteJobs = Array.isArray(data.user.favorites)
+        ? data.user.favorites.map((job) => ({
             id: job.id,
             title: job.title,
             organization: job.organization,
@@ -208,21 +205,21 @@ function UserContextProvider({ children }) {
             employment_type: job.employment_type,
             url: job.url,
             organization_logo: job.organization_logo,
-            displayLocation: job.display_location,
-            workMode: job.work_mode,
+            display_location: job.display_location,
+            work_mode: job.work_mode,
             seniority: job.seniority,
             description_text: job.description_text,
             date_posted: job.date_posted,
-            travelTime: job.travel_time,
-            leastTransfers: job.least_transfers,
-            normalizedDescription: job.normalized_description,
+            travel_time: job.travel_time,
+            least_transfers: job.least_transfers,
+            normalized_description: job.normalized_description,
           }))
         : [];
 
       dispatch({
         type: "LOGIN",
         payload: {
-          ...fixedUser,
+          ...data.user,
           skills: normalizedSkills,
           favorites: favoriteJobs,
         },
@@ -241,13 +238,27 @@ function UserContextProvider({ children }) {
       const data = await authFetch("", {
         method: "POST",
         body: JSON.stringify({
-          user: { firstname, lastname, email, password },
+          user: {
+            ...defaultUser,
+            skills: defaultUser.skills.map((s) => s.skill),
+            firstname,
+            lastname,
+            email,
+            password,
+          },
         }),
       });
-      const fixedUser = fixUserData(data.user);
       // Set the user and token received from the server
-      dispatch({ type: "REGISTER", payload: fixedUser });
-      return fixedUser;
+      const normalizedSkills = fixUserSkills(data.user.skills);
+      dispatch({
+        type: "REGISTER",
+        payload: {
+          ...data.user,
+          skills: normalizedSkills,
+          favorites: [],
+        },
+      });
+      return data.user;
     } catch (err) {
       throw err;
     }
@@ -273,14 +284,12 @@ function UserContextProvider({ children }) {
     // eslint-disable-next-line no-useless-catch
     try {
       const data = await authFetch("/profile", {
-        // matches backend route
         method: "PUT",
         body: JSON.stringify(updatedFields),
       });
-      const fixedUser = fixUserData(data.user);
-      dispatch({ type: "UPDATE_USER", payload: fixedUser });
+      dispatch({ type: "UPDATE_USER", payload: data.user });
       setMessage("Profile updated successfully!");
-      return fixedUser;
+      return data.user;
     } catch (err) {
       throw err;
     }
@@ -290,10 +299,10 @@ function UserContextProvider({ children }) {
     try {
       const data = await authFetch("/favorites/toggle", {
         method: "POST",
-        body: JSON.stringify({ jobId: job.id, jobData: job }),
+        body: JSON.stringify({ job }),
       });
 
-      dispatch({ type: "TOGGLE_FAVORITE", payload: job.id, jobData: job });
+      dispatch({ type: "TOGGLE_FAVORITE", payload: job });
 
       setMessage(
         data.action === "added"
@@ -304,6 +313,38 @@ function UserContextProvider({ children }) {
       console.error("toggleFavorite error:", err);
     }
   }
+
+  async function deleteUser() {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const data = await authFetch(`/delete/${user.id}`, {
+        method: "DELETE",
+      });
+
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+
+      return data;
+    } catch (err) {
+      throw err;
+    }
+  }
+  const changePassword = async (currentPassword, newPassword) => {
+    if (!currentPassword || !newPassword) {
+      throw new Error("Current password and new password are required.");
+    }
+
+    try {
+      const data = await authFetch("/change-password", {
+        method: "POST",
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      return data;
+    } catch (err) {
+      console.error("Change password error:", err);
+      throw err;
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -322,6 +363,8 @@ function UserContextProvider({ children }) {
         getCurrentUser,
         updateProfile,
         toggleFavorite,
+        deleteUser,
+        changePassword,
       }}
     >
       {children}

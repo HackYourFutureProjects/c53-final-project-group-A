@@ -25,7 +25,6 @@ export async function calculateTravelTime(req, res) {
         workCity,
         travel_time: Math.round(travelData.travel_time),
         least_transfers: travelData.least_transfers,
-        routesCount: travelData.routesCount,
       },
     });
   } catch (error) {
@@ -53,7 +52,9 @@ export default async function calculateBatchTravelTime(req, res) {
 
     for (const workCity of workCities) {
       if (
-        homeAddress.toLowerCase().includes(workCity.toLowerCase()) ||
+        (typeof homeAddress === "string" &&
+          typeof workCity === "string" &&
+          homeAddress.toLowerCase().includes(workCity.toLowerCase())) ||
         workCity.toLowerCase().includes(homeAddress.toLowerCase())
       ) {
         results.push({
@@ -75,7 +76,7 @@ export default async function calculateBatchTravelTime(req, res) {
           workCity,
           travel_time: Math.round(travelData.travel_time),
           least_transfers: travelData.least_transfers,
-          routesCount: travelData.routesCount,
+          // routesCount: travelData.routesCount,
           success: true,
         });
       } catch (error) {

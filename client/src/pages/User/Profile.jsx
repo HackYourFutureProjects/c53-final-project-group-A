@@ -7,13 +7,13 @@ import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
-import PopupForSave from "../../components/SuccessPopup/PopupForSave";
-import { defaultUser } from "../../data/defaultUser";
-
+import {
+  validatePassword,
+  validatePasswordMatch,
+} from "../../util/AuthValidation";
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const [showSavePopup, setShowSavePopup] = useState(false);
   const firstnameInputRef = useRef(null);
   const lastnameInputRef = useRef(null);
   const currentPasswordInputRef = useRef(null);
@@ -23,17 +23,50 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, updateProfile } = UseUser();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const { user, updateProfile, deleteUser, changePassword } = UseUser();
+
+  //  SHOW DELETE CONFIRM POPUP
+  const handleDeleteClick = () => {
+    setShowDeletePopup(true);
+  };
+
+  //  USER CONFIRMS DELETE
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteUser();
+      setDeleteSuccess(true);
+
+      // Redirect to login after 2 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete account. Please try again later.");
+      setShowDeletePopup(false);
+    }
+  };
+
+  //  CANCEL DELETE
+  const handleCancelDelete = () => {
+    setShowDeletePopup(false);
+  };
 
   useEffect(() => {
     if (user) {
+      if (firstnameInputRef.current)
+        firstnameInputRef.current.value = user?.firstname || "";
+      if (lastnameInputRef.current)
+        lastnameInputRef.current.value = user?.lastname || "";
       if (streetInputRef.current)
-        streetInputRef.current.value = user.street || "";
+        streetInputRef.current.value = user?.street || "";
       if (houseInputRef.current)
-        houseInputRef.current.value = user.houseNumber || "";
-      if (cityInputRef.current) cityInputRef.current.value = user.city || "";
+        houseInputRef.current.value = user?.housenumber || "";
+      if (cityInputRef.current) cityInputRef.current.value = user?.city || "";
       if (countryInputRef.current)
-        countryInputRef.current.value = user.country || "";
+        countryInputRef.current.value = user?.country || "";
     }
   }, [user]);
 
@@ -41,11 +74,6 @@ export default function Profile() {
     if (!alert.message) return;
     setAlert({ type: "", message: "" });
   }
-
-  const handleLoginRedirect = () => {
-    setShowSavePopup(false);
-    navigate("/login", {});
-  };
 
   async function handleSaveClick() {
     handleClearAlert();
@@ -75,15 +103,15 @@ export default function Profile() {
       return;
     }
 
-    if (user && user.email !== defaultUser.email) {
+    if (user) {
       const updatedFields = {};
 
       const firstname = cleanUpText(firstnameEl.value || "");
       const lastname = cleanUpText(lastnameEl.value || "");
 
       // FIX: Use String() for comparison to ensure changes are detected even if the value is null or undefined
-      const currentFirstName = String(user.firstName || "");
-      const currentLastName = String(user.lastName || "");
+      const currentFirstName = String(user.firstname || "");
+      const currentLastName = String(user.lastname || "");
 
       if (String(firstname) !== currentFirstName)
         updatedFields.firstname = firstname;
@@ -94,6 +122,7 @@ export default function Profile() {
       const confirmPassword = confirmPasswordEl.value || "";
       const currentPassword = currentPasswordEl.value || "";
 
+      // --- Password change handling ---
       if (newPassword || confirmPassword || currentPassword) {
         if (!currentPassword) {
           setAlert({
@@ -102,21 +131,44 @@ export default function Profile() {
           });
           return;
         }
-        if (newPassword !== confirmPassword) {
-          setAlert({ type: "error", message: "New passwords do not match." });
-          return;
-        }
-        if (newPassword && newPassword.length < 8) {
+
+        // Validate password strength
+        if (!validatePassword(newPassword)) {
           setAlert({
             type: "error",
-            message: "New password must be 8 characters or more.",
+            message:
+              "Password must be at least 8 characters and meet at least 2 complexity rules.",
           });
           return;
         }
 
-        if (newPassword) {
-          updatedFields.password = newPassword;
-          updatedFields.currentPassword = currentPassword;
+        // Validate password match
+        const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
+        if (!matchCheck.valid) {
+          setAlert({ type: "error", message: matchCheck.message });
+          return;
+        }
+
+        // Call API
+        try {
+          await changePassword(currentPassword, newPassword);
+
+          setAlert({
+            type: "success",
+            message: "Password updated successfully!",
+          });
+
+          // Clear input fields
+          currentPasswordEl.value = "";
+          newPasswordEl.value = "";
+          confirmPasswordInputRef.current.value = "";
+          return;
+        } catch (err) {
+          setAlert({
+            type: "error",
+            message: err.message || "Failed to change password.",
+          });
+          return;
         }
       }
 
@@ -151,11 +203,11 @@ export default function Profile() {
         return;
       }
 
-      const currentStreet = String(user.street || "");
-      const currentCity = String(user.city || "");
-      const currentCountry = String(user.country || "");
-      // FIX: Use String() for comparison to ensure the house number updates correctly
-      const currentHouseNo = String(user.houseNumber || "");
+      // Compare against the top-level address fields
+      const currentStreet = String(user?.street);
+      const currentCity = String(user?.city);
+      const currentCountry = String(user?.country);
+      const currentHouseNo = String(user?.housenumber || "");
 
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;
@@ -184,8 +236,6 @@ export default function Profile() {
           message: error.message || "Failed to save profile. Check connection.",
         });
       }
-    } else {
-      setShowSavePopup(true);
     }
   }
 
@@ -238,7 +288,7 @@ export default function Profile() {
               <input
                 ref={firstnameInputRef}
                 type="text"
-                defaultValue={user.firstName}
+                defaultValue={user.firstname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -251,7 +301,7 @@ export default function Profile() {
               <input
                 ref={lastnameInputRef}
                 type="text"
-                defaultValue={user.lastName}
+                defaultValue={user.lastname}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={pressEnterKey}
                 onChange={handleClearAlert}
@@ -267,7 +317,6 @@ export default function Profile() {
         countryInputRef={countryInputRef}
         clearAlert={handleClearAlert}
       />
-      <SkillsSettings />
       <label className="block text-sm font-medium text-gray-900 mb-3">
         Change Password
       </label>
@@ -332,15 +381,9 @@ export default function Profile() {
           >
             Save
           </button>
-          {/* Popup for saving settings */}
-          {showSavePopup && (
-            <PopupForSave
-              handleLoginRedirect={handleLoginRedirect}
-              setShowSavePopup={setShowSavePopup}
-            />
-          )}
         </div>
       </div>
+      <SkillsSettings />
       <hr className="border-gray-300 mb-8" />
       {/* <!-- Profile Deletion Section --> */}
       <div className="flex items-start justify-between">
@@ -350,10 +393,46 @@ export default function Profile() {
             Permanently delete your account and data.
           </p>
         </div>
-        <button className="px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium">
+        <button
+          onClick={handleDeleteClick}
+          className="px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
+        >
           Delete Profile
         </button>
       </div>
+      {/* DELETE CONFIRM POPUP */}
+      {showDeletePopup && (
+        <div className="popup-overlay">
+          <div className="popup-card">
+            {!deleteSuccess ? (
+              <>
+                <h2>Are you sure?</h2>
+                <p>This will permanently delete your account.</p>
+                <div className="popup-buttons">
+                  <button
+                    className="btn-secondary"
+                    onClick={handleCancelDelete}
+                  >
+                    Cancel
+                  </button>
+                  <button className="btn-primary" onClick={handleConfirmDelete}>
+                    OK
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>Account Deleted</h2>
+                <p>
+                  Your account has been deleted successfully.
+                  <br />
+                  Redirecting to login...
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,3 +1,19 @@
+.loader-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.loader-gif {
+  width: 100px;
+  height: 100px;
+}
+
 .page-header-container h2 {
   /* Style for the 'Job Search Results' title if needed */
   font-size: 1.5rem;
