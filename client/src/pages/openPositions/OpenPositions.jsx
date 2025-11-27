@@ -2,20 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import { gif } from "../../assets/index.js";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
+import DropdownSort from "../../components/DropdownSort/DropdownSort";
 import Pagination from "../../components/Pagination/Pagination";
 import { UseUser } from "../../context/UserContext";
 import "./OpenPositions.css";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
-// import { defaultUser, formatAddress } from "../../data/defaultUser";
-// removed UseUser import; JobCard now uses favorites from context directly
-
-// WE TEMPORARY UNLINKED FILE sortAndFilterJobs FROM THE OpenPositions FOR DEBUGGING
-// PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-// import { sortAndFilterJobs } from "../../util/sortingAndFiltering";
-
-import "./OpenPositions.css";
+import getSkillsInDescription from "../../util/getSkillsInDescription";
 import SkillsSettings from "../../components/SkillsSettings";
 import { UseJobs } from "../../context/JobsContext.jsx";
+import createSortComparator from "../../util/createSortComparator";
 
 export default function OpenPositions() {
   const { user, dispatch, toggleFavorite } = UseUser();
@@ -30,9 +25,7 @@ export default function OpenPositions() {
   } = UseJobs();
 
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
-
-  // PLEASE UNCOMMENT NEXT 1 LINE AFTER IMPLEMENTING SORTING AND FILTERING
-  // const { allJobs, searchTerm, showResults } = UseJobs();
+  const skills = user?.skills || [];
 
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
@@ -41,6 +34,27 @@ export default function OpenPositions() {
     employmentType: new Set(),
     work_mode: new Set(),
   });
+
+  const [selectedSort, setSelectedSort] = useState([
+    "Most skill matches",
+    "Fewest transport transfers",
+    "Nearest first",
+    "Newest first",
+  ]);
+
+  const jobsWithSkills = useMemo(() => {
+    return allJobs.map((job) => {
+      const skillsInDescription = getSkillsInDescription(
+        job.normalized_description || "",
+        skills,
+      );
+      return {
+        ...job,
+        skillsInDescription,
+        skillsMatch: String(skillsInDescription.length).padStart(2, "0"),
+      };
+    });
+  }, [allJobs, skills]);
 
   const filterOptions = useMemo(() => {
     return findFilterOptions(allJobs);
@@ -64,12 +78,17 @@ export default function OpenPositions() {
     setCurrentPage(1);
   };
 
+  const sortedJobs = useMemo(() => {
+    if (selectedSort.length === 0) return jobsWithSkills;
+    return [...jobsWithSkills].sort(createSortComparator(selectedSort));
+  }, [jobsWithSkills, selectedSort]);
+
   const filteredJobs = useMemo(() => {
-    return filterJobs(allJobs, activeFilters);
-  }, [allJobs, activeFilters]);
+    return filterJobs(sortedJobs, activeFilters);
+  }, [sortedJobs, activeFilters]);
 
   //pagination
-  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+  const totalPages = Math.ceil(sortedJobs.length / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
@@ -92,45 +111,39 @@ export default function OpenPositions() {
         <SkillsSettings />
         <div className="job-filters-bar">
           <div className="filters-container">
+            <DropdownSort
+              selectedSort={selectedSort}
+              setSelectedSort={setSelectedSort}
+            />
             <div className="filter-dropdowns">
               <DropdownFilter
-                buttonText="Experience level"
-                title="Experience level"
-                options={filterOptions.experienceOptions}
                 filterKey="seniorityLevel"
+                label="Experience level"
+                options={filterOptions.experienceOptions}
                 activeValues={activeFilters.seniorityLevel}
                 onFilterChange={handleFilterChange}
               />
               <DropdownFilter
-                buttonText="Job type"
-                title="Job type"
-                options={filterOptions.jobTypeOptions}
                 filterKey="employmentType"
+                label="Job type"
+                options={filterOptions.jobTypeOptions}
                 activeValues={activeFilters.employmentType}
                 onFilterChange={handleFilterChange}
               />
               <DropdownFilter
-                buttonText="Work mode"
-                title="Work mode"
-                options={filterOptions.workModeOptions}
                 filterKey="work_mode"
+                label="Work mode"
+                options={filterOptions.workModeOptions}
                 activeValues={activeFilters.work_mode}
                 onFilterChange={handleFilterChange}
               />
-              {/* <DropdownFilter
-                buttonText="Sort by"
-                title="Sort by"
-                options={sortOptions}
-                filterKey="sort"
-                activeValues={sortBy}
-                onFilterChange={(filterKey, value) =>
-                  handleSortChange(filterKey, value)
-                }
-              /> */}
+              <button
+                onClick={handleClearFilters}
+                className="clear-filters-btn"
+              >
+                Clear filters
+              </button>
             </div>
-            <button onClick={handleClearFilters} className="clear-filters-btn">
-              Clear filters
-            </button>
           </div>
         </div>
 
@@ -150,8 +163,10 @@ export default function OpenPositions() {
         {!isJobsLoading && filteredJobs.length > 0 && (
           <>
             <p className="job-message">
-              Showing {filteredJobs.length} jobs in total{" "}
-              {searchTerm && `for "${searchTerm}"`}
+              Found {allJobs.length} jobs in total for {searchTerm}.
+              {!Object.values(activeFilters).every(
+                (filterSet) => filterSet.size === 0,
+              ) && ` Filtered ${filteredJobs.length} jobs`}
             </p>
             <ul className="jobs-list">
               {currentJobs.map((job, idx) => (

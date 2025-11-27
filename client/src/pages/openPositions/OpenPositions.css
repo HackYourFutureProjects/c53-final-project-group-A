@@ -52,7 +52,7 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-  flex-grow: 1;
+  margin: 10px 0 10px auto;
 }
 
 .clear-filters-btn {
@@ -64,7 +64,6 @@
   cursor: pointer;
   transition: background-color 0.2s;
   font-size: 1.1rem;
-  margin: 10px 0;
 }
 
 .clear-filters-btn:hover {

@@ -193,11 +193,12 @@ export default function JobCard({
 
             <div className="job-card-footer">
               <div className="skill-match-container">
-                <span className="skill-match-text">
-                  <Skills item={job} />
-                </span>
+                {Array.isArray(job?.skillsInDescription) && (
+                  <span className="skill-match-text">
+                    <Skills job={job} />
+                  </span>
+                )}
               </div>
-
               <button className="more-apply-btn" onClick={handleApplyClick}>
                 More & Apply
               </button>

@@ -1,5 +1,5 @@
 import connectNeonDB from "../db/connectNeonDB.js";
-
+import { logError } from "../util/logging.js";
 export const toggleFavoriteJob = async (req, res) => {
   const userId = req.user?.id;
   const { job } = req.body;
@@ -31,12 +31,10 @@ export const toggleFavoriteJob = async (req, res) => {
       .json({ success: false, msg: "Database connection error" });
 
   try {
-    // Check if the job exists in the favorites table
     const existingFavorite = await connectedClient.query(
       "SELECT id FROM favorites WHERE id = $1",
       [jobId],
     );
-
     // 2️ If it does not exist → insert it into the favorites table
     //  Best practice: Consider using transactions when inserting multiple tables
     if (existingFavorite.rows.length === 0) {
@@ -91,10 +89,12 @@ export const toggleFavoriteJob = async (req, res) => {
 
     return res.json({ success: true, action: "added", jobId });
   } catch (err) {
-    console.error("Toggle favorite error:", err);
-    return res
-      .status(500)
-      .json({ success: false, msg: "Failed to toggle favorite" });
+    logError("Toggle favorite error: " + err);
+    // Provide more detailed error message for debugging (non-sensitive)
+    return res.status(500).json({
+      success: false,
+      msg: "Failed to toggle favorite",
+    });
   } finally {
     // Always close the database connection
     if (endConnection) await endConnection();

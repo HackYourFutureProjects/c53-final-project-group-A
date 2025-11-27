@@ -52,7 +52,7 @@ export default function processJobPost(job) {
     date_posted,
     employment_type:
       Array.isArray(employment_type) && employment_type.length > 0
-        ? employment_type[0]
+        ? employment_type[0].replace("_", " ")
         : null,
     work_mode: remote_derived === true ? "Remote" : "On-site",
     display_location:

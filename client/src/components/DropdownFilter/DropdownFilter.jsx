@@ -3,10 +3,9 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import "./DropdownFilter.css";
 
 export default function DropdownFilter({
-  buttonText,
-  title,
-  options,
   filterKey,
+  label,
+  options,
   activeValues,
   onFilterChange,
 }) {
@@ -15,9 +14,6 @@ export default function DropdownFilter({
 
   useOutsideClick(dropdownRef, () => setIsOpen(false));
 
-  const inputType = filterKey === "sort" ? "radio" : "checkbox";
-  const isRadioMode = filterKey === "sort";
-
   return (
     <div className="dropdown-container" ref={dropdownRef}>
       <button
@@ -25,7 +21,7 @@ export default function DropdownFilter({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <span>{buttonText}</span>
+        <span>{label}</span>
         <svg
           className="dropdown-arrow"
           fill="none"
@@ -44,33 +40,27 @@ export default function DropdownFilter({
       {isOpen && (
         <div className="dropdown-content">
           <div className="dropdown-header">
-            <span className="dropdown-title">{title}</span>
+            <span className="dropdown-title">{label}</span>
             <button onClick={() => setIsOpen(false)} className="dropdown-close">
               ×
             </button>
           </div>
           {options.map((option) => {
-            const checked = isRadioMode
-              ? activeValues === option
-              : activeValues && typeof activeValues.has === "function"
+            const checked =
+              activeValues && typeof activeValues.has === "function"
                 ? activeValues.has(option)
                 : false;
 
             return (
               <label key={option} className="dropdown-option">
                 <input
-                  type={inputType}
+                  type="checkbox"
                   className="form-checkbox"
                   name={filterKey}
                   checked={checked}
-                  onChange={(e) => {
-                    if (isRadioMode) {
-                      onFilterChange(filterKey, option);
-                      if (e.target.checked) setIsOpen(false);
-                    } else {
-                      onFilterChange(filterKey, option, e.target.checked);
-                    }
-                  }}
+                  onChange={(e) =>
+                    onFilterChange(filterKey, option, e.target.checked)
+                  }
                 />
                 <span className="option-text">{option}</span>
               </label>
