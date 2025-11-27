@@ -120,6 +120,10 @@ export default function OpenPositions() {
       <SkillsSettings />
       <div className="job-filters-bar">
         <div className="filters-container">
+          <DropdownSort
+            selectedSort={selectedSort}
+            setSelectedSort={setSelectedSort}
+          />
           <div className="filter-dropdowns">
             <DropdownFilter
               filterkey="seniorityLevel"
@@ -142,14 +146,10 @@ export default function OpenPositions() {
               activeValues={activeFilters.work_mode}
               onFilterChange={handleFilterChange}
             />
-            <DropdownSort
-              selectedSort={selectedSort}
-              setSelectedSort={setSelectedSort}
-            />
+            <button onClick={handleClearFilters} className="clear-filters-btn">
+              Clear filters
+            </button>
           </div>
-          <button onClick={handleClearFilters} className="clear-filters-btn">
-            Clear filters
-          </button>
         </div>
       </div>
 

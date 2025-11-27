@@ -44,7 +44,7 @@ export default function DropdownSort({ selectedSort, setSelectedSort }) {
     <div className="relative" ref={dropdownRef}>
       <button
         id="sortBtn"
-        className="px-4 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 flex items-center space-x-2"
+        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded cursor-pointer transition-colors duration-200 text-lg my-2.5 flex items-center space-x-2"
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen((open) => !open);
