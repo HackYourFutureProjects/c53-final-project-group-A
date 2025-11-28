@@ -54,6 +54,7 @@ export default async function calculateBatchTravelTime(req, res) {
 
     for (const workCity of workCities) {
       console.log(workCity);
+
       if (re.test(workCity)) {
         results.push({
           workCity,
@@ -61,29 +62,27 @@ export default async function calculateBatchTravelTime(req, res) {
           least_transfers: 0,
           success: true,
         });
-        continue;
-      }
+      } else {
+        try {
+          const travelData = await getTransitRouteSummary({
+            origin: homeAddress,
+            destination: workCity,
+            apiKey: process.env.GOOGLE_MAPS_API_KEY,
+          });
 
-      try {
-        const travelData = await getTransitRouteSummary({
-          origin: homeAddress,
-          destination: workCity,
-          apiKey: process.env.GOOGLE_MAPS_API_KEY,
-        });
-
-        results.push({
-          workCity,
-          travel_time: Math.round(travelData.travel_time),
-          least_transfers: travelData.least_transfers,
-          // routesCount: travelData.routesCount,
-          success: true,
-        });
-      } catch (error) {
-        results.push({
-          workCity,
-          success: false,
-          error: error.message,
-        });
+          results.push({
+            workCity,
+            travel_time: Math.round(travelData.travel_time),
+            least_transfers: travelData.least_transfers,
+            success: true,
+          });
+        } catch (error) {
+          results.push({
+            workCity,
+            success: false,
+            error: error.message,
+          });
+        }
       }
     }
 
