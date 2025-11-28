@@ -45,47 +45,49 @@ export default async function calculateBatchTravelTime(req, res) {
       homeCity,
       // homeCountry
     } = homeAddress;
-    console.log(homeAddress);
 
-    const results = [];
+    console.log(homeAddress);
 
     const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const re = new RegExp(escapeRegExp(homeCity), "i");
 
-    for (const workCity of workCities) {
+    // Build an array of promises for parallel execution. For same-city matches
+    // we return an already-resolved promise with zero travel time.
+    const promises = workCities.map((workCity) => {
       console.log(workCity);
 
       if (re.test(workCity)) {
-        results.push({
+        return Promise.resolve({
           workCity,
           travel_time: 0,
           least_transfers: 0,
           success: true,
         });
-      } else {
-        try {
-          const travelData = await getTransitRouteSummary({
-            origin: homeAddress,
-            destination: workCity,
-            apiKey: process.env.GOOGLE_MAPS_API_KEY,
-          });
-
-          results.push({
-            workCity,
-            travel_time: Math.round(travelData.travel_time),
-            least_transfers: travelData.least_transfers,
-            success: true,
-          });
-        } catch (error) {
-          results.push({
-            workCity,
-            success: false,
-            error: error.message,
-          });
-        }
       }
-    }
 
+      return getTransitRouteSummary({
+        origin: homeAddress,
+        destination: workCity,
+        apiKey: process.env.GOOGLE_MAPS_API_KEY,
+      })
+        .then((travelData) => ({
+          workCity,
+          travel_time: Math.round(travelData.travel_time),
+          least_transfers: travelData.least_transfers,
+          success: true,
+        }))
+        .catch((error) => ({
+          workCity,
+          success: false,
+          error: error.message,
+        }));
+    });
+
+    // Await all promises in parallel. Using Promise.all is fine because each
+    // individual promise handles its own errors and resolves with a result
+    // object; Promise.allSettled could be used too but isn't necessary here.
+    const results = await Promise.all(promises);
+    console.log("results", results);
     return res.status(200).json({
       success: true,
       result: {
