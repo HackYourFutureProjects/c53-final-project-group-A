@@ -60,10 +60,10 @@ const JobsProvider = ({ children }) => {
     const citiesToFetch = getCitiesToFetch(jobsArray, travelDetails);
 
     const homeAddress = {
-      street: user?.street,
-      housenumber: user?.housenumber,
-      city: user?.city,
-      country: user?.country,
+      homeStreet: user?.street,
+      homeHousenumber: user?.housenumber,
+      homeCity: user?.city,
+      homeCountry: user?.country,
     };
 
     if (citiesToFetch.length === 0) {

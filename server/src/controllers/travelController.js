@@ -40,16 +40,17 @@ export async function calculateTravelTime(req, res) {
 export default async function calculateBatchTravelTime(req, res) {
   try {
     const { homeAddress, workCities } = req.body;
+    const { homeStreet, homeHousenumber, homeCity, homeCountry } = homeAddress;
     console.log(homeAddress);
 
     const results = [];
 
+    const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(escapeRegExp(homeCity), "i");
+
     for (const workCity of workCities) {
       console.log(workCity);
-      if (
-        homeAddress.toLowerCase().includes(workCity.toLowerCase()) ||
-        workCity.toLowerCase().includes(homeAddress.toLowerCase())
-      ) {
+      if (re.test(workCity)) {
         results.push({
           workCity,
           travel_time: 0,
@@ -58,6 +59,7 @@ export default async function calculateBatchTravelTime(req, res) {
         });
         continue;
       }
+
       try {
         const travelData = await getTransitRouteSummary({
           origin: homeAddress,
