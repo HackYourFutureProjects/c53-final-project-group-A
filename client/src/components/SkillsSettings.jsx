@@ -30,6 +30,7 @@ export default function SkillsSettings() {
       });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
+      throw err;
     }
   }
 
@@ -53,11 +54,16 @@ export default function SkillsSettings() {
         ),
     );
 
-    await changeSkillsHelper(combined, message);
-    dispatch({
-      type: "SET_SKILLS",
-      payload: combined,
-    });
+    try {
+      await changeSkillsHelper(combined, message);
+      dispatch({
+        type: "SET_SKILLS",
+        payload: combined,
+      });
+    } catch {
+      // Error is already handled in changeSkillsHelper
+      return;
+    }
 
     if (skillInput) {
       skillInput.value = "";
@@ -70,22 +76,30 @@ export default function SkillsSettings() {
     const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
     const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
     const message = "The skill has been removed from the user's profile!";
-    await changeSkillsHelper(filtered, message);
-
-    dispatch({
-      type: "SET_SKILLS",
-      payload: filtered,
-    });
+    try {
+      await changeSkillsHelper(filtered, message);
+      dispatch({
+        type: "SET_SKILLS",
+        payload: filtered,
+      });
+    } catch {
+      // Error is already handled in changeSkillsHelper
+      return;
+    }
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
     const message = "All skills have been removed from the user's profile!";
-    await changeSkillsHelper([], message);
-
-    dispatch({
-      type: "SET_SKILLS",
-      payload: [],
-    });
+    try {
+      await changeSkillsHelper([], message);
+      dispatch({
+        type: "SET_SKILLS",
+        payload: [],
+      });
+    } catch {
+      // Error is already handled in changeSkillsHelper
+      return;
+    }
   }
 
   return (
