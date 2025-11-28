@@ -8,7 +8,7 @@ import { UseUser } from "../context/UserContext";
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const { user, dispatch } = UseUser();
+  const { user, dispatch, authFetch } = UseUser();
   const { skills } = user;
 
   function handleClearAlert() {
@@ -16,19 +16,47 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
-  function addSkill() {
+  async function changeSkillsHelper(skills) {
+    const skillNames = skills.map((s) => s.skill);
+
+    await authFetch("/change-skills", {
+      method: "POST",
+      body: JSON.stringify({ skills: skillNames }),
+    });
+  }
+
+  // -------------------- ADD SKILL --------------------
+  async function addSkill() {
     const skillInput = skillInputRef.current;
     if (!skillInput) return;
     const newSkill = cleanUpText(skillInput.value || "");
-
     const validationError = validateSkillInput({ text: newSkill, skills });
     if (validationError) {
       setAlert(validationError);
       return;
     }
 
-    // dispatch normalized skill to reducer which will add & sort
-    dispatch({ type: "ADD_SKILL", payload: regexEndNormalizeSkill(newSkill) });
+    const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
+    const combined = [...prevSkills, regexEndNormalizeSkill(newSkill)].sort(
+      (a, b) =>
+        String(a?.normalizedSkill ?? "").localeCompare(
+          String(b?.normalizedSkill ?? ""),
+        ),
+    );
+
+    try {
+      await changeSkillsHelper(combined);
+      dispatch({
+        type: "SET_SKILLS",
+        payload: combined,
+      });
+      setAlert({
+        type: "success",
+        message: "The skill has been added to the user's profile!",
+      });
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
+    }
 
     if (skillInput) {
       skillInput.value = "";
@@ -36,8 +64,39 @@ export default function SkillsSettings() {
     }
   }
 
-  function removeSkill(skill) {
-    dispatch({ type: "REMOVE_SKILL", payload: skill });
+  // -------------------- REMOVE SKILL --------------------
+  async function removeSkill(skill) {
+    const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
+    const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
+    try {
+      await changeSkillsHelper(filtered);
+      dispatch({
+        type: "SET_SKILLS",
+        payload: filtered,
+      });
+      setAlert({
+        type: "success",
+        message: "The skill has been removed from the user's profile!",
+      });
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
+    }
+  }
+  // -------------------- REMOVE ALL SKILLS --------------------
+  async function removeAllSkills() {
+    try {
+      await changeSkillsHelper([]);
+      dispatch({
+        type: "SET_SKILLS",
+        payload: [],
+      });
+      setAlert({
+        type: "success",
+        message: "All skills have been removed from the user's profile!",
+      });
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
+    }
   }
 
   return (
@@ -83,7 +142,7 @@ export default function SkillsSettings() {
         <div className="flex gap-3 mb-3">
           <button
             id="removeAllSkillsBtn"
-            onClick={() => dispatch({ type: "REMOVE_ALL_SKILLS" })}
+            onClick={() => removeAllSkills()}
             className="px-4 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
           >
             Remove All
