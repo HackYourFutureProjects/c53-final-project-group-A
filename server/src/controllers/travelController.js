@@ -42,19 +42,6 @@ export default async function calculateBatchTravelTime(req, res) {
     const { homeAddress, workCities } = req.body;
     console.log(homeAddress);
 
-    if (
-      !homeAddress ||
-      typeof homeAddress !== "string" ||
-      !Array.isArray(workCities) ||
-      workCities.length === 0 ||
-      workCities.some((workCity) => typeof workCity !== "string")
-    ) {
-      return res.status(400).json({
-        success: false,
-        msg: "homeAddress and workCities array are required and should be the text strings",
-      });
-    }
-
     const results = [];
 
     for (const workCity of workCities) {
