@@ -19,7 +19,7 @@ export default function SkillsSettings() {
   async function changeSkillsHelper(skills) {
     const skillNames = skills.map((s) => s.skill);
 
-    await authFetch("/skills/change", {
+    await authFetch("/change-skills", {
       method: "POST",
       body: JSON.stringify({ skills: skillNames }),
     });
