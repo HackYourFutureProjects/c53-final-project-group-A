@@ -1,7 +1,6 @@
 import { UseUser } from "./UserContext";
 import { createContext, useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
-import { formatAddress } from "../data/defaultUser";
 
 const JobsContext = createContext();
 
