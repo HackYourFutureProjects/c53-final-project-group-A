@@ -40,21 +40,27 @@ export async function calculateTravelTime(req, res) {
 export default async function calculateBatchTravelTime(req, res) {
   try {
     const { homeAddress, workCities } = req.body;
+    console.log(homeAddress);
 
-    if (!homeAddress || !Array.isArray(workCities) || workCities.length === 0) {
+    if (
+      !homeAddress ||
+      typeof homeAddress !== "string" ||
+      !Array.isArray(workCities) ||
+      workCities.length === 0 ||
+      workCities.some((workCity) => typeof workCity !== "string")
+    ) {
       return res.status(400).json({
         success: false,
-        msg: "homeAddress and workCities array are required",
+        msg: "homeAddress and workCities array are required and should be the text strings",
       });
     }
 
     const results = [];
 
     for (const workCity of workCities) {
+      console.log(workCity);
       if (
-        (typeof homeAddress === "string" &&
-          typeof workCity === "string" &&
-          homeAddress.toLowerCase().includes(workCity.toLowerCase())) ||
+        homeAddress.toLowerCase().includes(workCity.toLowerCase()) ||
         workCity.toLowerCase().includes(homeAddress.toLowerCase())
       ) {
         results.push({
