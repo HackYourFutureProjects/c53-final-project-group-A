@@ -16,9 +16,9 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
-  async function changeSkillsHelper(newUserState, message) {
+  async function changeSkillsHelper(message) {
     try {
-      const skillNames = newUserState.skills
+      const skillNames = user.skills
         .map((s) => (typeof s?.skill === "string" ? s.skill : null))
         .filter(Boolean);
 
@@ -54,7 +54,7 @@ export default function SkillsSettings() {
       payload: regexEndNormalizeSkill(newSkill),
     });
     const message = "The skill has been added to the user's profile!";
-    await changeSkillsHelper(user, message);
+    await changeSkillsHelper(message);
 
     if (skillInput) {
       skillInput.value = "";
@@ -66,13 +66,13 @@ export default function SkillsSettings() {
   async function removeSkill(skill) {
     dispatch({ type: "REMOVE_SKILL", payload: skill });
     const message = "The skill has been removed from the user's profile!";
-    await changeSkillsHelper(user.skills, message);
+    await changeSkillsHelper(message);
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
     dispatch({ type: "REMOVE_ALL_SKILLS" });
     const message = "All skills have been removed from the user's profile!";
-    await changeSkillsHelper(user.skills, message);
+    await changeSkillsHelper(message);
   }
 
   return (
