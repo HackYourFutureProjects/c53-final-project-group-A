@@ -1,6 +1,7 @@
 // controllers/changePassword.js
 import connectNeonDB from "../db/connectNeonDB.js";
 import bcrypt from "bcrypt";
+import { logError } from "../util/logging.js";
 
 export async function changePassword(req, res) {
   const { currentPassword, newPassword } = req.body;
@@ -41,7 +42,7 @@ export async function changePassword(req, res) {
 
     res.json({ success: true, msg: "Password updated successfully" });
   } catch (err) {
-    console.error(err);
+    logError(err);
     res.status(500).json({ success: false, msg: "Server error" });
   } finally {
     await endConnection();
