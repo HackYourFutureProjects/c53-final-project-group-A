@@ -78,7 +78,6 @@ export default function SkillsSettings() {
       });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
-      return;
     }
   }
   // -------------------- REMOVE ALL SKILLS --------------------
@@ -92,7 +91,6 @@ export default function SkillsSettings() {
       });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
-      return;
     }
   }
 
