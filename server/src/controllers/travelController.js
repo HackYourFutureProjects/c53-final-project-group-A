@@ -40,7 +40,11 @@ export async function calculateTravelTime(req, res) {
 export default async function calculateBatchTravelTime(req, res) {
   try {
     const { homeAddress, workCities } = req.body;
-    const { homeStreet, homeHousenumber, homeCity, homeCountry } = homeAddress;
+    const {
+      // homeStreet, homeHousenumber,
+      homeCity,
+      // homeCountry
+    } = homeAddress;
     console.log(homeAddress);
 
     const results = [];
