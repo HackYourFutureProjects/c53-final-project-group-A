@@ -16,23 +16,18 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
-  async function changeSkillsHelper(message) {
+  async function changeSkillsHelper(skills, message) {
     try {
-      const skillNames = user.skills
-        .map((s) => (typeof s?.skill === "string" ? s.skill : null))
-        .filter(Boolean);
+      const skillNames = skills.map((s) => s.skill);
 
-      console.log("Skills to be sent to server:", skillNames);
-      const response = await authFetch("/skills/change", {
+      await authFetch("/skills/change", {
         method: "POST",
         body: JSON.stringify({ skills: skillNames }),
       });
-      if (response.success) {
-        setAlert({
-          type: "success",
-          message,
-        });
-      }
+      setAlert({
+        type: "success",
+        message,
+      });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
     }
@@ -49,12 +44,20 @@ export default function SkillsSettings() {
       return;
     }
 
-    dispatch({
-      type: "ADD_SKILL",
-      payload: regexEndNormalizeSkill(newSkill),
-    });
     const message = "The skill has been added to the user's profile!";
-    await changeSkillsHelper(message);
+    const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
+    const combined = [...prevSkills, regexEndNormalizeSkill(newSkill)].sort(
+      (a, b) =>
+        String(a?.normalizedSkill ?? "").localeCompare(
+          String(b?.normalizedSkill ?? ""),
+        ),
+    );
+
+    await changeSkillsHelper(combined, message);
+    dispatch({
+      type: "SET_SKILLS",
+      payload: combined,
+    });
 
     if (skillInput) {
       skillInput.value = "";
@@ -64,15 +67,25 @@ export default function SkillsSettings() {
 
   // -------------------- REMOVE SKILL --------------------
   async function removeSkill(skill) {
-    dispatch({ type: "REMOVE_SKILL", payload: skill });
+    const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
+    const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
     const message = "The skill has been removed from the user's profile!";
-    await changeSkillsHelper(message);
+    await changeSkillsHelper(filtered, message);
+
+    dispatch({
+      type: "SET_SKILLS",
+      payload: filtered,
+    });
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
-    dispatch({ type: "REMOVE_ALL_SKILLS" });
     const message = "All skills have been removed from the user's profile!";
-    await changeSkillsHelper(message);
+    await changeSkillsHelper([], message);
+
+    dispatch({
+      type: "SET_SKILLS",
+      payload: [],
+    });
   }
 
   return (

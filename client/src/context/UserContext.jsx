@@ -22,25 +22,8 @@ function userReducer(state, action) {
     }
     case "LOGOUT":
       return action.payload || defaultUser;
-    case "ADD_SKILL": {
-      const newSkill = action.payload;
-      const prevSkills = Array.isArray(state?.skills) ? state.skills : [];
-      const combined = [...prevSkills, newSkill].sort((a, b) =>
-        String(a?.normalizedSkill ?? "").localeCompare(
-          String(b?.normalizedSkill ?? ""),
-        ),
-      );
-      return { ...state, skills: combined };
-    }
-    case "REMOVE_SKILL": {
-      const skill = action.payload;
-      const filtered = (state.skills || []).filter(
-        (s) => s.skill !== skill.skill,
-      );
-      return { ...state, skills: filtered };
-    }
-    case "REMOVE_ALL_SKILLS": {
-      return { ...state, skills: [] };
+    case "SET_SKILLS": {
+      return { ...state, skills: action.payload };
     }
     case "TOGGLE_FAVORITE": {
       const job = action.payload;
