@@ -50,7 +50,7 @@ function formatAddress(address) {
 export default async function calculateBatchTravelTime(req, res) {
   try {
     const { homeAddress, workCities } = req.body;
-    const { homeStreet, homeHousenumber, homeCity, homeCountry } = homeAddress;
+    const { homeCity } = homeAddress;
     const formattedHomeAddress = formatAddress(homeAddress);
     console.log("homeAddress", homeAddress);
 
