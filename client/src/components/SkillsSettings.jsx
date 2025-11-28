@@ -16,16 +16,12 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
-  async function changeSkillsHelper(skills, message) {
+  async function changeSkillsHelper(skills) {
     const skillNames = skills.map((s) => s.skill);
 
     await authFetch("/skills/change", {
       method: "POST",
       body: JSON.stringify({ skills: skillNames }),
-    });
-    setAlert({
-      type: "success",
-      message,
     });
   }
 
@@ -48,12 +44,15 @@ export default function SkillsSettings() {
         ),
     );
 
-    const message = "The skill has been added to the user's profile!";
     try {
-      await changeSkillsHelper(combined, message);
+      await changeSkillsHelper(combined);
       dispatch({
         type: "SET_SKILLS",
         payload: combined,
+      });
+      setAlert({
+        type: "success",
+        message: "The skill has been added to the user's profile!",
       });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
@@ -69,12 +68,15 @@ export default function SkillsSettings() {
   async function removeSkill(skill) {
     const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
     const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
-    const message = "The skill has been removed from the user's profile!";
     try {
-      await changeSkillsHelper(filtered, message);
+      await changeSkillsHelper(filtered);
       dispatch({
         type: "SET_SKILLS",
         payload: filtered,
+      });
+      setAlert({
+        type: "success",
+        message: "The skill has been removed from the user's profile!",
       });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
@@ -82,12 +84,15 @@ export default function SkillsSettings() {
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
-    const message = "All skills have been removed from the user's profile!";
     try {
-      await changeSkillsHelper([], message);
+      await changeSkillsHelper([]);
       dispatch({
         type: "SET_SKILLS",
         payload: [],
+      });
+      setAlert({
+        type: "success",
+        message: "All skills have been removed from the user's profile!",
       });
     } catch (err) {
       setAlert({ type: "error", message: err.message });
