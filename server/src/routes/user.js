@@ -26,6 +26,6 @@ userRouter.put("/profile", verifyToken, updateProfile);
 userRouter.post("/favorites/toggle", verifyToken, toggleFavoriteJob);
 userRouter.delete("/delete/:userid", verifyToken, deleteUser);
 userRouter.post("/change-password", verifyToken, changePassword);
-userRouter.post("/skills/change", verifyToken, changeSkills);
+userRouter.post("/change-skills", verifyToken, changeSkills);
 
 export default userRouter;
