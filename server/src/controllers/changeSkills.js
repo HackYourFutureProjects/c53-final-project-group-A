@@ -39,7 +39,7 @@ export async function changeSkills(req, res) {
       throw new Error("User not found after update");
     }
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       msg: "Skills are updated",
     });
