@@ -2,10 +2,11 @@ import { images } from "../assets";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 
 export const formatAddress = (user) => {
-  const parts = [];
+  let parts = [];
   if (user?.street) parts.push(user.street);
   if (user?.housenumber) parts.push(user.housenumber);
   if (user?.city) parts.push(user.city);
+  parts = [parts.join(" ")];
   if (user?.country) parts.push(user.country);
   return parts.join(", ");
 };
