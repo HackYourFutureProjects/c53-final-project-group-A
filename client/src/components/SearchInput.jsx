@@ -34,6 +34,7 @@ export default function SearchInput() {
 
     setShowResults(true);
     navigate("/jobs");
+    setSearchTerm("");
   };
 
   return (

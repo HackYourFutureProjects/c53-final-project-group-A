@@ -11,6 +11,7 @@ import {
   validatePassword,
   validatePasswordMatch,
 } from "../../util/AuthValidation";
+import { Eye, EyeOff } from "lucide-react";
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -26,6 +27,10 @@ export default function Profile() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const { user, updateProfile, deleteUser, changePassword } = UseUser();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmationPassword, setShowConfirmationPassword] =
+    useState(false);
+  const [newPassword, setNewPassword] = useState(false);
 
   //  SHOW DELETE CONFIRM POPUP
   const handleDeleteClick = () => {
@@ -325,15 +330,31 @@ export default function Profile() {
           <label className="block text-xs text-gray-600 mb-1">
             Type Your Current Password
           </label>
-          <input
-            id="currentPasswordInput"
-            ref={currentPasswordInputRef}
-            type="password"
-            placeholder="Type 8 characters or more"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onKeyDown={pressEnterKey}
-            onChange={handleClearAlert}
-          />
+          <div className="input-wrapper">
+            <input
+              id="currentPasswordInput"
+              ref={currentPasswordInputRef}
+              type={showPassword ? "text" : "password"}
+              placeholder="Type 8 characters or more"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onKeyDown={pressEnterKey}
+              onChange={handleClearAlert}
+              style={{ paddingRight: "35px" }}
+            />
+            {showPassword ? (
+              <EyeOff
+                size={18}
+                className="input-icon-right-password"
+                onClick={() => setShowPassword(false)}
+              />
+            ) : (
+              <Eye
+                size={18}
+                className="input-icon-right-password"
+                onClick={() => setShowPassword(true)}
+              />
+            )}
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 mb-3">
@@ -341,29 +362,61 @@ export default function Profile() {
           <label className="block text-xs text-gray-600 mb-1">
             Set New Password
           </label>
-          <input
-            id="newPasswordInput"
-            ref={newPasswordInputRef}
-            type="password"
-            placeholder="Type 8 characters or more"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onKeyDown={pressEnterKey}
-            onChange={handleClearAlert}
-          />
+          <div className="input-wrapper">
+            <input
+              id="newPasswordInput"
+              ref={newPasswordInputRef}
+              type={newPassword ? "text" : "password"}
+              placeholder="Type 8 characters or more"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onKeyDown={pressEnterKey}
+              onChange={handleClearAlert}
+              style={{ paddingRight: "35px" }}
+            />
+            {newPassword ? (
+              <EyeOff
+                size={18}
+                className="input-icon-right-password"
+                onClick={() => setNewPassword(false)}
+              />
+            ) : (
+              <Eye
+                size={18}
+                className="input-icon-right-password"
+                onClick={() => setNewPassword(true)}
+              />
+            )}
+          </div>
         </div>
         <div>
           <label className="block text-xs text-gray-600 mb-1">
             Confirm Password
           </label>
-          <input
-            id="confirmPasswordInput"
-            ref={confirmPasswordInputRef}
-            type="password"
-            placeholder="Write the same password again"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onKeyDown={pressEnterKey}
-            onChange={handleClearAlert}
-          />
+          <div className="input-wrapper">
+            <input
+              id="confirmPasswordInput"
+              ref={confirmPasswordInputRef}
+              type={showConfirmationPassword ? "text" : "password"}
+              placeholder="Write the same password again"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onKeyDown={pressEnterKey}
+              onChange={handleClearAlert}
+              style={{ paddingRight: "35px" }}
+            />
+            {showConfirmationPassword ? (
+              <EyeOff
+                size={18}
+                className="input-icon-right-password"
+                onClick={() => setShowConfirmationPassword(false)}
+              />
+            ) : (
+              <Eye
+                size={18}
+                className="input-icon-right-password"
+                onClick={() => setShowConfirmationPassword(true)}
+              />
+            )}
+          </div>
         </div>
       </div>
       {/* <!-- Save Button --> */}

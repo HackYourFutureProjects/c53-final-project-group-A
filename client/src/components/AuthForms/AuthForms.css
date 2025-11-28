@@ -177,3 +177,13 @@
   color: #888;
   cursor: pointer;
 }
+
+.input-icon-right-password,
+.input-icon-right1 {
+  position: absolute;
+  right: 10px;
+  top: 60%;
+  transform: translateY(-75%);
+  color: #888;
+  cursor: pointer;
+}
