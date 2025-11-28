@@ -1,6 +1,16 @@
 import { logError } from "../util/logging.js";
 import { getTransitRouteSummary } from "../services/googleMapsApi.js";
 
+function formatAddress(address) {
+  let parts = [];
+  if (address?.street) parts.push(address.street);
+  if (address?.housenumber) parts.push(address.housenumber);
+  if (address?.city) parts.push(address.city);
+  parts = [parts.join(" ")];
+  if (address?.country) parts.push(address.country);
+  return parts.join(", ");
+}
+
 export async function calculateTravelTime(req, res) {
   try {
     const { homeAddress, workCity } = req.body;
@@ -45,7 +55,7 @@ export default async function calculateBatchTravelTime(req, res) {
       homeCity,
       // homeCountry
     } = homeAddress;
-
+    const formattedHomeAddress = formatAddress(homeAddress);
     console.log(homeAddress);
 
     const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -66,7 +76,7 @@ export default async function calculateBatchTravelTime(req, res) {
       }
 
       return getTransitRouteSummary({
-        origin: homeAddress,
+        origin: formattedHomeAddress,
         destination: workCity,
         apiKey: process.env.GOOGLE_MAPS_API_KEY,
       })
@@ -91,7 +101,7 @@ export default async function calculateBatchTravelTime(req, res) {
     return res.status(200).json({
       success: true,
       result: {
-        homeAddress,
+        homeAddress: formattedHomeAddress,
         travelDetails: results,
       },
     });
