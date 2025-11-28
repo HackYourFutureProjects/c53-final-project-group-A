@@ -60,13 +60,12 @@ const JobsProvider = ({ children }) => {
 
     const citiesToFetch = getCitiesToFetch(jobsArray, travelDetails);
 
-    const homeAddress = formatAddress(user);
-
-    if (!homeAddress) {
-      setError("The address for route calculation is not specified.");
-      setIsTravelLoading(false);
-      return;
-    }
+    const homeAddress = {
+      street: user?.street,
+      housenumber: user?.housenumber,
+      city: user?.city,
+      country: user?.country,
+    };
 
     if (citiesToFetch.length === 0) {
       setIsTravelLoading(false);
