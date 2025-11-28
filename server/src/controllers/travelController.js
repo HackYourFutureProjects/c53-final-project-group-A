@@ -2,13 +2,14 @@ import { logError } from "../util/logging.js";
 import { getTransitRouteSummary } from "../services/googleMapsApi.js";
 
 function formatAddress(address) {
-  let parts = [];
-  if (address?.homeStreet) parts.push(address.homeStreet);
-  if (address?.homeHousenumber) parts.push(address.homeHousenumber);
-  if (address?.homeCity) parts.push(address.homeCity);
-  parts = [parts.join(" ")];
-  if (address?.homeCountry) parts.push(address.homeCountry);
-  return parts.join(", ");
+  const streetParts = [];
+  if (address?.homeStreet) streetParts.push(address.homeStreet);
+  if (address?.homeHousenumber) streetParts.push(address.homeHousenumber);
+  if (address?.homeCity) streetParts.push(address.homeCity);
+
+  const addressParts = [streetParts.join(" ")];
+  if (address?.homeCountry) addressParts.push(address.homeCountry);
+  return addressParts.join(", ");
 }
 
 export default async function calculateBatchTravelTime(req, res) {
