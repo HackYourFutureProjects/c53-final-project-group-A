@@ -17,21 +17,16 @@ export default function SkillsSettings() {
   }
 
   async function changeSkillsHelper(skills, message) {
-    try {
-      const skillNames = skills.map((s) => s.skill);
+    const skillNames = skills.map((s) => s.skill);
 
-      await authFetch("/skills/change", {
-        method: "POST",
-        body: JSON.stringify({ skills: skillNames }),
-      });
-      setAlert({
-        type: "success",
-        message,
-      });
-    } catch (err) {
-      setAlert({ type: "error", message: err.message });
-      throw err;
-    }
+    await authFetch("/skills/change", {
+      method: "POST",
+      body: JSON.stringify({ skills: skillNames }),
+    });
+    setAlert({
+      type: "success",
+      message,
+    });
   }
 
   // -------------------- ADD SKILL --------------------
@@ -45,7 +40,6 @@ export default function SkillsSettings() {
       return;
     }
 
-    const message = "The skill has been added to the user's profile!";
     const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
     const combined = [...prevSkills, regexEndNormalizeSkill(newSkill)].sort(
       (a, b) =>
@@ -54,15 +48,15 @@ export default function SkillsSettings() {
         ),
     );
 
+    const message = "The skill has been added to the user's profile!";
     try {
       await changeSkillsHelper(combined, message);
       dispatch({
         type: "SET_SKILLS",
         payload: combined,
       });
-    } catch {
-      // Error is already handled in changeSkillsHelper
-      return;
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
     }
 
     if (skillInput) {
@@ -82,8 +76,8 @@ export default function SkillsSettings() {
         type: "SET_SKILLS",
         payload: filtered,
       });
-    } catch {
-      // Error is already handled in changeSkillsHelper
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
       return;
     }
   }
@@ -96,8 +90,8 @@ export default function SkillsSettings() {
         type: "SET_SKILLS",
         payload: [],
       });
-    } catch {
-      // Error is already handled in changeSkillsHelper
+    } catch (err) {
+      setAlert({ type: "error", message: err.message });
       return;
     }
   }
