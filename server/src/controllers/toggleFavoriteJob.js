@@ -48,7 +48,7 @@ export const toggleFavoriteJob = async (req, res) => {
           ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
         [
           jobId,
-          job.title || null,
+          job.title,
           job.organization || null,
           job.organization_url || null,
           job.employment_type || null,
@@ -83,7 +83,7 @@ export const toggleFavoriteJob = async (req, res) => {
     //  Add favorite and store per-user travel metadata on the relation
     await connectedClient.query(
       "INSERT INTO user_favorites (user_id, favorite_id, travel_time, least_transfers) VALUES ($1, $2, $3, $4)",
-      [userId, jobId, job.travel_time || null, job.least_transfers || null],
+      [userId, jobId, job.travel_time, job.least_transfers],
     );
 
     return res.json({ success: true, action: "added", jobId });

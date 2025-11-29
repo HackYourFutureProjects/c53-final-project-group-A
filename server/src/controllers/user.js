@@ -20,8 +20,10 @@ const USER_FULL_INFO_QUERY = `
         u.userid, u.email, u.password, u.firstname, u.lastname, u.avatar,
         u.street, u.housenumber, u.city, u.country, u.skills,
         
-        -- Select ALL columns from the 'favorites' table
-        f.* FROM users u
+    -- Per-user travel metadata from the bridge table
+    uf.travel_time, uf.least_transfers,
+    -- Select ALL columns from the 'favorites' table
+    f.* FROM users u
     -- 1. Link users to the bridge table
     LEFT JOIN user_favorites uf ON u.userid = uf.user_id
     -- 2. Link the bridge table to the job/favorite details table
@@ -272,7 +274,7 @@ export const getMe = async (req, res) => {
       `${USER_FULL_INFO_QUERY} WHERE u.userid = $1`,
       [decoded.id],
     );
-
+    console.log("result", result);
     if (result.rows.length === 0) return res.json({ success: false });
     const rows = result.rows;
     const userDataRow = rows[0];
