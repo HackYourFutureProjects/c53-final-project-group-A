@@ -194,13 +194,13 @@ export default function JobCard({
 
             <p className="job-description">
               {job.description_text
-                ? job.description_text.substring(0, 150) + "..."
+                ? job.description_text.substring(0, 350) + "..."
                 : "No description available."}
             </p>
 
             <div className="job-card-footer">
               <div className="skill-match-container">
-                {Array.isArray(job?.skillsInDescription) && (
+                {job.skillsInDescription && (
                   <span className="skill-match-text">
                     <Skills job={job} />
                   </span>
