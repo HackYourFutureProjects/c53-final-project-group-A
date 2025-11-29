@@ -38,16 +38,17 @@ export const toggleFavoriteJob = async (req, res) => {
     // 2️ If it does not exist → insert it into the favorites table
     //  Best practice: Consider using transactions when inserting multiple tables
     if (existingFavorite.rows.length === 0) {
+      // Insert core favorite data (without per-user travel fields)
       await connectedClient.query(
         `INSERT INTO favorites 
           (id, title, organization, organization_url, employment_type, url, 
            organization_logo, display_location, work_mode, seniority, description_text,
-           date_posted, travel_time, least_transfers, normalized_description)
+           date_posted, normalized_description)
          VALUES
-          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`,
+          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
         [
           jobId,
-          job.title || null, //  Using null fallback is good to avoid errors
+          job.title || null,
           job.organization || null,
           job.organization_url || null,
           job.employment_type || null,
@@ -58,8 +59,6 @@ export const toggleFavoriteJob = async (req, res) => {
           job.seniority || null,
           job.description_text || null,
           job.date_posted || null,
-          job.travel_time || null,
-          job.least_transfers || null,
           job.normalized_description || null,
         ],
       );
@@ -81,10 +80,10 @@ export const toggleFavoriteJob = async (req, res) => {
       return res.json({ success: true, action: "removed", jobId });
     }
 
-    //  Add favorite
+    //  Add favorite and store per-user travel metadata on the relation
     await connectedClient.query(
-      "INSERT INTO user_favorites (user_id, favorite_id) VALUES ($1, $2)",
-      [userId, jobId],
+      "INSERT INTO user_favorites (user_id, favorite_id, travel_time, least_transfers) VALUES ($1, $2, $3, $4)",
+      [userId, jobId, job.travel_time || null, job.least_transfers || null],
     );
 
     return res.json({ success: true, action: "added", jobId });
