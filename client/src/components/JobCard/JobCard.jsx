@@ -180,17 +180,14 @@ export default function JobCard({
                     className="travel-spinner"
                   />
                 ) : (
-                  job.travel_time && (
-                    <>
-                      {/* <span className="job-tag-separator">|</span> */}
-                      <Bus className="job-icon" />
-                      <span className="job-commute">
-                        {formatTravelTime(job.travel_time)},{" "}
-                        {job.least_transfers} transfer
-                        {job.least_transfers !== 1 ? "s" : ""}
-                      </span>
-                    </>
-                  )
+                  <>
+                    <Bus className="job-icon" />
+                    <span className="job-commute">
+                      {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
+                      transfer
+                      {job.least_transfers !== 1 ? "s" : ""}
+                    </span>
+                  </>
                 )}
               </div>
             </div>
