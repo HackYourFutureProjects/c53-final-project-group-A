@@ -48,7 +48,7 @@ export const toggleFavoriteJob = async (req, res) => {
           ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
         [
           jobId,
-          job.title,
+          job.title || null,
           job.organization || null,
           job.organization_url || null,
           job.employment_type || null,
