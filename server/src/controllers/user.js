@@ -274,7 +274,6 @@ export const getMe = async (req, res) => {
       `${USER_FULL_INFO_QUERY} WHERE u.userid = $1`,
       [decoded.id],
     );
-    console.log("result", result);
     if (result.rows.length === 0) return res.json({ success: false });
     const rows = result.rows;
     const userDataRow = rows[0];
