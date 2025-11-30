@@ -7,6 +7,7 @@ import "./index.css";
 import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import AuthForms from "./components/AuthForms/AuthForms";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import ResetPasswordForm from "./pages/ResetPassword/ResetPassword.jsx";
 
 function App() {
   return (
@@ -22,10 +23,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route path="profile" element={<Profile />} /> */}
         <Route path="favorites" element={<MyFavorites />} />
         <Route path="login" element={<AuthForms />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="reset-password" element={<ResetPasswordForm />} />
+        <Route path="auth" element={<AuthForms />} />
       </Route>
     </Routes>
   );
