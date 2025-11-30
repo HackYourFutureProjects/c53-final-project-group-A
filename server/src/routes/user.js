@@ -12,7 +12,8 @@ import { toggleFavoriteJob } from "../controllers/toggleFavoriteJob.js";
 import { deleteUser } from "../controllers/deleteUser.js";
 import { changePassword } from "../controllers/changePassword.js";
 import { changeSkills } from "../controllers/changeSkills.js";
-
+import { forgotPassword } from "../controllers/forgotPassword.js";
+import { resetPassword } from "../controllers/resetPassword.js";
 const userRouter = express.Router();
 
 // Create a limiter for login/signup
@@ -27,5 +28,6 @@ userRouter.post("/favorites/toggle", verifyToken, toggleFavoriteJob);
 userRouter.delete("/delete/:userid", verifyToken, deleteUser);
 userRouter.post("/change-password", verifyToken, changePassword);
 userRouter.post("/change-skills", verifyToken, changeSkills);
-
+userRouter.post("/forgot-password", forgotPassword);
+userRouter.post("/reset-password", resetPassword);
 export default userRouter;
