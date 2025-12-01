@@ -6,6 +6,7 @@ import Profile from "./pages/User/Profile";
 import "./index.css";
 import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import AuthForms from "./components/AuthForms/AuthForms";
+import About from "./pages/About/About";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         {/* <Route path="profile" element={<Profile />} /> */}
         <Route path="favorites" element={<MyFavorites />} />
         <Route path="login" element={<AuthForms />} />
+        <Route path="about" element={<About />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
