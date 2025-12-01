@@ -342,15 +342,14 @@ export const updateProfile = async (req, res) => {
 };
 
 export const updateUserAvatar = async (req, res) => {
-  logError(1);
+  const { connectedClient, endConnection } = await connectNeonDB();
   try {
-    const { connectedClient } = await connectNeonDB();
     const file = req.file;
     logError(file);
     const imageUrl = await uploadImage(file);
     const userId = req.user.id;
     await connectedClient.query(
-      `UPDATE USERS
+      `UPDATE users
       SET avatar = $1
       WHERE id = $2 `,
       [imageUrl, userId],
@@ -368,5 +367,7 @@ export const updateUserAvatar = async (req, res) => {
   } catch (error) {
     logError(error);
     res.status(500).send("Error uploading image.");
+  } finally {
+    if (endConnection) await endConnection();
   }
 };

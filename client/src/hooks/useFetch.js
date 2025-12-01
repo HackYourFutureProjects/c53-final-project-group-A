@@ -42,11 +42,15 @@ const useFetch = (route, onReceived) => {
     setError(null);
     setIsLoading(true);
 
+    const isFormData = options?.body instanceof FormData;
+
     const baseOptions = {
       method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: isFormData
+        ? {}
+        : {
+            "content-type": "application/json",
+          },
     };
 
     const fetchData = async () => {

@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+// import { logError } from "../util/logging";
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -10,6 +11,11 @@ const firebaseConfig = {
   appId: process.env.APP_ID,
 };
 
+// logError(firebaseConfig);
+console.log(firebaseConfig);
+
 const app = initializeApp(firebaseConfig);
+// logError(app);
+console.log(app);
 
 export const storage = getStorage(app);
