@@ -101,6 +101,7 @@ function UserContextProvider({ children }) {
   // -------------------- GET CURRENT USER --------------------
 
   async function getCurrentUser() {
+    if (window.location.pathname === "/reset-password") return;
     try {
       const data = await authFetch("/me", { method: "GET" });
 
