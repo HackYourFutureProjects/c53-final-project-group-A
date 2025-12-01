@@ -32,18 +32,6 @@
   gap: 1rem;
 }
 
-.overview-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-  color: white;
-}
-
 .overview-text p {
   font-size: 1.1rem;
   color: #6b7280;
@@ -67,24 +55,6 @@
   margin-bottom: 0.5rem;
 }
 
-.highlight {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: #1e40af;
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.highlight p {
-  margin: 0;
-  padding: 0;
-}
-
 /* Features */
 .features-grid {
   display: grid;
@@ -101,10 +71,12 @@
   cursor: default;
 }
 
-.feature-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-color: #3b82f6;
+.feature-card:hover .icon-wrapper {
+  transform: translateY(-6px) scale(0.9);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+  color: #f3f4f6;
+  transition: all 0.6s;
 }
 
 .icon-wrapper {
@@ -112,12 +84,12 @@
   height: 48px;
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
-  color: #3b82f6;
+  color: #4a87e1;
 }
 
 .feature-card p {
@@ -125,6 +97,11 @@
   font-size: 0.9rem;
   line-height: 1.5;
   margin: 0;
+}
+
+.feature-icon {
+  width: 27px;
+  height: 27px;
 }
 
 .contributors-title {
@@ -256,7 +233,7 @@
   background-color: #4a87e1;
   transform: skewX(35deg);
   z-index: 0;
-  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.6s ease-in-out;
 }
 
 .link-button:hover::before {
@@ -276,25 +253,29 @@
 }
 
 .contact-section {
-  margin: 3rem 0;
+  margin: 3rem auto;
   border: 1px solid #e2e6e9;
   border-radius: 7px;
   padding: 3rem;
   text-align: center;
   background: #f9fafb;
+  max-width: 900px;
 }
 
-.contact-button {
-  background-color: #313237;
-  color: white;
-  border: none;
-  border-radius: 3px;
+.contact-text-primary {
+  color: rgb(107, 114, 128);
+}
+
+.email-link {
+  color: #4a87e1;
+  text-decoration: none;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
-  font-size: 16px;
-  padding: 10px 40px;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
 }
 
-.contact-button:hover {
-  background-color: #89939a;
+.email-link:hover {
+  border-bottom: 1px solid #4a87e1;
 }

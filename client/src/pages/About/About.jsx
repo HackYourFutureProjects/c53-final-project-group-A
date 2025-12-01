@@ -1,7 +1,7 @@
 import "./About.css";
 
 import { images } from "../../assets";
-import { Filter, Map, Star, User, Heart, Zap } from "lucide-react";
+import { Filter, Map, Lock, User, Heart, Zap } from "lucide-react";
 
 export default function About() {
   const contributors = [
@@ -10,7 +10,7 @@ export default function About() {
       role: "HYF trainee",
       avatar: images.yaroslavAvatar,
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+        "The main instigator and disruptor of the project. He realized that many job search sites produce results that are irrelevant to the applicant, and figured out how to make them customizable.",
       gitHub: "https://github.com/YaroslavKazeev",
       linkedin: "https://www.linkedin.com/in/yaroslavkazeev/",
     },
@@ -37,8 +37,7 @@ export default function About() {
       name: "Stas",
       role: "DevOps",
       avatar: images.stasAvatar,
-      description:
-        "He is the only person responsible for ensuring our deployments run smoothly.",
+      description: "Responsible for ensuring our deployments run smoothly.",
       gitHub: "https://github.com/stasel",
       linkedin: "https://www.linkedin.com/in/stasel/",
     },
@@ -48,7 +47,7 @@ export default function About() {
       role: "Product Owner",
       avatar: images.janaAvatar,
       description:
-        "She is the only person who understands users’ needs better than anyone, and also serves as our Scrum Master — ensuring the team stays aligned, supported, and functioning effectively.",
+        "The person who understands users’ needs better than anyone, and also serves as our Scrum Master — ensuring the team stays aligned, supported, and functioning effectively.",
       gitHub: "https://github.com/janagombitova",
       linkedin:
         "https://www.linkedin.com/in/jana-gombitova-42b08394?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
@@ -59,7 +58,7 @@ export default function About() {
       role: "Tech lead",
       avatar: images.timAvatar,
       description:
-        "He is the only person you can turn to whenever you need guidance or get stuck.",
+        "The person you can turn to whenever you need guidance or get stuck.",
       gitHub: "https://github.com/tlorent",
       linkedin: "https://www.linkedin.com/in/timlorent/",
     },
@@ -67,36 +66,38 @@ export default function About() {
 
   const features = [
     {
-      icon: <Filter size={28} />,
-      title: "Advanced filtering",
+      icon: <Filter className="feature-icon" />,
+      title: "Smart filtering and sorting",
       description:
-        "Filter by job type, work mode, and experience level to find your perfect match",
+        "Filter by job type, work mode, and experience level, and sort listings based on what matters most to you — all in one flexible tool.",
     },
     {
-      icon: <Zap size={28} />,
+      icon: <Zap className="feature-icon" />,
       title: "Smart matching",
       description: "Real-time job search with smart matching feature",
     },
     {
-      icon: <Map size={28} />,
+      icon: <Map className="feature-icon" />,
       title: "Commute calculator",
       description:
         "See travel time and number of transfers from your home to workplace",
     },
-    {
-      icon: <Star size={28} />,
-      title: "Custom sorting",
-      description:
-        "Rank vacancies based on your personal priorities and preferences",
-    },
 
     {
-      icon: <Heart size={28} />,
+      icon: <Heart className="feature-icon" />,
       title: "Save to favorites",
       description: "Mark interesting job posts to easily view them later",
     },
+
     {
-      icon: <User size={28} />,
+      icon: <Lock className="feature-icon" />,
+      title: "Secure and modern architecture",
+      description:
+        "Meets modern security standards, secure authentication, and protection against malicious scripts.",
+    },
+
+    {
+      icon: <User className="feature-icon" />,
       title: "User-friendly interface",
       description: "Intuitive design makes job discovery fast and efficient",
     },
@@ -167,10 +168,20 @@ export default function About() {
               </div>
 
               <div className="contributor-links">
-                <a href={contributor.gitHub} className="link-button">
+                <a
+                  href={contributor.gitHub}
+                  className="link-button"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <span>GitHub</span>
                 </a>
-                <a href={contributor.linkedin} className="link-button">
+                <a
+                  href={contributor.linkedin}
+                  className="link-button"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <span>LinkedIn</span>
                 </a>
               </div>
@@ -180,11 +191,21 @@ export default function About() {
 
         <div className="contact-section">
           <h2 className="contact-title">Get in touch?</h2>
-          <p className="contact-text">
+          <p className="contact-text-primary">
             Have questions or feedback? We would love to hear from you.
           </p>
 
-          <button className="contact-button">Contact us</button>
+          <p className="contact-text-secondary">
+            Drop us a line at{" "}
+            <a
+              href="mailto:jobcompass2025@gmail.com?subject=Question about JobCompass"
+              className="email-link"
+            >
+              jobcompass2025@gmail.com
+              {/* <button className="contact-button">Contact us</button> */}
+            </a>{" "}
+            and we will get back to you as soon as possible!
+          </p>
         </div>
       </main>
     </div>
