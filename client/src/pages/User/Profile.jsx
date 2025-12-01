@@ -12,6 +12,7 @@ import {
   validatePasswordMatch,
 } from "../../util/AuthValidation";
 import { Eye, EyeOff } from "lucide-react";
+import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -255,8 +256,12 @@ export default function Profile() {
       </h1>
       {/* <!-- Profile Section with Avatar and Name --> */}
       <div className="flex items-start space-x-4">
+
+         {/* <!-- Avatar with the editing/updating button --> */}
+         <AvatarUploader user={user} updateProfile={updateProfile} setAlert={setAlert} />
+        
         {/* <!-- Avatar with the editing/updating button --> */}
-        <div className="relative">
+        {/* <div className="relative">
           <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
             <img
               src={user.avatar}
@@ -279,7 +284,9 @@ export default function Profile() {
               ></path>
             </svg>
           </button>
-        </div>
+        </div> */}
+
+
         <div className="flex-grow">
           {/* <!-- First and Last Name --> */}
           <label className="block text-sm font-medium text-gray-900 mb-2">
