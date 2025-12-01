@@ -375,7 +375,6 @@ function UserContextProvider({ children }) {
         message,
         setMessage,
         clearMessage,
-        getCurrentUser,
         updateProfile,
         toggleFavorite,
         deleteUser,

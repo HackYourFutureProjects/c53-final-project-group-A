@@ -1,12 +1,12 @@
 import { logError } from "../util/logging.js";
 
-export const realJobSearch = async ({
+export const realJobSearch = async (
   jobWord,
   location = "Netherlands",
-  limit = 10,
+  limit = 100,
   maxIterations = 2,
   initialOffset = 0,
-} = {}) => {
+) => {
   const aggregated = [];
   let offset = initialOffset;
 

@@ -22,8 +22,8 @@ export const searchJobs = async (req, res) => {
       .filter(Boolean);
     for (const jobWord of searchWords) {
       const fetchedJobs = isSearchReal
-        ? await realJobSearch({ jobWord })
-        : fakeJobSearch({ jobWord });
+        ? await realJobSearch(jobWord)
+        : fakeJobSearch(jobWord);
       for (const job of fetchedJobs) {
         if (job.id && !aggregatedJobsIdsSet.has(job.id)) {
           aggregatedJobs.push(processJobPost(job));
