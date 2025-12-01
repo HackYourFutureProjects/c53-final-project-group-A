@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Loader, X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
 import { UseUser } from "../../context/UserContext";
 
-const LoginForm = ({ login, switchToSignup }) => {
+const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -96,6 +96,18 @@ const LoginForm = ({ login, switchToSignup }) => {
         <span className="switch-link" onClick={switchToSignup}>
           Sign Up
         </span>
+      </p>
+      <p className="forgot-text">
+        <a
+          href="#"
+          className="forgot-link"
+          onClick={(e) => {
+            e.preventDefault(); // prevent page reload
+            switchToForgotPassword();
+          }}
+        >
+          Forgot Password?
+        </a>
       </p>
     </div>
   );

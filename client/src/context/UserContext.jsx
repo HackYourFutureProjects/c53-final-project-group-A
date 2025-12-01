@@ -328,6 +328,38 @@ function UserContextProvider({ children }) {
     }
   }
 
+  async function requestPasswordReset(email) {
+    clearError();
+    try {
+      const data = await authFetch("/forgot-password", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      // success guaranteed by authFetch (it throws if !data.success)
+      setMessage(data.msg || "Reset email sent");
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  }
+
+  async function resetPassword(token, newPassword) {
+    clearError();
+    try {
+      // authFetch will call: /api/users/reset-password
+      const data = await authFetch("/reset-password", {
+        method: "POST",
+        body: JSON.stringify({ token, newPassword }),
+      });
+      setMessage(data.msg || "Password updated");
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -347,6 +379,8 @@ function UserContextProvider({ children }) {
         toggleFavorite,
         deleteUser,
         changePassword,
+        requestPasswordReset,
+        resetPassword,
       }}
     >
       {children}
