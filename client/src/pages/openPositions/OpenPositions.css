@@ -41,18 +41,16 @@
 .filters-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
   flex-grow: 1;
-  gap: 1rem;
+  gap: 10px;
 }
 
 .filter-dropdowns {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
   flex-wrap: wrap;
-  margin: 10px 0 10px auto;
 }
 
 .clear-filters-btn {

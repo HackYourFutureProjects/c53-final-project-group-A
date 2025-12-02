@@ -10,7 +10,7 @@ export default function SkillsSettings() {
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [showAll, setShowAll] = useState(false);
-  const maxVisible = 7;
+  const maxVisible = 4;
   const { user, dispatch } = UseUser();
   const { skills } = user;
 
@@ -48,9 +48,9 @@ export default function SkillsSettings() {
     <div className="skills-container">
       <div className="skills-section">
         <h3 className="skills-heading">Skills</h3>
-        <label className="skills-label" htmlFor="skillInput">
+        {/* <label className="skills-label" htmlFor="skillInput">
           Add skills
-        </label>
+        </label> */}
 
         {/* Skills management */}
         <div className="skills-management">
@@ -73,7 +73,7 @@ export default function SkillsSettings() {
               className="add-skill-btn"
               type="button"
             >
-              Add
+              Add skill
             </button>
 
             <button
