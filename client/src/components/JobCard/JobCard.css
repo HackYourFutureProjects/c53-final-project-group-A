@@ -45,10 +45,14 @@
 .company-name {
   display: inline-block;
   font-weight: 400;
-  font-size: 1 rem;
+  font-size: 1rem;
   color: #494d51;
   opacity: 0.9;
   transition: opacity 0.15s ease;
+  max-width: 130px;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
 }
 
 .company-link:hover .company-name {

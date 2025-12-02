@@ -1,6 +1,5 @@
 .skills-container {
   margin-top: 1rem;
-  border-radius: 12px;
   padding: 1rem;
   border: 1px solid #dcdfe5;
   border-radius: 10px;
@@ -62,7 +61,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  border: transparent;
+  border: none;
 }
 
 .skill-item {

@@ -4,7 +4,7 @@ import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
 import { UseUser } from "../context/UserContext";
-import "./skillsSettings.css";
+import "./SkillsSettings.css";
 
 export default function SkillsSettings() {
   const skillInputRef = useRef(null);
@@ -176,9 +176,7 @@ export default function SkillsSettings() {
               type="button"
             >
               {" "}
-              {showAll
-                ? "Show less"
-                : `+${skills.length - maxVisible} more`}{" "}
+              {showAll ? "Show less" : `+${skills.length - maxVisible} more`}
             </button>
           )}
         </div>
