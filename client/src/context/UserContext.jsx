@@ -20,31 +20,11 @@ function userReducer(state, action) {
       const next = { ...state, ...payload };
       return next;
     }
-
     case "LOGOUT":
       return action.payload || defaultUser;
-    case "ADD_SKILL": {
-      const newSkill = action.payload;
-      const prevSkills = Array.isArray(state?.skills) ? state.skills : [];
-      const combined = [...prevSkills, newSkill].sort((a, b) =>
-        String(a?.normalizedSkill ?? "").localeCompare(
-          String(b?.normalizedSkill ?? ""),
-        ),
-      );
-      return { ...state, skills: combined };
+    case "SET_SKILLS": {
+      return { ...state, skills: action.payload };
     }
-    case "REMOVE_SKILL": {
-      const skill = action.payload;
-      const filtered = (state.skills || []).filter(
-        (s) => s.skill !== skill.skill,
-      );
-      return { ...state, skills: filtered };
-    }
-    case "REMOVE_ALL_SKILLS": {
-      // Remove all skills from the user while preserving other fields
-      return { ...state, skills: [] };
-    }
-
     case "TOGGLE_FAVORITE": {
       const job = action.payload;
       const jobId = job?.id;
@@ -280,6 +260,7 @@ function UserContextProvider({ children }) {
       clearError();
     }
   }
+  // -------------------- UPDATE PROFILE --------------------
   async function updateProfile(updatedFields) {
     // eslint-disable-next-line no-useless-catch
     try {
@@ -294,7 +275,40 @@ function UserContextProvider({ children }) {
       throw err;
     }
   }
+  // -------------------- DELETE USER --------------------
+  async function deleteUser() {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      const data = await authFetch(`/delete/${user.id}`, {
+        method: "DELETE",
+      });
 
+      dispatch({ type: "LOGOUT", payload: defaultUser });
+
+      return data;
+    } catch (err) {
+      throw err;
+    }
+  }
+  // -------------------- CHANGE PASSWORD --------------------
+  const changePassword = async (currentPassword, newPassword) => {
+    if (!currentPassword || !newPassword) {
+      throw new Error("Current password and new password are required.");
+    }
+
+    try {
+      const data = await authFetch("/change-password", {
+        method: "POST",
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      return data;
+    } catch (err) {
+      console.error("Change password error:", err);
+      throw err;
+    }
+  };
+  // -------------------- FAVORITES --------------------
   async function toggleFavorite(job) {
     try {
       const data = await authFetch("/favorites/toggle", {
@@ -314,42 +328,43 @@ function UserContextProvider({ children }) {
     }
   }
 
-  async function deleteUser() {
-    // eslint-disable-next-line no-useless-catch
+  async function requestPasswordReset(email) {
+    clearError();
     try {
-      const data = await authFetch(`/delete/${user.id}`, {
-        method: "DELETE",
+      const data = await authFetch("/forgot-password", {
+        method: "POST",
+        body: JSON.stringify({ email }),
       });
-
-      dispatch({ type: "LOGOUT", payload: defaultUser });
-
-      return data;
+      // success guaranteed by authFetch (it throws if !data.success)
+      setMessage(data.msg || "Reset email sent");
+      return true;
     } catch (err) {
-      throw err;
+      console.error(err);
+      return false;
     }
   }
-  const changePassword = async (currentPassword, newPassword) => {
-    if (!currentPassword || !newPassword) {
-      throw new Error("Current password and new password are required.");
-    }
 
+  async function resetPassword(token, newPassword) {
+    clearError();
     try {
-      const data = await authFetch("/change-password", {
+      // authFetch will call: /api/users/reset-password
+      const data = await authFetch("/reset-password", {
         method: "POST",
-        body: JSON.stringify({ currentPassword, newPassword }),
+        body: JSON.stringify({ token, newPassword }),
       });
-
-      return data;
+      setMessage(data.msg || "Password updated");
+      return true;
     } catch (err) {
-      console.error("Change password error:", err);
-      throw err;
+      console.error(err);
+      return false;
     }
-  };
+  }
 
   return (
     <UserContext.Provider
       value={{
         user,
+        authFetch,
         dispatch,
         loading,
         error,
@@ -360,11 +375,12 @@ function UserContextProvider({ children }) {
         message,
         setMessage,
         clearMessage,
-        getCurrentUser,
         updateProfile,
         toggleFavorite,
         deleteUser,
         changePassword,
+        requestPasswordReset,
+        resetPassword,
       }}
     >
       {children}

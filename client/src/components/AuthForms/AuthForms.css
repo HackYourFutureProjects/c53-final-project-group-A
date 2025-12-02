@@ -59,6 +59,12 @@
   border: 1px solid #d1d5db;
   border-radius: 8px;
   padding: 32px;
+  margin: 0 auto;
+  margin-top: 10px;
+  min-width: 650px;
+}
+.form-card h2 {
+  margin-bottom: 10px;
 }
 
 .form-card label {
@@ -104,7 +110,8 @@
   margin-top: 12px;
 }
 
-.switch-link {
+.switch-link,
+.forgot-link {
   color: #3b82f6;
   text-decoration: underline;
   cursor: pointer;
@@ -176,4 +183,22 @@
   transform: translateY(-100%);
   color: #888;
   cursor: pointer;
+}
+
+.input-icon-right-password,
+.input-icon-right1 {
+  position: absolute;
+  right: 10px;
+  top: 60%;
+  transform: translateY(-75%);
+  color: #888;
+  cursor: pointer;
+}
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
 }

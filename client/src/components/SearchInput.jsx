@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseJobs } from "../context/JobsContext";
 import AlertMessage from "../components/AlertMessage";
@@ -8,7 +8,6 @@ import { cleanUpText } from "../util/cleanUpText";
 
 export default function SearchInput() {
   const {
-    searchTerm,
     setSearchTerm,
     setShowResults,
     setAllJobs,
@@ -17,10 +16,12 @@ export default function SearchInput() {
   } = UseJobs();
 
   const [alert, setAlert] = useState({ type: "", message: "" });
+  const inputRef = useRef(null);
   const navigate = useNavigate();
 
   const handleSearch = async () => {
-    const validationError = validateJobInput({ text: cleanUpText(searchTerm) });
+    const inputValue = inputRef.current?.value ?? "";
+    const validationError = validateJobInput({ text: cleanUpText(inputValue) });
     if (validationError) {
       setAlert(validationError);
       return;
@@ -28,12 +29,16 @@ export default function SearchInput() {
 
     setAllJobs([]);
     setError(null);
-    setAlert({ type: "info", message: `Searching for "${searchTerm}"...` });
+    setAlert({ type: "info", message: `Searching for "${inputValue}"...` });
+    // keep the searched text in context for results pages
+    setSearchTerm(inputValue);
 
-    fetchJobWordsBySearchWords(searchTerm);
+    fetchJobWordsBySearchWords(inputValue);
 
     setShowResults(true);
     navigate("/jobs");
+    // clear the visible input field while keeping `searchTerm` in context
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   return (
@@ -43,11 +48,10 @@ export default function SearchInput() {
       </label>
       <div className="input-group">
         <input
+          ref={inputRef}
           id="job-search"
           type="text"
           placeholder="e.g. Web Developer"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           aria-describedby="search-alert"
         />

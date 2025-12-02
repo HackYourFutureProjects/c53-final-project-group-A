@@ -1,7 +1,6 @@
 import { UseUser } from "./UserContext";
 import { createContext, useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
-import { formatAddress } from "../data/defaultUser";
 
 const JobsContext = createContext();
 
@@ -60,13 +59,12 @@ const JobsProvider = ({ children }) => {
 
     const citiesToFetch = getCitiesToFetch(jobsArray, travelDetails);
 
-    const homeAddress = formatAddress(user);
-
-    if (!homeAddress) {
-      setError("The address for route calculation is not specified.");
-      setIsTravelLoading(false);
-      return;
-    }
+    const homeAddress = {
+      homeStreet: user?.street,
+      homeHousenumber: user?.housenumber,
+      homeCity: user?.city,
+      homeCountry: user?.country,
+    };
 
     if (citiesToFetch.length === 0) {
       setIsTravelLoading(false);

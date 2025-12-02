@@ -1,13 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import LoginForm from "../../pages/LoginForm/LoginForm";
 import SignupForm from "../../pages/SignupForm/SignupForm";
 import SignupSuccessPopup from "../SuccessPopup/SignupSuccessPopup";
 import LoginSuccessPopup from "../SuccessPopup/LoginSuccessPopup";
 import { UseUser } from "../../context/UserContext";
+import ForgotPasswordForm from "../../pages/ForgotPassword/ForgotPassword.jsx";
+import ResetPasswordForm from "../../pages/ResetPassword/ResetPassword.jsx";
 import "./AuthForms.css";
 
 const AuthForms = () => {
+  const [searchParams] = useSearchParams();
+  const urlToken = searchParams.get("token");
+
   const navigate = useNavigate();
   const { login, signup, clearError } = UseUser();
   const [tab, setTab] = useState("login");
@@ -15,6 +20,14 @@ const AuthForms = () => {
   const [signedUpUser, setSignedUpUser] = useState("");
 
   const [loginSuccessPopup, setLoginSuccessPopup] = useState(false);
+  const [resetToken, setResetToken] = useState(urlToken || null);
+
+  useEffect(() => {
+    if (urlToken) {
+      setResetToken(urlToken);
+      setTab("reset");
+    }
+  }, [urlToken]);
 
   const goToProfile = () => {
     setSuccessPopup(false);
@@ -52,6 +65,25 @@ const AuthForms = () => {
             setLoginSuccessPopup(true);
           }}
           switchToSignup={() => handleSwitchTab("signup")}
+          switchToForgotPassword={() => handleSwitchTab("forgot")}
+        />
+      )}
+      {/* --- FORGOT PASSWORD FORM --- */}
+      {tab === "forgot" && (
+        <ForgotPasswordForm
+          switchToLogin={() => handleSwitchTab("login")}
+          switchToReset={(token) => {
+            setResetToken(token);
+            setTab("reset");
+          }}
+        />
+      )}
+
+      {/* --- RESET PASSWORD FORM --- */}
+      {tab === "reset" && (
+        <ResetPasswordForm
+          token={resetToken}
+          switchToLogin={() => handleSwitchTab("login")}
         />
       )}
 

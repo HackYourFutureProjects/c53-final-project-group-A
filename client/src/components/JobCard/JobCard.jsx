@@ -180,30 +180,27 @@ export default function JobCard({
                     className="travel-spinner"
                   />
                 ) : (
-                  job.travel_time && (
-                    <>
-                      {/* <span className="job-tag-separator">|</span> */}
-                      <Bus className="job-icon" />
-                      <span className="job-commute">
-                        {formatTravelTime(job.travel_time)},{" "}
-                        {job.least_transfers} transfer
-                        {job.least_transfers !== 1 ? "s" : ""}
-                      </span>
-                    </>
-                  )
+                  <>
+                    <Bus className="job-icon" />
+                    <span className="job-commute">
+                      {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
+                      transfer
+                      {job.least_transfers !== 1 ? "s" : ""}
+                    </span>
+                  </>
                 )}
               </div>
             </div>
 
             <p className="job-description">
               {job.description_text
-                ? job.description_text.substring(0, 150) + "..."
+                ? job.description_text.substring(0, 350) + "..."
                 : "No description available."}
             </p>
 
             <div className="job-card-footer">
               <div className="skill-match-container">
-                {Array.isArray(job?.skillsInDescription) && (
+                {job.skillsInDescription && (
                   <span className="skill-match-text">
                     <Skills job={job} />
                   </span>
