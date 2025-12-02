@@ -3,17 +3,16 @@ import { logError } from "../util/logging.js";
 export const realJobSearch = async (
   jobWord,
   location = "Netherlands",
-  limit = 100,
+  limit = 80,
   maxIterations = 2,
   initialOffset = 0,
 ) => {
   const aggregated = [];
-  // Build offsets for concurrent requests
-  const offsets = Array.from(
-    { length: maxIterations },
-    (_, i) => initialOffset + i * limit,
-  );
 
+  const offsets = [];
+  for (let i = 0; i < maxIterations; i++) {
+    offsets.push(initialOffset + i * limit);
+  }
   const options = {
     method: "GET",
     headers: {
