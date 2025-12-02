@@ -44,8 +44,8 @@ export const realJobSearch = async (
   results.forEach((apiResult) => {
     if (Array.isArray(apiResult)) {
       aggregated.push(...apiResult);
-    } else if (apiResult) {
-      aggregated.push(apiResult);
+    } else {
+      logError('Unexpected API response shape', apiResult);
     }
   });
 
