@@ -31,7 +31,6 @@ export const realJobSearch = async (
         const errorText = await apiResponse.text();
         logError(
           `Linkedin API Error: ${apiResponse.status} - ${apiResponse.statusText}`,
-          errorText,
         );
         throw new Error(`Failed to fetch from Linkedin API: ${errorText}`);
       }
