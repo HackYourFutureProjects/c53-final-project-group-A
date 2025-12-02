@@ -109,38 +109,36 @@ export default function SkillsSettings() {
         <h3 className="skills-heading">Skills</h3>
 
         {/* Skills management */}
-        <div className="skills-management">
-          <div className="skills-controls">
-            <input
-              id="skillInput"
-              ref={skillInputRef}
-              type="text"
-              placeholder="e.g. React, TypeScript, Docker"
-              className="skill-input"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") addSkill();
-              }}
-              onChange={handleClearAlert}
-            />
+        <div className="skills-controls">
+          <input
+            id="skillInput"
+            ref={skillInputRef}
+            type="text"
+            placeholder="e.g. React, TypeScript, Docker"
+            className="skill-input"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") addSkill();
+            }}
+            onChange={handleClearAlert}
+          />
 
-            <button
-              id="addSkillBtn"
-              onClick={addSkill}
-              className="add-skill-btn"
-              type="button"
-            >
-              Add skill
-            </button>
+          <button
+            id="addSkillBtn"
+            onClick={addSkill}
+            className="add-skill-btn"
+            type="button"
+          >
+            Add skill
+          </button>
 
-            <button
-              id="removeAllSkillsBtn"
-              onClick={removeAllSkills}
-              className="remove-all-btn"
-              type="button"
-            >
-              Remove all
-            </button>
-          </div>
+          <button
+            id="removeAllSkillsBtn"
+            onClick={removeAllSkills}
+            className="remove-all-btn"
+            type="button"
+          >
+            Remove all
+          </button>
         </div>
 
         {/* Skills List */}

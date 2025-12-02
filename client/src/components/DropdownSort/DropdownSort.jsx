@@ -51,7 +51,7 @@ export default function DropdownSort({ selectedSort, setSelectedSort }) {
           boxShadow: "none",
           height: "43px",
         }}
-        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded cursor-pointer transition-colors duration-200 text-lg my-2.5 flex items-center space-x-2"
+        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded cursor-pointer transition-colors duration-200 text-base my-2.5 flex items-center space-x-2"
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen((open) => !open);

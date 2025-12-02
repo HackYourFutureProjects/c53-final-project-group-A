@@ -61,8 +61,15 @@
   border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.2s;
-  font-size: 1.1rem;
+  font-size: 16px;
   height: 43px;
+  transition: all 0.3s ease-in-out;
+}
+
+.clear-filters-btn:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: rgb(50, 115, 220);
 }
 
 .job-message {
