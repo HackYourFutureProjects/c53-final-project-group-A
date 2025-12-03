@@ -520,18 +520,6 @@ footer {
   cursor: pointer;
 }
 
-/* Component helpers */
-#skillsList {
-  min-height: 60px; /* mirrors min-h-[60px] */
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.25rem;
-  padding: 0.75rem;
-  background-color: #f9fafb;
-}
-
 /* Small utilities used by items */
 
 /* Responsive helpers */

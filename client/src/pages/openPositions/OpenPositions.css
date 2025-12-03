@@ -41,33 +41,35 @@
 .filters-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
   flex-grow: 1;
-  gap: 1rem;
+  gap: 10px;
 }
 
 .filter-dropdowns {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
   flex-wrap: wrap;
-  margin: 10px 0 10px auto;
 }
 
 .clear-filters-btn {
-  padding: 0.5rem 1rem;
-  background-color: #3b82f6; /* Blue-500 */
-  color: white;
-  border: none;
+  padding: 0 1rem;
+  background: none;
+  border: 1px solid #d1d5db;
+  color: rgb(59, 130, 246);
   border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.2s;
-  font-size: 1.1rem;
+  font-size: 16px;
+  height: 43px;
+  transition: all 0.3s ease-in-out;
 }
 
 .clear-filters-btn:hover {
-  background-color: #2563eb; /* Darker blue */
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: rgb(50, 115, 220);
 }
 
 .job-message {
