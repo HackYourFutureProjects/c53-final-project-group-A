@@ -256,36 +256,12 @@ export default function Profile() {
       </h1>
       {/* <!-- Profile Section with Avatar and Name --> */}
       <div className="flex items-start space-x-4">
-
-         {/* <!-- Avatar with the editing/updating button --> */}
-         <AvatarUploader user={user} updateProfile={updateProfile} setAlert={setAlert} />
-        
         {/* <!-- Avatar with the editing/updating button --> */}
-        {/* <div className="relative">
-          <div className="w-20 h-20 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
-            <img
-              src={user.avatar}
-              alt={user.name}
-              className="w-20 h-20 object-cover"
-            />
-          </div>
-          <button className="absolute bottom-0 right-0 w-6 h-6 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50">
-            <svg
-              className="w-3 h-3 text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              ></path>
-            </svg>
-          </button>
-        </div> */}
-
+        <AvatarUploader
+          user={user}
+          updateProfile={updateProfile}
+          setAlert={setAlert}
+        />
 
         <div className="flex-grow">
           {/* <!-- First and Last Name --> */}

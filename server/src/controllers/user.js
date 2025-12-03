@@ -351,19 +351,15 @@ export const updateUserAvatar = async (req, res) => {
     await connectedClient.query(
       `UPDATE users
       SET avatar = $1
-      WHERE id = $2 `,
+      WHERE userid = $2 `,
       [imageUrl, userId],
     );
 
-    // if (updateUserPhoto) {
     res.send({
       success: true,
       message: "Image uploaded successfully.",
       url: imageUrl,
     });
-    // } else {
-    //   res.send({ success: false, message: "Failed to update user photo." });
-    // }
   } catch (error) {
     logError(error);
     res.status(500).send("Error uploading image.");

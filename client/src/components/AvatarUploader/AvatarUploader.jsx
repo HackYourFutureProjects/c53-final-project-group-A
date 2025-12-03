@@ -5,7 +5,16 @@ import useFetch from "../../hooks/useFetch";
 export default function AvatarUploader({ user, updateProfile, setAlert }) {
   const fileInputRef = useRef(null);
 
-  const { performFetch } = useFetch("/users/update-avatar");
+  // const { performFetch } = useFetch("/users/update-avatar");
+
+  const { performFetch } = useFetch("/users/update-avatar", (result) => {
+    if (result.success && result.url) {
+      updateProfile({ avatar: result.url });
+      setAlert({ type: "success", message: "Avatar updated!" });
+    } else {
+      setAlert({ type: "error", message: "Failed to upload avatar." });
+    }
+  });
 
   const handleButtonClick = () => {
     if (fileInputRef.current) fileInputRef.current.click();
@@ -20,19 +29,10 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
     const formData = new FormData();
     formData.append("pic", file);
 
-    try {
-      // await updateProfile({ avatar: url });
-
-      performFetch({
-        method: "POST",
-        body: formData,
-        // body: JSON.stringify(formData),
-      });
-
-      setAlert({ type: "success", message: "Avatar updated!" });
-    } catch (err) {
-      setAlert({ type: "error", message: "Failed to upload avatar." });
-    }
+    performFetch({
+      method: "POST",
+      body: formData,
+    });
   };
 
   return (
