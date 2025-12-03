@@ -39,5 +39,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-server/src/firebase-adminsdk.json

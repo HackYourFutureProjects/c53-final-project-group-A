@@ -345,7 +345,6 @@ export const updateUserAvatar = async (req, res) => {
   const { connectedClient, endConnection } = await connectNeonDB();
   try {
     const file = req.file;
-    logError(file);
     const imageUrl = await uploadImage(file);
     const userId = req.user.id;
     await connectedClient.query(

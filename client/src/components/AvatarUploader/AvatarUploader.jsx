@@ -5,8 +5,6 @@ import useFetch from "../../hooks/useFetch";
 export default function AvatarUploader({ user, updateProfile, setAlert }) {
   const fileInputRef = useRef(null);
 
-  // const { performFetch } = useFetch("/users/update-avatar");
-
   const { performFetch } = useFetch("/users/update-avatar", (result) => {
     if (result.success && result.url) {
       updateProfile({ avatar: result.url });
