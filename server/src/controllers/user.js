@@ -361,7 +361,10 @@ export const updateUserAvatar = async (req, res) => {
     });
   } catch (error) {
     logError(error);
-    res.status(500).send("Error uploading image.");
+    res.status(500).json({
+      success: false,
+      message: "Error uploading image.",
+    });
   } finally {
     if (endConnection) await endConnection();
   }
