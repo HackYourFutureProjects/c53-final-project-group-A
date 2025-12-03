@@ -3,7 +3,7 @@ import { realJobSearch } from "./realJobSearch.js";
 import { fakeJobSearch } from "./fakeJobSearch.js";
 import processJobPost from "../util/processJobPost.js";
 
-const isSearchReal = false; // Set to true to enable real job search
+const isSearchReal = true; // Set to true to enable real job search
 
 export const searchJobs = async (req, res) => {
   try {
@@ -20,10 +20,16 @@ export const searchJobs = async (req, res) => {
     const searchWords = search_terms
       .split(new RegExp("[\\s\\-.'/]+"))
       .filter(Boolean);
-    for (const jobWord of searchWords) {
-      const fetchedJobs = isSearchReal
-        ? await realJobSearch(jobWord)
-        : fakeJobSearch(jobWord);
+    // Fetch results for all search words concurrently
+    const fetchPromises = searchWords.map((jobWord) =>
+      isSearchReal
+        ? realJobSearch(jobWord)
+        : Promise.resolve(fakeJobSearch(jobWord)),
+    );
+
+    const fetchedJobsArrays = await Promise.all(fetchPromises);
+
+    for (const fetchedJobs of fetchedJobsArrays) {
       for (const job of fetchedJobs) {
         if (job.id && !aggregatedJobsIdsSet.has(job.id)) {
           aggregatedJobs.push(processJobPost(job));

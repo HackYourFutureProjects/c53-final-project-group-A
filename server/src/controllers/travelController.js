@@ -25,7 +25,7 @@ export default async function calculateBatchTravelTime(req, res) {
     // already-resolved promise with zero travel time. For external cities
     // start all `getTransitRouteSummary` calls immediately (concurrent).
     const promises = workCities.map((workCity) => {
-      if (re.test(workCity)) {
+      if (re.test(workCity) || workCity === "Netherlands") {
         return Promise.resolve({
           workCity,
           travel_time: 0,
