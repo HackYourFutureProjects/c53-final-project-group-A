@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 function formatTravelTime(minutes) {
+  console.log("minutes", minutes);
   if (minutes < 60) return `${minutes} min`;
   const h = Math.floor(minutes / 60);
   const m = Math.round(minutes % 60);
@@ -183,6 +184,8 @@ export default function JobCard({
                   <>
                     <Bus className="job-icon" />
                     <span className="job-commute">
+                      {console.log("job.travel_time", job.travel_time)}
+                      {console.log("job.least_transfers", job.least_transfers)}
                       {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
                       transfer
                       {job.least_transfers !== 1 ? "s" : ""}

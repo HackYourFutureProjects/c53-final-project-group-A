@@ -27,13 +27,13 @@ export default function processJobPost(job) {
     case "Instapniveau":
       normalizedSeniority = "Entry level";
       break;
-    case "Medewerker":
+    case "Berufseinstieg":
       normalizedSeniority = "Associate";
       break;
     case "Senior medewerker":
       normalizedSeniority = "Mid-Senior level";
       break;
-    case "Directeur":
+    case "Algemeen directeur":
       normalizedSeniority = "Director";
       break;
     case "Bestuurder":
