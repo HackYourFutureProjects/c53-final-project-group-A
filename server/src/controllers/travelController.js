@@ -30,7 +30,7 @@ export default async function calculateBatchTravelTime(req, res) {
           workCity,
           travel_time: 0,
           least_transfers: 0,
-          success: true,
+          travelFetchSuccess: true,
         });
       }
       return getTransitRouteSummary(
@@ -42,11 +42,11 @@ export default async function calculateBatchTravelTime(req, res) {
           workCity,
           travel_time: Math.round(travelData.travel_time),
           least_transfers: travelData.least_transfers,
-          success: true,
+          travelFetchSuccess: true,
         }))
         .catch((error) => ({
           workCity,
-          success: false,
+          travelFetchSuccess: false,
           error: error.message,
         }));
     });
