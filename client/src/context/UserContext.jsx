@@ -52,6 +52,7 @@ function UserContextProvider({ children }) {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const API_URL = "/users";
+  const { setAllJobs } = UseJobs();
 
   // -------------------- CLEAR ERROR --------------------
   const clearError = () => setError(null);
@@ -167,7 +168,6 @@ function UserContextProvider({ children }) {
 
   // -------------------- LOGIN --------------------
   async function login(email, password) {
-    const { setAllJobs } = UseJobs();
     setAllJobs([]);
     if (email === defaultUser.email) throw new Error("Invalid credentials");
     // eslint-disable-next-line no-useless-catch
@@ -248,7 +248,6 @@ function UserContextProvider({ children }) {
   }
   // -------------------- LOGOUT --------------------
   async function logout() {
-    const { setAllJobs } = UseJobs();
     setAllJobs([]);
     try {
       // Attempt to log out on the server side
