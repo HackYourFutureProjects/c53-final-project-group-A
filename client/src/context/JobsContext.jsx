@@ -1,5 +1,5 @@
 import { UseUser } from "./UserContext";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 
 const JobsContext = createContext();
@@ -14,13 +14,26 @@ const JobsProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState(""); //  global search term
   const [showResults, setShowResults] = useState(false); //control when results appear
 
-  const handleFetchResults = (data) => {
+  const { error: jobFetchError, performFetch } = useFetch(
+    "/jobs/search",
+    handleFetchResults,
+  );
+
+  useEffect(() => {
+    if (jobFetchError) {
+      setError(jobFetchError || "Failed to fetch jobs");
+      setIsJobsLoading(false);
+    }
+  }, [jobFetchError]);
+
+  function handleFetchResults(data) {
+    console.log("Fetched job data:", data);
+    console.log("Job fetch error state:", jobFetchError);
+
     setAllJobs(data.result);
     setIsJobsLoading(false);
     fetchBatchTravelDetails(data.result);
-  };
-
-  const { performFetch } = useFetch("/jobs/search", handleFetchResults);
+  }
 
   async function fetchJobWordsBySearchWords(searchWords) {
     setError(null);
