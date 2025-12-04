@@ -184,8 +184,18 @@ export default function JobCard({
                   <>
                     <Bus className="job-icon" />
                     <span className="job-commute">
-                      {console.log("job.travel_time", job.travel_time)}
-                      {console.log("job.least_transfers", job.least_transfers)}
+                      {console.log(
+                        "job.title",
+                        job.title,
+                        "job.location",
+                        job.display_location,
+                      )}
+                      {console.log(
+                        "job.least_transfers",
+                        job.least_transfers,
+                        "job.travel_time",
+                        job.travel_time,
+                      )}
                       {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
                       transfer
                       {job.least_transfers !== 1 ? "s" : ""}
