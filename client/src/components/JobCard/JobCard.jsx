@@ -180,8 +180,7 @@ export default function JobCard({
                     className="travel-spinner"
                   />
                 )}
-                {console.log("job.travelFetchsuccess", job.travelFetchsuccess)}
-                {job.travelFetchsuccess && (
+                {job.travelFetchSuccess && (
                   <>
                     <Bus className="job-icon" />
                     <span className="job-commute">
