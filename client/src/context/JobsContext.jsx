@@ -33,7 +33,7 @@ const JobsProvider = ({ children }) => {
 
   useEffect(() => {
     if (jobFetchError) {
-      setError(jobFetchError || "Failed to fetch jobs");
+      setError(jobFetchError);
       setIsJobsLoading(false);
     }
   }, [jobFetchError]);
