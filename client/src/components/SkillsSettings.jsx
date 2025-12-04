@@ -4,12 +4,16 @@ import AlertMessage from "./AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
 import { UseUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import PopupForSave from "../components/SuccessPopup/PopupForSave";
 
 export default function SkillsSettings() {
+  const navigate = useNavigate();
   const skillInputRef = useRef(null);
   const [alert, setAlert] = useState({ type: "", message: "" });
   const { user, dispatch, authFetch } = UseUser();
   const { skills } = user;
+  const [showSavePopup, setShowSavePopup] = useState(false);
 
   function handleClearAlert() {
     if (!alert.message) return;
@@ -27,6 +31,10 @@ export default function SkillsSettings() {
 
   // -------------------- ADD SKILL --------------------
   async function addSkill() {
+    if (!user?.userid) {
+      setShowSavePopup(true);
+      return;
+    }
     const skillInput = skillInputRef.current;
     if (!skillInput) return;
     const newSkill = cleanUpText(skillInput.value || "");
@@ -66,6 +74,10 @@ export default function SkillsSettings() {
 
   // -------------------- REMOVE SKILL --------------------
   async function removeSkill(skill) {
+    if (!user?.userid) {
+      setShowSavePopup(true);
+      return;
+    }
     const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
     const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
     try {
@@ -84,6 +96,10 @@ export default function SkillsSettings() {
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
+    if (!user?.userid) {
+      setShowSavePopup(true);
+      return;
+    }
     try {
       await changeSkillsHelper([]);
       dispatch({
@@ -169,6 +185,17 @@ export default function SkillsSettings() {
       </div>
       {alert.message && (
         <AlertMessage type={alert.type} message={alert.message} />
+      )}
+      {showSavePopup && (
+        <PopupForSave
+          title="You are not logged in"
+          message="Please log in or sign up to manage your skills."
+          handleLoginRedirect={() => {
+            navigate("/login");
+            setShowSavePopup(false);
+          }}
+          setShowSavePopup={setShowSavePopup}
+        />
       )}
     </div>
   );
