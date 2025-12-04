@@ -14,6 +14,12 @@ const JobsProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState(""); //  global search term
   const [showResults, setShowResults] = useState(false); //control when results appear
 
+  // Clear jobs when user logs in/out
+  useEffect(() => {
+    setAllJobs([]);
+    setTravelDetails({});
+  }, [user.email]);
+
   function handleFetchResults(data) {
     setAllJobs(data.result);
     setIsJobsLoading(false);
