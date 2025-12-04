@@ -14,6 +14,12 @@ const JobsProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState(""); //  global search term
   const [showResults, setShowResults] = useState(false); //control when results appear
 
+  function handleFetchResults(data) {
+    setAllJobs(data.result);
+    setIsJobsLoading(false);
+    fetchBatchTravelDetails(data.result);
+  }
+
   const { error: jobFetchError, performFetch } = useFetch(
     "/jobs/search",
     handleFetchResults,
@@ -25,12 +31,6 @@ const JobsProvider = ({ children }) => {
       setIsJobsLoading(false);
     }
   }, [jobFetchError]);
-
-  function handleFetchResults(data) {
-    setAllJobs(data.result);
-    setIsJobsLoading(false);
-    fetchBatchTravelDetails(data.result);
-  }
 
   async function fetchJobWordsBySearchWords(searchWords) {
     setError(null);
