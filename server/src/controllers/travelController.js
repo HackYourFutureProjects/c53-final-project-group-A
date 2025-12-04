@@ -19,13 +19,15 @@ export default async function calculateBatchTravelTime(req, res) {
     const formattedHomeAddress = formatAddress(homeAddress);
 
     const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const re = new RegExp(escapeRegExp(homeCity), "i");
+    const re = new RegExp(escapeRegExp(" " + homeCity + " "), "i");
 
     // Build an array of promises. For same-city matches we return an
     // already-resolved promise with zero travel time. For external cities
     // start all `getTransitRouteSummary` calls immediately (concurrent).
     const promises = workCities.map((workCity) => {
-      if (re.test(workCity) || workCity === "Netherlands") {
+      if (re.test(" " + workCity + " ") || workCity === "Netherlands") {
+        console.log("No Fetching, WorkCity", workCity);
+        console.log("No Fetching, homeAddress", homeAddress);
         return Promise.resolve({
           workCity,
           travel_time: 0,
@@ -38,12 +40,16 @@ export default async function calculateBatchTravelTime(req, res) {
         workCity,
         process.env.GOOGLE_MAPS_API_KEY,
       )
-        .then((travelData) => ({
-          workCity,
-          travel_time: Math.round(travelData.travel_time),
-          least_transfers: travelData.least_transfers,
-          travelFetchSuccess: true,
-        }))
+        .then((travelData) => {
+          console.log("Fetching, WorkCity", workCity);
+          console.log("Fetching, homeAddress", homeAddress);
+          return {
+            workCity,
+            travel_time: Math.round(travelData.travel_time),
+            least_transfers: travelData.least_transfers,
+            travelFetchSuccess: true,
+          };
+        })
         .catch((error) => ({
           workCity,
           travelFetchSuccess: false,
