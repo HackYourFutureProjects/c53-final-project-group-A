@@ -26,8 +26,6 @@ export default async function calculateBatchTravelTime(req, res) {
     // start all `getTransitRouteSummary` calls immediately (concurrent).
     const promises = workCities.map((workCity) => {
       if (re.test(" " + workCity + " ") || workCity === "Netherlands") {
-        console.log("No Fetching, WorkCity", workCity);
-        console.log("No Fetching, homeAddress", homeAddress);
         return Promise.resolve({
           workCity,
           travel_time: 0,
@@ -41,8 +39,6 @@ export default async function calculateBatchTravelTime(req, res) {
         process.env.GOOGLE_MAPS_API_KEY,
       )
         .then((travelData) => {
-          console.log("Fetching, WorkCity", workCity);
-          console.log("Fetching, homeAddress", homeAddress);
           return {
             workCity,
             travel_time: Math.round(travelData.travel_time),
