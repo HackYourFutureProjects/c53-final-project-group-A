@@ -109,6 +109,27 @@ const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
           Forgot Password?
         </a>
       </p>
+      <p
+        className="gdpr-text"
+        style={{
+          fontSize: "12px",
+          marginTop: "10px",
+          color: "#666",
+          lineHeight: "1.4",
+        }}
+      >
+        By signing up, you agree to the{" "}
+        <a
+          href="https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#0070f3", textDecoration: "underline" }}
+        >
+          GDPR & Privacy Policy
+        </a>
+        . We handle your data according to GDPR rules. Your information is
+        secure and will be deleted if you remove your account.
+      </p>
     </div>
   );
 };
