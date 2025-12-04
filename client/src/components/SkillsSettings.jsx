@@ -18,7 +18,7 @@ export default function SkillsSettings() {
     setAlert({ type: "", message: "" });
   }
 
-  function delayedClearAlert() {
+  async function delayedClearAlert() {
     return new Promise(() => {
       setTimeout(() => {
         handleClearAlert();
