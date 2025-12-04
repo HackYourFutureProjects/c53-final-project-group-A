@@ -108,6 +108,7 @@ const JobsProvider = ({ children }) => {
         ...job,
         travel_time: travelDetails[city]?.travel_time,
         least_transfers: travelDetails[city]?.least_transfers,
+        travelFetchsuccess: travelDetails[city]?.travelFetchsuccess,
       };
     });
   }
