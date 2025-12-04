@@ -15,8 +15,15 @@ export default function SkillsSettings() {
   const { skills } = user;
 
   function handleClearAlert() {
-    if (!alert.message) return;
     setAlert({ type: "", message: "" });
+  }
+
+  function delayedClearAlert() {
+    return new Promise(() => {
+      setTimeout(() => {
+        handleClearAlert();
+      }, 2000);
+    });
   }
 
   async function changeSkillsHelper(skills) {
@@ -35,7 +42,8 @@ export default function SkillsSettings() {
     const newSkill = cleanUpText(skillInput.value || "");
     const validationError = validateSkillInput({ text: newSkill, skills });
     if (validationError) {
-      setAlert(validationError);
+      setAlert({ type: "error", message: String(validationError) });
+      await delayedClearAlert();
       return;
     }
 
@@ -57,8 +65,10 @@ export default function SkillsSettings() {
         type: "success",
         message: "The skill has been added to the user's profile!",
       });
+      await delayedClearAlert();
     } catch (err) {
-      setAlert({ type: "error", message: err.message });
+      setAlert({ type: "error", message: String(err?.message || err) });
+      await delayedClearAlert();
     }
 
     if (skillInput) {
@@ -81,8 +91,10 @@ export default function SkillsSettings() {
         type: "success",
         message: "The skill has been removed from the user's profile!",
       });
+      await delayedClearAlert();
     } catch (err) {
-      setAlert({ type: "error", message: err.message });
+      setAlert({ type: "error", message: String(err?.message || err) });
+      await delayedClearAlert();
     }
   }
   // -------------------- REMOVE ALL SKILLS --------------------
@@ -97,8 +109,10 @@ export default function SkillsSettings() {
         type: "success",
         message: "All skills have been removed from the user's profile!",
       });
+      await delayedClearAlert();
     } catch (err) {
-      setAlert({ type: "error", message: err.message });
+      setAlert({ type: "error", message: String(err?.message || err) });
+      await delayedClearAlert();
     }
   }
   const visibleSkills = showAll ? skills : skills.slice(0, maxVisible);
