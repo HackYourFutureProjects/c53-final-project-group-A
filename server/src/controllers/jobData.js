@@ -23,9 +23,9 @@ export const searchJobs = async (req, res) => {
     // Fetch results for all search words concurrently
     const fetchPromises = searchWords.map((jobWord, i) =>
       isSearchReal
-        ? searchWords.length >= 2
+        ? searchWords.length > 2 && i >= 2
           ? new Promise((resolve) =>
-              setTimeout(() => resolve(realJobSearch(jobWord)), (i - 1) * 500),
+              setTimeout(() => resolve(realJobSearch(jobWord)), (i - 1) * 700),
             )
           : realJobSearch(jobWord)
         : Promise.resolve(fakeJobSearch(jobWord)),

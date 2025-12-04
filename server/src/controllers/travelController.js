@@ -24,10 +24,25 @@ export default async function calculateBatchTravelTime(req, res) {
     // Build an array of promises. For same-city matches we return an
     // already-resolved promise with zero travel time. For external cities
     // start all `getTransitRouteSummary` calls immediately (concurrent).
+    const workPlacesSet = new Set([
+      "Netherlands",
+      "Drenthe, Netherlands",
+      "Flevoland, Netherlands",
+      "Friesland, Netherlands",
+      "Gelderland, Netherlands",
+      "Groningen, Netherlands",
+      "Limburg, Netherlands",
+      "Noord-Brabant, Netherlands",
+      "Noord-Holland, Netherlands",
+      "Overijssel, Netherlands",
+      "Utrecht, Netherlands",
+      "Zeeland, Netherlands",
+      "Zuid-Holland, Netherlands",
+    ]);
     const promises = workCities.map((workCity) => {
       if (
         re.test(" " + workCity.replace(",", " ") + " ") ||
-        workCity === "Netherlands"
+        workPlacesSet.has(workCity)
       ) {
         return Promise.resolve({
           workCity,
