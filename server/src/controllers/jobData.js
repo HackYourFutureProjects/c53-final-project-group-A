@@ -21,9 +21,13 @@ export const searchJobs = async (req, res) => {
       .split(new RegExp("[\\s\\-.'/]+"))
       .filter(Boolean);
     // Fetch results for all search words concurrently
-    const fetchPromises = searchWords.map((jobWord) =>
+    const fetchPromises = searchWords.map((jobWord, index) =>
       isSearchReal
-        ? realJobSearch(jobWord)
+        ? searchWords.length > 2
+          ? new Promise((resolve) =>
+              setTimeout(() => resolve(realJobSearch(jobWord)), index * 500),
+            )
+          : realJobSearch(jobWord)
         : Promise.resolve(fakeJobSearch(jobWord)),
     );
 

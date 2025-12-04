@@ -27,9 +27,6 @@ const JobsProvider = ({ children }) => {
   }, [jobFetchError]);
 
   function handleFetchResults(data) {
-    console.log("Fetched job data:", data);
-    console.log("Job fetch error state:", jobFetchError);
-
     setAllJobs(data.result);
     setIsJobsLoading(false);
     fetchBatchTravelDetails(data.result);
