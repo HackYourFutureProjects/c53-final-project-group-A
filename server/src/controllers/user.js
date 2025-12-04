@@ -8,6 +8,7 @@ import { logError } from "../util/logging.js";
 import { blacklistedTokens } from "../middleware/authVerify.js";
 import validateCreactUser from "../util/validateCreactUser.js";
 import { updateUserProfile } from "./profile.js";
+import { uploadImage } from "../services/ImageUpload.js";
 
 // JWT Configuration
 
@@ -337,5 +338,34 @@ export const updateProfile = async (req, res) => {
       success: false,
       msg: err instanceof Error ? err.message : "Update error",
     });
+  }
+};
+
+export const updateUserAvatar = async (req, res) => {
+  const { connectedClient, endConnection } = await connectNeonDB();
+  try {
+    const file = req.file;
+    const imageUrl = await uploadImage(file);
+    const userId = req.user.id;
+    await connectedClient.query(
+      `UPDATE users
+      SET avatar = $1
+      WHERE userid = $2 `,
+      [imageUrl, userId],
+    );
+
+    res.send({
+      success: true,
+      message: "Image uploaded successfully.",
+      url: imageUrl,
+    });
+  } catch (error) {
+    logError(error);
+    res.status(500).json({
+      success: false,
+      message: "Error uploading image.",
+    });
+  } finally {
+    if (endConnection) await endConnection();
   }
 };

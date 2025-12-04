@@ -34,8 +34,8 @@ function UserMenu() {
         aria-haspopup="menu"
       >
         <img
-          src={images.defaultAvatar}
-          alt="user avatar"
+          src={user.avatar || defaultUser.avatar}
+          alt={user?.name || "User"}
           className="user-avatar"
         />
         <span className="divider"></span>
