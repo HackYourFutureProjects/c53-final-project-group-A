@@ -7,6 +7,7 @@ import {
 } from "react";
 import { defaultUser } from "../data/defaultUser";
 import { fixUserSkills } from "../util/fixUserSkills";
+import { UseJobs } from "./JobsContext";
 
 const UserContext = createContext();
 
@@ -166,6 +167,8 @@ function UserContextProvider({ children }) {
 
   // -------------------- LOGIN --------------------
   async function login(email, password) {
+    const { setAllJobs } = UseJobs();
+    setAllJobs([]);
     if (email === defaultUser.email) throw new Error("Invalid credentials");
     // eslint-disable-next-line no-useless-catch
     try {
@@ -245,6 +248,8 @@ function UserContextProvider({ children }) {
   }
   // -------------------- LOGOUT --------------------
   async function logout() {
+    const { setAllJobs } = UseJobs();
+    setAllJobs([]);
     try {
       // Attempt to log out on the server side
       await authFetch("/logout", {
