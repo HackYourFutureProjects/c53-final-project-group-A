@@ -16,10 +16,8 @@
 /* Profile Photo Section */
 .profile-avatar-row {
   display: flex;
-  font-display: column;
   align-items: center;
   border-radius: 10px;
-  /* background-color: #fff; */
   background: #fff;
   border: 1px solid #d6ddeb;
   margin-bottom: 24px;
@@ -50,7 +48,6 @@
   padding: 32px;
   margin-bottom: 24px;
   border-radius: 7px;
-  /* background-color: #fff; */
   background: #fff;
   border: 1px solid #d6ddeb;
 }
@@ -75,7 +72,6 @@
   padding: 32px;
   margin-bottom: 24px;
   border-radius: 7px;
-  /* background-color: #fff; */
   background: #fff;
   border: 1px solid #d6ddeb;
 }
@@ -212,11 +208,7 @@
   border: 1px solid #e05151;
   cursor: pointer;
   font-size: 16px;
-  transition:
-    background 0.2s,
-    color 0.2s;
   height: 43px;
-
   padding: 0 1rem;
   transition: all 0.3s ease-in-out;
 }
