@@ -1,0 +1,317 @@
+.profile-container {
+  max-width: 870px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.profile-title {
+  font-weight: 600;
+  text-align: center;
+  margin: 35px 0;
+  font-size: 28px;
+  color: #25324b;
+}
+
+/* Profile Photo Section */
+.profile-avatar-row {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #d6ddeb;
+  margin-bottom: 24px;
+}
+
+.avatar-uploader-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.avatar-uploader-title {
+  color: #25324b;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.avatar-uploader-subtitle {
+  color: #7c8493;
+  font-size: 14px;
+}
+
+/* Basic Information Section */
+.flex-grow {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  margin-bottom: 24px;
+  border-radius: 7px;
+  background: #fff;
+  border: 1px solid #d6ddeb;
+}
+
+.basic-info-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #25324b;
+  margin: 0 0 24px 0;
+}
+
+.profile-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+/* ========== Address & Change Password Sections ========== */
+
+.profile-section {
+  padding: 32px;
+  margin-bottom: 24px;
+  border-radius: 7px;
+  background: #fff;
+  border: 1px solid #d6ddeb;
+}
+
+.profile-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #25324b;
+  margin: 0 0 24px 0;
+}
+
+/* Current Password - single full width */
+.profile-password-single {
+  margin-bottom: 16px;
+}
+
+/* Grid for two inputs in a row */
+.profile-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ========== Form Inputs ========== */
+.profile-field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #515b6f;
+  margin-bottom: 8px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d6ddeb;
+  border-radius: 3px;
+  outline: none;
+  font-size: 14px;
+  color: #25324b;
+  background-color: #fff;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.profile-input::placeholder {
+  color: #a8adb7;
+}
+
+.profile-input:focus {
+  border-color: #4640de;
+  box-shadow: 0 0 0 3px rgba(70, 64, 222, 0.1);
+}
+
+/* Password visibility toggle */
+.profile-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.profile-input-with-icon {
+  padding-right: 40px;
+}
+
+.profile-input-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #a8adb7;
+  transition: color 0.2s;
+}
+
+.profile-input-icon:hover {
+  color: #515b6f;
+}
+
+/* ========== Save Button ========== */
+.profile-save-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.profile-save-btn {
+  background: #4a87e1;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 32px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-save-btn:hover {
+  background: #3978d7;
+}
+
+/* ========== Delete Section ========== */
+.profile-delete-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 32px;
+  border-radius: 7px;
+  background: #f9fafb;
+  border: 1px solid #d6ddeb;
+  margin: 24px 0 35px;
+}
+
+.profile-delete-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #25324b;
+  margin: 0 0 8px 0;
+}
+
+.profile-delete-desc {
+  font-size: 14px;
+  color: #7c8493;
+  margin: 0;
+}
+
+.profile-delete-btn {
+  background: #fff;
+  color: #e05151;
+  border-radius: 3px;
+  border: 1px solid #e05151;
+  cursor: pointer;
+  font-size: 16px;
+  height: 43px;
+  padding: 0 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.profile-delete-btn:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: #e97373;
+}
+
+/* ========== Delete Popup ========== */
+.profile-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.profile-popup-card {
+  background: #fff;
+  border-radius: 7px;
+  padding: 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 400px;
+  text-align: center;
+}
+
+.profile-popup-card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #25324b;
+  margin: 0 0 12px 0;
+}
+
+.profile-popup-card p {
+  font-size: 14px;
+  color: #7c8493;
+  margin: 0 0 24px 0;
+}
+
+.profile-popup-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.profile-btn-secondary {
+  background: #fff;
+  color: #515b6f;
+  border: 1px solid #d6ddeb;
+  border-radius: 7px;
+  padding: 10px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.profile-btn-secondary:hover {
+  background: #f8f9fa;
+}
+
+.profile-btn-primary {
+  background: #4a87e1;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.profile-btn-primary:hover {
+  background: #3978d7;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .profile-fields,
+  .profile-fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-avatar-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-delete-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .profile-save-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

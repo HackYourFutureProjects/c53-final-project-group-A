@@ -1,4 +1,5 @@
 import { UseUser } from "../context/UserContext";
+import "./AddressSettings.css";
 
 export default function AddressSettings({
   handleSaveClick,
@@ -22,36 +23,33 @@ export default function AddressSettings({
   }
   return (
     <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-900 mb-3">
-        Address
-      </label>
       <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <label className="block text-xs text-gray-600 mb-1">Street</label>
+          <label className="address-label">Street</label>
           <input
             id="streetInput"
             ref={streetInputRef}
             type="text"
             defaultValue={user?.street ?? ""}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="address-input"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-600 mb-1">House no.</label>
+          <label className="address-label">House no.</label>
           <input
             id="houseInput"
             ref={houseInputRef}
             type="text"
             defaultValue={user?.housenumber ?? ""}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="address-input"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-600 mb-1">
+          <label className="address-label">
             City <span className="text-red-500">*</span>
           </label>
           <input
@@ -60,19 +58,19 @@ export default function AddressSettings({
             type="text"
             defaultValue={user?.city ?? ""}
             aria-required="true"
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="address-input"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-600 mb-1">Country</label>
+          <label className="address-label">Country</label>
           <input
             id="countryInput"
             ref={countryInputRef}
             type="text"
             defaultValue={user?.country ?? ""}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="address-input"
             onKeyDown={pressEnterKey}
             onChange={clearAlert}
           />

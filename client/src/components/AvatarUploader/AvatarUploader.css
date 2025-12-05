@@ -1,11 +1,12 @@
 .avatar-uploader-container {
   position: relative;
   display: inline-block;
+  margin: 32px;
 }
 
 .avatar-image {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background: #e2e8f0;
   border-radius: 50%;
   object-fit: cover;
@@ -17,10 +18,10 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 24px;
-  height: 24px;
-  background: #fff;
-  border: 1px solid #d1d5db;
+  width: 30px;
+  height: 30px;
+  background: #d4dcff;
+  border: 2px solid white;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -34,7 +35,6 @@
 }
 
 .avatar-edit-icon {
-  width: 14px;
-  height: 14px;
-  color: #4b5563;
+  width: 20px;
+  height: 20px;
 }

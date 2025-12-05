@@ -13,6 +13,8 @@ import {
 } from "../../util/AuthValidation";
 import { Eye, EyeOff } from "lucide-react";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
+import "./Profile.css";
+
 export default function Profile() {
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -248,162 +250,157 @@ export default function Profile() {
   function pressEnterKey(e) {
     if (e.key === "Enter") handleSaveClick();
   }
+
   return (
-    <div className="content-container">
-      {/* <!-- Page Title --> */}
-      <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">
-        Profile
-      </h1>
-      {/* <!-- Profile Section with Avatar and Name --> */}
-      <div className="flex items-start space-x-4">
+    <div className="profile-container">
+      <h1 className="profile-title">Profile</h1>
+
+      <div className="profile-avatar-row">
         {/* <!-- Avatar with the editing/updating button --> */}
         <AvatarUploader
           user={user}
           updateProfile={updateProfile}
           setAlert={setAlert}
         />
+        <div className="avatar-uploader-info">
+          <h3 className="avatar-uploader-title">Profile photo</h3>
+          <span className="avatar-uploader-subtitle">
+            Upload a new profile picture
+          </span>
+        </div>
+      </div>
 
-        <div className="flex-grow">
-          {/* <!-- First and Last Name --> */}
-          <label className="block text-sm font-medium text-gray-900 mb-2">
-            Name
-          </label>
-          <div className="grid grid-cols-2 gap-4 mb-3">
-            <div>
-              <label className="block text-xs text-gray-600 mb-1">
-                First Name
-              </label>
-              <input
-                ref={firstnameInputRef}
-                type="text"
-                defaultValue={user.firstname}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onKeyDown={pressEnterKey}
-                onChange={handleClearAlert}
-              />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-600 mb-1">
-                Last Name
-              </label>
-              <input
-                ref={lastnameInputRef}
-                type="text"
-                defaultValue={user.lastname}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onKeyDown={pressEnterKey}
-                onChange={handleClearAlert}
-              />
-            </div>
+      <div className="flex-grow">
+        {/* <!-- First and Last Name --> */}
+        <h3 className="basic-info-title">Basic information</h3>
+        <div className="profile-fields">
+          <div className="profile-info-left">
+            <label className="profile-field-label">First name</label>
+            <input
+              ref={firstnameInputRef}
+              type="text"
+              defaultValue={user?.firstname || ""}
+              className="profile-input"
+              onKeyDown={pressEnterKey}
+              onChange={handleClearAlert}
+            />
+          </div>
+          <div className="profile-info">
+            <label className="profile-field-label">Last name</label>
+            <input
+              ref={lastnameInputRef}
+              type="text"
+              defaultValue={user?.lastname || ""}
+              className="profile-input"
+              onKeyDown={pressEnterKey}
+              onChange={handleClearAlert}
+            />
           </div>
         </div>
       </div>
-      <AddressSettings
-        streetInputRef={streetInputRef}
-        houseInputRef={houseInputRef}
-        cityInputRef={cityInputRef}
-        countryInputRef={countryInputRef}
-        clearAlert={handleClearAlert}
-      />
-      <label className="block text-sm font-medium text-gray-900 mb-3">
-        Change Password
-      </label>
-      <div className="grid grid-cols-2 gap-4 mb-3">
-        <div>
-          <label className="block text-xs text-gray-600 mb-1">
-            Type Your Current Password
+
+      <div className="profile-section">
+        <h3 className="profile-section-title">Address</h3>
+        <AddressSettings
+          streetInputRef={streetInputRef}
+          houseInputRef={houseInputRef}
+          cityInputRef={cityInputRef}
+          countryInputRef={countryInputRef}
+          clearAlert={handleClearAlert}
+        />
+      </div>
+
+      <div className="profile-section">
+        <h3 className="profile-section-title">Change password</h3>
+        <div className="profile-password-single">
+          <label className="profile-field-label">
+            Type your current password
           </label>
-          <div className="input-wrapper">
+          <div className="profile-input-wrapper">
             <input
               id="currentPasswordInput"
               ref={currentPasswordInputRef}
               type={showPassword ? "text" : "password"}
               placeholder="Type 8 characters or more"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="profile-input profile-input-with-icon"
               onKeyDown={pressEnterKey}
               onChange={handleClearAlert}
-              style={{ paddingRight: "35px" }}
             />
             {showPassword ? (
               <EyeOff
                 size={18}
-                className="input-icon-right-password"
+                className="profile-input-icon"
                 onClick={() => setShowPassword(false)}
               />
             ) : (
               <Eye
                 size={18}
-                className="input-icon-right-password"
+                className="profile-input-icon"
                 onClick={() => setShowPassword(true)}
               />
             )}
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4 mb-3">
-        <div>
-          <label className="block text-xs text-gray-600 mb-1">
-            Set New Password
-          </label>
-          <div className="input-wrapper">
-            <input
-              id="newPasswordInput"
-              ref={newPasswordInputRef}
-              type={newPassword ? "text" : "password"}
-              placeholder="Type 8 characters or more"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyDown={pressEnterKey}
-              onChange={handleClearAlert}
-              style={{ paddingRight: "35px" }}
-            />
-            {newPassword ? (
-              <EyeOff
-                size={18}
-                className="input-icon-right-password"
-                onClick={() => setNewPassword(false)}
+        <div className="profile-fields-grid">
+          <div>
+            <label className="profile-field-label">Set new password</label>
+            <div className="profile-input-wrapper">
+              <input
+                id="newPasswordInput"
+                ref={newPasswordInputRef}
+                type={newPassword ? "text" : "password"}
+                placeholder="Type 8 characters or more"
+                className="profile-input profile-input-with-icon"
+                onKeyDown={pressEnterKey}
+                onChange={handleClearAlert}
               />
-            ) : (
-              <Eye
-                size={18}
-                className="input-icon-right-password"
-                onClick={() => setNewPassword(true)}
-              />
-            )}
+              {newPassword ? (
+                <EyeOff
+                  size={18}
+                  className="profile-input-icon"
+                  onClick={() => setNewPassword(false)}
+                />
+              ) : (
+                <Eye
+                  size={18}
+                  className="profile-input-icon"
+                  onClick={() => setNewPassword(true)}
+                />
+              )}
+            </div>
           </div>
-        </div>
-        <div>
-          <label className="block text-xs text-gray-600 mb-1">
-            Confirm Password
-          </label>
-          <div className="input-wrapper">
-            <input
-              id="confirmPasswordInput"
-              ref={confirmPasswordInputRef}
-              type={showConfirmationPassword ? "text" : "password"}
-              placeholder="Write the same password again"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyDown={pressEnterKey}
-              onChange={handleClearAlert}
-              style={{ paddingRight: "35px" }}
-            />
-            {showConfirmationPassword ? (
-              <EyeOff
-                size={18}
-                className="input-icon-right-password"
-                onClick={() => setShowConfirmationPassword(false)}
+
+          <div>
+            <label className="profile-field-label">Confirm password</label>
+            <div className="profile-input-wrapper">
+              <input
+                id="confirmPasswordInput"
+                ref={confirmPasswordInputRef}
+                type={showConfirmationPassword ? "text" : "password"}
+                placeholder="Write the same password again"
+                className="profile-input profile-input-with-icon"
+                onKeyDown={pressEnterKey}
+                onChange={handleClearAlert}
               />
-            ) : (
-              <Eye
-                size={18}
-                className="input-icon-right-password"
-                onClick={() => setShowConfirmationPassword(true)}
-              />
-            )}
+              {showConfirmationPassword ? (
+                <EyeOff
+                  size={18}
+                  className="profile-input-icon"
+                  onClick={() => setShowConfirmationPassword(false)}
+                />
+              ) : (
+                <Eye
+                  size={18}
+                  className="profile-input-icon"
+                  onClick={() => setShowConfirmationPassword(true)}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
       {/* <!-- Save Button --> */}
-      <div className="flex items-center justify-end mb-8 space-x-4">
+      <div className="profile-save-row">
         {alert.message && (
           <div className="md:w-auto">
             <AlertMessage type={alert.type} message={alert.message} />
@@ -413,52 +410,51 @@ export default function Profile() {
           <button
             id="saveBtn"
             onClick={handleSaveClick}
-            className="bg-blue-500 text-white text-2xl px-6 py-3 rounded hover:bg-blue-600 transition font-medium"
+            className="profile-save-btn"
           >
             Save
           </button>
         </div>
       </div>
       <SkillsSettings />
-      <hr className="border-gray-300 mb-8" />
-      {/* <!-- Profile Deletion Section --> */}
-      <div className="flex items-start justify-between">
+
+      <div className="profile-delete-row">
         <div>
-          <h3 className="font-medium text-gray-900 mb-1">Delete Profile</h3>
-          <p className="text-sm text-gray-600">
+          <h3 className="profile-delete-title">Delete profile</h3>
+          <p className="profile-delete-desc">
             Permanently delete your account and data.
           </p>
         </div>
-        <button
-          onClick={handleDeleteClick}
-          className="px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
-        >
-          Delete Profile
+        <button onClick={handleDeleteClick} className="profile-delete-btn">
+          Delete profile
         </button>
       </div>
       {/* DELETE CONFIRM POPUP */}
       {showDeletePopup && (
-        <div className="popup-overlay">
-          <div className="popup-card">
+        <div className="profile-popup-overlay">
+          <div className="profile-popup-card">
             {!deleteSuccess ? (
               <>
                 <h2>Are you sure?</h2>
                 <p>This will permanently delete your account.</p>
-                <div className="popup-buttons">
+                <div className="profile-popup-buttons">
                   <button
-                    className="btn-secondary"
+                    className="profile-btn-secondary"
                     onClick={handleCancelDelete}
                   >
                     Cancel
                   </button>
-                  <button className="btn-primary" onClick={handleConfirmDelete}>
+                  <button
+                    className="profile-btn-primary"
+                    onClick={handleConfirmDelete}
+                  >
                     OK
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <h2>Account Deleted</h2>
+                <h2>Account deleted</h2>
                 <p>
                   Your account has been deleted successfully.
                   <br />

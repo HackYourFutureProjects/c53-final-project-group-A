@@ -1,8 +1,9 @@
 .skills-container {
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 32px;
   border: 1px solid #dcdfe5;
-  border-radius: 10px;
+  border-radius: 7px;
+  background: #fff;
 }
 
 .skills-section {
@@ -34,7 +35,7 @@
   height: 43px;
   border: 1px solid #d1d5db;
   border-radius: 0.25rem;
-  font-size: 1rem;
+  font-size: 14px;
   outline: none;
   transition:
     box-shadow 0.15s ease,
@@ -44,7 +45,7 @@
 }
 
 .skill-input::placeholder {
-  color: #9ca3af;
+  color: #a8adb7;
 }
 
 .skills-input input {
@@ -105,10 +106,10 @@
 
 .add-skill-btn {
   padding: 0 1.5rem;
-  background: #3b82f6;
+  background: #4a87e1;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   font-weight: 400;
   cursor: pointer;
   transition: all 0.2s;
@@ -119,7 +120,7 @@
 }
 
 .add-skill-btn:hover {
-  opacity: 0.9;
+  background: #3978d7;
 }
 
 .remove-all-btn {
@@ -127,8 +128,8 @@
   cursor: pointer;
   display: flex;
   border: 1px solid #d1d5db;
-  color: #f4b0b0;
-  border-radius: 5px;
+  color: #e88989;
+  border-radius: 3px;
   padding: 0 1rem;
   align-items: center;
   font-size: 16px;
@@ -139,7 +140,7 @@
 .remove-all-btn:hover {
   background-color: #f9fafb;
   border-color: #9ca3af;
-  color: #e29696;
+  color: #e97373;
 }
 
 .show-all-btn {
@@ -186,4 +187,12 @@
   .skill-item {
     padding: 0.25rem 0.5rem;
   }
+}
+
+.profile-input:-webkit-autofill,
+.profile-input:-webkit-autofill:hover,
+.profile-input:-webkit-autofill:focus,
+.profile-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
 }
