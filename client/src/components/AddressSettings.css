@@ -1,0 +1,26 @@
+.address-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d6ddeb;
+  border-radius: 3px;
+  outline: none;
+  font-size: 14px;
+  color: #25324b;
+  background-color: #fff;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.address-input:focus {
+  border-color: #4640de;
+  box-shadow: 0 0 0 3px rgba(70, 64, 222, 0.1);
+}
+
+.address-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #515b6f;
+  margin-bottom: 8px;
+}
