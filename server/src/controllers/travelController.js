@@ -19,18 +19,36 @@ export default async function calculateBatchTravelTime(req, res) {
     const formattedHomeAddress = formatAddress(homeAddress);
 
     const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const re = new RegExp(escapeRegExp(homeCity), "i");
+    const re = new RegExp(escapeRegExp(" " + homeCity + " "), "i");
 
     // Build an array of promises. For same-city matches we return an
     // already-resolved promise with zero travel time. For external cities
     // start all `getTransitRouteSummary` calls immediately (concurrent).
+    const workPlacesSet = new Set([
+      "Netherlands",
+      "Drenthe, Netherlands",
+      "Flevoland, Netherlands",
+      "Friesland, Netherlands",
+      "Gelderland, Netherlands",
+      "Groningen, Netherlands",
+      "Limburg, Netherlands",
+      "Noord-Brabant, Netherlands",
+      "Noord-Holland, Netherlands",
+      "Overijssel, Netherlands",
+      "Utrecht, Netherlands",
+      "Zeeland, Netherlands",
+      "Zuid-Holland, Netherlands",
+    ]);
     const promises = workCities.map((workCity) => {
-      if (re.test(workCity) || workCity === "Netherlands") {
+      if (
+        re.test(" " + workCity.replace(",", " ") + " ") ||
+        workPlacesSet.has(workCity)
+      ) {
         return Promise.resolve({
           workCity,
           travel_time: 0,
           least_transfers: 0,
-          success: true,
+          travelFetchSuccess: true,
         });
       }
       return getTransitRouteSummary(
@@ -38,15 +56,17 @@ export default async function calculateBatchTravelTime(req, res) {
         workCity,
         process.env.GOOGLE_MAPS_API_KEY,
       )
-        .then((travelData) => ({
-          workCity,
-          travel_time: Math.round(travelData.travel_time),
-          least_transfers: travelData.least_transfers,
-          success: true,
-        }))
+        .then((travelData) => {
+          return {
+            workCity,
+            travel_time: Math.round(travelData.travel_time),
+            least_transfers: travelData.least_transfers,
+            travelFetchSuccess: true,
+          };
+        })
         .catch((error) => ({
           workCity,
-          success: false,
+          travelFetchSuccess: false,
           error: error.message,
         }));
     });

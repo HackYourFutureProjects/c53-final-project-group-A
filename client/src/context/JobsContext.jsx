@@ -1,5 +1,5 @@
 import { UseUser } from "./UserContext";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 
 const JobsContext = createContext();
@@ -14,13 +14,29 @@ const JobsProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState(""); //  global search term
   const [showResults, setShowResults] = useState(false); //control when results appear
 
-  const handleFetchResults = (data) => {
+  // Clear jobs when user logs in/out
+  useEffect(() => {
+    setAllJobs([]);
+    setTravelDetails({});
+  }, [user.email]);
+
+  function handleFetchResults(data) {
     setAllJobs(data.result);
     setIsJobsLoading(false);
     fetchBatchTravelDetails(data.result);
-  };
+  }
 
-  const { performFetch } = useFetch("/jobs/search", handleFetchResults);
+  const { error: jobFetchError, performFetch } = useFetch(
+    "/jobs/search",
+    handleFetchResults,
+  );
+
+  useEffect(() => {
+    if (jobFetchError) {
+      setError(jobFetchError);
+      setIsJobsLoading(false);
+    }
+  }, [jobFetchError]);
 
   async function fetchJobWordsBySearchWords(searchWords) {
     setError(null);
@@ -82,8 +98,12 @@ const JobsProvider = ({ children }) => {
       const detailsMap = { ...travelDetails };
       if (data.result && Array.isArray(data.result.travelDetails)) {
         data.result.travelDetails.forEach(
-          ({ workCity, travel_time, least_transfers }) => {
-            detailsMap[workCity] = { travel_time, least_transfers };
+          ({ workCity, travel_time, least_transfers, travelFetchSuccess }) => {
+            detailsMap[workCity] = {
+              travel_time,
+              least_transfers,
+              travelFetchSuccess,
+            };
           },
         );
       }
@@ -104,6 +124,7 @@ const JobsProvider = ({ children }) => {
         ...job,
         travel_time: travelDetails[city]?.travel_time,
         least_transfers: travelDetails[city]?.least_transfers,
+        travelFetchSuccess: travelDetails[city]?.travelFetchSuccess,
       };
     });
   }
