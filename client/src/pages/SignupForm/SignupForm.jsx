@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Loader,
   X,
   UserPlus,
   CheckCircle,
@@ -17,6 +16,7 @@ import {
   validatePasswordMatch,
   validateEmail,
 } from "../../util/AuthValidation";
+import { gif } from "../../assets";
 
 const SignupForm = ({
   signup,
@@ -259,12 +259,8 @@ const SignupForm = ({
         <button type="submit" disabled={loading}>
           {loading ? (
             <>
-              <Loader
-                className="spin"
-                size={18}
-                style={{ marginRight: "5px" }}
-              />
-              Signing up...
+              <span>Signing up...</span>
+              <img src={gif.spinner} className="spinner" />
             </>
           ) : (
             <>
