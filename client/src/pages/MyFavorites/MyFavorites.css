@@ -1,0 +1,15 @@
+.page-header-container h2 {
+  font-weight: 600;
+  text-align: center;
+  margin: 35px 0;
+  font-size: 28px;
+  color: #25324b;
+}
+
+.results-title,
+.favorites-no-found {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}

@@ -34,8 +34,9 @@
 .job-filters-bar {
   background-color: white;
   border-bottom: 1px solid #e5e7eb;
-  padding-top: 1rem;
+  padding: 1rem 0 0.5rem;
   width: 100%;
+
 }
 
 .filters-container {

@@ -49,16 +49,16 @@
 }
 
 .btn-primary {
-  background-color: #000;
+  background-color: #4a87e1;
   color: #fff;
   border: none;
   padding: 10px 16px;
-  border-radius: 6px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
 .btn-primary:hover {
-  background-color: #111827;
+  background-color: #3272d2;
 }
 
 .btn-secondary {

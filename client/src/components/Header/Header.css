@@ -7,9 +7,11 @@
   padding: 0 24px 0 24px;
   border-bottom: 1px solid #e2e6e9;
   position: sticky;
-  background-color: #fff;
   top: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(44, 44, 44, 0.08);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .brand {
@@ -58,7 +60,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1rem;
-  background: #dce5ff;
+  background-color: #d6e6ff;
   border-radius: 60px;
   transition: background 0.2s;
 }
@@ -128,12 +130,16 @@
 .alert-message {
   background-color: #4a87e1;
   color: white;
-  padding: 10px 15px;
+  padding: 16px 20px;
   position: fixed;
   top: 90px;
   right: 20px;
   z-index: 1000;
-  border-radius: 12px;
+  border-radius: 7px;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.alert-message p {
+  margin: 0;
 }
