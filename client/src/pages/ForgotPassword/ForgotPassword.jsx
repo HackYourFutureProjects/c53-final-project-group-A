@@ -54,7 +54,7 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
               {userLoading ? (
                 <>
                   <span>Sending...</span>
-                  <img src={gif.spinner} className="travel-spinner" />
+                  <img src={gif.spinner} className="spinner" />
                 </>
               ) : (
                 "Send Reset Link"
