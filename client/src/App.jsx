@@ -8,7 +8,7 @@ import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import AuthForms from "./components/AuthForms/AuthForms";
 import About from "./pages/About/About";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import ResetPasswordForm from "./pages/ResetPassword/ResetPassword.jsx";
+import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   return (

@@ -9,7 +9,7 @@ import "./OpenPositions.css";
 import { findFilterOptions, filterJobs } from "../../util/filterJobs";
 import getSkillsInDescription from "../../util/getSkillsInDescription";
 import SkillsSettings from "../../components/SkillsSettings/SkillsSettings";
-import { UseJobs } from "../../context/JobsContext.jsx";
+import { UseJobs } from "../../context/JobsContext";
 import createSortComparator from "../../util/createSortComparator";
 
 export default function OpenPositions() {
