@@ -135,10 +135,16 @@ footer {
 }
 
 .content-container {
-  max-width: 1140px;
   margin: 0 auto;
-  padding: 0 20px 0 20px;
+  padding: 0 20px;
   width: 100%;
+  max-width: clamp(700px, 70%, 1200px);
+}
+
+@media (min-width: 1600px) {
+  .content-container {
+    max-width: 1400px;
+  }
 }
 
 /* ============================================
