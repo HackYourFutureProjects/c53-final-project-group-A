@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { UseJobs } from "../context/JobsContext";
+import { UseJobs } from "../../context/JobsContext";
 import AlertMessage from "./AlertMessage/AlertMessage";
-import { validateJobInput } from "../util/searchValidation";
+import { validateJobInput } from "../../util/searchValidation";
 import "./SearchInput.css";
 import { cleanUpText } from "../util/cleanUpText";
 
