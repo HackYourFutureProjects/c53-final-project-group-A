@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SkillsSettings from "../../components/SkillsSettings";
+import SkillsSettings from "../../components/SkillsSettings/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
 import { cleanUpText } from "../../util/cleanUpText";
