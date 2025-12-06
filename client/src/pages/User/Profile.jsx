@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SkillsSettings from "../../components/SkillsSettings/SkillsSettings";
-import AddressSettings from "../../components/AddressSettings";
+import AddressSettings from "../../components/AddressSettings/AddressSettings";
 import AlertMessage from "../../components/AlertMessage";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
