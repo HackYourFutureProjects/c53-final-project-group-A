@@ -128,17 +128,6 @@
   margin-bottom: 12px;
 }
 
-.spin {
-  animation: spin 1s linear infinite;
-  display: inline-block;
-  vertical-align: middle;
-}
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .spinner {
   width: 20px;
   height: 20px;
