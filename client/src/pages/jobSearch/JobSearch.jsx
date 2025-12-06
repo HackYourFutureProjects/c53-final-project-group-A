@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import SearchInput from "../../components/SearchInput.jsx";
+import SearchInput from "../../components/SearchInput/SearchInput.jsx";
 import "./JobSearch.css";
 import { icons } from "../../assets/index.js";
 import { defaultUser } from "../../data/defaultUser.js";
