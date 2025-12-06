@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { validateSkillInput } from "../util/skillValidation";
-import AlertMessage from "./AlertMessage";
+import AlertMessage from "../AlertMessage/AlertMessage";
 import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
 import { cleanUpText } from "../util/cleanUpText";
 import { UseUser } from "../context/UserContext";
