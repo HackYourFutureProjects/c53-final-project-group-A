@@ -2,13 +2,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import JobSearch from "./pages/jobSearch/JobSearch";
 import OpenPositions from "./pages/openPositions/OpenPositions";
-import Profile from "./pages/User/Profile";
+import Profile from "./pages/Profile/Profile";
 import "./index.css";
 import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import AuthForms from "./components/AuthForms/AuthForms";
 import About from "./pages/About/About";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import ResetPasswordForm from "./pages/ResetPassword/ResetPassword.jsx";
+import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   return (

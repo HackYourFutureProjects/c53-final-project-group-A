@@ -128,15 +128,13 @@
   margin-bottom: 12px;
 }
 
-.spin {
-  animation: spin 1s linear infinite;
-  display: inline-block;
+.spinner {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: inline;
   vertical-align: middle;
-}
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
+  margin-left: 5px;
 }
 
 .password-rule-list {

@@ -5,8 +5,8 @@ import SignupForm from "../../pages/SignupForm/SignupForm";
 import SignupSuccessPopup from "../SuccessPopup/SignupSuccessPopup";
 import LoginSuccessPopup from "../SuccessPopup/LoginSuccessPopup";
 import { UseUser } from "../../context/UserContext";
-import ForgotPasswordForm from "../../pages/ForgotPassword/ForgotPassword.jsx";
-import ResetPasswordForm from "../../pages/ResetPassword/ResetPassword.jsx";
+import ForgotPasswordForm from "../../pages/ForgotPassword/ForgotPassword";
+import ResetPasswordForm from "../../pages/ResetPassword/ResetPassword";
 import "./AuthForms.css";
 
 const AuthForms = () => {

@@ -1,4 +1,4 @@
-import { UseUser } from "../context/UserContext";
+import { UseUser } from "../../context/UserContext";
 import "./AddressSettings.css";
 
 export default function AddressSettings({

@@ -174,11 +174,7 @@ export default function JobCard({
               {/* commute info block*/}
               <div className="job-commute-info">
                 {isTravelLoading && (
-                  <img
-                    src={gif.spinner}
-                    alt="Loading..."
-                    className="travel-spinner"
-                  />
+                  <img src={gif.spinner} alt="Loading..." className="spinner" />
                 )}
                 {job.travelFetchSuccess && (
                   <>
