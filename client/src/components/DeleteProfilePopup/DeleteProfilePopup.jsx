@@ -1,8 +1,9 @@
 import { UseUser } from "../../context/UserContext";
 import "./DeleteProfilePopup.css";
+import { defaultUser } from "../../data/defaultUser";
 
 export default function DeleteProfilePopup({ setShowDeletePopup }) {
-  const { deleteUser, dispatch, defaultUser } = UseUser();
+  const { deleteUser, dispatch } = UseUser();
 
   const handleConfirmDelete = async () => {
     try {
