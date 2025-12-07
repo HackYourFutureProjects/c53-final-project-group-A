@@ -136,7 +136,6 @@
 .job-commute-info {
   margin: 8px 0 12px 0;
   font-size: 14px;
-  /* color: #007bff; */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -173,10 +172,10 @@
 
 .more-apply-btn {
   padding: 0.5rem 1.5rem;
-  background-color: black;
+  background-color: #4a87e1;
   color: white;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 3px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
@@ -184,7 +183,7 @@
 }
 
 .more-apply-btn:hover {
-  background-color: #374151;
+  background-color: #3272d2;
 }
 
 /* Responsive tweaks */

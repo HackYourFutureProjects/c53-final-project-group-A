@@ -155,8 +155,8 @@ export default function OpenPositions() {
 
         {!isJobsLoading && filteredJobs.length === 0 && (
           <p className="job-message">
-            No jobs are shown. Go to <strong>Job Search</strong> or{" "}
-            <strong>Clear Filters</strong> to see more results.
+            No jobs are shown. Go to <strong>Job search</strong> or{" "}
+            <strong>Clear filters</strong> to see more results.
           </p>
         )}
 

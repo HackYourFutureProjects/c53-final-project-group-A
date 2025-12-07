@@ -16,10 +16,13 @@ export default function JobSearch() {
   return (
     <div className="job-search-container">
       <div className="mission-section">
-        <h1>Master navigating the sea of irrelevant jobs with JobCompass</h1>
+        <h1>
+          Master navigating the sea of irrelevant jobs with{" "}
+          <span>JobCompass</span>
+        </h1>
         <p className="subtitle">
           Tell us your skills, role, location, and we’ll steer you to the right
-          job with the least commute time.
+          job with the least commute time
         </p>
       </div>
       <SearchInput />

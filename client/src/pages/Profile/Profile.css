@@ -265,7 +265,7 @@
   background: #fff;
   color: #515b6f;
   border: 1px solid #d6ddeb;
-  border-radius: 7px;
+  border-radius: 3px;
   padding: 10px 24px;
   cursor: pointer;
   font-weight: 600;
@@ -281,7 +281,7 @@
   background: #4a87e1;
   color: #fff;
   border: none;
-  border-radius: 7px;
+  border-radius: 3px;
   padding: 10px 24px;
   cursor: pointer;
   font-weight: 600;

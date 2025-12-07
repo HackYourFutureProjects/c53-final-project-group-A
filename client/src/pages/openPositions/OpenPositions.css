@@ -34,7 +34,7 @@
 .job-filters-bar {
   background-color: white;
   border-bottom: 1px solid #e5e7eb;
-  padding-top: 1rem;
+  padding: 1rem 0 0.5rem;
   width: 100%;
 }
 
@@ -60,7 +60,6 @@
   color: rgb(59, 130, 246);
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: background-color 0.2s;
   font-size: 16px;
   height: 43px;
   transition: all 0.3s ease-in-out;
@@ -75,10 +74,7 @@
 .job-message {
   text-align: center;
   font-size: 1.125rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 1rem;
 }
 
 .error-message {
