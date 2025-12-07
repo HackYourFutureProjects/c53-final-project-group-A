@@ -176,7 +176,7 @@ export default function JobCard({
                 {isTravelLoading && (
                   <img src={gif.spinner} alt="Loading..." className="spinner" />
                 )}
-                {job.travelFetchSuccess && (
+                {job.travel_time !== null && job.least_transfers !== null && (
                   <>
                     <Bus className="job-icon" />
                     <span className="job-commute">
