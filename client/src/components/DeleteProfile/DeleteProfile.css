@@ -1,0 +1,128 @@
+/* Delete Profile Section */
+.profile-delete-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 32px;
+  gap: 16px;
+}
+
+.profile-delete-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.profile-delete-desc {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.profile-delete-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.profile-delete-btn:hover {
+  background-color: #dc2626;
+}
+
+.profile-delete-btn:active {
+  background-color: #b91c1c;
+}
+
+/* Delete Confirmation Popup */
+.profile-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.profile-popup-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-popup-card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+.profile-popup-card p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+.profile-popup-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.profile-btn-secondary {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex: 1;
+  max-width: 160px;
+}
+
+.profile-btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.profile-btn-primary {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex: 1;
+  max-width: 160px;
+}
+
+.profile-btn-primary:hover {
+  background-color: #dc2626;
+}
+
+.profile-btn-primary:active {
+  background-color: #b91c1c;
+}
