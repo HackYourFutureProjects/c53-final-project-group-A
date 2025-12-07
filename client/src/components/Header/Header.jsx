@@ -2,7 +2,7 @@ import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { images, icons } from "../../assets";
-import { UseUser } from "../../context/UserContext.jsx";
+import { UseUser } from "../../context/UserContext";
 import { defaultUser } from "../../data/defaultUser.js";
 //dropdown menu
 function UserMenu() {

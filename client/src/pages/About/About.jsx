@@ -60,7 +60,6 @@ export default function About() {
       avatar: images.timAvatar,
       description:
         "Our Tech Lead who guided us through technical sessions, helping us navigate challenges, distribute responsibilities, and establish effective development workflows — especially during the critical early stages of the project.",
-
       gitHub: "https://github.com/tlorent",
       linkedin: "https://www.linkedin.com/in/timlorent/",
     },

@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { UseUser } from "../../context/UserContext";
 import { Mail } from "lucide-react";
+import { gif } from "../../assets";
 
 const ForgotPasswordForm = ({ switchToLogin }) => {
-  const { requestPasswordReset, loading, error, clearError } = UseUser();
+  const {
+    requestPasswordReset,
+    loading: userLoading,
+    error,
+    clearError,
+  } = UseUser();
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
 
@@ -44,8 +50,15 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
               <Mail size={18} className="input-icon-right" />
             </div>
             {error && <p className="error-text">{error}</p>}
-            <button type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Send Reset Link"}
+            <button type="submit" disabled={userLoading}>
+              {userLoading ? (
+                <>
+                  <span>Sending...</span>
+                  <img src={gif.spinner} className="spinner" />
+                </>
+              ) : (
+                "Send Reset Link"
+              )}
             </button>
           </form>
 

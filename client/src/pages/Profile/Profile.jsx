@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import SkillsSettings from "../../components/SkillsSettings";
-import AddressSettings from "../../components/AddressSettings";
-import AlertMessage from "../../components/AlertMessage";
+import SkillsSettings from "../../components/SkillsSettings/SkillsSettings";
+import AddressSettings from "../../components/AddressSettings/AddressSettings";
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
@@ -13,10 +12,10 @@ import {
 } from "../../util/AuthValidation";
 import { Eye, EyeOff } from "lucide-react";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
+import DeleteProfilePopup from "../../components/DeleteProfilePopup/DeleteProfilePopup";
 import "./Profile.css";
 
 export default function Profile() {
-  const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
   const firstnameInputRef = useRef(null);
   const lastnameInputRef = useRef(null);
@@ -27,40 +26,12 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const { user, updateProfile, deleteUser, changePassword } = UseUser();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
   const [newPassword, setNewPassword] = useState(false);
-
-  //  SHOW DELETE CONFIRM POPUP
-  const handleDeleteClick = () => {
-    setShowDeletePopup(true);
-  };
-
-  //  USER CONFIRMS DELETE
-  const handleConfirmDelete = async () => {
-    try {
-      await deleteUser();
-      setDeleteSuccess(true);
-
-      // Redirect to login after 2 seconds
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete account. Please try again later.");
-      setShowDeletePopup(false);
-    }
-  };
-
-  //  CANCEL DELETE
-  const handleCancelDelete = () => {
-    setShowDeletePopup(false);
-  };
+  const { user, updateProfile, changePassword } = UseUser();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -82,6 +53,10 @@ export default function Profile() {
     if (!alert.message) return;
     setAlert({ type: "", message: "" });
   }
+
+  const handleDeleteClick = () => {
+    setShowDeletePopup(true);
+  };
 
   async function handleSaveClick() {
     handleClearAlert();
@@ -417,7 +392,7 @@ export default function Profile() {
         </div>
       </div>
       <SkillsSettings />
-
+      {/* DELETE PROFILE */}
       <div className="profile-delete-row">
         <div>
           <h3 className="profile-delete-title">Delete profile</h3>
@@ -429,41 +404,8 @@ export default function Profile() {
           Delete profile
         </button>
       </div>
-      {/* DELETE CONFIRM POPUP */}
       {showDeletePopup && (
-        <div className="profile-popup-overlay">
-          <div className="profile-popup-card">
-            {!deleteSuccess ? (
-              <>
-                <h2>Are you sure?</h2>
-                <p>This will permanently delete your account.</p>
-                <div className="profile-popup-buttons">
-                  <button
-                    className="profile-btn-secondary"
-                    onClick={handleCancelDelete}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="profile-btn-primary"
-                    onClick={handleConfirmDelete}
-                  >
-                    OK
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <h2>Account deleted</h2>
-                <p>
-                  Your account has been deleted successfully.
-                  <br />
-                  Redirecting to login...
-                </p>
-              </>
-            )}
-          </div>
-        </div>
+        <DeleteProfilePopup setShowDeletePopup={setShowDeletePopup} />
       )}
     </div>
   );

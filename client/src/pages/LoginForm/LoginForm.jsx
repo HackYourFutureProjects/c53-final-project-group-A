@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Loader, X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
+import { X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
 import { UseUser } from "../../context/UserContext";
+import { gif } from "../../assets";
 
 const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -75,12 +76,8 @@ const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
         <button type="submit" disabled={loading}>
           {loading ? (
             <>
-              <Loader
-                className="spin"
-                size={18}
-                style={{ marginRight: "5px" }}
-              />
-              Logging in...
+              <span>Logging in...</span>
+              <img src={gif.spinner} className="spinner" />
             </>
           ) : (
             <>

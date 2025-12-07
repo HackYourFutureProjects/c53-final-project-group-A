@@ -283,8 +283,6 @@ function UserContextProvider({ children }) {
         method: "DELETE",
       });
 
-      dispatch({ type: "LOGOUT", payload: defaultUser });
-
       return data;
     } catch (err) {
       throw err;

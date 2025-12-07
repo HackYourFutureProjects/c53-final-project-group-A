@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
-import { validateSkillInput } from "../util/skillValidation";
-import AlertMessage from "./AlertMessage";
-import { regexEndNormalizeSkill } from "../util/regexEndNormalizeSkill";
-import { cleanUpText } from "../util/cleanUpText";
-import { UseUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import PopupForSave from "../components/SuccessPopup/PopupForSave";
+import AlertMessage from "../AlertMessage/AlertMessage";
+import PopupForSave from "../SuccessPopup/PopupForSave";
+import { UseUser } from "../../context/UserContext";
+import { cleanUpText } from "../../util/cleanUpText";
+import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
+import { validateSkillInput } from "../../util/skillValidation";
 import "./SkillsSettings.css";
 export default function SkillsSettings() {
   const navigate = useNavigate();
