@@ -3,7 +3,7 @@ import { realJobSearch } from "./realJobSearch.js";
 import { fakeJobSearch } from "./fakeJobSearch.js";
 import processJobPost from "../util/processJobPost.js";
 
-const isSearchReal = false; // Set to true to enable real job search
+const isSearchReal = true; // Set to true to enable real job search
 
 export const searchJobs = async (req, res) => {
   try {
