@@ -6,38 +6,39 @@ import { Filter, Map, Lock, User, Heart, Zap } from "lucide-react";
 export default function About() {
   const contributors = [
     {
-      name: "Yaroslav",
+      name: "Yaroslav Kazeev",
       role: "HYF trainee",
       avatar: images.yaroslavAvatar,
       description:
-        "The main instigator and disruptor of the project. He realized that many job search sites produce results that are irrelevant to the applicant, and figured out how to make them customizable.",
+        "The main instigator and disruptor of the project. He realized that many job search sites produce results that are irrelevant to the applicant, and figured out how to make them customizable. Combined big-picture vision with the hands-on implementation of core features.",
       gitHub: "https://github.com/YaroslavKazeev",
       linkedin: "https://www.linkedin.com/in/yaroslavkazeev/",
     },
     {
-      name: "Hanna",
+      name: "Hanna Dubyna",
       role: "HYF trainee",
       avatar: images.hannaAvatar,
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+        "Led UI/UX design and brought key features to life — from route calculation and Firebase-powered avatar uploads to LinkedIn API integration, guest user experience, and database connection. Also built the About page and core navigation.",
       gitHub: "https://github.com/HannaInIT",
       linkedin: "https://www.linkedin.com/in/hanna-dubyna/",
     },
 
     {
-      name: "Yahya",
+      name: "Yahya Al-Ademi",
       role: "HYF trainee",
       avatar: images.yahyaAvatar,
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+        "Designed and implemented the full authentication architecture for the application, covering secure backend workflows (user registration, login, hashing, token-based password reset, email delivery) and complete frontend integration using React Context, ensuring seamless communication between client and server.",
       gitHub: "https://github.com/YahyaAl-Ademi",
       linkedin: "https://www.linkedin.com/in/yahya-al-ademi-12786555/",
     },
     {
-      name: "Stas",
+      name: "Stas Seldin",
       role: "DevOps",
       avatar: images.stasAvatar,
-      description: "Responsible for ensuring our deployments run smoothly.",
+      description:
+        "Our DevOps, Education Director and technical compass who provided invaluable guidance on everything from database configuration to deployment strategies during weekly Tech Hours, ensuring that the team could tackle any challenge with confidence.",
       gitHub: "https://github.com/stasel",
       linkedin: "https://www.linkedin.com/in/stasel/",
     },
@@ -47,7 +48,7 @@ export default function About() {
       role: "Product Owner",
       avatar: images.janaAvatar,
       description:
-        "The person who understands users’ needs better than anyone, and also serves as our Scrum Master — ensuring the team stays aligned, supported, and functioning effectively.",
+        "Our Product Owner, Scrum Master and guiding light — translating user needs into clear features, providing invaluable design feedback, teaching us industry best practices, keeping the team aligned, and helping us build a product that truly serves its users.",
       gitHub: "https://github.com/janagombitova",
       linkedin:
         "https://www.linkedin.com/in/jana-gombitova-42b08394?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
@@ -58,7 +59,7 @@ export default function About() {
       role: "Tech lead",
       avatar: images.timAvatar,
       description:
-        "The person you can turn to whenever you need guidance or get stuck.",
+        "Our Tech Lead who guided us through technical sessions, helping us navigate challenges, distribute responsibilities, and establish effective development workflows — especially during the critical early stages of the project.",
       gitHub: "https://github.com/tlorent",
       linkedin: "https://www.linkedin.com/in/timlorent/",
     },
@@ -202,7 +203,6 @@ export default function About() {
               className="email-link"
             >
               jobcompass2025@gmail.com
-              {/* <button className="contact-button">Contact us</button> */}
             </a>{" "}
             and we will get back to you as soon as possible!
           </p>

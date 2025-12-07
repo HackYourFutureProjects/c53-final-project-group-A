@@ -9,9 +9,9 @@
 .pagination button {
   /* Base style for all pagination buttons */
   padding: 6px 12px; /* Adopted from the original small padding */
-  border: 1px solid #2563eb; /* Border color for all buttons */
+  border: 1px solid #4a87e1; /* Border color for all buttons */
   background-color: white;
-  color: #2563eb;
+  color: #4a87e1;
   border-radius: 0.25rem; /* Adopted from newer styles */
   cursor: pointer;
   transition: background-color 0.1s;
@@ -42,9 +42,9 @@
 }
 
 .page-number-btn.active {
-  background-color: #2563eb;
+  background-color: #4a87e1;
   color: white;
-  border-color: #2563eb;
+  border-color: #4a87e1;
   font-weight: bold;
 }
 
