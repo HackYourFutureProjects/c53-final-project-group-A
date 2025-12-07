@@ -51,7 +51,7 @@ export default function SearchInput() {
           ref={inputRef}
           id="job-search"
           type="text"
-          placeholder="e.g. Web Developer"
+          placeholder="e.g. web developer"
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           aria-describedby="search-alert"
         />

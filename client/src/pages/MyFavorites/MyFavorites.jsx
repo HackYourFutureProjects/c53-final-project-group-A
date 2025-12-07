@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import JobCard from "../../components/JobCard/JobCard";
 import { UseUser } from "../../context/UserContext";
 import getSkillsInDescription from "../../util/getSkillsInDescription";
+import "./MyFavorites.css";
 
 export default function MyFavorites() {
   const { user, toggleFavorite } = UseUser();
@@ -26,21 +27,21 @@ export default function MyFavorites() {
     return (
       <div className="page-content content-container">
         <div className="page-header-container">
-          <h2>My Favorite Jobs ❤️</h2>
+          <h2>My favorite jobs</h2>
         </div>
-        <p>You have no favorited jobs yet.</p>
+        <p className="favorites-no-found">You have no favorited jobs yet.</p>
       </div>
     );
   } else {
     return (
       <div className="page-content content-container">
         <div className="page-header-container">
-          <h2>My Favorite Jobs ❤️</h2>
+          <h2>My favorite jobs</h2>
         </div>
 
         <section className="results-summary">
           <h3 className="results-title">
-            Saved Jobs
+            Saved jobs
             <span className="results-count">
               {" "}
               ({favoriteJobs.length} found)

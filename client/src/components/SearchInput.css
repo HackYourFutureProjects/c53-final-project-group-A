@@ -38,7 +38,7 @@
   padding: 0.75rem 1rem;
   font-size: 1rem;
   border: 1px solid var(--color-input-border);
-  border-radius: 0.5rem;
+  border-radius: 3px;
   outline: none;
   transition:
     border-color 0.2s ease,
@@ -61,19 +61,19 @@
 /* --- Search Button --- */
 .input-group button {
   padding: 0.75rem 2rem;
-  background-color: var(--color-btn-search);
+  background-color: #4a87e1;
   color: white;
   font-size: 1rem;
   font-weight: 500;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.2s ease;
   white-space: nowrap;
 }
 
 .input-group button:hover {
-  background-color: var(--color-btn-search-hover);
+  background-color: #3272d2;
 }
 
 .input-group button:disabled {
