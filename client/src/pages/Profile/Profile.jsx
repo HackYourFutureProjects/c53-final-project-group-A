@@ -31,6 +31,7 @@ export default function Profile() {
     useState(false);
   const [newPassword, setNewPassword] = useState(false);
   const { user, updateProfile, changePassword } = UseUser();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -52,6 +53,10 @@ export default function Profile() {
     if (!alert.message) return;
     setAlert({ type: "", message: "" });
   }
+
+  const handleDeleteClick = () => {
+    setShowDeletePopup(true);
+  };
 
   async function handleSaveClick() {
     handleClearAlert();
@@ -387,8 +392,21 @@ export default function Profile() {
         </div>
       </div>
       <SkillsSettings />
-
-      <DeleteProfile />
+      {/* DELETE PROFILE */}
+      <div className="profile-delete-row">
+        <div>
+          <h3 className="profile-delete-title">Delete profile</h3>
+          <p className="profile-delete-desc">
+            Permanently delete your account and data.
+          </p>
+        </div>
+        <button onClick={handleDeleteClick} className="profile-delete-btn">
+          Delete profile
+        </button>
+      </div>
+      {showDeletePopup && (
+        <DeleteProfile setShowDeletePopup={setShowDeletePopup} />
+      )}
     </div>
   );
 }
