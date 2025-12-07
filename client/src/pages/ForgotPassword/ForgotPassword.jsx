@@ -59,7 +59,6 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
               ) : (
                 "Send Reset Link"
               )}
-              {/* {userLoading ? "Sending..." : "Send Reset Link"} */}
             </button>
           </form>
 
