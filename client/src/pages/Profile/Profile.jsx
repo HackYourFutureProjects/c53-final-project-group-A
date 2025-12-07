@@ -12,7 +12,7 @@ import {
 } from "../../util/AuthValidation";
 import { Eye, EyeOff } from "lucide-react";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
-import DeleteProfile from "../../components/DeleteProfile/DeleteProfile";
+import DeleteProfilePopup from "../../components/DeleteProfilePopup/DeleteProfilePopup";
 import "./Profile.css";
 
 export default function Profile() {
@@ -405,7 +405,7 @@ export default function Profile() {
         </button>
       </div>
       {showDeletePopup && (
-        <DeleteProfile setShowDeletePopup={setShowDeletePopup} />
+        <DeleteProfilePopup setShowDeletePopup={setShowDeletePopup} />
       )}
     </div>
   );
