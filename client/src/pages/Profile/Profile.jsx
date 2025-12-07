@@ -30,7 +30,7 @@ export default function Profile() {
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
   const [newPassword, setNewPassword] = useState(false);
-  const { user, updateProfile, deleteUser, changePassword } = UseUser();
+  const { user, updateProfile, changePassword } = UseUser();
 
   useEffect(() => {
     if (user) {
@@ -388,7 +388,7 @@ export default function Profile() {
       </div>
       <SkillsSettings />
 
-      <DeleteProfile deleteUser={deleteUser} />
+      <DeleteProfile />
     </div>
   );
 }

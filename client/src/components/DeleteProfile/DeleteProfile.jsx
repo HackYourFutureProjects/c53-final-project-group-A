@@ -1,13 +1,10 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { UseUser } from "../../context/UserContext";
+import { UseUser } from "../../context/UserContext";
 import "./DeleteProfile.css";
 
-export default function DeleteProfile({ deleteUser }) {
+export default function DeleteProfile() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-  // const navigate = useNavigate();
-  // const { clearMessage } = UseUser();
+  const { deleteUser, dispatch, defaultUser } = UseUser();
 
   const handleDeleteClick = () => {
     setShowDeletePopup(true);
@@ -16,12 +13,10 @@ export default function DeleteProfile({ deleteUser }) {
   const handleConfirmDelete = async () => {
     try {
       await deleteUser();
-      setDeleteSuccess(true);
 
-      // Redirect to login after 3 seconds to allow user to see success message
-      // setTimeout(() => {
-      //   navigate("/login");
-      // }, 3000);
+      setTimeout(() => {
+        dispatch({ type: "LOGOUT", payload: defaultUser });
+      }, 2000);
     } catch (err) {
       console.error(err);
       alert("Failed to delete account. Please try again later.");
@@ -50,35 +45,22 @@ export default function DeleteProfile({ deleteUser }) {
       {showDeletePopup && (
         <div className="profile-popup-overlay">
           <div className="profile-popup-card">
-            {!deleteSuccess ? (
-              <>
-                <h2>Are you sure?</h2>
-                <p>This will permanently delete your account.</p>
-                <div className="profile-popup-buttons">
-                  <button
-                    className="profile-btn-secondary"
-                    onClick={handleCancelDelete}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="profile-btn-primary"
-                    onClick={handleConfirmDelete}
-                  >
-                    OK
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <h2>Account deleted</h2>
-                <p>
-                  Your account has been deleted successfully.
-                  <br />
-                  Redirecting to login...
-                </p>
-              </>
-            )}
+            <h2>Are you sure?</h2>
+            <p>This will permanently delete your account.</p>
+            <div className="profile-popup-buttons">
+              <button
+                className="profile-btn-secondary"
+                onClick={handleCancelDelete}
+              >
+                Cancel
+              </button>
+              <button
+                className="profile-btn-primary"
+                onClick={handleConfirmDelete}
+              >
+                OK
+              </button>
+            </div>
           </div>
         </div>
       )}
