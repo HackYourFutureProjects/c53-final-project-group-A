@@ -134,6 +134,7 @@
   object-fit: contain;
   display: inline;
   vertical-align: middle;
+  margin-left: 5px;
 }
 
 .password-rule-list {
