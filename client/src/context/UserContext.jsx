@@ -268,7 +268,15 @@ function UserContextProvider({ children }) {
         method: "PUT",
         body: JSON.stringify(updatedFields),
       });
-      dispatch({ type: "UPDATE_USER", payload: data.user });
+
+      const normalizedSkills = fixUserSkills(data.user.skills);
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          ...data.user,
+          skills: normalizedSkills,
+        },
+      });
       setMessage("Profile updated successfully!");
       return data.user;
     } catch (err) {
