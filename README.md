@@ -1,119 +1,184 @@
-`TODO: Add a nice screenshot of the app!`
+# JobCompass
 
-# Cohort XX final project
+> Master navigating the sea of irrelevant jobs with **JobCompass**
 
-This is the final project for the HackYourFuture curriculum we did as a cohort using the [MERN stack](https://www.mongodb.com/resources/languages/mern-stack) by following the agile methodology with our team and a group of mentors. A quick guide to what we built:
+JobCompass is an advanced job search platform that helps you find ideal positions with smart filtering capabilities, commute calculations, and personalized matching. Tell us your skills, role, and location, and we'll steer you to the right job with the least commute time.
 
-> TODO: Add short description of the app
+The repo is a monorepo with a Vite/React Frontend and an Express/PostgreSQL Backend that also integrates Google Maps for transit times, RapidAPI (LinkedIn jobs), Firebase Storage for avatars, and email-based password recovery.
 
-`[Click here for the Demo version](TODO: add link)`
+## 🎯 Mission
 
-## 1. Setup
+Connect talented professionals with opportunities that match their skills, preferences, and career goals.
 
-First, to setup all the directories run the following in the main directory:
+## ✨ Features
 
-`npm install`
+- **🔍 Smart Filtering and Sorting** - Filter by job type, work mode, and experience level, and sort listings based on what matters most to you
+- **⚡ Smart Matching** - Search and browse open roles; surface skills detected in each description.
+- **🗺️ Commute Calculator** - See travel time and number of transfers from your home to workplace
+- **❤️ Save to Favorites** - Mark interesting job posts to easily view them later
+- **✉️ Password Reset** - Recover account access via email with secure, short-lived tokens
+- **👤 User Profiles** - Customize your profile with skills, address settings, and avatar uploads
+- **👥 Guest Mode** - Try the platform without creating an account (with limited features)
 
-`npm run setup`
+## 🛠️ Tech Stack
 
-The first command will install `cypress` and some small libraries needed for running the rest of the commands. The second will go into the `client` and `server` directories and set those up to be ran.
+### Frontend
 
-In the `client` and `server` directory there are two `.env.example` files. Create a copy and rename that to `.env`. Then follow the instructions in those files to fill in the right values.
+- **React 19** - UI library
+- **Vite** - Build tool and dev server
+- **React Router DOM** - Client-side routing
+- **Lucide React** - Icon library
 
-To run the app in dev mode you can run the following command in the main directory:
+### Backend
 
-`npm run dev`
+- **Node.js** (>=24.0.0) - Runtime environment
+- **Express.js** - Web framework
+- **PostgreSQL** (Neon DB) - Database
+- **Firebase Admin** - File storage and authentication
+- **JWT** - Token-based authentication
+- **bcrypt** - Password hashing
+- **Nodemailer** - Email service
+- **Multer** - File upload handling
+- **Google Maps API** - Commute calculations
 
-## 2. Code structure
+### DevOps & Tools
+
+- **Husky** - Git hooks
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **Concurrently** - Run multiple commands
+
+## 📁 Project Structure
 
 ```
-client
-├── public
-└── src
-|   └── __tests__
-|   └── __testUtils__
-|   └── components
-|   └── hooks
-|   └── pages
-|       └── __tests__
-|       └── components
-|   └── util
-|   index.jsx
-cypress
-|   └── fixtures
-|   └── integration
-|   └── plugins
-|   └── support
-server
-└── src
-    └── __tests__
-    └── __testUtils__
-    └── controllers
-    └── db
-    └── models
-    └── routes
-    └── util
-    index.js
+c53-final-project-group-A/
+├── client/                 # React frontend application
+│   ├── src/
+│   │   ├── components/    # Reusable React components
+│   │   ├── pages/         # Page components
+│   │   ├── context/       # React Context providers
+│   │   ├── hooks/         # Custom React hooks
+│   │   ├── util/          # Utility functions
+│   │   └── assets/        # Static assets
+│   └── package.json
+├── server/                 # Express backend application
+│   ├── src/
+│   │   ├── controllers/   # Route controllers
+│   │   ├── routes/        # API routes
+│   │   ├── middleware/    # Express middleware
+│   │   ├── services/      # Business logic services
+│   │   ├── db/            # Database configuration
+│   │   ├── config/        # Configuration files
+│   │   ├── data/          # Data files
+│   │   └── util/          # Utility functions
+│   └── package.json
+├── .github/               # GitHub workflows
+├── .husky/                # Git hooks
+└── package.json           # Root package.json with workspace scripts
 ```
 
-### 2.1 Client structure
+## Backend Routes Overview
 
-- `public` || public facing client code
-- `__tests__` || any `jest` tests for specific components will be in a `__tests__` folder on the same level
-- `__testUtils__` || any code that is only being used in the tests is put in the `__testUtils__` folder to separate that away from the rest of the code
-- `components` || all of our shared components that are used over multiple pages
-- `hooks` || all of our custom hooks
-- `pages` || the page components of our app, any routing will go between these components
-- `pages/components` || components used specifically on those pages
-- `util` || any utility functions that can be used anywhere on the client side
-- `main.jsx` || the start point of the client
-- `vite.config.js` || to configure vite
+- `POST /api/users` – sign up; `POST /api/users/login` / `/logout` – auth via HTTP-only cookie.
+- `GET /api/users/me` – current user; `PUT /api/users/profile` – update profile fields.
+- `POST /api/users/update-avatar` – upload avatar (Multer memory storage → Firebase Storage).
+- `POST /api/users/change-password` / `/change-skills` – profile mutations.
+- `POST /api/users/favorites/toggle` – save/unsave a job; `DELETE /api/users/delete/:userid` – delete account.
+- `POST /api/users/forgot-password` / `/reset-password` – email reset flow.
+- `POST /api/jobs/search` – search jobs (RapidAPI LinkedIn + local processing).
+- `POST /api/travel/batch` – batch transit time + transfer counts for job locations.
 
-### 2.2 Cypress structure
+## 🚀 Getting Started
 
-- `fixtures` || any data/files that `cypress` needs can be placed here
-- `integration` || all of our tests are in here, separated in folders based on the pages in our app
-- `plugins` || any plugins for our `cypress` configuration can be placed here
-- `support` || custom commands and other support files for `cypress` can be placed here
+### Prerequisites
 
-### 2.3 Server structure
+- **Node.js** >= 24.0.0
+- **npm** (comes with Node.js)
+- **PostgreSQL** database (Neon DB recommended)
+- **Firebase** Firebase service account (as JSON string)
+- **SMTP credentials**
+- **LinkedIn Job Search RapidAPI key**
+- **Google Maps API** key for commute calculations
 
-- `__tests__` || any `jest` tests for the api endpoints as that is our testing strategy for the backend
-- `__testUtils__` || any code that is only being used in the tests is put in the `__testUtils__` folder to separate that away from the rest of the code
-- `controllers` || all of our controller functions that interact with the database
-- `db` || all of our configuration for the database
-- `models` || all of our `mongoose` models will be placed here
-- `routes` || code to match up the API with our controllers
-- `util` || any utility functions that can be used anywhere on the server side
-- `index.js` || the start point of the server
+### Installation
 
-## 3. Stack / external libraries
+1. **Clone the repository**
 
-The base stack of the app is a MERN stack (Mongoose, Express, React, Node). Next to that we make use of the following extras:
+   ```bash
+   git clone https://github.com/HackYourFuture/c53-final-project-group-A.git
+   cd c53-final-project-group-A
+   ```
 
-### 3.1 Configuration libraries
+2. **Install dependencies**
 
-- `dotenv` || To load the .env variables into the process environment. See [docs](https://www.npmjs.com/package/dotenv)
-- `vite` || To bundle our React app and create a static app to host. See [docs](https://vite.dev/)
-- `husky` || To run our tests and linter before committing. See [docs](https://typicode.github.io/husky/#/)
-- `eslint` || To check our code. We have different configurations for frontend and backend. You can check out the configuration in the `.eslintrc.(c)js` files in the respective `client` and `server` folders. See [docs](https://eslint.org/)
-- `prettier` || To automatically format our code. See [docs](https://prettier.io/)
-- `concurrently` || To run commands in parallel. See [docs](https://github.com/open-cli-tools/concurrently#readme)
+   ```bash
+   npm run setup
+   ```
 
-For more information on how these work together including the automatic deployment to heroku, have a look at our detailed [DEV](./DEV.md) file.
+   This will install dependencies for both client and server.
 
-### 3.2 Client-side libraries
+3. **Set up environment variables**
 
-- `@testing-library/*` || We use React Testing Library to write all of our tests. See [docs](https://testing-library.com/docs/react-testing-library/intro/)
-- `jest` || To run our tests and coverage. See [docs](https://jestjs.io/)
-- `jest-fetch-mock` || To mock out the backend for our testing purposes. See [docs](https://github.com/jefflau/jest-fetch-mock#readme)
-- `prop-types` || To type-check our components. See [docs](https://github.com/facebook/prop-types)
+   In client and server directories, copy and rename the `.env.example` files into `.env`. Set all environmental variables.
 
-### 3.3 Server-side libraries
+4. **Run the development servers**
 
-- `nodemon` || To automatically restart the server when in development mode. See [docs](https://nodemon.io/)
-- `jest` || To run our tests and coverage. See [docs](https://jestjs.io/)
-- `supertest` || To more easily test our endpoints. See [docs](https://github.com/visionmedia/supertest#readme)
-- `mongodb-memory-server` || To mock out our database in our backend tests. See [docs](https://github.com/nodkz/mongodb-memory-server)
-- `cors` || To open up our API. See [docs](https://github.com/expressjs/cors#readme)
-- `mongoose` || To add schemas to our database. See [docs](https://mongoosejs.com/)
+   ```bash
+   npm run dev
+   ```
+
+   This will start both the client (Vite dev server) and server (Express with nodemon) concurrently.
+
+   - Frontend: http://localhost:5173 (or the port Vite assigns)
+   - Backend: http://localhost:3000 (or your configured PORT)
+
+## 📜 Available Root Level Scripts
+
+- `npm run dev` - Start both client and server in development mode
+- `npm run start` - Start the production server
+- `npm run build` - Build the client for production
+- `npm run setup` - Install dependencies for both client and server
+
+## 🚢 Deployment
+
+The project is configured for Heroku deployment. The `Procfile` specifies the production start command.
+
+### Heroku Deployment Steps
+
+1. Create a Heroku app
+2. Set environment variables in Heroku dashboard
+3. Push to Heroku:
+   ```bash
+   git push heroku main
+   ```
+
+The `heroku-postbuild` script will automatically:
+
+- Install dependencies
+- Build the client application
+
+## 👥 Contributors
+
+This project was developed as part of HackYourFuture's final project by:
+
+- **Yaroslav Kazeev** - HYF trainee - [GitHub](https://github.com/YaroslavKazeev) | [LinkedIn](https://www.linkedin.com/in/yaroslavkazeev/)
+- **Hanna Dubyna** - HYF trainee - [GitHub](https://github.com/HannaInIT) | [LinkedIn](https://www.linkedin.com/in/hanna-dubyna/)
+- **Yahya Al-Ademi** - HYF trainee - [GitHub](https://github.com/YahyaAl-Ademi) | [LinkedIn](https://www.linkedin.com/in/yahya-al-ademi-12786555/)
+- **Stas Seldin** - DevOps, Education Director - [GitHub](https://github.com/stasel) | [LinkedIn](https://www.linkedin.com/in/stasel/)
+- **Jana Gombitová** - Product Owner, Scrum Master - [GitHub](https://github.com/janagombitova) | [LinkedIn](https://www.linkedin.com/in/jana-gombitova-42b08394/)
+- **Tim Lorent** - Tech Lead - [GitHub](https://github.com/tlorent) | [LinkedIn](https://www.linkedin.com/in/timlorent/)
+
+## 📧 Contact
+
+Have questions or feedback? We would love to hear from you!
+
+Drop us a line at [jobcompass2025@gmail.com](mailto:jobcompass2025@gmail.com?subject=Question about JobCompass) and we will get back to you as soon as possible!
+
+## 📄 License
+
+ISC
+
+## 🙏 Acknowledgments
+
+- Built as part of [HackYourFuture](https://www.hackyourfuture.net/) curriculum
+- Special thanks to all mentors and contributors who made this project possible

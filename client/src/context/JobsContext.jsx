@@ -98,11 +98,10 @@ const JobsProvider = ({ children }) => {
       const detailsMap = { ...travelDetails };
       if (data.result && Array.isArray(data.result.travelDetails)) {
         data.result.travelDetails.forEach(
-          ({ workCity, travel_time, least_transfers, travelFetchSuccess }) => {
+          ({ workCity, travel_time, least_transfers }) => {
             detailsMap[workCity] = {
               travel_time,
               least_transfers,
-              travelFetchSuccess,
             };
           },
         );
@@ -124,7 +123,6 @@ const JobsProvider = ({ children }) => {
         ...job,
         travel_time: travelDetails[city]?.travel_time,
         least_transfers: travelDetails[city]?.least_transfers,
-        travelFetchSuccess: travelDetails[city]?.travelFetchSuccess,
       };
     });
   }
