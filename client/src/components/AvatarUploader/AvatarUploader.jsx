@@ -19,7 +19,7 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
       console.error("Avatar upload error:", error);
       setAlert({ type: "error", message: "Failed to upload avatar." });
     }
-  }, [error, setAlert]);
+  }, [error]);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) fileInputRef.current.click();
