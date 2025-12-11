@@ -13,6 +13,12 @@
   color: #25324b;
 }
 
+.spinner {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
 /* Profile Photo Section */
 .profile-avatar-row {
   display: flex;
