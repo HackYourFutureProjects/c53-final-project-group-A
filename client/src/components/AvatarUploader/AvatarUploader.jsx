@@ -46,6 +46,7 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
         type="button"
         className="avatar-edit-btn"
         onClick={handleButtonClick}
+        disabled={isLoading}
       >
         {isLoading ? (
           <img src={gif.spinner} alt="Loading..." className="spinner" />
