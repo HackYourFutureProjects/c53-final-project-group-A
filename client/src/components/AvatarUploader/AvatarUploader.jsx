@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import "./AvatarUploader.css";
 import useFetch from "../../hooks/useFetch";
 import { gif } from "../../assets";
@@ -14,10 +14,12 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
     },
   );
 
-  if (error) {
-    console.error("Avatar upload error:", error);
-    setAlert({ type: "error", message: "Failed to upload avatar." });
-  }
+  useEffect(() => {
+    if (error) {
+      console.error("Avatar upload error:", error);
+      setAlert({ type: "error", message: "Failed to upload avatar." });
+    }
+  }, [error]);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) fileInputRef.current.click();
