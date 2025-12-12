@@ -11,7 +11,7 @@ export default function SearchInput() {
     setSearchTerm,
     setShowResults,
     setAllJobs,
-    setError,
+    // setError,
     fetchJobWordsBySearchWords,
   } = UseJobs();
 
@@ -28,7 +28,7 @@ export default function SearchInput() {
     }
 
     setAllJobs([]);
-    setError(null);
+    // setError(null);
     setAlert({ type: "info", message: `Searching for "${inputValue}"...` });
     // keep the searched text in context for results pages
     setSearchTerm(inputValue);

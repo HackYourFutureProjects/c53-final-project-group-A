@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { gif } from "../../assets/index.js";
 import DropdownFilter from "../../components/DropdownFilter/DropdownFilter";
 import JobCard from "../../components/JobCard/JobCard";
@@ -13,15 +13,17 @@ import { UseJobs } from "../../context/JobsContext";
 import createSortComparator from "../../util/createSortComparator";
 
 export default function OpenPositions() {
-  const { user, dispatch, toggleFavorite } = UseUser();
+  const { user, toggleFavorite } = UseUser();
 
   const {
     allJobs,
     searchTerm,
     isJobsLoading,
-    isTravelLoading,
-    error,
-    fetchBatchTravelDetails,
+    jobFetchError,
+    // isTravelLoading,
+    travelFetchError,
+    // error,
+    // fetchBatchTravelDetails,
   } = UseJobs();
 
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
@@ -93,11 +95,11 @@ export default function OpenPositions() {
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
-  useEffect(() => {
-    if (currentJobs.length > 0) {
-      fetchBatchTravelDetails(currentJobs);
-    }
-  }, [currentPage, activeFilters]);
+  // useEffect(() => {
+  //   if (currentJobs.length > 0) {
+  //     fetchBatchTravelDetails(currentJobs);
+  //   }
+  // }, [currentPage, activeFilters]);
 
   return (
     <div className="open-positions content-container">
@@ -147,9 +149,10 @@ export default function OpenPositions() {
           </div>
         </div>
 
-        {error && (
+        {(jobFetchError || travelFetchError) && (
           <div className="error-message">
-            Error loading commute info: {error}
+            Error loading jobs or commute info:{" "}
+            {jobFetchError || travelFetchError}
           </div>
         )}
 
@@ -173,9 +176,9 @@ export default function OpenPositions() {
                 <JobCard
                   key={job.id || idx}
                   job={job}
-                  isTravelLoading={isTravelLoading}
+                  // isTravelLoading={isTravelLoading}
                   isInFavorites={favorites.some((fav) => fav.id === job.id)}
-                  dispatch={dispatch}
+                  // dispatch={dispatch}
                   toggleFavorite={toggleFavorite}
                   user={user}
                   onApplyClick={(url) => window.open(url, "_blank")}

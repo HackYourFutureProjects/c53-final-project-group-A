@@ -16,6 +16,7 @@ import {
   MapPin,
   Monitor,
 } from "lucide-react";
+import { UseJobs } from "../../context/JobsContext";
 
 function formatTravelTime(minutes) {
   if (minutes < 60) return `${minutes} min`;
@@ -27,12 +28,13 @@ function formatTravelTime(minutes) {
 export default function JobCard({
   job,
   onApplyClick,
-  isTravelLoading,
+  // isTravelLoading,
   user,
   toggleFavorite,
   isInFavorites,
 }) {
   const navigate = useNavigate();
+  const { isTravelLoading } = UseJobs();
 
   //  New state for showing popup
   const [showApplyPopup, setShowApplyPopup] = useState(false);
@@ -173,18 +175,20 @@ export default function JobCard({
 
               {/* commute info block*/}
               <div className="job-commute-info">
-                {isTravelLoading && (
+                {isTravelLoading ? (
                   <img src={gif.spinner} alt="Loading..." className="spinner" />
-                )}
-                {job.travel_time !== null && job.least_transfers !== null && (
-                  <>
-                    <Bus className="job-icon" />
-                    <span className="job-commute">
-                      {formatTravelTime(job.travel_time)}, {job.least_transfers}{" "}
-                      transfer
-                      {job.least_transfers !== 1 ? "s" : ""}
-                    </span>
-                  </>
+                ) : (
+                  job.travel_time != null &&
+                  job.least_transfers != null && (
+                    <>
+                      <Bus className="job-icon" />
+                      <span className="job-commute">
+                        {formatTravelTime(job.travel_time)},{" "}
+                        {job.least_transfers} transfer
+                        {job.least_transfers !== 1 ? "s" : ""}
+                      </span>
+                    </>
+                  )
                 )}
               </div>
             </div>
