@@ -1,13 +1,5 @@
-import Skills from "../Skills";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
-import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
-import "./JobCard.css";
-import { icons, gif } from "../../assets";
-
-import { defaultUser } from "../../data/defaultUser";
+import { useNavigate } from "react-router-dom";
 import {
   Bus,
   Briefcase,
@@ -16,7 +8,15 @@ import {
   MapPin,
   Monitor,
 } from "lucide-react";
+// Assets & data
+import { icons, gif } from "../../assets";
+import { defaultUser } from "../../data/defaultUser";
+// Context, Components, styles
 import { UseJobs } from "../../context/JobsContext";
+import Skills from "../Skills";
+import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
+import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
+import "./JobCard.css";
 
 function formatTravelTime(minutes) {
   if (minutes < 60) return `${minutes} min`;
