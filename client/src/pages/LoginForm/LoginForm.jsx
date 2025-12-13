@@ -7,12 +7,16 @@ const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { loading, error, clearError } = UseUser();
+  const {
+    loading,
+    error,
+    // , clearError
+  } = UseUser();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
-    clearError(); // clear error while typing
+    // clearError(); // clear error while typing
   };
 
   const handleSubmit = async (e) => {

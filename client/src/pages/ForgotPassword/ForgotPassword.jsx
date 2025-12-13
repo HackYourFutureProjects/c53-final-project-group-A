@@ -8,7 +8,7 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
     requestPasswordReset,
     loading: userLoading,
     error,
-    clearError,
+    // clearError,
   } = UseUser();
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
@@ -43,7 +43,7 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  clearError();
+                  // clearError();
                 }}
                 style={{ paddingRight: "35px" }}
               />

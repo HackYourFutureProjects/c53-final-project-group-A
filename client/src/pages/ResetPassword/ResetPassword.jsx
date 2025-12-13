@@ -15,7 +15,12 @@ const ResetPasswordForm = () => {
 
   const navigate = useNavigate();
 
-  const { resetPassword, loading, error, clearError } = UseUser();
+  const {
+    resetPassword,
+    loading,
+    error,
+    // , clearError
+  } = UseUser();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
@@ -23,16 +28,16 @@ const ResetPasswordForm = () => {
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
-  useEffect(() => {
-    clearError();
-    // Clear any previous error messages when component mounts
-  }, []);
+  // useEffect(() => {
+  //   clearError();
+  //   // Clear any previous error messages when component mounts
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Prevent form submission from refreshing the page
 
-    clearError();
+    // clearError();
     // Clear previous errors before validation
 
     if (!token) {

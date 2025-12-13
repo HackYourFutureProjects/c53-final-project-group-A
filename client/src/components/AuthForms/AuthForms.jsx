@@ -14,7 +14,11 @@ const AuthForms = () => {
   const urlToken = searchParams.get("token");
 
   const navigate = useNavigate();
-  const { login, signup, clearError } = UseUser();
+  const {
+    login,
+    signup,
+    // , clearError
+  } = UseUser();
   const [tab, setTab] = useState("login");
   const [successPopup, setSuccessPopup] = useState(false);
   const [signedUpUser, setSignedUpUser] = useState("");
@@ -37,7 +41,7 @@ const AuthForms = () => {
   //  SWITCH TAB //
   const handleSwitchTab = (newTab) => {
     setTab(newTab);
-    clearError(); // clear error immediately when switching tabs
+    // clearError(); // clear error immediately when switching tabs
   };
 
   return (

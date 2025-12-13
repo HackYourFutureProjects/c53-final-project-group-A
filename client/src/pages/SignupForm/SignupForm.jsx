@@ -32,7 +32,11 @@ const SignupForm = ({
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const { loading, error, clearError } = UseUser();
+  const {
+    loading,
+    error,
+    // , clearError
+  } = UseUser();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
@@ -40,7 +44,7 @@ const SignupForm = ({
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSignupData({ ...signupData, [name]: value });
-    clearError(); // clear context error while typing
+    // clearError(); // clear context error while typing
     setErrorMessage(""); //clear local error while typing
   };
 
@@ -277,7 +281,7 @@ const SignupForm = ({
           className="switch-link"
           onClick={() => {
             switchToLogin();
-            clearError(); // clear error when switching to login
+            // clearError(); // clear error when switching to login
             setErrorMessage(""); //clear local error when switching
           }}
         >
