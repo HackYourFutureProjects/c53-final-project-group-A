@@ -95,27 +95,21 @@ function UserContextProvider({ children }) {
     performFetch: performFetchMe,
   } = useFetch("/users/me", handleFetchMeResults);
 
-  async function getCurrentUser() {
-    performFetchMe({ method: "GET" });
-  }
-
   useEffect(() => {
-    getCurrentUser();
+    performFetchMe();
   }, []);
 
-  // Handle fetchMeError separately for authentication
   useEffect(() => {
     if (fetchMeError) {
-      if (
-        fetchMeError.includes("token") ||
-        fetchMeError.includes("Token") ||
-        fetchMeError.includes("not provided")
-      ) {
-        dispatch({ type: "LOGOUT", payload: defaultUser });
-      } else {
+      const authErrorKeywords = ["token", "Token", "not provided"];
+      const isAuthError = authErrorKeywords.some((keyword) =>
+        fetchMeError.includes(keyword),
+      );
+
+      if (!isAuthError) {
         console.error("Error fetching current user:", fetchMeError);
-        dispatch({ type: "LOGOUT", payload: defaultUser });
       }
+      dispatch({ type: "LOGOUT", payload: defaultUser });
     }
   }, [fetchMeError]);
 
