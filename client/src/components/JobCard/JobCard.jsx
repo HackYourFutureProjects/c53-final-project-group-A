@@ -28,7 +28,6 @@ function formatTravelTime(minutes) {
 export default function JobCard({
   job,
   onApplyClick,
-  // isTravelLoading,
   user,
   toggleFavorite,
   isInFavorites,

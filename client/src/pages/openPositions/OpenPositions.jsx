@@ -20,10 +20,7 @@ export default function OpenPositions() {
     searchTerm,
     isJobsLoading,
     jobFetchError,
-    // isTravelLoading,
     travelFetchError,
-    // error,
-    // fetchBatchTravelDetails,
   } = UseJobs();
 
   const favorites = Array.isArray(user?.favorites) ? user.favorites : [];
@@ -94,12 +91,6 @@ export default function OpenPositions() {
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-
-  // useEffect(() => {
-  //   if (currentJobs.length > 0) {
-  //     fetchBatchTravelDetails(currentJobs);
-  //   }
-  // }, [currentPage, activeFilters]);
 
   return (
     <div className="open-positions content-container">
@@ -176,9 +167,7 @@ export default function OpenPositions() {
                 <JobCard
                   key={job.id || idx}
                   job={job}
-                  // isTravelLoading={isTravelLoading}
                   isInFavorites={favorites.some((fav) => fav.id === job.id)}
-                  // dispatch={dispatch}
                   toggleFavorite={toggleFavorite}
                   user={user}
                   onApplyClick={(url) => window.open(url, "_blank")}
