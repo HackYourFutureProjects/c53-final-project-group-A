@@ -16,9 +16,7 @@ function userReducer(state, action) {
     case "LOGIN":
       return { ...defaultUser, ...action.payload };
     case "UPDATE_USER": {
-      const payload = action.payload || {};
-      const next = { ...state, ...payload };
-      return next;
+      return { ...state, ...action.payload };
     }
     case "LOGOUT":
       return action.payload || defaultUser;
