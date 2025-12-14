@@ -14,7 +14,7 @@ export default function SkillsSettings() {
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [showAll, setShowAll] = useState(false);
   const maxVisible = 4;
-  const { user, dispatch, authFetch } = UseUser();
+  const { user, dispatch } = UseUser();
   const { skills } = user;
   const [showSavePopup, setShowSavePopup] = useState(false);
   const handleSkillsChangeResultsRef = useRef(() => {});
@@ -33,8 +33,8 @@ export default function SkillsSettings() {
   }
 
   const {
-    isLoading: isSkillsLoading,
-    error: skillsFetchError,
+    // isLoading: isSkillsLoading,
+    // error: skillsFetchError,
     performFetch: performSkillsChange,
   } = useFetch("/users/change-skills", (result) =>
     handleSkillsChangeResultsRef.current(result),
