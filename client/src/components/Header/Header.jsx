@@ -1,12 +1,12 @@
 import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { images, icons } from "../../assets";
+import { images, icons, gif } from "../../assets";
 import { UseUser } from "../../context/UserContext";
 import { defaultUser } from "../../data/defaultUser.js";
 //dropdown menu
 function UserMenu() {
-  const { user, logout } = UseUser();
+  const { user, logout, isMeLoading } = UseUser();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -40,7 +40,7 @@ function UserMenu() {
         />
         <span className="divider"></span>
         <span className="user-name">{user?.firstname}</span>
-
+        {isMeLoading && <img src={gif.spinner} className="spinner" />}
         <img
           src={icons.arrow}
           alt=""
