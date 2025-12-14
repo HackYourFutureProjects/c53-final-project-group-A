@@ -15,14 +15,14 @@ const AuthForms = () => {
 
   const navigate = useNavigate();
   const {
-    login,
+    // login,
     signup,
     // , clearError
   } = UseUser();
   const [tab, setTab] = useState("login");
   const [successPopup, setSuccessPopup] = useState(false);
   const [signedUpUser, setSignedUpUser] = useState("");
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  // const [loginData, setLoginData] = useState({ email: "", password: "" });
 
   const [loginSuccessPopup, setLoginSuccessPopup] = useState(false);
   const [resetToken, setResetToken] = useState(urlToken || null);
