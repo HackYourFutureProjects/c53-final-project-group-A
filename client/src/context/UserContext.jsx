@@ -96,7 +96,7 @@ function UserContextProvider({ children }) {
   } = useFetch("/users/me", handleFetchMeResults);
 
   useEffect(() => {
-    performFetchMe();
+    performFetchMe({ credentials: "include" });
   }, []);
 
   useEffect(() => {
@@ -157,6 +157,7 @@ function UserContextProvider({ children }) {
     performLogin({
       method: "POST",
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
   }
   // -------------------- SIGNUP --------------------
@@ -193,6 +194,7 @@ function UserContextProvider({ children }) {
           password,
         },
       }),
+      credentials: "include",
     });
   }
   // -------------------- LOGOUT --------------------
@@ -208,7 +210,7 @@ function UserContextProvider({ children }) {
   } = useFetch("/users/logout", handleLogoutResults);
 
   async function logout() {
-    performLogout({ method: "POST" });
+    performLogout({ method: "POST", credentials: "include" });
     // Always clear local state even if server request fails
     if (logoutError) {
       console.error("Error logging out:", logoutError);
@@ -237,6 +239,7 @@ function UserContextProvider({ children }) {
     performUpdateProfile({
       method: "PUT",
       body: JSON.stringify(updatedFields),
+      credentials: "include",
     });
   }
   // -------------------- DELETE USER --------------------
@@ -251,7 +254,7 @@ function UserContextProvider({ children }) {
   } = useFetch("/users/delete/${user.id}", handleDeleteUserResults);
 
   async function deleteUser() {
-    performDeleteUser({ method: "DELETE" });
+    performDeleteUser({ method: "DELETE", credentials: "include" });
   }
   // -------------------- CHANGE PASSWORD --------------------
   function handleChangePasswordResults(data) {
@@ -272,6 +275,7 @@ function UserContextProvider({ children }) {
     performChangePassword({
       method: "POST",
       body: JSON.stringify({ currentPassword, newPassword }),
+      credentials: "include",
     });
   }
   // -------------------- FAVORITES --------------------
@@ -294,6 +298,7 @@ function UserContextProvider({ children }) {
     performToggleFavorite({
       method: "POST",
       body: JSON.stringify({ job }),
+      credentials: "include",
     });
   }
 
@@ -312,6 +317,7 @@ function UserContextProvider({ children }) {
     performForgotPassword({
       method: "POST",
       body: JSON.stringify({ email }),
+      credentials: "include",
     });
   }
   // -------------------- RESET PASSWORD --------------------
