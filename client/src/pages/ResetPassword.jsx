@@ -30,7 +30,7 @@ const ResetPasswordForm = () => {
 
   useEffect(() => {
     if (error) {
-      setAlert({ type: "error", message: String(error) });
+      // setAlert({ type: "error", message: String(error) });
       const timer = setTimeout(() => {
         setAlert({ type: "", message: "" });
       }, 2000);
