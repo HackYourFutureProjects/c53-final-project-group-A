@@ -258,7 +258,6 @@ function UserContextProvider({ children }) {
     isResetPasswordLoading;
 
   const error =
-    fetchMeError ||
     logoutError ||
     updateProfileError ||
     deleteUserError ||
@@ -295,7 +294,6 @@ function UserContextProvider({ children }) {
         isForgotPasswordLoading,
         isResetPasswordLoading,
         // Expose individual error states
-        fetchMeError,
         logoutError,
         updateProfileError,
         deleteUserError,
