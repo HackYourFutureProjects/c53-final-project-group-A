@@ -105,26 +105,6 @@ function UserContextProvider({ children }) {
       dispatch({ type: "LOGOUT", payload: defaultUser });
     }
   }, [fetchMeError]);
-
-  // -------------------- LOGOUT --------------------
-  function handleLogoutResults(data) {
-    setMessage(data.msg || "Logged out successfully!");
-    dispatch({ type: "LOGOUT", payload: defaultUser });
-  }
-
-  const {
-    isLoading: isLogoutLoading,
-    error: logoutError,
-    performFetch: performLogout,
-  } = useFetch("/users/logout", handleLogoutResults);
-
-  async function logout() {
-    performLogout({ method: "POST", credentials: "include" });
-    // Always clear local state even if server request fails
-    if (logoutError) {
-      console.error("Error logging out:", logoutError);
-    }
-  }
   // -------------------- UPDATE PROFILE --------------------
   function handleUpdateProfileResults(data) {
     const normalizedSkills = fixUserSkills(data.user.skills);
@@ -249,7 +229,6 @@ function UserContextProvider({ children }) {
   // Combined loading and error states
   const loading =
     isMeLoading ||
-    isLogoutLoading ||
     isUpdateProfileLoading ||
     isDeleteUserLoading ||
     isChangePasswordLoading ||
@@ -258,7 +237,6 @@ function UserContextProvider({ children }) {
     isResetPasswordLoading;
 
   const error =
-    logoutError ||
     updateProfileError ||
     deleteUserError ||
     changePasswordError ||
@@ -273,7 +251,6 @@ function UserContextProvider({ children }) {
         dispatch,
         loading,
         error,
-        logout,
         // clearError,
         message,
         setMessage,
@@ -286,7 +263,6 @@ function UserContextProvider({ children }) {
         resetPassword,
         // Expose individual loading states
         isMeLoading,
-        isLogoutLoading,
         isUpdateProfileLoading,
         isDeleteUserLoading,
         isChangePasswordLoading,
@@ -294,7 +270,6 @@ function UserContextProvider({ children }) {
         isForgotPasswordLoading,
         isResetPasswordLoading,
         // Expose individual error states
-        logoutError,
         updateProfileError,
         deleteUserError,
         changePasswordError,

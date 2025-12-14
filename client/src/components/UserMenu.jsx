@@ -2,12 +2,23 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { icons, gif } from "../assets";
 import { UseUser } from "../context/UserContext";
+import useFetch from "../hooks/useFetch";
 import { defaultUser } from "../data/defaultUser.js";
 
 export default function UserMenu() {
-  const { user, logout, isMeLoading } = UseUser();
+  const { user, dispatch, isMeLoading, setMessage } = UseUser();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const {
+    isLoading: isLogoutLoading,
+    error,
+    performFetch,
+  } = useFetch("/users/logout", (data) => {
+    setMessage(data.msg);
+    dispatch({ type: "LOGOUT", payload: defaultUser });
+  });
+
+  const toggle = () => setOpen((v) => !v);
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -16,12 +27,12 @@ export default function UserMenu() {
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
-  const toggle = () => setOpen((v) => !v);
 
-  const handleLogout = async () => {
-    await logout();
-    setOpen(false);
-  };
+  useEffect(() => {
+    if (error) {
+      console.error("Error logging out:", error);
+    }
+  }, [error]);
 
   return (
     <div className="user-menu" ref={ref}>
@@ -39,7 +50,9 @@ export default function UserMenu() {
         />
         <span className="divider"></span>
         <span className="user-name">{user?.firstname}</span>
-        {isMeLoading && <img src={gif.spinner} className="spinner" />}
+        {(isMeLoading || isLogoutLoading) && (
+          <img src={gif.spinner} className="spinner" />
+        )}
         <img
           src={icons.arrow}
           alt=""
@@ -75,7 +88,7 @@ export default function UserMenu() {
               className="user-item"
               role="menuitem"
               onClick={() => {
-                handleLogout();
+                performFetch({ method: "POST", credentials: "include" });
                 setOpen(false);
               }}
             >
