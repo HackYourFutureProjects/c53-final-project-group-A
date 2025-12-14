@@ -2,38 +2,76 @@ import { useState } from "react";
 import { X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
 import { UseUser } from "../../context/UserContext";
 import { gif } from "../../assets";
+import useFetch from "../../hooks/useFetch";
+import { fixUserSkills } from "../../util/fixUserSkills";
 
 const LoginForm = ({
-  // email,
-  // password,
   setLoginSuccessPopup,
   switchToSignup,
   switchToForgotPassword,
 }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const { dispatch } = UseUser();
 
-  const {
-    login,
-    loading,
-    error,
-    // , clearError
-  } = UseUser();
+  // -------------------- LOGIN --------------------
+  function handleLoginResults(data) {
+    const normalizedSkills = fixUserSkills(data.user.skills);
+    const favoriteJobs = Array.isArray(data.user.favorites)
+      ? data.user.favorites.map((job) => ({
+          id: job.id,
+          title: job.title,
+          organization: job.organization,
+          organization_url: job.organization_url,
+          employment_type: job.employment_type,
+          url: job.url,
+          organization_logo: job.organization_logo,
+          display_location: job.display_location,
+          work_mode: job.work_mode,
+          seniority: job.seniority,
+          description_text: job.description_text,
+          date_posted: job.date_posted,
+          travel_time: job.travel_time,
+          least_transfers: job.least_transfers,
+          normalized_description: job.normalized_description,
+        }))
+      : [];
+
+    dispatch({
+      type: "LOGIN",
+      payload: {
+        ...data.user,
+        skills: normalizedSkills,
+        favorites: favoriteJobs,
+      },
+    });
+    setLoginSuccessPopup(true);
+  }
+
+  const { isLoading, error, performFetch } = useFetch(
+    "/users/login",
+    handleLoginResults,
+  );
+
+  if (error) {
+    setLoginSuccessPopup(false);
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
-    // clearError(); // clear error while typing
-  };
-
-  const handleLogin = async (email, password) => {
-    await login(email, password);
-    setLoginSuccessPopup(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin(loginData.email, loginData.password);
+    performFetch({
+      method: "POST",
+      body: JSON.stringify({
+        email: loginData.email,
+        password: loginData.password,
+      }),
+      credentials: "include",
+    });
   };
 
   return (
@@ -89,8 +127,8 @@ const LoginForm = ({
           </p>
         )}
 
-        <button type="submit" disabled={loading}>
-          {loading ? (
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? (
             <>
               <span>Logging in...</span>
               <img src={gif.spinner} className="spinner" />

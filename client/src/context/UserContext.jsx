@@ -113,53 +113,6 @@ function UserContextProvider({ children }) {
     }
   }, [fetchMeError]);
 
-  // -------------------- LOGIN --------------------
-  function handleLoginResults(data) {
-    const normalizedSkills = fixUserSkills(data.user.skills);
-    const favoriteJobs = Array.isArray(data.user.favorites)
-      ? data.user.favorites.map((job) => ({
-          id: job.id,
-          title: job.title,
-          organization: job.organization,
-          organization_url: job.organization_url,
-          employment_type: job.employment_type,
-          url: job.url,
-          organization_logo: job.organization_logo,
-          display_location: job.display_location,
-          work_mode: job.work_mode,
-          seniority: job.seniority,
-          description_text: job.description_text,
-          date_posted: job.date_posted,
-          travel_time: job.travel_time,
-          least_transfers: job.least_transfers,
-          normalized_description: job.normalized_description,
-        }))
-      : [];
-
-    dispatch({
-      type: "LOGIN",
-      payload: {
-        ...data.user,
-        skills: normalizedSkills,
-        favorites: favoriteJobs,
-      },
-    });
-  }
-
-  const {
-    isLoading: isLoginLoading,
-    error: loginError,
-    performFetch: performLogin,
-  } = useFetch("/users/login", handleLoginResults);
-
-  async function login(email, password) {
-    if (email === defaultUser.email) throw new Error("Invalid credentials");
-    performLogin({
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      credentials: "include",
-    });
-  }
   // -------------------- SIGNUP --------------------
   function handleSignupResults(data) {
     const normalizedSkills = fixUserSkills(data.user.skills);
@@ -340,7 +293,6 @@ function UserContextProvider({ children }) {
   // Combined loading and error states
   const loading =
     isMeLoading ||
-    isLoginLoading ||
     isSignupLoading ||
     isLogoutLoading ||
     isUpdateProfileLoading ||
@@ -352,7 +304,6 @@ function UserContextProvider({ children }) {
 
   const error =
     fetchMeError ||
-    loginError ||
     signupError ||
     logoutError ||
     updateProfileError ||
@@ -369,7 +320,6 @@ function UserContextProvider({ children }) {
         dispatch,
         loading,
         error,
-        login,
         signup,
         logout,
         // clearError,
@@ -384,7 +334,6 @@ function UserContextProvider({ children }) {
         resetPassword,
         // Expose individual loading states
         isMeLoading,
-        isLoginLoading,
         isSignupLoading,
         isLogoutLoading,
         isUpdateProfileLoading,
@@ -395,7 +344,6 @@ function UserContextProvider({ children }) {
         isResetPasswordLoading,
         // Expose individual error states
         fetchMeError,
-        loginError,
         signupError,
         logoutError,
         updateProfileError,
