@@ -12,11 +12,9 @@ import "./AuthForms.css";
 const AuthForms = () => {
   const [searchParams] = useSearchParams();
   const urlToken = searchParams.get("token");
-
   const navigate = useNavigate();
   const [tab, setTab] = useState(() => (urlToken ? "reset" : "login"));
   const [successPopup, setSuccessPopup] = useState(false);
-
   const [loginSuccessPopup, setLoginSuccessPopup] = useState(false);
 
   const goToProfile = () => {
@@ -24,24 +22,18 @@ const AuthForms = () => {
     navigate("/profile");
   };
 
-  //  SWITCH TAB //
-  const handleSwitchTab = (newTab) => {
-    setTab(newTab);
-    // clearError(); // clear error immediately when switching tabs
-  };
-
   return (
     <div className="auth-container" id="auth-container">
       <div className="tabs">
         <button
           className={tab === "login" ? "active-tab" : ""}
-          onClick={() => handleSwitchTab("login")}
+          onClick={() => setTab("login")}
         >
           Login
         </button>
         <button
           className={tab === "signup" ? "active-tab" : ""}
-          onClick={() => handleSwitchTab("signup")}
+          onClick={() => setTab("signup")}
         >
           Sign Up
         </button>
@@ -51,20 +43,20 @@ const AuthForms = () => {
       {tab === "login" && (
         <LoginForm
           setLoginSuccessPopup={setLoginSuccessPopup}
-          switchToSignup={() => handleSwitchTab("signup")}
-          switchToForgotPassword={() => handleSwitchTab("forgot")}
+          switchToSignup={() => setTab("signup")}
+          switchToForgotPassword={() => setTab("forgot")}
         />
       )}
       {/* --- FORGOT PASSWORD FORM --- */}
       {tab === "forgot" && (
-        <ForgotPasswordForm switchToLogin={() => handleSwitchTab("login")} />
+        <ForgotPasswordForm switchToLogin={() => setTab("login")} />
       )}
 
       {/* --- RESET PASSWORD FORM --- */}
       {tab === "reset" && (
         <ResetPasswordForm
           token={urlToken}
-          switchToLogin={() => handleSwitchTab("login")}
+          switchToLogin={() => setTab("login")}
         />
       )}
 
@@ -72,7 +64,7 @@ const AuthForms = () => {
       {tab === "signup" && (
         <SignupForm
           setSignupSuccessPopup={setSuccessPopup}
-          switchToLogin={() => handleSwitchTab("login")}
+          switchToLogin={() => setTab("login")}
         />
       )}
 
