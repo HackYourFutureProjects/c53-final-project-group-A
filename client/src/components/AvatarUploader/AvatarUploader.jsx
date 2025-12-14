@@ -6,11 +6,21 @@ import { gif } from "../../assets";
 export default function AvatarUploader({ user, updateProfile, setAlert }) {
   const fileInputRef = useRef(null);
 
+  function delayedClearAlert() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setAlert({ type: "", message: "" });
+        resolve();
+      }, 2000);
+    });
+  }
+
   const { isLoading, error, performFetch } = useFetch(
     "/users/update-avatar",
     (result) => {
       updateProfile({ avatar: result.url });
       setAlert({ type: "success", message: "Avatar updated!" });
+      delayedClearAlert();
     },
   );
 
@@ -18,19 +28,15 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
     if (error) {
       console.error("Avatar upload error:", error);
       setAlert({ type: "error", message: "Failed to upload avatar." });
+      delayedClearAlert();
     }
   }, [error]);
-
-  const handleButtonClick = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
-  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) {
       return;
     }
-
     const formData = new FormData();
     formData.append("pic", file);
 
@@ -43,11 +49,12 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
   return (
     <div className="avatar-uploader-container">
       <img src={user.avatar} alt={user.name} className="avatar-image" />
-
       <button
         type="button"
         className="avatar-edit-btn"
-        onClick={handleButtonClick}
+        onClick={() => {
+          if (fileInputRef.current) fileInputRef.current.click();
+        }}
         disabled={isLoading}
       >
         {isLoading ? (
@@ -68,7 +75,6 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
           </svg>
         )}
       </button>
-
       <input
         type="file"
         accept="image/*"
