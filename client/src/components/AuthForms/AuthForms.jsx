@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import ForgotPasswordForm from "../../pages/ForgotPassword/ForgotPassword";
-import LoginForm from "../../pages/LoginForm/LoginForm";
-import ResetPasswordForm from "../../pages/ResetPassword/ResetPassword";
-import SignupForm from "../../pages/SignupForm/SignupForm";
+import ForgotPasswordForm from "../../pages/ForgotPassword";
+import LoginForm from "../../pages/LoginForm";
+import ResetPasswordForm from "../../pages/ResetPassword";
+import SignupForm from "../../pages/SignupForm";
 import LoginSuccessPopup from "../SuccessPopup/LoginSuccessPopup";
 import SignupSuccessPopup from "../SuccessPopup/SignupSuccessPopup";
 import "./AuthForms.css";
