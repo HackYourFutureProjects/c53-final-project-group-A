@@ -191,23 +191,6 @@ function UserContextProvider({ children }) {
     });
   }
 
-  // -------------------- FORGOT PASSWORD --------------------
-  function handleForgotPasswordResults(data) {
-    setMessage(data.msg || "Reset email sent");
-  }
-
-  const {
-    isLoading: isForgotPasswordLoading,
-    error: forgotPasswordError,
-    performFetch: performForgotPassword,
-  } = useFetch("/users/forgot-password", handleForgotPasswordResults);
-
-  async function requestPasswordReset(email) {
-    performForgotPassword({
-      method: "POST",
-      body: JSON.stringify({ email }),
-    });
-  }
   // -------------------- RESET PASSWORD --------------------
   function handleResetPasswordResults(data) {
     setMessage(data.msg || "Password updated");
@@ -233,7 +216,6 @@ function UserContextProvider({ children }) {
     isDeleteUserLoading ||
     isChangePasswordLoading ||
     isToggleFavoriteLoading ||
-    isForgotPasswordLoading ||
     isResetPasswordLoading;
 
   const error =
@@ -241,7 +223,6 @@ function UserContextProvider({ children }) {
     deleteUserError ||
     changePasswordError ||
     toggleFavoriteError ||
-    forgotPasswordError ||
     resetPasswordError;
 
   return (
@@ -259,7 +240,6 @@ function UserContextProvider({ children }) {
         toggleFavorite,
         deleteUser,
         changePassword,
-        requestPasswordReset,
         resetPassword,
         // Expose individual loading states
         isMeLoading,
@@ -267,14 +247,12 @@ function UserContextProvider({ children }) {
         isDeleteUserLoading,
         isChangePasswordLoading,
         isToggleFavoriteLoading,
-        isForgotPasswordLoading,
         isResetPasswordLoading,
         // Expose individual error states
         updateProfileError,
         deleteUserError,
         changePasswordError,
         toggleFavoriteError,
-        forgotPasswordError,
         resetPasswordError,
       }}
     >

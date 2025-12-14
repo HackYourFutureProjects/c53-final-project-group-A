@@ -1,28 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useFetch from "../../hooks/useFetch";
 import { UseUser } from "../../context/UserContext";
 import { Mail } from "lucide-react";
 import { gif } from "../../assets";
 
 const ForgotPasswordForm = ({ switchToLogin }) => {
-  const {
-    requestPasswordReset,
-    loading: userLoading,
-    error,
-    // clearError,
-  } = UseUser();
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const { setMessage } = UseUser();
 
-  // Handles the "send reset email" form submission
+  const {
+    isLoading: userLoading,
+    error,
+    performFetch,
+  } = useFetch("/users/forgot-password", (data) => {
+    setSent(true);
+    setMessage(data.msg);
+  });
+
+  useEffect(() => {
+    if (error) {
+      setMessage(error);
+    }
+  }, [error]);
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload when the form is submitted
-
-    // Calls backend to request a reset email, returns true/false
-    const success = await requestPasswordReset(email);
-
-    if (success) {
-      setSent(true);
-    }
+    performFetch({
+      method: "POST",
+      body: JSON.stringify({ email }),
+    });
   };
 
   return (
@@ -43,7 +50,7 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  // clearError();
+                  setMessage(null);
                 }}
                 style={{ paddingRight: "35px" }}
               />
