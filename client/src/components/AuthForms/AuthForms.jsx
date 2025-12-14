@@ -39,7 +39,6 @@ const AuthForms = () => {
         </button>
       </div>
 
-      {/* --- LOGIN FORM --- */}
       {tab === "login" && (
         <LoginForm
           setLoginSuccessPopup={setLoginSuccessPopup}
@@ -47,36 +46,27 @@ const AuthForms = () => {
           switchToForgotPassword={() => setTab("forgot")}
         />
       )}
-      {/* --- FORGOT PASSWORD FORM --- */}
       {tab === "forgot" && (
         <ForgotPasswordForm switchToLogin={() => setTab("login")} />
       )}
-
-      {/* --- RESET PASSWORD FORM --- */}
       {tab === "reset" && (
         <ResetPasswordForm
           token={urlToken}
           switchToLogin={() => setTab("login")}
         />
       )}
-
-      {/* --- SIGNUP FORM --- */}
       {tab === "signup" && (
         <SignupForm
           setSignupSuccessPopup={setSuccessPopup}
           switchToLogin={() => setTab("login")}
         />
       )}
-
-      {/* --- SUCCESS POPUP signup --- */}
       {successPopup && (
         <SignupSuccessPopup
           onClose={() => setSuccessPopup(false)}
           goToProfile={goToProfile}
         />
       )}
-
-      {/* --- LOGIN SUCCESS POPUP --- */}
       {loginSuccessPopup && (
         <LoginSuccessPopup onClose={() => setLoginSuccessPopup(false)} />
       )}
