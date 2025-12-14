@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AlertMessage from "../AlertMessage/AlertMessage";
 import PopupForSave from "../SuccessPopup/PopupForSave";
 import { UseUser } from "../../context/UserContext";
+import useFetch from "../../hooks/useFetch";
 import { cleanUpText } from "../../util/cleanUpText";
 import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
 import { validateSkillInput } from "../../util/skillValidation";
@@ -16,27 +17,56 @@ export default function SkillsSettings() {
   const { user, dispatch, authFetch } = UseUser();
   const { skills } = user;
   const [showSavePopup, setShowSavePopup] = useState(false);
+  const handleSkillsChangeResultsRef = useRef(() => {});
 
   function handleClearAlert() {
     setAlert({ type: "", message: "" });
   }
 
   function delayedClearAlert() {
-    return new Promise(() => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         handleClearAlert();
+        resolve();
       }, 2000);
     });
   }
 
+  const {
+    isLoading: isSkillsLoading,
+    error: skillsFetchError,
+    performFetch: performSkillsChange,
+  } = useFetch("/users/change-skills", (result) =>
+    handleSkillsChangeResultsRef.current(result),
+  );
+
   async function changeSkillsHelper(skills) {
     const skillNames = skills.map((s) => s.skill);
 
-    await authFetch("/change-skills", {
+    performSkillsChange({
       method: "POST",
       body: JSON.stringify({ skills: skillNames }),
+      credentials: "include",
     });
   }
+  function handleSkillsChangeResults(nextSkills, successMessage) {
+    handleSkillsChangeResultsRef.current = async () => {
+      dispatch({
+        type: "SET_SKILLS",
+        payload: nextSkills,
+      });
+      setAlert({
+        type: "success",
+        message: successMessage,
+      });
+      await delayedClearAlert();
+    };
+  }
+  // await authFetch("/change-skills", {
+  //   method
+  // : "POST",
+  //   body: JSON.stringify({ skills: skillNames }),
+  // });
 
   // -------------------- ADD SKILL --------------------
   async function addSkill() {
@@ -62,21 +92,11 @@ export default function SkillsSettings() {
         ),
     );
 
-    try {
-      await changeSkillsHelper(combined);
-      dispatch({
-        type: "SET_SKILLS",
-        payload: combined,
-      });
-      setAlert({
-        type: "success",
-        message: "The skill has been added to the user's profile!",
-      });
-      await delayedClearAlert();
-    } catch (err) {
-      setAlert({ type: "error", message: String(err?.message || err) });
-      await delayedClearAlert();
-    }
+    await changeSkillsHelper(combined);
+    handleSkillsChangeResults(
+      combined,
+      "The skill has been added to the user's profile!",
+    );
 
     if (skillInput) {
       skillInput.value = "";
@@ -92,21 +112,12 @@ export default function SkillsSettings() {
     }
     const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
     const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
-    try {
-      await changeSkillsHelper(filtered);
-      dispatch({
-        type: "SET_SKILLS",
-        payload: filtered,
-      });
-      setAlert({
-        type: "success",
-        message: "The skill has been removed from the user's profile!",
-      });
-      await delayedClearAlert();
-    } catch (err) {
-      setAlert({ type: "error", message: String(err?.message || err) });
-      await delayedClearAlert();
-    }
+
+    await changeSkillsHelper(filtered);
+    handleSkillsChangeResults(
+      filtered,
+      "The skill has been removed from the user's profile!",
+    );
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
@@ -114,21 +125,12 @@ export default function SkillsSettings() {
       setShowSavePopup(true);
       return;
     }
-    try {
-      await changeSkillsHelper([]);
-      dispatch({
-        type: "SET_SKILLS",
-        payload: [],
-      });
-      setAlert({
-        type: "success",
-        message: "All skills have been removed from the user's profile!",
-      });
-      await delayedClearAlert();
-    } catch (err) {
-      setAlert({ type: "error", message: String(err?.message || err) });
-      await delayedClearAlert();
-    }
+
+    await changeSkillsHelper([]);
+    handleSkillsChangeResults(
+      [],
+      "All skills have been removed from the user's profile!",
+    );
   }
   const visibleSkills = showAll ? skills : skills.slice(0, maxVisible);
 
