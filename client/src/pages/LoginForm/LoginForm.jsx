@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
+import { useState, useEffect } from "react";
+import { LogIn, Mail, Eye, EyeOff } from "lucide-react";
 import { UseUser } from "../../context/UserContext";
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import { gif } from "../../assets";
 import useFetch from "../../hooks/useFetch";
 import { fixUserSkills } from "../../util/fixUserSkills";
@@ -12,7 +13,12 @@ const LoginForm = ({
 }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [alert, setAlert] = useState({ type: "", message: "" });
   const { dispatch } = UseUser();
+
+  function handleClearAlert() {
+    setAlert({ type: "", message: "" });
+  }
 
   // -------------------- LOGIN --------------------
   function handleLoginResults(data) {
@@ -53,13 +59,17 @@ const LoginForm = ({
     handleLoginResults,
   );
 
-  if (error) {
-    setLoginSuccessPopup(false);
-  }
+  useEffect(() => {
+    if (error) {
+      setAlert({ type: "error", message: String(error) });
+      setLoginSuccessPopup(false);
+    }
+  }, [error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
+    handleClearAlert();
   };
 
   const handleSubmit = async (e) => {
@@ -120,11 +130,8 @@ const LoginForm = ({
           )}
         </div>
 
-        {error && (
-          <p className="error-text">
-            <X size={14} style={{ marginRight: "5px" }} />
-            {error}
-          </p>
+        {alert.message && (
+          <AlertMessage type={alert.type} message={alert.message} />
         )}
 
         <button type="submit" disabled={isLoading}>
