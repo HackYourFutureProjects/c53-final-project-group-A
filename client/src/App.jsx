@@ -27,7 +27,6 @@ function App() {
         <Route path="favorites" element={<MyFavorites />} />
         <Route path="reset-password" element={<ResetPasswordForm />} />
         <Route path="login" element={<AuthForms />} />
-        <Route path="auth" element={<AuthForms />} />
         <Route path="about" element={<About />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
