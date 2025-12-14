@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import useFetch from "../hooks/useFetch";
+import {
+  validatePassword,
+  validatePasswordMatch,
+} from "../util/AuthValidation";
 
 export default function ChangePassword({
   currentPasswordInputRef,
@@ -7,11 +12,99 @@ export default function ChangePassword({
   confirmPasswordInputRef,
   onKeyDown,
   onInputChange,
+  setAlert,
+  onPasswordChangeSuccess,
 }) {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
+
+  const { performFetch } = useFetch("/users/change-password", (data) => {
+    setAlert({ type: "success", message: data.msg });
+  });
+
+  async function handlePasswordChange() {
+    const currentPasswordEl = currentPasswordInputRef.current;
+    const newPasswordEl = newPasswordInputRef.current;
+    const confirmPasswordEl = confirmPasswordInputRef.current;
+
+    if (!currentPasswordEl || !newPasswordEl || !confirmPasswordEl) {
+      return { success: false, hasChanges: false };
+    }
+
+    const newPassword = newPasswordEl.value || "";
+    const confirmPassword = confirmPasswordEl.value || "";
+    const currentPassword = currentPasswordEl.value || "";
+
+    // If no password fields are filled, return no changes
+    if (!newPassword && !confirmPassword && !currentPassword) {
+      return { success: true, hasChanges: false };
+    }
+
+    // Validate that current password is provided
+    if (!currentPassword) {
+      setAlert({
+        type: "error",
+        message: "Current password is required to change password.",
+      });
+      return { success: false, hasChanges: true };
+    }
+
+    // Validate new password format
+    if (!validatePassword(newPassword)) {
+      setAlert({
+        type: "error",
+        message:
+          "Password must be at least 8 characters and meet at least 2 complexity rules.",
+      });
+      return { success: false, hasChanges: true };
+    }
+
+    // Validate password match
+    const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
+    if (!matchCheck.valid) {
+      setAlert({ type: "error", message: matchCheck.message });
+      return { success: false, hasChanges: true };
+    }
+
+    // Attempt to change password
+    try {
+      await performFetch({
+        method: "POST",
+        body: JSON.stringify({ currentPassword, newPassword }),
+        credentials: "include",
+      });
+
+      setAlert({
+        type: "success",
+        message: "Password updated successfully!",
+      });
+
+      // Clear password fields
+      currentPasswordEl.value = "";
+      newPasswordEl.value = "";
+      confirmPasswordEl.value = "";
+
+      if (onPasswordChangeSuccess) {
+        onPasswordChangeSuccess();
+      }
+
+      return { success: true, hasChanges: true };
+    } catch (err) {
+      setAlert({
+        type: "error",
+        message: err.message || "Failed to change password.",
+      });
+      return { success: false, hasChanges: true };
+    }
+  }
+
+  // Expose the handlePasswordChange function to parent via callback
+  useEffect(() => {
+    // Store the function reference on the component instance
+    currentPasswordInputRef.current.handlePasswordChange = handlePasswordChange;
+  }, []);
 
   return (
     <div className="profile-section">

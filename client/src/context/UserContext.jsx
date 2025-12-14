@@ -149,28 +149,7 @@ function UserContextProvider({ children }) {
   async function deleteUser() {
     performDeleteUser({ method: "DELETE", credentials: "include" });
   }
-  // -------------------- CHANGE PASSWORD --------------------
-  function handleChangePasswordResults(data) {
-    setMessage(data.msg || "Password changed successfully!");
-  }
 
-  const {
-    isLoading: isChangePasswordLoading,
-    error: changePasswordError,
-    performFetch: performChangePassword,
-  } = useFetch("/users/change-password", handleChangePasswordResults);
-
-  async function changePassword(currentPassword, newPassword) {
-    if (!currentPassword || !newPassword) {
-      throw new Error("Current password and new password are required.");
-    }
-
-    performChangePassword({
-      method: "POST",
-      body: JSON.stringify({ currentPassword, newPassword }),
-      credentials: "include",
-    });
-  }
   // -------------------- FAVORITES --------------------
   function handleToggleFavoriteResults(data) {
     setMessage(
@@ -200,14 +179,9 @@ function UserContextProvider({ children }) {
     isMeLoading ||
     isUpdateProfileLoading ||
     isDeleteUserLoading ||
-    isChangePasswordLoading ||
     isToggleFavoriteLoading;
 
-  const error =
-    updateProfileError ||
-    deleteUserError ||
-    changePasswordError ||
-    toggleFavoriteError;
+  const error = updateProfileError || deleteUserError || toggleFavoriteError;
 
   return (
     <UserContext.Provider
@@ -223,17 +197,14 @@ function UserContextProvider({ children }) {
         updateProfile,
         toggleFavorite,
         deleteUser,
-        changePassword,
         // Expose individual loading states
         isMeLoading,
         isUpdateProfileLoading,
         isDeleteUserLoading,
-        isChangePasswordLoading,
         isToggleFavoriteLoading,
         // Expose individual error states
         updateProfileError,
         deleteUserError,
-        changePasswordError,
         toggleFavoriteError,
       }}
     >

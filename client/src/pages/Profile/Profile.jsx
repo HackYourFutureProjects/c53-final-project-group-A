@@ -7,10 +7,6 @@ import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
-import {
-  validatePassword,
-  validatePasswordMatch,
-} from "../../util/AuthValidation";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import DeleteProfilePopup from "../../components/DeleteProfilePopup/DeleteProfilePopup";
 import "./Profile.css";
@@ -26,7 +22,7 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, updateProfile, changePassword } = UseUser();
+  const { user, updateProfile } = UseUser();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   useEffect(() => {
@@ -59,9 +55,6 @@ export default function Profile() {
 
     const firstnameEl = firstnameInputRef.current;
     const lastnameEl = lastnameInputRef.current;
-    const currentPasswordEl = currentPasswordInputRef.current;
-    const newPasswordEl = newPasswordInputRef.current;
-    const confirmPasswordEl = confirmPasswordInputRef.current;
     const streetEl = streetInputRef.current;
     const housenumberEl = houseInputRef.current;
     const cityEl = cityInputRef.current;
@@ -82,6 +75,17 @@ export default function Profile() {
       return;
     }
 
+    // Handle password change first
+    if (currentPasswordInputRef.current?.handlePasswordChange) {
+      const passwordResult =
+        await currentPasswordInputRef.current.handlePasswordChange();
+      if (passwordResult.hasChanges) {
+        // Password change was attempted, return regardless of success
+        return;
+      }
+      // No password changes, continue with profile update
+    }
+
     if (user) {
       const updatedFields = {};
 
@@ -96,60 +100,6 @@ export default function Profile() {
         updatedFields.firstname = firstname;
       if (String(lastname) !== currentLastName)
         updatedFields.lastname = lastname;
-
-      const newPassword = newPasswordEl.value || "";
-      const confirmPassword = confirmPasswordEl.value || "";
-      const currentPassword = currentPasswordEl.value || "";
-
-      // --- Password change handling ---
-      if (newPassword || confirmPassword || currentPassword) {
-        if (!currentPassword) {
-          setAlert({
-            type: "error",
-            message: "Current password is required to change password.",
-          });
-          return;
-        }
-
-        // Validate password strength
-        if (!validatePassword(newPassword)) {
-          setAlert({
-            type: "error",
-            message:
-              "Password must be at least 8 characters and meet at least 2 complexity rules.",
-          });
-          return;
-        }
-
-        // Validate password match
-        const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
-        if (!matchCheck.valid) {
-          setAlert({ type: "error", message: matchCheck.message });
-          return;
-        }
-
-        // Call API
-        try {
-          await changePassword(currentPassword, newPassword);
-
-          setAlert({
-            type: "success",
-            message: "Password updated successfully!",
-          });
-
-          // Clear input fields
-          currentPasswordEl.value = "";
-          newPasswordEl.value = "";
-          confirmPasswordInputRef.current.value = "";
-          return;
-        } catch (err) {
-          setAlert({
-            type: "error",
-            message: err.message || "Failed to change password.",
-          });
-          return;
-        }
-      }
 
       const street = cleanUpText(streetEl.value || "");
       const housenumber = cleanUpText(housenumberEl.value || "");
@@ -203,12 +153,6 @@ export default function Profile() {
       try {
         await updateProfile(updatedFields);
         setAlert({ type: "success", message: "Profile updated successfully!" });
-
-        if (newPassword) {
-          currentPasswordEl.value = "";
-          newPasswordEl.value = "";
-          confirmPasswordInputRef.current.value = "";
-        }
       } catch (error) {
         setAlert({
           type: "error",
@@ -287,6 +231,7 @@ export default function Profile() {
         confirmPasswordInputRef={confirmPasswordInputRef}
         onKeyDown={pressEnterKey}
         onInputChange={handleClearAlert}
+        setAlert={setAlert}
       />
       {/* <!-- Save Button --> */}
       <div className="profile-save-row">
