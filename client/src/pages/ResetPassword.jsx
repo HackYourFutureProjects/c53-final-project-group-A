@@ -3,7 +3,7 @@ import {
   // , useEffect
 } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { UseUser } from "../context/UserContext";
+import useFetch from "../hooks/useFetch";
 import {
   validatePassword,
   validatePasswordMatch,
@@ -15,19 +15,35 @@ const ResetPasswordForm = () => {
   const token = searchParams.get("token");
   const navigate = useNavigate();
 
-  const {
-    resetPassword,
-    loading,
-    error,
-    // , clearError
-  } = UseUser();
-
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
   // NEW: visibility toggles
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+
+  // -------------------- RESET PASSWORD --------------------
+  function handleResetPasswordResults(data) {
+    // Return true to indicate success
+    return true;
+  }
+
+  const {
+    isLoading: loading,
+    error,
+    performFetch: performResetPassword,
+  } = useFetch("/users/reset-password", handleResetPasswordResults);
+
+  async function resetPassword(resetToken, newPasswordValue) {
+    performResetPassword({
+      method: "POST",
+      body: JSON.stringify({
+        token: resetToken,
+        newPassword: newPasswordValue,
+      }),
+    });
+    return true;
+  }
 
   // useEffect(() => {
   //   clearError();
@@ -43,11 +59,9 @@ const ResetPasswordForm = () => {
 
     if (!token) {
       alert("Invalid or missing token.");
-      // Token must exist to proceed with password reset
       return;
     }
 
-    // Validate password rules
     if (!validatePassword(newPassword)) {
       alert(
         "Password must be at least 8 characters and meet at least two of the following: uppercase, lowercase, number, symbol.",
@@ -55,7 +69,6 @@ const ResetPasswordForm = () => {
       return;
     }
 
-    // Validate passwords match
     const matchValidation = validatePasswordMatch(newPassword, confirmPassword);
     if (!matchValidation.valid) {
       alert(matchValidation.message);

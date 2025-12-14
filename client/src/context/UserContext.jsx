@@ -195,39 +195,19 @@ function UserContextProvider({ children }) {
     });
   }
 
-  // -------------------- RESET PASSWORD --------------------
-  function handleResetPasswordResults(data) {
-    setMessage(data.msg || "Password updated");
-  }
-
-  const {
-    isLoading: isResetPasswordLoading,
-    error: resetPasswordError,
-    performFetch: performResetPassword,
-  } = useFetch("/users/reset-password", handleResetPasswordResults);
-
-  async function resetPassword(token, newPassword) {
-    performResetPassword({
-      method: "POST",
-      body: JSON.stringify({ token, newPassword }),
-    });
-  }
-
   // Combined loading and error states
   const loading =
     isMeLoading ||
     isUpdateProfileLoading ||
     isDeleteUserLoading ||
     isChangePasswordLoading ||
-    isToggleFavoriteLoading ||
-    isResetPasswordLoading;
+    isToggleFavoriteLoading;
 
   const error =
     updateProfileError ||
     deleteUserError ||
     changePasswordError ||
-    toggleFavoriteError ||
-    resetPasswordError;
+    toggleFavoriteError;
 
   return (
     <UserContext.Provider
@@ -244,20 +224,17 @@ function UserContextProvider({ children }) {
         toggleFavorite,
         deleteUser,
         changePassword,
-        resetPassword,
         // Expose individual loading states
         isMeLoading,
         isUpdateProfileLoading,
         isDeleteUserLoading,
         isChangePasswordLoading,
         isToggleFavoriteLoading,
-        isResetPasswordLoading,
         // Expose individual error states
         updateProfileError,
         deleteUserError,
         changePasswordError,
         toggleFavoriteError,
-        resetPasswordError,
       }}
     >
       {children}
