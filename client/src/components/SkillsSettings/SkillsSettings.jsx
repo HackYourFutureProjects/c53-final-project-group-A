@@ -22,7 +22,7 @@ export default function SkillsSettings() {
   const { user, dispatch } = UseUser();
   const { skills } = user;
   const [showSavePopup, setShowSavePopup] = useState(false);
-  const updateSkillsStateRef = useRef(() => {});
+  const handleSkillsResultsRef = useRef(() => {});
 
   function handleClearAlert() {
     setAlert({ type: "", message: "" });
@@ -42,7 +42,7 @@ export default function SkillsSettings() {
     error: fetchError,
     performFetch: performSkillsChange,
   } = useFetch("/users/change-skills", (result) =>
-    updateSkillsStateRef.current(result),
+    handleSkillsResultsRef.current(result),
   );
 
   if (fetchError) {
@@ -51,7 +51,7 @@ export default function SkillsSettings() {
   }
 
   function prepareSkillsUpdate(nextSkills, successMessage) {
-    updateSkillsStateRef.current = async () => {
+    handleSkillsResultsRef.current = async () => {
       dispatch({
         type: "SET_SKILLS",
         payload: nextSkills,
