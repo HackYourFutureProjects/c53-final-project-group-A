@@ -1,5 +1,5 @@
 // React imports
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Context, Component imports
 import { UseUser } from "../../context/UserContext";
@@ -46,10 +46,12 @@ export default function SkillsSettings() {
     handleSkillsResultsRef.current(result),
   );
 
-  if (fetchError) {
-    setAlert({ type: "error", message: String(fetchError) });
-    delayedClearAlert();
-  }
+  useEffect(() => {
+    if (fetchError) {
+      setAlert({ type: "error", message: String(fetchError) });
+      delayedClearAlert();
+    }
+  }, [fetchError]);
 
   function prepareSkillsUpdate(nextSkills, successMessage) {
     handleSkillsResultsRef.current = async () => {
