@@ -17,7 +17,7 @@ export default function SkillsSettings() {
   const { user, dispatch } = UseUser();
   const { skills } = user;
   const [showSavePopup, setShowSavePopup] = useState(false);
-  const handleSkillsChangeResultsRef = useRef(() => {});
+  const updateSkillsStateRef = useRef(() => {});
 
   function handleClearAlert() {
     setAlert({ type: "", message: "" });
@@ -37,20 +37,11 @@ export default function SkillsSettings() {
     // error: skillsFetchError,
     performFetch: performSkillsChange,
   } = useFetch("/users/change-skills", (result) =>
-    handleSkillsChangeResultsRef.current(result),
+    updateSkillsStateRef.current(result),
   );
 
-  async function changeSkillsHelper(skills) {
-    const skillNames = skills.map((s) => s.skill);
-
-    performSkillsChange({
-      method: "POST",
-      body: JSON.stringify({ skills: skillNames }),
-      credentials: "include",
-    });
-  }
-  function handleSkillsChangeResults(nextSkills, successMessage) {
-    handleSkillsChangeResultsRef.current = async () => {
+  function prepareSkillsUpdate(nextSkills, successMessage) {
+    updateSkillsStateRef.current = async () => {
       dispatch({
         type: "SET_SKILLS",
         payload: nextSkills,
@@ -61,6 +52,16 @@ export default function SkillsSettings() {
       });
       await delayedClearAlert();
     };
+  }
+
+  async function changeSkillsHelper(skills) {
+    const skillNames = skills.map((s) => s.skill);
+
+    performSkillsChange({
+      method: "POST",
+      body: JSON.stringify({ skills: skillNames }),
+      credentials: "include",
+    });
   }
   // await authFetch("/change-skills", {
   //   method
@@ -92,11 +93,11 @@ export default function SkillsSettings() {
         ),
     );
 
-    await changeSkillsHelper(combined);
-    handleSkillsChangeResults(
+    prepareSkillsUpdate(
       combined,
       "The skill has been added to the user's profile!",
     );
+    await changeSkillsHelper(combined);
 
     if (skillInput) {
       skillInput.value = "";
@@ -113,11 +114,11 @@ export default function SkillsSettings() {
     const prevSkills = Array.isArray(user?.skills) ? user.skills : [];
     const filtered = prevSkills.filter((s) => s.skill !== skill.skill);
 
-    await changeSkillsHelper(filtered);
-    handleSkillsChangeResults(
+    prepareSkillsUpdate(
       filtered,
       "The skill has been removed from the user's profile!",
     );
+    await changeSkillsHelper(filtered);
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
@@ -126,11 +127,11 @@ export default function SkillsSettings() {
       return;
     }
 
-    await changeSkillsHelper([]);
-    handleSkillsChangeResults(
+    prepareSkillsUpdate(
       [],
       "All skills have been removed from the user's profile!",
     );
+    await changeSkillsHelper([]);
   }
   const visibleSkills = showAll ? skills : skills.slice(0, maxVisible);
 
