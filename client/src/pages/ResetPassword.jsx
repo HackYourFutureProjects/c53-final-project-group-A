@@ -3,38 +3,33 @@ import {
   // , useEffect
 } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+
 import useFetch from "../hooks/useFetch";
 import {
   validatePassword,
   validatePasswordMatch,
 } from "../util/AuthValidation";
-import { Eye, EyeOff } from "lucide-react";
 
 const ResetPasswordForm = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
+  const [resetSuccess, setResetSuccess] = useState(false);
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   // NEW: visibility toggles
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
-  const [resetSuccess, setResetSuccess] = useState(false);
 
-  function handleResetPasswordResults() {
-    setResetSuccess(true);
-  }
-
-  const {
-    isLoading: loading,
-    error,
-    performFetch: performResetPassword,
-  } = useFetch("/users/reset-password", handleResetPasswordResults);
+  const { isLoading, error, performFetch } = useFetch(
+    "/users/reset-password",
+    () => setResetSuccess(true),
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Prevent form submission from refreshing the page
 
     if (!token) {
       alert("Invalid or missing token.");
@@ -52,14 +47,13 @@ const ResetPasswordForm = () => {
       return;
     }
 
-    performResetPassword({
+    performFetch({
       method: "POST",
       body: JSON.stringify({
         token,
         newPassword,
       }),
     });
-    // Calls the backend to update the password with the token
   };
 
   return (
@@ -124,9 +118,8 @@ const ResetPasswordForm = () => {
             </div>
             {error && <p className="error-text">{error}</p>}
             {/* Display any error returned from backend */}
-            <button type="submit" disabled={loading}>
-              {loading ? "Saving..." : "Save New Password"}
-              {/* Show loading text while waiting for backend */}
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Saving..." : "Save New Password"}
             </button>
           </form>
           <p className="switch-text">
