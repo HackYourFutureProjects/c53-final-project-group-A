@@ -1,13 +1,17 @@
+// React imports
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+// Context, Component imports
 import AlertMessage from "../AlertMessage/AlertMessage";
 import PopupForSave from "../SuccessPopup/PopupForSave";
-import { UseUser } from "../../context/UserContext";
+// Hook & Utility imports
 import useFetch from "../../hooks/useFetch";
 import { cleanUpText } from "../../util/cleanUpText";
 import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
 import { validateSkillInput } from "../../util/skillValidation";
+// Styles
 import "./SkillsSettings.css";
+
 export default function SkillsSettings() {
   const navigate = useNavigate();
   const skillInputRef = useRef(null);
@@ -34,11 +38,16 @@ export default function SkillsSettings() {
 
   const {
     // isLoading: isSkillsLoading,
-    // error: skillsFetchError,
+    error: fetchError,
     performFetch: performSkillsChange,
   } = useFetch("/users/change-skills", (result) =>
     updateSkillsStateRef.current(result),
   );
+
+  if (fetchError) {
+    setAlert({ type: "error", message: String(fetchError) });
+    delayedClearAlert();
+  }
 
   function prepareSkillsUpdate(nextSkills, successMessage) {
     updateSkillsStateRef.current = async () => {
@@ -63,11 +72,6 @@ export default function SkillsSettings() {
       credentials: "include",
     });
   }
-  // await authFetch("/change-skills", {
-  //   method
-  // : "POST",
-  //   body: JSON.stringify({ skills: skillNames }),
-  // });
 
   // -------------------- ADD SKILL --------------------
   async function addSkill() {
