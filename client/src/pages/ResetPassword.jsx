@@ -30,11 +30,13 @@ const ResetPasswordForm = () => {
 
   useEffect(() => {
     if (error) {
-      // setAlert({ type: "error", message: String(error) });
-      const timer = setTimeout(() => {
-        setAlert({ type: "", message: "" });
-      }, 2000);
-      return () => clearTimeout(timer);
+      async () => {
+        setAlert({ type: "error", message: String(error) });
+        const timer = setTimeout(() => {
+          setAlert({ type: "", message: "" });
+        }, 2000);
+        return () => clearTimeout(timer);
+      };
     }
   }, [error]);
 
