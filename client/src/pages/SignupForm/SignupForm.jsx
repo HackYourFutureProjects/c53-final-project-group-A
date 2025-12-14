@@ -62,13 +62,6 @@ const SignupForm = ({ setSignupSuccessPopup, switchToLogin }) => {
       setAlert({ type: "error", message: String(error) });
       setSignupSuccessPopup(false);
     }
-    setSignupData({
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
   }, [error]);
 
   const handleChange = (e) => {
