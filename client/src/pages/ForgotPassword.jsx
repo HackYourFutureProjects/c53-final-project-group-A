@@ -9,14 +9,13 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
   const [sent, setSent] = useState(false);
   const { setMessage } = UseUser();
 
-  const {
-    isLoading: userLoading,
-    error,
-    performFetch,
-  } = useFetch("/users/forgot-password", (data) => {
-    setSent(true);
-    setMessage(data.msg);
-  });
+  const { isLoading, error, performFetch } = useFetch(
+    "/users/forgot-password",
+    (data) => {
+      setSent(true);
+      setMessage(data.msg);
+    },
+  );
 
   useEffect(() => {
     if (error) {
@@ -57,8 +56,8 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
               <Mail size={18} className="input-icon-right" />
             </div>
             {error && <p className="error-text">{error}</p>}
-            <button type="submit" disabled={userLoading}>
-              {userLoading ? (
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? (
                 <>
                   <span>Sending...</span>
                   <img src={gif.spinner} className="spinner" />

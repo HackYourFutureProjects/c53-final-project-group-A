@@ -9,13 +9,10 @@ import {
   validatePasswordMatch,
 } from "../util/AuthValidation";
 import { Eye, EyeOff } from "lucide-react";
-// assuming your helper functions are in helpers/validation.js
 
 const ResetPasswordForm = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  // Retrieves the reset token from the URL query parameters
-
   const navigate = useNavigate();
 
   const {
@@ -24,6 +21,7 @@ const ResetPasswordForm = () => {
     error,
     // , clearError
   } = UseUser();
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);

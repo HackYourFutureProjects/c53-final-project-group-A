@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import ForgotPasswordForm from "../../pages/ForgotPassword";
 import LoginForm from "../../pages/LoginForm";
@@ -10,10 +10,8 @@ import SignupSuccessPopup from "../SuccessPopup/SignupSuccessPopup";
 import "./AuthForms.css";
 
 const AuthForms = () => {
-  const [searchParams] = useSearchParams();
-  const urlToken = searchParams.get("token");
   const navigate = useNavigate();
-  const [tab, setTab] = useState(() => (urlToken ? "reset" : "login"));
+  const [tab, setTab] = useState("login");
   const [successPopup, setSuccessPopup] = useState(false);
   const [loginSuccessPopup, setLoginSuccessPopup] = useState(false);
 
@@ -49,12 +47,7 @@ const AuthForms = () => {
       {tab === "forgot" && (
         <ForgotPasswordForm switchToLogin={() => setTab("login")} />
       )}
-      {tab === "reset" && (
-        <ResetPasswordForm
-          token={urlToken}
-          switchToLogin={() => setTab("login")}
-        />
-      )}
+      {tab === "reset" && <ResetPasswordForm />}
       {tab === "signup" && (
         <SignupForm
           setSignupSuccessPopup={setSuccessPopup}
