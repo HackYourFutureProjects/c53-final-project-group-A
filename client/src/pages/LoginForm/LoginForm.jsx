@@ -3,11 +3,18 @@ import { X, LogIn, Mail, Eye, EyeOff } from "lucide-react";
 import { UseUser } from "../../context/UserContext";
 import { gif } from "../../assets";
 
-const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
+const LoginForm = ({
+  // email,
+  // password,
+  setLoginSuccessPopup,
+  switchToSignup,
+  switchToForgotPassword,
+}) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
   const {
+    login,
     loading,
     error,
     // , clearError
@@ -19,9 +26,14 @@ const LoginForm = ({ login, switchToSignup, switchToForgotPassword }) => {
     // clearError(); // clear error while typing
   };
 
+  const handleLogin = async (email, password) => {
+    await login(email, password);
+    setLoginSuccessPopup(true);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(loginData.email, loginData.password);
+    await handleLogin(loginData.email, loginData.password);
   };
 
   return (

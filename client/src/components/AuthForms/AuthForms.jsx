@@ -22,6 +22,7 @@ const AuthForms = () => {
   const [tab, setTab] = useState("login");
   const [successPopup, setSuccessPopup] = useState(false);
   const [signedUpUser, setSignedUpUser] = useState("");
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
 
   const [loginSuccessPopup, setLoginSuccessPopup] = useState(false);
   const [resetToken, setResetToken] = useState(urlToken || null);
@@ -64,10 +65,9 @@ const AuthForms = () => {
       {/* --- LOGIN FORM --- */}
       {tab === "login" && (
         <LoginForm
-          login={async (email, password) => {
-            await login(email, password);
-            setLoginSuccessPopup(true);
-          }}
+          // email={loginData.email}
+          // password={loginData.password}
+          setLoginSuccessPopup={setLoginSuccessPopup}
           switchToSignup={() => handleSwitchTab("signup")}
           switchToForgotPassword={() => handleSwitchTab("forgot")}
         />
