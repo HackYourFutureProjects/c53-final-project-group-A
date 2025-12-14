@@ -1,21 +1,21 @@
-import {
-  useState,
-  // , useEffect
-} from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import AlertMessage from "../components/AlertMessage/AlertMessage";
 
 import useFetch from "../hooks/useFetch";
 import {
   validatePassword,
   validatePasswordMatch,
 } from "../util/AuthValidation";
+import { gif } from "../assets";
 
 const ResetPasswordForm = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
   const [resetSuccess, setResetSuccess] = useState(false);
+  const [alert, setAlert] = useState({ type: "", message: "" });
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,6 +27,16 @@ const ResetPasswordForm = () => {
     "/users/reset-password",
     () => setResetSuccess(true),
   );
+
+  useEffect(() => {
+    if (error) {
+      setAlert({ type: "error", message: String(error) });
+      const timer = setTimeout(() => {
+        setAlert({ type: "", message: "" });
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,10 +126,20 @@ const ResetPasswordForm = () => {
                 />
               )}
             </div>
-            {error && <p className="error-text">{error}</p>}
-            {/* Display any error returned from backend */}
+
+            {alert.message && (
+              <AlertMessage type={alert.type} message={alert.message} />
+            )}
+
             <button type="submit" disabled={isLoading}>
-              {isLoading ? "Saving..." : "Save New Password"}
+              {isLoading ? (
+                <>
+                  <span>Saving...</span>
+                  <img src={gif.spinner} className="spinner" />
+                </>
+              ) : (
+                "Save New Password"
+              )}
             </button>
           </form>
           <p className="switch-text">

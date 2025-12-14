@@ -3,11 +3,13 @@ import useFetch from "../hooks/useFetch";
 import { UseUser } from "../context/UserContext";
 import { Mail } from "lucide-react";
 import { gif } from "../assets";
+import AlertMessage from "../components/AlertMessage/AlertMessage";
 
 const ForgotPasswordForm = ({ switchToLogin }) => {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const { setMessage } = UseUser();
+  const [alert, setAlert] = useState({ type: "", message: "" });
 
   const { isLoading, error, performFetch } = useFetch(
     "/users/forgot-password",
@@ -19,7 +21,11 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
 
   useEffect(() => {
     if (error) {
-      setMessage(error);
+      setAlert({ type: "error", message: String(error) });
+      const timer = setTimeout(() => {
+        setAlert({ type: "", message: "" });
+      }, 2000);
+      return () => clearTimeout(timer);
     }
   }, [error]);
 
@@ -55,7 +61,11 @@ const ForgotPasswordForm = ({ switchToLogin }) => {
               />
               <Mail size={18} className="input-icon-right" />
             </div>
-            {error && <p className="error-text">{error}</p>}
+
+            {alert.message && (
+              <AlertMessage type={alert.type} message={alert.message} />
+            )}
+
             <button type="submit" disabled={isLoading}>
               {isLoading ? (
                 <>

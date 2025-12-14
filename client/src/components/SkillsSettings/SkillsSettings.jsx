@@ -30,12 +30,10 @@ export default function SkillsSettings() {
   }
 
   function delayedClearAlert() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        handleClearAlert();
-        resolve();
-      }, 2000);
-    });
+    const timer = setTimeout(() => {
+      handleClearAlert();
+    }, 2000);
+    return () => clearTimeout(timer);
   }
 
   const {
@@ -63,7 +61,6 @@ export default function SkillsSettings() {
         type: "success",
         message: successMessage,
       });
-      await delayedClearAlert();
     };
   }
 
@@ -89,7 +86,7 @@ export default function SkillsSettings() {
     const validationError = validateSkillInput({ text: newSkill, skills });
     if (validationError) {
       setAlert({ type: "error", message: String(validationError) });
-      await delayedClearAlert();
+      delayedClearAlert();
       return;
     }
 
@@ -106,6 +103,7 @@ export default function SkillsSettings() {
       "The skill has been added to the user's profile!",
     );
     await changeSkillsHelper(combined);
+    delayedClearAlert();
 
     if (skillInput) {
       skillInput.value = "";
@@ -127,6 +125,7 @@ export default function SkillsSettings() {
       "The skill has been removed from the user's profile!",
     );
     await changeSkillsHelper(filtered);
+    delayedClearAlert();
   }
   // -------------------- REMOVE ALL SKILLS --------------------
   async function removeAllSkills() {
@@ -140,6 +139,7 @@ export default function SkillsSettings() {
       "All skills have been removed from the user's profile!",
     );
     await changeSkillsHelper([]);
+    delayedClearAlert();
   }
   const visibleSkills = showAll ? skills : skills.slice(0, maxVisible);
 
