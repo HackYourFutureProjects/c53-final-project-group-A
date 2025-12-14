@@ -317,7 +317,6 @@ function UserContextProvider({ children }) {
     performForgotPassword({
       method: "POST",
       body: JSON.stringify({ email }),
-      credentials: "include",
     });
   }
   // -------------------- RESET PASSWORD --------------------
