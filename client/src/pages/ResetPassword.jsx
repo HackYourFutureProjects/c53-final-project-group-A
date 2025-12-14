@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import AlertMessage from "../components/AlertMessage/AlertMessage";
 
 import useFetch from "../hooks/useFetch";
+import AlertMessage from "../components/AlertMessage/AlertMessage";
 import {
   validatePassword,
   validatePasswordMatch,
@@ -44,18 +44,20 @@ const ResetPasswordForm = () => {
     e.preventDefault();
 
     if (!token) {
-      alert("Invalid or missing token.");
+      setAlert({ type: "error", message: "Invalid or missing token." });
       return;
     }
     if (!validatePassword(newPassword)) {
-      alert(
-        "Password must be at least 8 characters and meet at least two of the following: uppercase, lowercase, number, symbol.",
-      );
+      setAlert({
+        type: "error",
+        message:
+          "Password must be at least 8 characters and meet at least two of the following: uppercase, lowercase, number, symbol.",
+      });
       return;
     }
     const matchValidation = validatePasswordMatch(newPassword, confirmPassword);
     if (!matchValidation.valid) {
-      alert(matchValidation.message);
+      setAlert({ type: "error", message: matchValidation.message });
       return;
     }
 
