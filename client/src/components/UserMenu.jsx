@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { icons, gif } from "../../assets";
-import { UseUser } from "../../context/UserContext";
-import { defaultUser } from "../../data/defaultUser.js";
+import { icons, gif } from "../assets";
+import { UseUser } from "../context/UserContext";
+import { defaultUser } from "../data/defaultUser.js";
 
 export default function UserMenu() {
   const { user, logout, isMeLoading } = UseUser();

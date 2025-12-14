@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { images } from "../../assets";
 import { UseUser } from "../../context/UserContext";
-import UserMenu from "../UserMenu/UserMenu.jsx";
+import UserMenu from "../UserMenu";
 
 export default function Header() {
   const { message, clearMessage } = UseUser();

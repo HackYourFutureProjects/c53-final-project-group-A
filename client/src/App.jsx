@@ -7,7 +7,7 @@ import "./index.css";
 import MyFavorites from "./pages/MyFavorites/MyFavorites";
 import AuthForms from "./components/AuthForms/AuthForms";
 import About from "./pages/About/About";
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 
 function App() {
