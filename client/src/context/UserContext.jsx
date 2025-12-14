@@ -100,10 +100,14 @@ function UserContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (fetchMeError) {
+    if (!fetchMeError) return;
+
+    // "No token provided" is expected when browsing as a guest, so avoid noisy logs.
+    if (fetchMeError !== "No token provided") {
       console.error("Error fetching current user:", fetchMeError);
-      dispatch({ type: "LOGOUT", payload: defaultUser });
     }
+
+    dispatch({ type: "LOGOUT", payload: defaultUser });
   }, [fetchMeError]);
   // -------------------- UPDATE PROFILE --------------------
   function handleUpdateProfileResults(data) {
