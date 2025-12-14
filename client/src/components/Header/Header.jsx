@@ -16,7 +16,8 @@ export default function Header() {
 
       return () => clearTimeout(timer);
     }
-  }, [message, clearMessage]);
+  }, [message]);
+
   return (
     <header className="app-header">
       {message && (

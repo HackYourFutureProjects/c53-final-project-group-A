@@ -31,6 +31,7 @@ export default function UserMenu() {
   useEffect(() => {
     if (error) {
       console.error("Error logging out:", error);
+      setMessage(String(error));
     }
   }, [error]);
 
