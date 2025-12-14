@@ -101,14 +101,7 @@ function UserContextProvider({ children }) {
 
   useEffect(() => {
     if (fetchMeError) {
-      const authErrorKeywords = ["token", "Token", "not provided"];
-      const isAuthError = authErrorKeywords.some((keyword) =>
-        fetchMeError.includes(keyword),
-      );
-
-      if (!isAuthError) {
-        console.error("Error fetching current user:", fetchMeError);
-      }
+      console.error("Error fetching current user:", fetchMeError);
       dispatch({ type: "LOGOUT", payload: defaultUser });
     }
   }, [fetchMeError]);
