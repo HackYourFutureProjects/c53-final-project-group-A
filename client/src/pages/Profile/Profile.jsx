@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import SkillsSettings from "../../components/SkillsSettings/SkillsSettings";
 import AddressSettings from "../../components/AddressSettings/AddressSettings";
 import AlertMessage from "../../components/AlertMessage/AlertMessage";
+import ChangePassword from "../../components/ChangePassword";
 import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
@@ -10,7 +11,6 @@ import {
   validatePassword,
   validatePasswordMatch,
 } from "../../util/AuthValidation";
-import { Eye, EyeOff } from "lucide-react";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import DeleteProfilePopup from "../../components/DeleteProfilePopup/DeleteProfilePopup";
 import "./Profile.css";
@@ -26,10 +26,6 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmationPassword, setShowConfirmationPassword] =
-    useState(false);
-  const [newPassword, setNewPassword] = useState(false);
   const { user, updateProfile, changePassword } = UseUser();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
@@ -285,95 +281,13 @@ export default function Profile() {
         />
       </div>
 
-      <div className="profile-section">
-        <h3 className="profile-section-title">Change password</h3>
-        <div className="profile-password-single">
-          <label className="profile-field-label">
-            Type your current password
-          </label>
-          <div className="profile-input-wrapper">
-            <input
-              id="currentPasswordInput"
-              ref={currentPasswordInputRef}
-              type={showPassword ? "text" : "password"}
-              placeholder="Type 8 characters or more"
-              className="profile-input profile-input-with-icon"
-              onKeyDown={pressEnterKey}
-              onChange={handleClearAlert}
-            />
-            {showPassword ? (
-              <EyeOff
-                size={18}
-                className="profile-input-icon"
-                onClick={() => setShowPassword(false)}
-              />
-            ) : (
-              <Eye
-                size={18}
-                className="profile-input-icon"
-                onClick={() => setShowPassword(true)}
-              />
-            )}
-          </div>
-        </div>
-        <div className="profile-fields-grid">
-          <div>
-            <label className="profile-field-label">Set new password</label>
-            <div className="profile-input-wrapper">
-              <input
-                id="newPasswordInput"
-                ref={newPasswordInputRef}
-                type={newPassword ? "text" : "password"}
-                placeholder="Type 8 characters or more"
-                className="profile-input profile-input-with-icon"
-                onKeyDown={pressEnterKey}
-                onChange={handleClearAlert}
-              />
-              {newPassword ? (
-                <EyeOff
-                  size={18}
-                  className="profile-input-icon"
-                  onClick={() => setNewPassword(false)}
-                />
-              ) : (
-                <Eye
-                  size={18}
-                  className="profile-input-icon"
-                  onClick={() => setNewPassword(true)}
-                />
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="profile-field-label">Confirm password</label>
-            <div className="profile-input-wrapper">
-              <input
-                id="confirmPasswordInput"
-                ref={confirmPasswordInputRef}
-                type={showConfirmationPassword ? "text" : "password"}
-                placeholder="Write the same password again"
-                className="profile-input profile-input-with-icon"
-                onKeyDown={pressEnterKey}
-                onChange={handleClearAlert}
-              />
-              {showConfirmationPassword ? (
-                <EyeOff
-                  size={18}
-                  className="profile-input-icon"
-                  onClick={() => setShowConfirmationPassword(false)}
-                />
-              ) : (
-                <Eye
-                  size={18}
-                  className="profile-input-icon"
-                  onClick={() => setShowConfirmationPassword(true)}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      <ChangePassword
+        currentPasswordInputRef={currentPasswordInputRef}
+        newPasswordInputRef={newPasswordInputRef}
+        confirmPasswordInputRef={confirmPasswordInputRef}
+        onKeyDown={pressEnterKey}
+        onInputChange={handleClearAlert}
+      />
       {/* <!-- Save Button --> */}
       <div className="profile-save-row">
         {alert.message && (
