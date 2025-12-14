@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  X,
   UserPlus,
   CheckCircle,
   XCircle,
@@ -16,14 +15,13 @@ import {
   validatePasswordMatch,
   validateEmail,
 } from "../../util/AuthValidation";
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import { gif } from "../../assets";
+import useFetch from "../../hooks/useFetch";
+import { fixUserSkills } from "../../util/fixUserSkills";
+import { defaultUser } from "../../data/defaultUser";
 
-const SignupForm = ({
-  signup,
-  setSuccessPopup,
-  setSignedUpUser,
-  switchToLogin,
-}) => {
+const SignupForm = ({ setSignupSuccessPopup, switchToLogin }) => {
   const [signupData, setSignupData] = useState({
     firstname: "",
     lastname: "",
@@ -31,21 +29,52 @@ const SignupForm = ({
     password: "",
     confirmPassword: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
-  const {
-    loading,
-    error,
-    // , clearError
-  } = UseUser();
+  const [alert, setAlert] = useState({ type: "", message: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
+  const { dispatch } = UseUser();
+
+  function handleClearAlert() {
+    setAlert({ type: "", message: "" });
+  }
+
+  function handleSignupResults(data) {
+    const normalizedSkills = fixUserSkills(data.user.skills);
+    dispatch({
+      type: "REGISTER",
+      payload: {
+        ...data.user,
+        skills: normalizedSkills,
+        favorites: [],
+      },
+    });
+    setSignupSuccessPopup(true);
+  }
+
+  const { isLoading, error, performFetch } = useFetch(
+    "/users",
+    handleSignupResults,
+  );
+
+  useEffect(() => {
+    if (error) {
+      setAlert({ type: "error", message: String(error) });
+      setSignupSuccessPopup(false);
+    }
+    setSignupData({
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  }, [error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSignupData({ ...signupData, [name]: value });
-    // clearError(); // clear context error while typing
-    setErrorMessage(""); //clear local error while typing
+    handleClearAlert();
   };
 
   const handleSubmit = async (e) => {
@@ -54,7 +83,7 @@ const SignupForm = ({
     // Validate email
     const emailCheck = validateEmail(signupData.email);
     if (!emailCheck.valid) {
-      setErrorMessage(emailCheck.message);
+      setAlert({ type: "error", message: emailCheck.message });
       return;
     }
 
@@ -64,36 +93,33 @@ const SignupForm = ({
       signupData.confirmPassword,
     );
     if (!matchCheck.valid) {
-      setErrorMessage(matchCheck.message);
+      setAlert({ type: "error", message: matchCheck.message });
       return;
     }
 
     // Validate password strength
     if (!validatePassword(signupData.password)) {
-      setErrorMessage("Password does not meet requirements.");
+      setAlert({
+        type: "error",
+        message: "Password does not meet requirements.",
+      });
       return;
     }
 
-    setErrorMessage("");
-    await signup(
-      signupData.firstname,
-      signupData.lastname,
-      signupData.email,
-      signupData.password,
-    );
-
-    if (!error) {
-      const fullName = `${signupData.firstname} ${signupData.lastname}`;
-      setSignedUpUser(fullName);
-      setSuccessPopup(true);
-      setSignupData({
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-    }
+    performFetch({
+      method: "POST",
+      body: JSON.stringify({
+        user: {
+          ...defaultUser,
+          skills: defaultUser.skills.map((s) => s.skill),
+          firstname: signupData.firstname,
+          lastname: signupData.lastname,
+          email: signupData.email,
+          password: signupData.password,
+        },
+      }),
+      credentials: "include",
+    });
   };
 
   const pw = signupData.password;
@@ -246,22 +272,12 @@ const SignupForm = ({
           {renderRuleItem(passwordRules.symbol(pw), "Contains symbols")}
         </ul>
 
-        {errorMessage && (
-          <p className="error-text">
-            <X size={14} style={{ marginRight: "5px" }} />
-            {errorMessage}
-          </p>
+        {alert.message && (
+          <AlertMessage type={alert.type} message={alert.message} />
         )}
 
-        {error && (
-          <p className="error-text">
-            <X size={14} style={{ marginRight: "5px" }} />
-            {error}
-          </p>
-        )}
-
-        <button type="submit" disabled={loading}>
-          {loading ? (
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? (
             <>
               <span>Signing up...</span>
               <img src={gif.spinner} className="spinner" />
@@ -281,8 +297,7 @@ const SignupForm = ({
           className="switch-link"
           onClick={() => {
             switchToLogin();
-            // clearError(); // clear error when switching to login
-            setErrorMessage(""); //clear local error when switching
+            handleClearAlert();
           }}
         >
           Login

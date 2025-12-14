@@ -113,43 +113,6 @@ function UserContextProvider({ children }) {
     }
   }, [fetchMeError]);
 
-  // -------------------- SIGNUP --------------------
-  function handleSignupResults(data) {
-    const normalizedSkills = fixUserSkills(data.user.skills);
-    dispatch({
-      type: "REGISTER",
-      payload: {
-        ...data.user,
-        skills: normalizedSkills,
-        favorites: [],
-      },
-    });
-  }
-
-  const {
-    isLoading: isSignupLoading,
-    error: signupError,
-    performFetch: performSignup,
-  } = useFetch("/users/signup", handleSignupResults);
-
-  async function signup(firstname, lastname, email, password) {
-    if (email === defaultUser.email)
-      throw new Error("Email already registered");
-    performSignup({
-      method: "POST",
-      body: JSON.stringify({
-        user: {
-          ...defaultUser,
-          skills: defaultUser.skills.map((s) => s.skill),
-          firstname,
-          lastname,
-          email,
-          password,
-        },
-      }),
-      credentials: "include",
-    });
-  }
   // -------------------- LOGOUT --------------------
   function handleLogoutResults(data) {
     setMessage(data.msg || "Logged out successfully!");
@@ -293,7 +256,6 @@ function UserContextProvider({ children }) {
   // Combined loading and error states
   const loading =
     isMeLoading ||
-    isSignupLoading ||
     isLogoutLoading ||
     isUpdateProfileLoading ||
     isDeleteUserLoading ||
@@ -304,7 +266,6 @@ function UserContextProvider({ children }) {
 
   const error =
     fetchMeError ||
-    signupError ||
     logoutError ||
     updateProfileError ||
     deleteUserError ||
@@ -320,7 +281,6 @@ function UserContextProvider({ children }) {
         dispatch,
         loading,
         error,
-        signup,
         logout,
         // clearError,
         message,
@@ -334,7 +294,6 @@ function UserContextProvider({ children }) {
         resetPassword,
         // Expose individual loading states
         isMeLoading,
-        isSignupLoading,
         isLogoutLoading,
         isUpdateProfileLoading,
         isDeleteUserLoading,
@@ -344,7 +303,6 @@ function UserContextProvider({ children }) {
         isResetPasswordLoading,
         // Expose individual error states
         fetchMeError,
-        signupError,
         logoutError,
         updateProfileError,
         deleteUserError,

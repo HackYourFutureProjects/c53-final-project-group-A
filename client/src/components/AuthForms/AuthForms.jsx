@@ -14,11 +14,8 @@ const AuthForms = () => {
   const urlToken = searchParams.get("token");
 
   const navigate = useNavigate();
-  const { signup } = UseUser();
   const [tab, setTab] = useState("login");
   const [successPopup, setSuccessPopup] = useState(false);
-  const [signedUpUser, setSignedUpUser] = useState("");
-  // const [loginData, setLoginData] = useState({ email: "", password: "" });
 
   const [loginSuccessPopup, setLoginSuccessPopup] = useState(false);
   const [resetToken, setResetToken] = useState(urlToken || null);
@@ -88,9 +85,7 @@ const AuthForms = () => {
       {/* --- SIGNUP FORM --- */}
       {tab === "signup" && (
         <SignupForm
-          signup={signup}
-          setSuccessPopup={setSuccessPopup}
-          setSignedUpUser={setSignedUpUser}
+          setSignupSuccessPopup={setSuccessPopup}
           switchToLogin={() => handleSwitchTab("login")}
         />
       )}
@@ -98,7 +93,6 @@ const AuthForms = () => {
       {/* --- SUCCESS POPUP signup --- */}
       {successPopup && (
         <SignupSuccessPopup
-          user={signedUpUser}
           onClose={() => setSuccessPopup(false)}
           goToProfile={goToProfile}
         />

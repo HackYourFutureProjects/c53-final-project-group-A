@@ -1,9 +1,12 @@
 import "./SuccessPopup.css";
-const SignupSuccessPopup = ({ user, goToProfile }) => {
+import { UseUser } from "../../context/UserContext";
+
+const SignupSuccessPopup = ({ goToProfile }) => {
+  const { user } = UseUser();
   return (
     <div className="popup-overlay">
       <div className="popup-card">
-        <h2>Welcome {user}</h2>
+        <h2>Welcome {user?.firstname}</h2>
         <p>
           You successfully signed up and logged in! Manage your skill set and
           address in your profile to get the most relevant jobs.

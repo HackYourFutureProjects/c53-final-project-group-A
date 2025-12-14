@@ -20,7 +20,6 @@ const LoginForm = ({
     setAlert({ type: "", message: "" });
   }
 
-  // -------------------- LOGIN --------------------
   function handleLoginResults(data) {
     const normalizedSkills = fixUserSkills(data.user.skills);
     const favoriteJobs = Array.isArray(data.user.favorites)
