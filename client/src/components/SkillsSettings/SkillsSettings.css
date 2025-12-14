@@ -21,6 +21,15 @@
   margin-top: 0;
 }
 
+.spinner {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: inline;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
 .skills-controls {
   display: flex;
   gap: 10px;

@@ -10,6 +10,7 @@ import useFetch from "../../hooks/useFetch";
 import { cleanUpText } from "../../util/cleanUpText";
 import { regexEndNormalizeSkill } from "../../util/regexEndNormalizeSkill";
 import { validateSkillInput } from "../../util/skillValidation";
+import { gif } from "../../assets/index.js";
 // Styles
 import "./SkillsSettings.css";
 
@@ -38,9 +39,9 @@ export default function SkillsSettings() {
   }
 
   const {
-    // isLoading: isSkillsLoading,
+    isLoading,
     error: fetchError,
-    performFetch: performSkillsChange,
+    performFetch,
   } = useFetch("/users/change-skills", (result) =>
     handleSkillsResultsRef.current(result),
   );
@@ -67,7 +68,7 @@ export default function SkillsSettings() {
   async function changeSkillsHelper(skills) {
     const skillNames = skills.map((s) => s.skill);
 
-    performSkillsChange({
+    performFetch({
       method: "POST",
       body: JSON.stringify({ skills: skillNames }),
       credentials: "include",
@@ -144,7 +145,6 @@ export default function SkillsSettings() {
     <div className="skills-container">
       <div className="skills-section">
         <h3 className="skills-heading">Skills</h3>
-
         {/* Skills management */}
         <div className="skills-controls">
           <input
@@ -166,6 +166,13 @@ export default function SkillsSettings() {
             type="button"
           >
             Add skill
+            {isLoading && (
+              <img
+                src={gif.spinner}
+                alt="Loading..."
+                className="spinner inline-spinner"
+              />
+            )}
           </button>
 
           <button
@@ -175,6 +182,13 @@ export default function SkillsSettings() {
             type="button"
           >
             Remove all
+            {isLoading && (
+              <img
+                src={gif.spinner}
+                alt="Loading..."
+                className="spinner inline-spinner"
+              />
+            )}
           </button>
         </div>
 
@@ -188,20 +202,25 @@ export default function SkillsSettings() {
                 onClick={() => removeSkill(s)}
                 aria-label={`Remove ${s.skill}`}
                 type="button"
+                disabled={isLoading}
               >
-                <svg
-                  className="skill-remove-icon"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                {isLoading ? (
+                  <img src={gif.spinner} alt="Loading..." className="spinner" />
+                ) : (
+                  <svg
+                    className="skill-remove-icon"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
               </button>
             </div>
           ))}
