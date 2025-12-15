@@ -18,7 +18,11 @@ const ChangePassword = forwardRef(function ChangePassword(
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
 
-  const { performFetch } = useFetch("/users/change-password");
+  const {
+    // isLoading,
+    // error,
+    performFetch,
+  } = useFetch("/users/change-password");
 
   async function handlePasswordChange() {
     const currentPassword = currentPasswordInputRef?.current?.value || "";
