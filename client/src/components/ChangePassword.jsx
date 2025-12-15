@@ -29,16 +29,11 @@ const ChangePassword = forwardRef(function ChangePassword(
 
     // If no password fields are filled, return no changes
     if (!newPassword || !confirmPassword || !currentPassword) {
-      return { success: false, hasChanges: false };
-    }
-
-    // Validate that current password is provided
-    if (!currentPassword) {
       setAlert({
         type: "error",
-        message: "Current password is required to change password.",
+        message: "Password fields should not be empty.",
       });
-      return { success: false, hasChanges: true };
+      return { success: false, hasChanges: false };
     }
     if (!validatePassword(newPassword)) {
       setAlert({
