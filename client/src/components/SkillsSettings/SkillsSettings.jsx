@@ -30,10 +30,9 @@ export default function SkillsSettings() {
   }
 
   function delayedClearAlert() {
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       handleClearAlert();
     }, 2000);
-    return () => clearTimeout(timer);
   }
 
   const {

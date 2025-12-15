@@ -9,10 +9,9 @@ export default function AvatarUploader({ setAlert }) {
   const fileInputRef = useRef(null);
 
   function delayedClearAlert() {
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setAlert({ type: "", message: "" });
     }, 2000);
-    return () => clearTimeout(timer);
   }
 
   const { isLoading, error, performFetch } = useFetch(
