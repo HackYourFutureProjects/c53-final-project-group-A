@@ -68,9 +68,9 @@ const ChangePassword = forwardRef(function ChangePassword(
       });
 
       // Clear password fields
-      currentPasswordEl.value = "";
-      newPasswordEl.value = "";
-      confirmPasswordEl.value = "";
+      currentPasswordInputRef.current.value = "";
+      newPasswordInputRef.current.value = "";
+      confirmPasswordInputRef.current.value = "";
 
       return { success: true, hasChanges: true };
     } catch (err) {
