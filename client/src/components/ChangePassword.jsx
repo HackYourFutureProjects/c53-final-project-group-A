@@ -20,7 +20,7 @@ const ChangePassword = forwardRef(function ChangePassword(
 
   const {
     // isLoading,
-    // error,
+    error,
     performFetch,
   } = useFetch("/users/change-password");
 
@@ -72,9 +72,10 @@ const ChangePassword = forwardRef(function ChangePassword(
     }
   }
 
-  // Expose the handlePasswordChange function to parent via ref
+  // Expose the handlePasswordChange function and error state to parent via ref
   useImperativeHandle(ref, () => ({
     handlePasswordChange,
+    error,
   }));
 
   return (

@@ -77,8 +77,25 @@ export default function Profile() {
     if (changePasswordRef.current?.handlePasswordChange) {
       const passwordResult =
         await changePasswordRef.current.handlePasswordChange();
+
+      // If there's an error from password change, show it and return
+      if (passwordResult.error) {
+        setAlert({
+          type: "error",
+          message: passwordResult.error,
+        });
+        return;
+      }
+
+      // If there were password changes (successful or not), return
       if (passwordResult.hasChanges) {
-        // Password change was attempted, return regardless of success
+        // If we get here, the password change was successful (no error)
+        if (!passwordResult.error) {
+          setAlert({
+            type: "success",
+            message: "Password changed successfully!",
+          });
+        }
         return;
       }
       // No password changes, continue with profile update
