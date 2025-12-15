@@ -227,7 +227,6 @@ export default function Profile() {
         ref={changePasswordRef}
         onKeyDown={pressEnterKey}
         onInputChange={handleClearAlert}
-        setAlert={setAlert}
       />
       {/* <!-- Save Button --> */}
       <div className="profile-save-row">

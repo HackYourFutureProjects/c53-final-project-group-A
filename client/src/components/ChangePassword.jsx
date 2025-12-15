@@ -7,7 +7,7 @@ import {
 } from "../util/AuthValidation";
 
 const ChangePassword = forwardRef(function ChangePassword(
-  { onKeyDown, onInputChange, setAlert },
+  { onKeyDown, onInputChange },
   ref,
 ) {
   const currentPasswordInputRef = useRef(null);
@@ -18,9 +18,7 @@ const ChangePassword = forwardRef(function ChangePassword(
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
 
-  const { performFetch } = useFetch("/users/change-password", (data) => {
-    setAlert({ type: "success", message: data.msg });
-  });
+  const { performFetch } = useFetch("/users/change-password");
 
   async function handlePasswordChange() {
     const currentPassword = currentPasswordInputRef?.current?.value || "";
@@ -31,24 +29,21 @@ const ChangePassword = forwardRef(function ChangePassword(
       !(newPassword && confirmPassword && currentPassword) &&
       (newPassword || confirmPassword || currentPassword)
     ) {
-      setAlert({
-        type: "error",
-        message: "To change your password, please fill in all fields.",
-      });
-      return { success: false, hasChanges: false };
+      return {
+        error: "To change your password, please fill in all fields.",
+        hasChanges: false,
+      };
     }
     if (!validatePassword(newPassword)) {
-      setAlert({
-        type: "error",
-        message:
+      return {
+        error:
           "Password must be at least 8 characters and meet at least 2 complexity rules.",
-      });
-      return { success: false, hasChanges: true };
+        hasChanges: true,
+      };
     }
     const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
     if (!matchCheck.valid) {
-      setAlert({ type: "error", message: matchCheck.message });
-      return { success: false, hasChanges: true };
+      return { error: matchCheck.message, hasChanges: true };
     }
 
     // Attempt to change password
@@ -59,23 +54,17 @@ const ChangePassword = forwardRef(function ChangePassword(
         credentials: "include",
       });
 
-      setAlert({
-        type: "success",
-        message: "Password updated successfully!",
-      });
-
       // Clear password fields
       currentPasswordInputRef.current.value = "";
       newPasswordInputRef.current.value = "";
       confirmPasswordInputRef.current.value = "";
 
-      return { success: true, hasChanges: true };
+      return { error: null, hasChanges: true };
     } catch (err) {
-      setAlert({
-        type: "error",
-        message: err.message || "Failed to change password.",
-      });
-      return { success: false, hasChanges: true };
+      return {
+        error: err.message || "Failed to change password.",
+        hasChanges: true,
+      };
     }
   }
 
