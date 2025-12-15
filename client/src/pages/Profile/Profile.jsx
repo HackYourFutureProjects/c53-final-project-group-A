@@ -73,32 +73,26 @@ export default function Profile() {
       return;
     }
 
-    // Handle password change first
-    if (changePasswordRef.current?.handlePasswordChange) {
-      const passwordResult =
-        await changePasswordRef.current.handlePasswordChange();
-
-      // If there's an error from password change, show it and return
-      if (passwordResult.error) {
+    let passwordResult = { inputsFilled: false };
+    if (changePasswordRef.current.handlePasswordChange) {
+      passwordResult = await changePasswordRef.current.handlePasswordChange();
+      if (
+        passwordResult.validationError ||
+        changePasswordRef.current.fetchError
+      ) {
         setAlert({
           type: "error",
-          message: passwordResult.error,
+          message:
+            passwordResult.validationError ||
+            String(changePasswordRef.current.fetchError),
         });
         return;
+      } else if (passwordResult.inputsFilled) {
+        setAlert({
+          type: "success",
+          message: "Password changed successfully!",
+        });
       }
-
-      // If there were password changes (successful or not), return
-      if (passwordResult.hasChanges) {
-        // If we get here, the password change was successful (no error)
-        if (!passwordResult.error) {
-          setAlert({
-            type: "success",
-            message: "Password changed successfully!",
-          });
-        }
-        return;
-      }
-      // No password changes, continue with profile update
     }
 
     if (user) {
@@ -156,11 +150,12 @@ export default function Profile() {
       if (String(street) !== currentStreet) updatedFields.street = street;
       if (String(city) !== currentCity) updatedFields.city = city;
       if (String(country) !== currentCountry) updatedFields.country = country;
-
       if (String(housenumber) !== currentHouseNo)
         updatedFields.housenumber = housenumber;
-
-      if (Object.keys(updatedFields).length === 0) {
+      if (
+        Object.keys(updatedFields).length === 0 &&
+        passwordResult.inputsFilled === false
+      ) {
         setAlert({ type: "info", message: "No changes detected." });
         return;
       }

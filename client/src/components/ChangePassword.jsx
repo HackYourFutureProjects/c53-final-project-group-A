@@ -20,7 +20,7 @@ const ChangePassword = forwardRef(function ChangePassword(
 
   const {
     // isLoading,
-    error,
+    error: fetchError,
     performFetch,
   } = useFetch("/users/change-password");
 
@@ -29,53 +29,43 @@ const ChangePassword = forwardRef(function ChangePassword(
     const newPassword = newPasswordInputRef?.current?.value || "";
     const confirmPassword = confirmPasswordInputRef?.current?.value || "";
 
-    if (
-      !(newPassword && confirmPassword && currentPassword) &&
-      (newPassword || confirmPassword || currentPassword)
-    ) {
+    if (!newPassword && !confirmPassword && !currentPassword) {
       return {
-        error: "To change your password, please fill in all fields.",
-        hasChanges: false,
+        validationError: null,
+        inputsFilled: false,
+      };
+    }
+    if (!(newPassword && confirmPassword && currentPassword)) {
+      return {
+        validationError: "To change your password, please fill in all fields.",
+        inputsFilled: true,
       };
     }
     if (!validatePassword(newPassword)) {
       return {
-        error:
+        validationError:
           "Password must be at least 8 characters and meet at least 2 complexity rules.",
-        hasChanges: true,
+        inputsFilled: true,
       };
     }
     const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
     if (!matchCheck.valid) {
-      return { error: matchCheck.message, hasChanges: true };
+      return { validationError: matchCheck.message, inputsFilled: true };
     }
 
-    // Attempt to change password
-    try {
-      await performFetch({
-        method: "POST",
-        body: JSON.stringify({ currentPassword, newPassword }),
-        credentials: "include",
-      });
+    performFetch({
+      method: "POST",
+      body: JSON.stringify({ currentPassword, newPassword }),
+      credentials: "include",
+    });
 
-      // Clear password fields
-      currentPasswordInputRef.current.value = "";
-      newPasswordInputRef.current.value = "";
-      confirmPasswordInputRef.current.value = "";
-
-      return { error: null, hasChanges: true };
-    } catch (err) {
-      return {
-        error: err.message || "Failed to change password.",
-        hasChanges: true,
-      };
-    }
+    return { validationError: null, inputsFilled: true };
   }
 
   // Expose the handlePasswordChange function and error state to parent via ref
   useImperativeHandle(ref, () => ({
     handlePasswordChange,
-    error,
+    fetchError,
   }));
 
   return (
