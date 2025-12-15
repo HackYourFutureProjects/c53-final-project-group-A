@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, forwardRef, useImperativeHandle } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import useFetch from "../hooks/useFetch";
 import {
@@ -6,15 +6,13 @@ import {
   validatePasswordMatch,
 } from "../util/AuthValidation";
 
-export default function ChangePassword({
-  currentPasswordInputRef,
-  newPasswordInputRef,
-  confirmPasswordInputRef,
-  onKeyDown,
-  onInputChange,
-  setAlert,
-  onPasswordChangeSuccess,
-}) {
+const ChangePassword = forwardRef(function ChangePassword(
+  { onKeyDown, onInputChange, setAlert, onPasswordChangeSuccess },
+  ref,
+) {
+  const currentPasswordInputRef = useRef(null);
+  const newPasswordInputRef = useRef(null);
+  const confirmPasswordInputRef = useRef(null);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
@@ -100,11 +98,10 @@ export default function ChangePassword({
     }
   }
 
-  // Expose the handlePasswordChange function to parent via callback
-  useEffect(() => {
-    // Store the function reference on the component instance
-    currentPasswordInputRef.current.handlePasswordChange = handlePasswordChange;
-  }, []);
+  // Expose the handlePasswordChange function to parent via ref
+  useImperativeHandle(ref, () => ({
+    handlePasswordChange,
+  }));
 
   return (
     <div className="profile-section">
@@ -197,4 +194,6 @@ export default function ChangePassword({
       </div>
     </div>
   );
-}
+});
+
+export default ChangePassword;

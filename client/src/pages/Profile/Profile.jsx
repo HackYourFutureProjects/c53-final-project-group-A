@@ -15,9 +15,7 @@ export default function Profile() {
   const [alert, setAlert] = useState({ type: "", message: "" });
   const firstnameInputRef = useRef(null);
   const lastnameInputRef = useRef(null);
-  const currentPasswordInputRef = useRef(null);
-  const newPasswordInputRef = useRef(null);
-  const confirmPasswordInputRef = useRef(null);
+  const changePasswordRef = useRef(null);
   const streetInputRef = useRef(null);
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
@@ -76,9 +74,9 @@ export default function Profile() {
     }
 
     // Handle password change first
-    if (currentPasswordInputRef.current?.handlePasswordChange) {
+    if (changePasswordRef.current?.handlePasswordChange) {
       const passwordResult =
-        await currentPasswordInputRef.current.handlePasswordChange();
+        await changePasswordRef.current.handlePasswordChange();
       if (passwordResult.hasChanges) {
         // Password change was attempted, return regardless of success
         return;
@@ -226,9 +224,7 @@ export default function Profile() {
       </div>
 
       <ChangePassword
-        currentPasswordInputRef={currentPasswordInputRef}
-        newPasswordInputRef={newPasswordInputRef}
-        confirmPasswordInputRef={confirmPasswordInputRef}
+        ref={changePasswordRef}
         onKeyDown={pressEnterKey}
         onInputChange={handleClearAlert}
         setAlert={setAlert}
