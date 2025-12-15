@@ -10,7 +10,7 @@ import {
 } from "../util/AuthValidation";
 import { gif } from "../assets";
 
-const ResetPasswordForm = () => {
+export default function ResetPasswordForm() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const ResetPasswordForm = () => {
   useEffect(() => {
     if (error) {
       async () => {
+        setResetSuccess(false);
         setAlert({ type: "error", message: String(error) });
         const timer = setTimeout(() => {
           setAlert({ type: "", message: "" });
@@ -155,6 +156,4 @@ const ResetPasswordForm = () => {
       )}
     </>
   );
-};
-
-export default ResetPasswordForm;
+}
