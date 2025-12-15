@@ -23,21 +23,13 @@ const ChangePassword = forwardRef(function ChangePassword(
   });
 
   async function handlePasswordChange() {
-    const currentPasswordEl = currentPasswordInputRef.current;
-    const newPasswordEl = newPasswordInputRef.current;
-    const confirmPasswordEl = confirmPasswordInputRef.current;
-
-    if (!currentPasswordEl || !newPasswordEl || !confirmPasswordEl) {
-      return { success: false, hasChanges: false };
-    }
-
-    const newPassword = newPasswordEl.value || "";
-    const confirmPassword = confirmPasswordEl.value || "";
-    const currentPassword = currentPasswordEl.value || "";
+    const currentPassword = currentPasswordInputRef?.current?.value || "";
+    const newPassword = newPasswordInputRef?.current?.value || "";
+    const confirmPassword = confirmPasswordInputRef?.current?.value || "";
 
     // If no password fields are filled, return no changes
-    if (!newPassword && !confirmPassword && !currentPassword) {
-      return { success: true, hasChanges: false };
+    if (!newPassword || !confirmPassword || !currentPassword) {
+      return { success: false, hasChanges: false };
     }
 
     // Validate that current password is provided
@@ -48,8 +40,6 @@ const ChangePassword = forwardRef(function ChangePassword(
       });
       return { success: false, hasChanges: true };
     }
-
-    // Validate new password format
     if (!validatePassword(newPassword)) {
       setAlert({
         type: "error",
@@ -58,8 +48,6 @@ const ChangePassword = forwardRef(function ChangePassword(
       });
       return { success: false, hasChanges: true };
     }
-
-    // Validate password match
     const matchCheck = validatePasswordMatch(newPassword, confirmPassword);
     if (!matchCheck.valid) {
       setAlert({ type: "error", message: matchCheck.message });
