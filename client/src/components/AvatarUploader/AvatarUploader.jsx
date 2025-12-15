@@ -1,9 +1,11 @@
 import { useRef, useEffect } from "react";
+import { UseUser } from "../../context/UserContext";
 import "./AvatarUploader.css";
 import useFetch from "../../hooks/useFetch";
 import { gif } from "../../assets";
 
-export default function AvatarUploader({ user, updateProfile, setAlert }) {
+export default function AvatarUploader({ setAlert }) {
+  const { user, dispatch } = UseUser();
   const fileInputRef = useRef(null);
 
   function delayedClearAlert() {
@@ -18,7 +20,12 @@ export default function AvatarUploader({ user, updateProfile, setAlert }) {
   const { isLoading, error, performFetch } = useFetch(
     "/users/update-avatar",
     (result) => {
-      updateProfile({ avatar: result.url });
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          avatar: result.url,
+        },
+      });
       setAlert({ type: "success", message: "Avatar updated!" });
       delayedClearAlert();
     },
