@@ -7,7 +7,7 @@ import {
 } from "../util/AuthValidation";
 
 const ChangePassword = forwardRef(function ChangePassword(
-  { onKeyDown, onInputChange, setAlert },
+  { onKeyDown, onInputChange, setAlert, onPasswordChangeSuccess },
   ref,
 ) {
   const currentPasswordInputRef = useRef(null);
@@ -83,6 +83,10 @@ const ChangePassword = forwardRef(function ChangePassword(
       currentPasswordEl.value = "";
       newPasswordEl.value = "";
       confirmPasswordEl.value = "";
+
+      if (onPasswordChangeSuccess) {
+        onPasswordChangeSuccess();
+      }
 
       return { success: true, hasChanges: true };
     } catch (err) {
