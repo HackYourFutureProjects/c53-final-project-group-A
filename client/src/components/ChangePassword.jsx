@@ -27,11 +27,13 @@ const ChangePassword = forwardRef(function ChangePassword(
     const newPassword = newPasswordInputRef?.current?.value || "";
     const confirmPassword = confirmPasswordInputRef?.current?.value || "";
 
-    // If no password fields are filled, return no changes
-    if (!newPassword || !confirmPassword || !currentPassword) {
+    if (
+      !(newPassword && confirmPassword && currentPassword) &&
+      (newPassword || confirmPassword || currentPassword)
+    ) {
       setAlert({
         type: "error",
-        message: "Password fields should not be empty.",
+        message: "To change your password, please fill in all fields.",
       });
       return { success: false, hasChanges: false };
     }
