@@ -47,8 +47,6 @@ function userReducer(state, action) {
 function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, defaultUser);
   const [message, setMessage] = useState(null);
-
-  // -------------------- CLEAR MESSAGE --------------------
   const clearMessage = () => setMessage(null);
 
   // -------------------- GET CURRENT USER --------------------
@@ -145,7 +143,6 @@ function UserContextProvider({ children }) {
         dispatch,
         loading,
         error,
-        // clearError,
         message,
         setMessage,
         clearMessage,
