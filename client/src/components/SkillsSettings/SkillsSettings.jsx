@@ -168,11 +168,7 @@ export default function SkillsSettings() {
           >
             Add skill
             {isLoading && (
-              <img
-                src={gif.spinner}
-                alt="Loading..."
-                className="spinner inline-spinner"
-              />
+              <img src={gif.spinner} alt="Loading..." className="spinner" />
             )}
           </button>
 
@@ -184,11 +180,7 @@ export default function SkillsSettings() {
           >
             Remove all
             {isLoading && (
-              <img
-                src={gif.spinner}
-                alt="Loading..."
-                className="spinner inline-spinner"
-              />
+              <img src={gif.spinner} alt="Loading..." className="spinner" />
             )}
           </button>
         </div>

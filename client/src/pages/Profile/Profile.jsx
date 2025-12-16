@@ -260,11 +260,7 @@ export default function Profile() {
           >
             Save
             {isUpdateLoading && (
-              <img
-                src={gif.spinner}
-                alt="Loading..."
-                className="spinner inline-spinner"
-              />
+              <img src={gif.spinner} alt="Loading..." className="spinner" />
             )}
           </button>
         </div>

@@ -92,11 +92,7 @@ const ChangePassword = forwardRef(function ChangePassword(
       <h3 className="profile-section-title">
         Change password{" "}
         {isPasswordChangeLoading && (
-          <img
-            src={gif.spinner}
-            alt="Loading..."
-            className="spinner inline-spinner"
-          />
+          <img src={gif.spinner} alt="Loading..." className="spinner" />
         )}
       </h3>
       <div className="profile-password-single">

@@ -109,21 +109,6 @@ function UserContextProvider({ children }) {
 
     dispatch({ type: "LOGOUT", payload: defaultUser });
   }, [fetchMeError]);
-  // -------------------- DELETE USER --------------------
-  function handleDeleteUserResults(data) {
-    setMessage(data.msg || "Account deleted successfully!");
-  }
-
-  const {
-    isLoading: isDeleteUserLoading,
-    error: deleteUserError,
-    performFetch: performDeleteUser,
-  } = useFetch("/users/delete/${user.id}", handleDeleteUserResults);
-
-  async function deleteUser() {
-    performDeleteUser({ method: "DELETE", credentials: "include" });
-  }
-
   // -------------------- FAVORITES --------------------
   function handleToggleFavoriteResults(data) {
     setMessage(
@@ -149,9 +134,9 @@ function UserContextProvider({ children }) {
   }
 
   // Combined loading and error states
-  const loading = isMeLoading || isDeleteUserLoading || isToggleFavoriteLoading;
+  const loading = isMeLoading || isToggleFavoriteLoading;
 
-  const error = deleteUserError || toggleFavoriteError;
+  const error = toggleFavoriteError;
 
   return (
     <UserContext.Provider
@@ -165,13 +150,10 @@ function UserContextProvider({ children }) {
         setMessage,
         clearMessage,
         toggleFavorite,
-        deleteUser,
         // Expose individual loading states
         isMeLoading,
-        isDeleteUserLoading,
         isToggleFavoriteLoading,
         // Expose individual error states
-        deleteUserError,
         toggleFavoriteError,
       }}
     >

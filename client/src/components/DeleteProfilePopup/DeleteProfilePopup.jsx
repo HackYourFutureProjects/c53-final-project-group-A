@@ -1,27 +1,30 @@
+import { useEffect } from "react";
 import { UseUser } from "../../context/UserContext";
 import "./DeleteProfilePopup.css";
 import { defaultUser } from "../../data/defaultUser";
+import useFetch from "../../hooks/useFetch";
+import { gif } from "../../assets";
 
 export default function DeleteProfilePopup({ setShowDeletePopup }) {
-  const { deleteUser, dispatch } = UseUser();
+  const { user, dispatch, setMessage } = UseUser();
 
-  const handleConfirmDelete = async () => {
-    try {
-      await deleteUser();
-
+  const { isLoading, error, performFetch } = useFetch(
+    `/users/delete/${user.id}`,
+    (data) => {
+      setMessage(data.msg || "Account deleted successfully!");
       setTimeout(() => {
         dispatch({ type: "LOGOUT", payload: defaultUser });
       }, 2000);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete account. Please try again later.");
+    },
+  );
+
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+      setMessage("Failed to delete account. Please try again later.");
       setShowDeletePopup(false);
     }
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeletePopup(false);
-  };
+  }, [error]);
 
   return (
     <div className="profile-popup-overlay">
@@ -31,12 +34,25 @@ export default function DeleteProfilePopup({ setShowDeletePopup }) {
         <div className="profile-popup-buttons">
           <button
             className="profile-btn-secondary"
-            onClick={handleCancelDelete}
+            onClick={() => setShowDeletePopup(false)}
           >
             Cancel
           </button>
-          <button className="profile-btn-primary" onClick={handleConfirmDelete}>
-            OK
+          <button
+            className="profile-btn-primary"
+            onClick={() =>
+              performFetch({ method: "DELETE", credentials: "include" })
+            }
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <span>Deleting...</span>
+                <img src={gif.spinner} alt="Loading..." className="spinner" />
+              </>
+            ) : (
+              "OK"
+            )}
           </button>
         </div>
       </div>
