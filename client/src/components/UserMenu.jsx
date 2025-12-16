@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { icons, gif } from "../assets";
 import { UseUser } from "../context/UserContext";
@@ -7,8 +7,7 @@ import { defaultUser } from "../data/defaultUser.js";
 
 export default function UserMenu() {
   const { user, dispatch, isMeLoading, setMessage } = UseUser();
-  const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
   const {
     isLoading: isLogoutLoading,
     error,
@@ -18,16 +17,6 @@ export default function UserMenu() {
     dispatch({ type: "LOGOUT", payload: defaultUser });
   });
 
-  const toggle = () => setOpen((v) => !v);
-
-  useEffect(() => {
-    const onDocClick = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener("mousedown", onDocClick);
-    return () => document.removeEventListener("mousedown", onDocClick);
-  }, []);
-
   useEffect(() => {
     if (error) {
       console.error("Error logging out:", error);
@@ -36,12 +25,12 @@ export default function UserMenu() {
   }, [error]);
 
   return (
-    <div className="user-menu" ref={ref}>
+    <div className="user-menu">
       <button
         type="button"
         className="user-trigger"
-        onClick={toggle}
-        aria-expanded={open}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
         aria-haspopup="menu"
       >
         <img
@@ -57,11 +46,11 @@ export default function UserMenu() {
         <img
           src={icons.arrow}
           alt=""
-          className={`arrow ${open ? "arrow-open" : ""}`}
+          className={`arrow ${isOpen ? "arrow-open" : ""}`}
         />
       </button>
 
-      {open && (
+      {isOpen && (
         <div className="user-dropdown" role="menu">
           <NavLink
             to="/profile"
@@ -69,7 +58,7 @@ export default function UserMenu() {
               isActive ? "user-item active" : "user-item"
             }
             role="menuitem"
-            onClick={() => setOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
             Profile
           </NavLink>
@@ -79,7 +68,7 @@ export default function UserMenu() {
               isActive ? "user-item active" : "user-item"
             }
             role="menuitem"
-            onClick={() => setOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
             About
           </NavLink>
@@ -90,7 +79,7 @@ export default function UserMenu() {
               role="menuitem"
               onClick={() => {
                 performFetch({ method: "POST", credentials: "include" });
-                setOpen(false);
+                setIsOpen(false);
               }}
             >
               Logout
@@ -102,7 +91,7 @@ export default function UserMenu() {
                 isActive ? "user-item active" : "user-item"
               }
               role="menuitem"
-              onClick={() => setOpen(false)}
+              onClick={() => setIsOpen(false)}
             >
               Login
             </NavLink>
