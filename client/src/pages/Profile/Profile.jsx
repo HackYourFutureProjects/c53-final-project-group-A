@@ -73,14 +73,6 @@ export default function Profile() {
     setShowDeletePopup(true);
   };
 
-  function updateProfile(updatedFields) {
-    performUpdateProfile({
-      method: "PUT",
-      body: JSON.stringify(updatedFields),
-      credentials: "include",
-    });
-  }
-
   async function handleSaveClick() {
     handleClearAlert();
 
@@ -193,7 +185,11 @@ export default function Profile() {
         return;
       }
 
-      updateProfile(updatedFields);
+      performUpdateProfile({
+        method: "PUT",
+        body: JSON.stringify(updatedFields),
+        credentials: "include",
+      });
     }
   }
 
