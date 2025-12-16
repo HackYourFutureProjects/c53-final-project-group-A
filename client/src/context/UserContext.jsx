@@ -108,22 +108,20 @@ function UserContextProvider({ children }) {
     dispatch({ type: "LOGOUT", payload: defaultUser });
   }, [fetchMeError]);
   // -------------------- FAVORITES --------------------
-  function handleToggleFavoriteResults(data) {
+  const {
+    isLoading: isToggleFavoriteLoading,
+    error: toggleFavoriteError,
+    performFetch: performToggleFavorite,
+  } = useFetch("/users/favorites/toggle", (data) => {
+    dispatch({ type: "TOGGLE_FAVORITE", payload: data.job });
     setMessage(
       data.action === "added"
         ? "Job added to favorites!"
         : "Job removed from favorites!",
     );
-  }
-
-  const {
-    isLoading: isToggleFavoriteLoading,
-    error: toggleFavoriteError,
-    performFetch: performToggleFavorite,
-  } = useFetch("/users/favorites/toggle", handleToggleFavoriteResults);
+  });
 
   async function toggleFavorite(job) {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: job });
     performToggleFavorite({
       method: "POST",
       body: JSON.stringify({ job }),

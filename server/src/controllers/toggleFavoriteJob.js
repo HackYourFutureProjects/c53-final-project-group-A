@@ -77,7 +77,7 @@ export const toggleFavoriteJob = async (req, res) => {
         "DELETE FROM user_favorites WHERE user_id = $1 AND favorite_id = $2",
         [userId, jobId],
       );
-      return res.json({ success: true, action: "removed", jobId });
+      return res.json({ success: true, action: "removed", job });
     }
 
     //  Add favorite and store per-user travel metadata on the relation
@@ -86,7 +86,7 @@ export const toggleFavoriteJob = async (req, res) => {
       [userId, jobId, job.travel_time, job.least_transfers],
     );
 
-    return res.json({ success: true, action: "added", jobId });
+    return res.json({ success: true, action: "added", job });
   } catch (err) {
     logError("Toggle favorite error: " + err);
     // Provide more detailed error message for debugging (non-sensitive)
