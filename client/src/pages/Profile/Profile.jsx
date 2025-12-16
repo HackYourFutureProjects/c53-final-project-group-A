@@ -152,30 +152,23 @@ export default function Profile() {
       return;
     }
 
-    // Compare against the top-level address fields
-    const currentStreet = String(user?.street);
-    const currentCity = String(user?.city);
-    const currentCountry = String(user?.country);
-    const currentHouseNo = String(user?.housenumber || "");
-
-    if (String(street) !== currentStreet) updatedFields.street = street;
-    if (String(city) !== currentCity) updatedFields.city = city;
-    if (String(country) !== currentCountry) updatedFields.country = country;
-    if (String(housenumber) !== currentHouseNo)
+    if (street !== user.street) updatedFields.street = street;
+    if (city !== user.city) updatedFields.city = city;
+    if (country !== user.country) updatedFields.country = country;
+    if (housenumber !== user.housenumber)
       updatedFields.housenumber = housenumber;
-    if (
-      Object.keys(updatedFields).length === 0 &&
-      passwordResult.inputsFilled === false
-    ) {
-      setAlert({ type: "info", message: "No changes detected." });
-      return;
-    }
 
-    performUpdateProfile({
-      method: "PUT",
-      body: JSON.stringify(updatedFields),
-      credentials: "include",
-    });
+    if (Object.keys(updatedFields).length === 0) {
+      if (passwordResult.inputsFilled === false)
+        setAlert({ type: "info", message: "No changes detected." });
+      return;
+    } else {
+      performUpdateProfile({
+        method: "PUT",
+        body: JSON.stringify(updatedFields),
+        credentials: "include",
+      });
+    }
   }
 
   function pressEnterKey(e) {
