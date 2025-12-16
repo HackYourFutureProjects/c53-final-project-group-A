@@ -24,16 +24,30 @@ export default function SkillsSettings() {
   const { skills } = user;
   const [showSavePopup, setShowSavePopup] = useState(false);
   const handleSkillsResultsRef = useRef(() => {});
+  const clearAlertTimeoutRef = useRef(null);
 
   function handleClearAlert() {
     setAlert({ type: "", message: "" });
   }
 
   function delayedClearAlert() {
-    setTimeout(() => {
+    // Clear any existing timeout before setting a new one
+    if (clearAlertTimeoutRef.current) {
+      clearTimeout(clearAlertTimeoutRef.current);
+    }
+    clearAlertTimeoutRef.current = setTimeout(() => {
       handleClearAlert();
     }, 2000);
   }
+
+  // Cleanup timeout on component unmount
+  useEffect(() => {
+    return () => {
+      if (clearAlertTimeoutRef.current) {
+        clearTimeout(clearAlertTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const {
     isLoading,
