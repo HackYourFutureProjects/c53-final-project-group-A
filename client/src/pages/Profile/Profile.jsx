@@ -60,12 +60,12 @@ export default function Profile() {
 
   useEffect(() => {
     if (
-      firstnameInputRef &&
-      lastnameInputRef &&
-      streetInputRef &&
-      houseInputRef &&
-      cityInputRef &&
-      countryInputRef
+      firstnameInputRef.current &&
+      lastnameInputRef.current &&
+      streetInputRef.current &&
+      houseInputRef.current &&
+      cityInputRef.current &&
+      countryInputRef.current
     ) {
       firstnameInputRef.current.value = user?.firstname || "";
       lastnameInputRef.current.value = user?.lastname || "";
