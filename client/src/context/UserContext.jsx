@@ -107,28 +107,6 @@ function UserContextProvider({ children }) {
 
     dispatch({ type: "LOGOUT", payload: defaultUser });
   }, [fetchMeError]);
-  // -------------------- FAVORITES --------------------
-  const {
-    isLoading: isToggleFavoriteLoading,
-    error: toggleFavoriteError,
-    performFetch: performToggleFavorite,
-  } = useFetch("/users/favorites/toggle", (data) => {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: data.job });
-    setMessage(
-      data.action === "added"
-        ? "Job added to favorites!"
-        : "Job removed from favorites!",
-    );
-  });
-
-  async function toggleFavorite(job) {
-    performToggleFavorite({
-      method: "POST",
-      body: JSON.stringify({ job }),
-      credentials: "include",
-    });
-  }
-
   return (
     <UserContext.Provider
       value={{
@@ -137,10 +115,7 @@ function UserContextProvider({ children }) {
         message,
         setMessage,
         clearMessage,
-        toggleFavorite,
         isMeLoading,
-        isToggleFavoriteLoading,
-        toggleFavoriteError,
       }}
     >
       {children}

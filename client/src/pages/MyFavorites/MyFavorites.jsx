@@ -5,7 +5,7 @@ import getSkillsInDescription from "../../util/getSkillsInDescription";
 import "./MyFavorites.css";
 
 export default function MyFavorites() {
-  const { user, toggleFavorite } = UseUser();
+  const { user } = UseUser();
   const favoriteJobs = Array.isArray(user?.favorites) ? user.favorites : [];
   const skills = Array.isArray(user?.skills) ? user.skills : [];
 
@@ -57,8 +57,6 @@ export default function MyFavorites() {
               onApplyClick={(job) =>
                 window.open(job.applyUrl || job.link, "_blank")
               }
-              user={user}
-              toggleFavorite={toggleFavorite}
               isInFavorites={true}
             />
           ))}

@@ -13,7 +13,7 @@ import { UseJobs } from "../../context/JobsContext";
 import createSortComparator from "../../util/createSortComparator";
 
 export default function OpenPositions() {
-  const { user, toggleFavorite } = UseUser();
+  const { user } = UseUser();
 
   const {
     allJobs,
@@ -168,8 +168,6 @@ export default function OpenPositions() {
                   key={job.id || idx}
                   job={job}
                   isInFavorites={favorites.some((fav) => fav.id === job.id)}
-                  toggleFavorite={toggleFavorite}
-                  user={user}
                   onApplyClick={(url) => window.open(url, "_blank")}
                 />
               ))}

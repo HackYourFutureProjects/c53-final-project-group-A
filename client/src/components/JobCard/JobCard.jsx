@@ -12,7 +12,9 @@ import {
 import { icons, gif } from "../../assets";
 import { defaultUser } from "../../data/defaultUser";
 // Context, Components, styles
+import { UseUser } from "../../context/UserContext";
 import { UseJobs } from "../../context/JobsContext";
+import useFetch from "../../hooks/useFetch";
 import Skills from "../Skills";
 import PopupForMoreAndApply from "../SuccessPopup/PopupForMoreAndApply";
 import PopupForFavorites from "../SuccessPopup/PopupForFavorites";
@@ -25,24 +27,31 @@ function formatTravelTime(minutes) {
   return m === 0 ? `${h} h` : `${h} h ${m} min`;
 }
 
-export default function JobCard({
-  job,
-  onApplyClick,
-  user,
-  toggleFavorite,
-  isInFavorites,
-}) {
+export default function JobCard({ job, onApplyClick, isInFavorites }) {
   const navigate = useNavigate();
+  const { user, dispatch, setMessage } = UseUser();
   const { isTravelLoading } = UseJobs();
 
   //  New state for showing popup
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
+  const {
+    isLoading: isToggleFavoriteLoading,
+    performFetch: performToggleFavorite,
+  } = useFetch("/users/favorites/toggle", (data) => {
+    dispatch({ type: "TOGGLE_FAVORITE", payload: data.job });
+    setMessage(
+      data.action === "added"
+        ? "Job added to favorites!"
+        : "Job removed from favorites!",
+    );
+  });
+
   const handleApplyClick = (e) => {
     e.stopPropagation();
 
-    if (user && user.email !== defaultUser.email) {
+    if (user.email !== defaultUser.email) {
       if (onApplyClick) {
         window.open(job.applyLink || job.url, "_blank");
       }
@@ -61,8 +70,12 @@ export default function JobCard({
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
 
-    if (user && user.email !== defaultUser.email) {
-      toggleFavorite(job);
+    if (user.email !== defaultUser.email) {
+      performToggleFavorite({
+        method: "POST",
+        body: JSON.stringify({ job }),
+        credentials: "include",
+      });
     } else {
       setShowFavoritesPopup(true);
     }
@@ -96,6 +109,7 @@ export default function JobCard({
               <button
                 className={`favorite-btn ${isInFavorites ? "favorited" : ""}`}
                 onClick={handleFavoriteClick}
+                disabled={isToggleFavoriteLoading}
                 title={
                   isInFavorites
                     ? "Remove from favourites"
