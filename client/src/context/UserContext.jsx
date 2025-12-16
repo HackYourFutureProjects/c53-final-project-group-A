@@ -131,26 +131,17 @@ function UserContextProvider({ children }) {
     });
   }
 
-  // Combined loading and error states
-  const loading = isMeLoading || isToggleFavoriteLoading;
-
-  const error = toggleFavoriteError;
-
   return (
     <UserContext.Provider
       value={{
         user,
         dispatch,
-        loading,
-        error,
         message,
         setMessage,
         clearMessage,
         toggleFavorite,
-        // Expose individual loading states
         isMeLoading,
         isToggleFavoriteLoading,
-        // Expose individual error states
         toggleFavoriteError,
       }}
     >
