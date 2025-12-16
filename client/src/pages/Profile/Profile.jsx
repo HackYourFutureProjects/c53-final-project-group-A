@@ -55,7 +55,6 @@ export default function Profile() {
 
   useEffect(() => {
     if (
-      user &&
       firstnameInputRef &&
       lastnameInputRef &&
       streetInputRef &&
@@ -115,77 +114,68 @@ export default function Profile() {
       });
     }
 
-    if (user) {
-      const updatedFields = {};
+    const updatedFields = {};
 
-      const firstname = cleanUpText(firstnameInputRef.current.value || "");
-      const lastname = cleanUpText(lastnameInputRef.current.value || "");
+    const firstname = cleanUpText(firstnameInputRef.current.value);
+    const lastname = cleanUpText(lastnameInputRef.current.value);
+    const street = cleanUpText(streetInputRef.current.value);
+    const housenumber = cleanUpText(houseInputRef.current.value);
+    const city = cleanUpText(cityInputRef.current.value);
+    const country = cleanUpText(countryInputRef.current.value);
 
-      // FIX: Use String() for comparison to ensure changes are detected even if the value is null or undefined
-      const currentFirstName = String(user.firstname || "");
-      const currentLastName = String(user.lastname || "");
+    if (firstname !== user.firstname) updatedFields.firstname = firstname;
+    if (lastname !== user.lastname) updatedFields.lastname = lastname;
 
-      if (String(firstname) !== currentFirstName)
-        updatedFields.firstname = firstname;
-      if (String(lastname) !== currentLastName)
-        updatedFields.lastname = lastname;
+    const streetValidationError = validateAddressTextInputs({ text: street });
+    const cityValidationError = validateAddressTextInputs({
+      text: city,
+      type: "city",
+    });
+    const countryValidationError = validateAddressTextInputs({
+      text: country,
+      type: "country",
+    });
+    const houseValidationError = validateHouseNoInput({ text: housenumber });
 
-      const street = cleanUpText(streetInputRef.current.value || "");
-      const housenumber = cleanUpText(houseInputRef.current.value || "");
-      const city = cleanUpText(cityInputRef.current.value || "");
-      const country = cleanUpText(countryInputRef.current.value || "");
-
-      const streetValidationError = validateAddressTextInputs({ text: street });
-      const cityValidationError = validateAddressTextInputs({
-        text: city,
-        type: "city",
-      });
-      const countryValidationError = validateAddressTextInputs({
-        text: country,
-        type: "country",
-      });
-      const houseValidationError = validateHouseNoInput({ text: housenumber });
-
-      if (
+    if (
+      streetValidationError ||
+      cityValidationError ||
+      countryValidationError ||
+      houseValidationError
+    ) {
+      setAlert(
         streetValidationError ||
-        cityValidationError ||
-        countryValidationError ||
-        houseValidationError
-      ) {
-        setAlert(
-          streetValidationError ||
-            cityValidationError ||
-            countryValidationError ||
-            houseValidationError,
-        );
-        return;
-      }
-
-      // Compare against the top-level address fields
-      const currentStreet = String(user?.street);
-      const currentCity = String(user?.city);
-      const currentCountry = String(user?.country);
-      const currentHouseNo = String(user?.housenumber || "");
-
-      if (String(street) !== currentStreet) updatedFields.street = street;
-      if (String(city) !== currentCity) updatedFields.city = city;
-      if (String(country) !== currentCountry) updatedFields.country = country;
-      if (String(housenumber) !== currentHouseNo)
-        updatedFields.housenumber = housenumber;
-      if (
-        Object.keys(updatedFields).length === 0 &&
-        passwordResult.inputsFilled === false
-      ) {
-        setAlert({ type: "info", message: "No changes detected." });
-        return;
-      }
-
-      performUpdateProfile({
-        method: "PUT",
-        body: JSON.stringify(updatedFields),
-        credentials: "include",
-      });
+          cityValidationError ||
+          countryValidationError ||
+          houseValidationError,
+      );
+      return;
     }
+
+    // Compare against the top-level address fields
+    const currentStreet = String(user?.street);
+    const currentCity = String(user?.city);
+    const currentCountry = String(user?.country);
+    const currentHouseNo = String(user?.housenumber || "");
+
+    if (String(street) !== currentStreet) updatedFields.street = street;
+    if (String(city) !== currentCity) updatedFields.city = city;
+    if (String(country) !== currentCountry) updatedFields.country = country;
+    if (String(housenumber) !== currentHouseNo)
+      updatedFields.housenumber = housenumber;
+    if (
+      Object.keys(updatedFields).length === 0 &&
+      passwordResult.inputsFilled === false
+    ) {
+      setAlert({ type: "info", message: "No changes detected." });
+      return;
+    }
+
+    performUpdateProfile({
+      method: "PUT",
+      body: JSON.stringify(updatedFields),
+      credentials: "include",
+    });
   }
 
   function pressEnterKey(e) {
