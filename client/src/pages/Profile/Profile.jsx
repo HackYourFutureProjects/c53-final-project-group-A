@@ -54,18 +54,21 @@ export default function Profile() {
   }, [updateProfileError]);
 
   useEffect(() => {
-    if (user) {
-      if (firstnameInputRef.current)
-        firstnameInputRef.current.value = user?.firstname || "";
-      if (lastnameInputRef.current)
-        lastnameInputRef.current.value = user?.lastname || "";
-      if (streetInputRef.current)
-        streetInputRef.current.value = user?.street || "";
-      if (houseInputRef.current)
-        houseInputRef.current.value = user?.housenumber || "";
-      if (cityInputRef.current) cityInputRef.current.value = user?.city || "";
-      if (countryInputRef.current)
-        countryInputRef.current.value = user?.country || "";
+    if (
+      user &&
+      firstnameInputRef &&
+      lastnameInputRef &&
+      streetInputRef &&
+      houseInputRef &&
+      cityInputRef &&
+      countryInputRef
+    ) {
+      firstnameInputRef.current.value = user?.firstname || "";
+      lastnameInputRef.current.value = user?.lastname || "";
+      streetInputRef.current.value = user?.street || "";
+      houseInputRef.current.value = user?.housenumber || "";
+      cityInputRef.current.value = user?.city || "";
+      countryInputRef.current.value = user?.country || "";
     }
   }, [user]);
 
