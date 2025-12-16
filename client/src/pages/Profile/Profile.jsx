@@ -25,24 +25,32 @@ export default function Profile() {
   const { user, dispatch } = UseUser();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
-  function handleUpdateProfileResults(data) {
-    const normalizedSkills = fixUserSkills(data.user.skills);
-    dispatch({
-      type: "UPDATE_USER",
-      payload: {
-        ...data.user,
-        skills: normalizedSkills,
-      },
-    });
-    setAlert({ type: "success", message: "Profile updated successfully!" });
+  function handleClearAlert() {
+    setAlert({ type: "", message: "" });
+  }
+
+  function delayedClearAlert() {
+    setTimeout(() => {
+      handleClearAlert();
+    }, 2000);
   }
 
   const { error: updateProfileError, performFetch: performUpdateProfile } =
-    useFetch("/users/profile", handleUpdateProfileResults);
+    useFetch("/users/profile", (data) => {
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          ...data.user,
+          skills: fixUserSkills(data.user.skills),
+        },
+      });
+      setAlert({ type: "success", message: "Profile updated successfully!" });
+    });
 
   useEffect(() => {
-    if (!updateProfileError) return;
-    setAlert({ type: "error", message: String(updateProfileError) });
+    if (updateProfileError)
+      setAlert({ type: "error", message: String(updateProfileError) });
+    delayedClearAlert();
   }, [updateProfileError]);
 
   useEffect(() => {
@@ -60,11 +68,6 @@ export default function Profile() {
         countryInputRef.current.value = user?.country || "";
     }
   }, [user]);
-
-  function handleClearAlert() {
-    if (!alert.message) return;
-    setAlert({ type: "", message: "" });
-  }
 
   const handleDeleteClick = () => {
     setShowDeletePopup(true);
