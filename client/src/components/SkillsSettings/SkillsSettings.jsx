@@ -20,6 +20,7 @@ export default function SkillsSettings() {
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [showAll, setShowAll] = useState(false);
   const maxVisible = 4;
+  const ALERT_CLEAR_DELAY_MS = 2000;
   const { user, dispatch } = UseUser();
   const { skills } = user;
   const [showSavePopup, setShowSavePopup] = useState(false);
@@ -34,10 +35,11 @@ export default function SkillsSettings() {
     // Clear any existing timeout before setting a new one
     if (clearAlertTimeoutRef.current) {
       clearTimeout(clearAlertTimeoutRef.current);
+      clearAlertTimeoutRef.current = null;
     }
     clearAlertTimeoutRef.current = setTimeout(() => {
       handleClearAlert();
-    }, 2000);
+    }, ALERT_CLEAR_DELAY_MS);
   }
 
   // Cleanup timeout on component unmount
@@ -45,6 +47,7 @@ export default function SkillsSettings() {
     return () => {
       if (clearAlertTimeoutRef.current) {
         clearTimeout(clearAlertTimeoutRef.current);
+        clearAlertTimeoutRef.current = null;
       }
     };
   }, []);
