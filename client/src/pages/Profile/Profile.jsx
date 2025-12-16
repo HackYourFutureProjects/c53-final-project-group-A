@@ -12,6 +12,7 @@ import { fixUserSkills } from "../../util/fixUserSkills";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import DeleteProfilePopup from "../../components/DeleteProfilePopup/DeleteProfilePopup";
 import "./Profile.css";
+import { gif } from "../../assets/index.js";
 
 export default function Profile() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -35,17 +36,21 @@ export default function Profile() {
     }, 2000);
   }
 
-  const { error: updateProfileError, performFetch: performUpdateProfile } =
-    useFetch("/users/profile", (data) => {
-      dispatch({
-        type: "UPDATE_USER",
-        payload: {
-          ...data.user,
-          skills: fixUserSkills(data.user.skills),
-        },
-      });
-      setAlert({ type: "success", message: "Profile updated successfully!" });
+  const {
+    error: updateProfileError,
+    isLoading: isUpdateLoading,
+    performFetch: performUpdateProfile,
+  } = useFetch("/users/profile", (data) => {
+    dispatch({
+      type: "UPDATE_USER",
+      payload: {
+        ...data.user,
+        skills: fixUserSkills(data.user.skills),
+      },
     });
+    setAlert({ type: "success", message: "Profile updated successfully!" });
+    delayedClearAlert();
+  });
 
   useEffect(() => {
     if (updateProfileError)
@@ -254,6 +259,13 @@ export default function Profile() {
             className="profile-save-btn"
           >
             Save
+            {isUpdateLoading && (
+              <img
+                src={gif.spinner}
+                alt="Loading..."
+                className="spinner inline-spinner"
+              />
+            )}
           </button>
         </div>
       </div>
