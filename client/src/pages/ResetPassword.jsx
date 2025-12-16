@@ -30,20 +30,18 @@ export default function ResetPasswordForm() {
 
   useEffect(() => {
     if (error) {
-      async () => {
+      (async () => {
         setResetSuccess(false);
         setAlert({ type: "error", message: String(error) });
-        const timer = setTimeout(() => {
+        setTimeout(() => {
           setAlert({ type: "", message: "" });
         }, 2000);
-        return () => clearTimeout(timer);
-      };
+      })();
     }
-  }, [error]);
+  }, [error, setAlert, setResetSuccess]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!token) {
       setAlert({ type: "error", message: "Invalid or missing token." });
       return;
