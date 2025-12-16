@@ -67,12 +67,12 @@ export default function Profile() {
       cityInputRef.current &&
       countryInputRef.current
     ) {
-      firstnameInputRef.current.value = user?.firstname || "";
-      lastnameInputRef.current.value = user?.lastname || "";
-      streetInputRef.current.value = user?.street || "";
-      houseInputRef.current.value = user?.housenumber || "";
-      cityInputRef.current.value = user?.city || "";
-      countryInputRef.current.value = user?.country || "";
+      firstnameInputRef.current.value = user.firstname;
+      lastnameInputRef.current.value = user.lastname;
+      streetInputRef.current.value = user.street;
+      houseInputRef.current.value = user.housenumber;
+      cityInputRef.current.value = user.city;
+      countryInputRef.current.value = user.country;
     }
   }, [user]);
 
@@ -96,21 +96,6 @@ export default function Profile() {
   async function handleSaveClick() {
     handleClearAlert();
 
-    if (
-      !changePasswordRef ||
-      !firstnameInputRef ||
-      !lastnameInputRef ||
-      !streetInputRef ||
-      !houseInputRef ||
-      !cityInputRef ||
-      !countryInputRef
-    ) {
-      setAlert({
-        type: "error",
-        message: "Error: Input fields references are missing.",
-      });
-      return;
-    }
     const passwordResult =
       await changePasswordRef.current.handlePasswordChange();
 
@@ -122,12 +107,12 @@ export default function Profile() {
 
     const updatedFields = {};
 
-    const firstname = cleanUpText(firstnameInputRef.current.value);
-    const lastname = cleanUpText(lastnameInputRef.current.value);
-    const street = cleanUpText(streetInputRef.current.value);
-    const housenumber = cleanUpText(houseInputRef.current.value);
-    const city = cleanUpText(cityInputRef.current.value);
-    const country = cleanUpText(countryInputRef.current.value);
+    const firstname = cleanUpText(firstnameInputRef?.current.value);
+    const lastname = cleanUpText(lastnameInputRef?.current.value);
+    const street = cleanUpText(streetInputRef?.current.value);
+    const housenumber = cleanUpText(houseInputRef?.current.value);
+    const city = cleanUpText(cityInputRef?.current.value);
+    const country = cleanUpText(countryInputRef?.current.value);
 
     if (firstname !== user.firstname) updatedFields.firstname = firstname;
     if (lastname !== user.lastname) updatedFields.lastname = lastname;
