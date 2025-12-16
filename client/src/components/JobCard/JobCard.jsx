@@ -113,7 +113,13 @@ export default function JobCard({ job, onApplyClick, isInFavorites }) {
                     : "Save to favourites"
                 }
               >
-                {isInFavorites ? "♥" : "♡"}
+                {isToggleFavoriteLoading ? (
+                  <img src={gif.spinner} alt="Loading..." className="spinner" />
+                ) : isInFavorites ? (
+                  "♥"
+                ) : (
+                  "♡"
+                )}
               </button>
             </div>
 
