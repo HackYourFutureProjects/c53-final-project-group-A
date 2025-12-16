@@ -79,20 +79,14 @@ export default function Profile() {
   async function handleSaveClick() {
     handleClearAlert();
 
-    const firstnameEl = firstnameInputRef.current;
-    const lastnameEl = lastnameInputRef.current;
-    const streetEl = streetInputRef.current;
-    const housenumberEl = houseInputRef.current;
-    const cityEl = cityInputRef.current;
-    const countryEl = countryInputRef.current;
-
     if (
-      !firstnameEl ||
-      !lastnameEl ||
-      !streetEl ||
-      !housenumberEl ||
-      !cityEl ||
-      !countryEl
+      !changePasswordRef ||
+      !firstnameInputRef ||
+      !lastnameInputRef ||
+      !streetInputRef ||
+      !houseInputRef ||
+      !cityInputRef ||
+      !countryInputRef
     ) {
       setAlert({
         type: "error",
@@ -102,32 +96,30 @@ export default function Profile() {
     }
 
     let passwordResult = { inputsFilled: false };
-    if (changePasswordRef.current.handlePasswordChange) {
-      passwordResult = await changePasswordRef.current.handlePasswordChange();
-      if (
-        passwordResult.validationError ||
-        changePasswordRef.current.fetchError
-      ) {
-        setAlert({
-          type: "error",
-          message:
-            passwordResult.validationError ||
-            String(changePasswordRef.current.fetchError),
-        });
-        return;
-      } else if (passwordResult.inputsFilled) {
-        setAlert({
-          type: "success",
-          message: "Password changed successfully!",
-        });
-      }
+    passwordResult = await changePasswordRef.current.handlePasswordChange();
+    if (
+      passwordResult.validationError ||
+      changePasswordRef.current.fetchError
+    ) {
+      setAlert({
+        type: "error",
+        message:
+          passwordResult.validationError ||
+          String(changePasswordRef.current.fetchError),
+      });
+      return;
+    } else if (passwordResult.inputsFilled) {
+      setAlert({
+        type: "success",
+        message: "Password changed successfully!",
+      });
     }
 
     if (user) {
       const updatedFields = {};
 
-      const firstname = cleanUpText(firstnameEl.value || "");
-      const lastname = cleanUpText(lastnameEl.value || "");
+      const firstname = cleanUpText(firstnameInputRef.current.value || "");
+      const lastname = cleanUpText(lastnameInputRef.current.value || "");
 
       // FIX: Use String() for comparison to ensure changes are detected even if the value is null or undefined
       const currentFirstName = String(user.firstname || "");
@@ -138,10 +130,10 @@ export default function Profile() {
       if (String(lastname) !== currentLastName)
         updatedFields.lastname = lastname;
 
-      const street = cleanUpText(streetEl.value || "");
-      const housenumber = cleanUpText(housenumberEl.value || "");
-      const city = cleanUpText(cityEl.value || "");
-      const country = cleanUpText(countryEl.value || "");
+      const street = cleanUpText(streetInputRef.current.value || "");
+      const housenumber = cleanUpText(houseInputRef.current.value || "");
+      const city = cleanUpText(cityInputRef.current.value || "");
+      const country = cleanUpText(countryInputRef.current.value || "");
 
       const streetValidationError = validateAddressTextInputs({ text: street });
       const cityValidationError = validateAddressTextInputs({
