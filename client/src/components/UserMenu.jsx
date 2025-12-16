@@ -10,19 +10,19 @@ export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const {
     isLoading: isLogoutLoading,
-    error: logoutError,
-    performFetch: performLogoutFetch,
+    error,
+    performFetch,
   } = useFetch("/users/logout", (data) => {
     setMessage(data.msg);
-    dispatch({ type: "LOGOUT", payload: defaultUser });
+    dispatch({ type: "LOGOUT" });
   });
 
   useEffect(() => {
-    if (logoutError) {
-      console.error("Error logging out:", logoutError);
-      setMessage(String(logoutError));
+    if (error) {
+      console.error("Error logging out:", error);
+      setMessage(String(error));
     }
-  }, [logoutError]);
+  }, [error]);
 
   return (
     <div className="user-menu">
@@ -78,7 +78,7 @@ export default function UserMenu() {
               className="user-item"
               role="menuitem"
               onClick={() => {
-                performLogoutFetch({ method: "POST", credentials: "include" });
+                performFetch({ method: "POST", credentials: "include" });
                 setIsOpen(false);
               }}
             >

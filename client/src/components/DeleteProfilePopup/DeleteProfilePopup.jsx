@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { UseUser } from "../../context/UserContext";
 import "./DeleteProfilePopup.css";
-import { defaultUser } from "../../data/defaultUser";
 import useFetch from "../../hooks/useFetch";
 import { gif } from "../../assets";
 
@@ -13,7 +12,7 @@ export default function DeleteProfilePopup({ setShowDeletePopup }) {
     (data) => {
       setMessage(data.msg || "Account deleted successfully!");
       setTimeout(() => {
-        dispatch({ type: "LOGOUT", payload: defaultUser });
+        dispatch({ type: "LOGOUT" });
       }, 2000);
     },
   );

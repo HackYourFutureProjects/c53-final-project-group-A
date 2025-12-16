@@ -18,16 +18,14 @@ function userReducer(state, action) {
       return { ...state, ...action.payload };
     }
     case "LOGOUT":
-      return action.payload || defaultUser;
+      return defaultUser;
     case "SET_SKILLS": {
       return { ...state, skills: action.payload };
     }
     case "TOGGLE_FAVORITE": {
       const job = action.payload;
       const jobId = job?.id;
-      const prevFavorites = Array.isArray(state?.favorites)
-        ? state.favorites
-        : [];
+      const prevFavorites = state.favorites;
       const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
         ? prevFavorites.filter((fav) => fav.id !== jobId)
@@ -78,7 +76,7 @@ function UserContextProvider({ children }) {
         },
       });
     } else {
-      dispatch({ type: "LOGOUT", payload: defaultUser });
+      dispatch({ type: "LOGOUT" });
     }
     clearMessage();
   }
@@ -99,7 +97,7 @@ function UserContextProvider({ children }) {
     if (fetchMeError !== "No token provided") {
       console.error("Error fetching current user:", fetchMeError);
     }
-    dispatch({ type: "LOGOUT", payload: defaultUser });
+    dispatch({ type: "LOGOUT" });
   }, [fetchMeError]);
 
   return (
