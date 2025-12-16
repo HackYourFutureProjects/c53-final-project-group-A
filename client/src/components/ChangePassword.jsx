@@ -5,6 +5,7 @@ import {
   validatePassword,
   validatePasswordMatch,
 } from "../util/AuthValidation";
+import { gif } from "../assets/index.js";
 
 const ChangePassword = forwardRef(function ChangePassword(
   { onKeyDown, onInputChange },
@@ -19,7 +20,7 @@ const ChangePassword = forwardRef(function ChangePassword(
     useState(false);
 
   const {
-    // isLoading,
+    isLoading,
     error: fetchError,
     performFetch,
   } = useFetch("/users/change-password", () => {
@@ -74,7 +75,16 @@ const ChangePassword = forwardRef(function ChangePassword(
 
   return (
     <div className="profile-section">
-      <h3 className="profile-section-title">Change password</h3>
+      <h3 className="profile-section-title">
+        Change password{" "}
+        {isLoading && (
+          <img
+            src={gif.spinner}
+            alt="Loading..."
+            className="spinner inline-spinner"
+          />
+        )}
+      </h3>
       <div className="profile-password-single">
         <label className="profile-field-label">
           Type your current password
