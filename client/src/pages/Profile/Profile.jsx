@@ -75,6 +75,19 @@ export default function Profile() {
     setShowDeletePopup(true);
   };
 
+  const handlePasswordChangeSuccess = () => {
+    setAlert({
+      type: "success",
+      message: "Password changed successfully!",
+    });
+    delayedClearAlert();
+  };
+
+  const handlePasswordChangeError = (message) => {
+    setAlert({ type: "error", message: String(message) });
+    delayedClearAlert();
+  };
+
   async function handleSaveClick() {
     handleClearAlert();
 
@@ -93,25 +106,13 @@ export default function Profile() {
       });
       return;
     }
+    const passwordResult =
+      await changePasswordRef.current.handlePasswordChange();
 
-    let passwordResult = { inputsFilled: false };
-    passwordResult = await changePasswordRef.current.handlePasswordChange();
-    if (
-      passwordResult.validationError ||
-      changePasswordRef.current.fetchError
-    ) {
-      setAlert({
-        type: "error",
-        message:
-          passwordResult.validationError ||
-          String(changePasswordRef.current.fetchError),
-      });
+    if (passwordResult.validationError) {
+      setAlert({ type: "error", message: passwordResult.validationError });
+      delayedClearAlert();
       return;
-    } else if (passwordResult.inputsFilled) {
-      setAlert({
-        type: "success",
-        message: "Password changed successfully!",
-      });
     }
 
     const updatedFields = {};
@@ -149,6 +150,7 @@ export default function Profile() {
           countryValidationError ||
           houseValidationError,
       );
+      delayedClearAlert();
       return;
     }
 
@@ -161,6 +163,7 @@ export default function Profile() {
     if (Object.keys(updatedFields).length === 0) {
       if (passwordResult.inputsFilled === false)
         setAlert({ type: "info", message: "No changes detected." });
+      delayedClearAlert();
       return;
     } else {
       performUpdateProfile({
@@ -234,6 +237,8 @@ export default function Profile() {
         ref={changePasswordRef}
         onKeyDown={pressEnterKey}
         onInputChange={handleClearAlert}
+        onSuccess={handlePasswordChangeSuccess}
+        onError={handlePasswordChangeError}
       />
       {/* <!-- Save Button --> */}
       <div className="profile-save-row">

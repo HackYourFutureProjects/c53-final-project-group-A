@@ -1,4 +1,10 @@
-import { useState, useRef, forwardRef, useImperativeHandle } from "react";
+import {
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Eye, EyeOff } from "lucide-react";
 import useFetch from "../hooks/useFetch";
 import {
@@ -8,7 +14,7 @@ import {
 import { gif } from "../assets/index.js";
 
 const ChangePassword = forwardRef(function ChangePassword(
-  { onKeyDown, onInputChange },
+  { onKeyDown, onInputChange, onSuccess, onError },
   ref,
 ) {
   const currentPasswordInputRef = useRef(null);
@@ -20,14 +26,21 @@ const ChangePassword = forwardRef(function ChangePassword(
     useState(false);
 
   const {
-    isLoading,
+    isLoading: isPasswordChangeLoading,
     error: fetchError,
     performFetch,
   } = useFetch("/users/change-password", () => {
     currentPasswordInputRef.current.value = "";
     newPasswordInputRef.current.value = "";
     confirmPasswordInputRef.current.value = "";
+    if (typeof onSuccess === "function") onSuccess();
   });
+
+  useEffect(() => {
+    if (fetchError && typeof onError === "function") {
+      onError(fetchError);
+    }
+  }, [fetchError, onError]);
 
   async function handlePasswordChange() {
     const currentPassword = currentPasswordInputRef?.current?.value || "";
@@ -71,13 +84,14 @@ const ChangePassword = forwardRef(function ChangePassword(
   useImperativeHandle(ref, () => ({
     handlePasswordChange,
     fetchError,
+    isPasswordChangeLoading,
   }));
 
   return (
     <div className="profile-section">
       <h3 className="profile-section-title">
         Change password{" "}
-        {isLoading && (
+        {isPasswordChangeLoading && (
           <img
             src={gif.spinner}
             alt="Loading..."
