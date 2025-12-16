@@ -36,42 +36,22 @@ export default function JobCard({ job, onApplyClick, isInFavorites }) {
   const [showApplyPopup, setShowApplyPopup] = useState(false);
   const [showFavoritesPopup, setShowFavoritesPopup] = useState(false);
 
-  const {
-    isLoading: isToggleFavoriteLoading,
-    performFetch: performToggleFavorite,
-  } = useFetch("/users/favorites/toggle", (data) => {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: data.job });
-    setMessage(
-      data.action === "added"
-        ? "Job added to favorites!"
-        : "Job removed from favorites!",
-    );
-  });
-
-  const handleApplyClick = (e) => {
-    e.stopPropagation();
-
-    if (user.email !== defaultUser.email) {
-      if (onApplyClick) {
-        window.open(job.applyLink || job.url, "_blank");
-      }
-      return;
-    }
-
-    setShowApplyPopup(true);
-  };
-
-  const handleLoginRedirect = () => {
-    setShowApplyPopup(false);
-    setShowFavoritesPopup(false);
-    navigate("/login", {});
-  };
+  const { isLoading: isToggleFavoriteLoading, performFetch } = useFetch(
+    "/users/favorites/toggle",
+    (data) => {
+      dispatch({ type: "TOGGLE_FAVORITE", payload: data.job });
+      setMessage(
+        data.action === "added"
+          ? "Job added to favorites!"
+          : "Job removed from favorites!",
+      );
+    },
+  );
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
-
     if (user.email !== defaultUser.email) {
-      performToggleFavorite({
+      performFetch({
         method: "POST",
         body: JSON.stringify({ job }),
         credentials: "include",
@@ -79,6 +59,23 @@ export default function JobCard({ job, onApplyClick, isInFavorites }) {
     } else {
       setShowFavoritesPopup(true);
     }
+  };
+
+  const handleApplyClick = (e) => {
+    e.stopPropagation();
+    if (user.email !== defaultUser.email) {
+      if (onApplyClick) {
+        window.open(job.applyLink || job.url, "_blank");
+      }
+      return;
+    }
+    setShowApplyPopup(true);
+  };
+
+  const handleLoginRedirect = () => {
+    setShowApplyPopup(false);
+    setShowFavoritesPopup(false);
+    navigate("/login", {});
   };
 
   return (
