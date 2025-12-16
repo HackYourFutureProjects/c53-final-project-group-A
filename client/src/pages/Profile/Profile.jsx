@@ -7,6 +7,8 @@ import { cleanUpText } from "../../util/cleanUpText";
 import { validateAddressTextInputs } from "../../util/addressTextsValidation";
 import { validateHouseNoInput } from "../../util/addressHouseNoValidation";
 import { UseUser } from "../../context/UserContext";
+import useFetch from "../../hooks/useFetch";
+import { fixUserSkills } from "../../util/fixUserSkills";
 import AvatarUploader from "../../components/AvatarUploader/AvatarUploader";
 import DeleteProfilePopup from "../../components/DeleteProfilePopup/DeleteProfilePopup";
 import "./Profile.css";
@@ -20,8 +22,28 @@ export default function Profile() {
   const houseInputRef = useRef(null);
   const cityInputRef = useRef(null);
   const countryInputRef = useRef(null);
-  const { user, updateProfile } = UseUser();
+  const { user, dispatch } = UseUser();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+
+  function handleUpdateProfileResults(data) {
+    const normalizedSkills = fixUserSkills(data.user.skills);
+    dispatch({
+      type: "UPDATE_USER",
+      payload: {
+        ...data.user,
+        skills: normalizedSkills,
+      },
+    });
+    setAlert({ type: "success", message: "Profile updated successfully!" });
+  }
+
+  const { error: updateProfileError, performFetch: performUpdateProfile } =
+    useFetch("/users/profile", handleUpdateProfileResults);
+
+  useEffect(() => {
+    if (!updateProfileError) return;
+    setAlert({ type: "error", message: String(updateProfileError) });
+  }, [updateProfileError]);
 
   useEffect(() => {
     if (user) {
@@ -47,6 +69,14 @@ export default function Profile() {
   const handleDeleteClick = () => {
     setShowDeletePopup(true);
   };
+
+  function updateProfile(updatedFields) {
+    performUpdateProfile({
+      method: "PUT",
+      body: JSON.stringify(updatedFields),
+      credentials: "include",
+    });
+  }
 
   async function handleSaveClick() {
     handleClearAlert();
@@ -160,15 +190,7 @@ export default function Profile() {
         return;
       }
 
-      try {
-        await updateProfile(updatedFields);
-        setAlert({ type: "success", message: "Profile updated successfully!" });
-      } catch (error) {
-        setAlert({
-          type: "error",
-          message: error.message || "Failed to save profile. Check connection.",
-        });
-      }
+      updateProfile(updatedFields);
     }
   }
 

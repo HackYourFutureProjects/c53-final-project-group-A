@@ -109,32 +109,6 @@ function UserContextProvider({ children }) {
 
     dispatch({ type: "LOGOUT", payload: defaultUser });
   }, [fetchMeError]);
-  // -------------------- UPDATE PROFILE --------------------
-  function handleUpdateProfileResults(data) {
-    const normalizedSkills = fixUserSkills(data.user.skills);
-    dispatch({
-      type: "UPDATE_USER",
-      payload: {
-        ...data.user,
-        skills: normalizedSkills,
-      },
-    });
-    setMessage("Profile updated successfully!");
-  }
-
-  const {
-    isLoading: isUpdateProfileLoading,
-    error: updateProfileError,
-    performFetch: performUpdateProfile,
-  } = useFetch("/users/profile", handleUpdateProfileResults);
-
-  async function updateProfile(updatedFields) {
-    performUpdateProfile({
-      method: "PUT",
-      body: JSON.stringify(updatedFields),
-      credentials: "include",
-    });
-  }
   // -------------------- DELETE USER --------------------
   function handleDeleteUserResults(data) {
     setMessage(data.msg || "Account deleted successfully!");
@@ -175,13 +149,9 @@ function UserContextProvider({ children }) {
   }
 
   // Combined loading and error states
-  const loading =
-    isMeLoading ||
-    isUpdateProfileLoading ||
-    isDeleteUserLoading ||
-    isToggleFavoriteLoading;
+  const loading = isMeLoading || isDeleteUserLoading || isToggleFavoriteLoading;
 
-  const error = updateProfileError || deleteUserError || toggleFavoriteError;
+  const error = deleteUserError || toggleFavoriteError;
 
   return (
     <UserContext.Provider
@@ -194,16 +164,13 @@ function UserContextProvider({ children }) {
         message,
         setMessage,
         clearMessage,
-        updateProfile,
         toggleFavorite,
         deleteUser,
         // Expose individual loading states
         isMeLoading,
-        isUpdateProfileLoading,
         isDeleteUserLoading,
         isToggleFavoriteLoading,
         // Expose individual error states
-        updateProfileError,
         deleteUserError,
         toggleFavoriteError,
       }}
