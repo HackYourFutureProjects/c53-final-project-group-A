@@ -22,7 +22,11 @@ const ChangePassword = forwardRef(function ChangePassword(
     // isLoading,
     error: fetchError,
     performFetch,
-  } = useFetch("/users/change-password");
+  } = useFetch("/users/change-password", () => {
+    currentPasswordInputRef.current.value = "";
+    newPasswordInputRef.current.value = "";
+    confirmPasswordInputRef.current.value = "";
+  });
 
   async function handlePasswordChange() {
     const currentPassword = currentPasswordInputRef?.current?.value || "";
