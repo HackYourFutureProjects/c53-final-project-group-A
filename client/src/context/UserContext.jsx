@@ -9,8 +9,6 @@ import { defaultUser } from "../data/defaultUser";
 import { fixUserSkills } from "../util/fixUserSkills";
 import useFetch from "../hooks/useFetch";
 
-const UserContext = createContext();
-
 function userReducer(state, action) {
   switch (action.type) {
     case "REGISTER":
@@ -30,19 +28,18 @@ function userReducer(state, action) {
       const prevFavorites = Array.isArray(state?.favorites)
         ? state.favorites
         : [];
-
       const exists = prevFavorites.some((fav) => fav.id === jobId);
       const newFavorites = exists
         ? prevFavorites.filter((fav) => fav.id !== jobId)
         : [...prevFavorites, job];
-
       return { ...state, favorites: newFavorites };
     }
-
     default:
       return state;
   }
 }
+
+const UserContext = createContext();
 
 function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, defaultUser);
@@ -72,7 +69,6 @@ function UserContextProvider({ children }) {
             normalized_description: job.normalized_description,
           }))
         : [];
-
       dispatch({
         type: "LOGIN",
         payload: {
@@ -99,14 +95,13 @@ function UserContextProvider({ children }) {
 
   useEffect(() => {
     if (!fetchMeError) return;
-
     // "No token provided" is expected when browsing as a guest, so avoid noisy logs.
     if (fetchMeError !== "No token provided") {
       console.error("Error fetching current user:", fetchMeError);
     }
-
     dispatch({ type: "LOGOUT", payload: defaultUser });
   }, [fetchMeError]);
+
   return (
     <UserContext.Provider
       value={{
